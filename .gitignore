@@ -129,47 +129,47 @@ sftp-config.json
 /build/
 /bin/
 target/
- 
+
 # OS Files #
 .DS_Store
- 
+
 *.class
- 
+
 # Package Files #
 *.jar
 *.war
 *.ear
 *.db
- 
+
 ######################
 # Windows
 ######################
- 
+
 # Windows image file caches
-Thumbs.db 
- 
+Thumbs.db
+
 # Folder config file
 Desktop.ini
- 
+
 ######################
 # OSX
 ######################
- 
+
 .DS_Store
 .svn
- 
+
 # Thumbnails
 ._*
- 
+
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
- 
- 
+
+
 ######################
 # Eclipse
 ######################
- 
+
 *.pydevproject
 .project
 .metadata
@@ -187,13 +187,13 @@ local.properties
 /src/main/resources/rebel.xml
 # External tool builders
 .externalToolBuilders/
- 
+
 # Locally stored "Eclipse launch configurations"
 *.launch
- 
+
 # CDT-specific
 .cproject
- 
+
 # PDT-specific
 .buildpath
 .recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/jre/jre/1.0.0-SNAPSHOT/jre-1.0.0-20140604.182326-1-call.zip
@@ -223,9 +223,5 @@ local.properties
 *.properties
 
 *.tis
-
-*.class
-
-*.class
 
 *.class
