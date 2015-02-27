@@ -196,3 +196,34 @@ local.properties
  
 # PDT-specific
 .buildpath
+.recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/jre/jre/1.0.0-SNAPSHOT/jre-1.0.0-20140604.182326-1-call.zip
+
+*.gen
+
+*.repositories
+
+*.tii
+
+*.prx
+
+*.frq
+
+*.fdx
+
+*.fdt
+
+*.json
+
+*.fnm
+
+*.nrm
+
+*.xml
+
+*.properties
+
+*.tis
+
+*.class
+
+*.class

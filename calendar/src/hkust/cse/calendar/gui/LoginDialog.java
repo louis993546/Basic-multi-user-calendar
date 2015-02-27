@@ -94,21 +94,20 @@ public class LoginDialog extends JFrame implements ActionListener
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == button)
+		if(e.getSource() == button) //Login button
 		{
 			// When the button is clicked, check the user name and password, and try to log the user in
-			//login button
 			//login();
 			User user = new User( "noname", "nopass");
 			CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
 			setVisible( false );
 		}
-		else if(e.getSource() == signupButton)
+		else if(e.getSource() == signupButton) //Sign-up button
 		{
 			// Create a new account
-//			User newUser = new User();
+			// Create a new UI
 		}
-		else if(e.getSource() == closeButton)
+		else if(e.getSource() == closeButton) //close button
 		{
 			int n = JOptionPane.showConfirmDialog(null, "Exit Program ?",
 					"Confirm", JOptionPane.YES_NO_OPTION);
