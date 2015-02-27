@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -30,7 +31,7 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		setTitle("Sign up");	
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				System.exit(0);
+				dispose();
 			}
 		});
 		
@@ -96,6 +97,10 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		else if (e.getSource() == cancelB) //cancel button
 		{
 			//close this and go back
+			int n = JOptionPane.showConfirmDialog(null, "Discard all changes?",
+					"Confirm", JOptionPane.YES_NO_OPTION);
+			if (n == JOptionPane.YES_OPTION)
+				dispose();
 		}
 		
 	}
