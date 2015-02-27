@@ -24,52 +24,52 @@ public class SignUpDialog extends JFrame implements ActionListener{
 	private JTextField emailTF;			//TextField for email
 	private JButton signupB;			//Button for confirm signup
 	private JButton cancelB;			//Button for cancel signup
-	
+
 	//constructor: construct the GUI
-	public SignUpDialog ()  
+	public SignUpDialog ()
 	{
-		setTitle("Sign up");	
+		setTitle("Sign up");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				dispose();
 			}
 		});
-		
+
 		Container contentPane;
 		contentPane = getContentPane();
-		
+
 		//create a new JPanel to hold everything
 		JPanel sud = new JPanel();
 		sud.setLayout(new BoxLayout(sud, BoxLayout.Y_AXIS));
-		
+
 		//messPanel contains message to be displayed
 		JPanel messPanel = new JPanel();
 		messPanel.add(new JLabel("Create account to login"));
 		sud.add(messPanel);
-		
+
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		namePanel.add(new JLabel("User Name:"));
 		usernameTF = new JTextField(15);
 		namePanel.add(usernameTF);
 		sud.add(namePanel);
-		
+
 		JPanel pwPanel1 = new JPanel();
 		pwPanel1.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		pwPanel1.add(new JLabel("Password:  "));
 		password1PF = new JPasswordField(15);
 		pwPanel1.add(password1PF);
 		sud.add(pwPanel1);
-		
+
 		JPanel pwPanel2 = new JPanel();
 		pwPanel2.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		pwPanel2.add(new JLabel("Type password again:  "));
 		password2PF = new JPasswordField(15);
 		pwPanel2.add(password2PF);
 		sud.add(pwPanel2);
-		
+
 		contentPane.add("North", sud);
-		
+
 		JPanel butPanel = new JPanel();
 		cancelB = new JButton("Cancel");
 		cancelB.addActionListener(this);
@@ -77,13 +77,13 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		signupB = new JButton("Create");
 		signupB.addActionListener(this);
 		butPanel.add(signupB);
-		
+
 		contentPane.add("South", butPanel);
 		pack();
 		setLocationRelativeTo(null);
-		setVisible(true);	
+		setVisible(true);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//define all button clicks
@@ -102,6 +102,23 @@ public class SignUpDialog extends JFrame implements ActionListener{
 			if (n == JOptionPane.YES_OPTION)
 				dispose();
 		}
-		
+
+	}
+
+	// This method checks whether a string is a valid user name or password, as they can contains only letters and numbers
+	public static boolean ValidString(String s)
+	{
+		char[] sChar = s.toCharArray();
+		for(int i = 0; i < sChar.length; i++)
+		{
+			int sInt = (int)sChar[i];
+			if(sInt < 48 || sInt > 122)
+				return false;
+			if(sInt > 57 && sInt < 65)
+				return false;
+			if(sInt > 90 && sInt < 97)
+				return false;
+		}
+		return true;
 	}
 }
