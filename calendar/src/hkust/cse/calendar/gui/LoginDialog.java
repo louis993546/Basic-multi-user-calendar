@@ -29,11 +29,10 @@ public class LoginDialog extends JFrame implements ActionListener
 	private JButton closeButton;
 	private JButton signupButton;
 	
+	//constructor
 	public LoginDialog()		// Create a dialog to log in
 	{
-		
-		setTitle("Log in");
-		
+		setTitle("Log in");	
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -44,25 +43,31 @@ public class LoginDialog extends JFrame implements ActionListener
 		Container contentPane;
 		contentPane = getContentPane();
 		
+		//create a new JPanel to hold everything
 		JPanel top = new JPanel();
 		top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
 		
+		//messPanel contains message to be displayed
 		JPanel messPanel = new JPanel();
 		messPanel.add(new JLabel("Please input your user name and password to log in."));
 		top.add(messPanel);
 		
+		//namePanel contains a JLabel and a JTextField for the username input
 		JPanel namePanel = new JPanel();
 		namePanel.add(new JLabel("User Name:"));
 		userName = new JTextField(15);
 		namePanel.add(userName);
 		top.add(namePanel);
 		
+		//pwPanel contains a JLabel and a JTextField for the password input
 		JPanel pwPanel = new JPanel();
 		pwPanel.add(new JLabel("Password:  "));
 		password = new JPasswordField(15);
 		pwPanel.add(password);
 		top.add(pwPanel);
 		
+		
+		//signupPanel contains a signup button
 		JPanel signupPanel = new JPanel();
 		signupPanel.add(new JLabel("If you don't have an account, please sign up:"));
 		signupButton = new JButton("Sign up now");
@@ -91,9 +96,8 @@ public class LoginDialog extends JFrame implements ActionListener
 		
 	}
 	
-
+	//This is where you code for each button click
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == button) //Login button
 		{
 			// When the button is clicked, check the user name and password, and try to log the user in
@@ -106,9 +110,11 @@ public class LoginDialog extends JFrame implements ActionListener
 		{
 			// Create a new account
 			// Create a new UI
+			// Go to constructor of SignUpDialog.java
 		}
 		else if(e.getSource() == closeButton) //close button
 		{
+			//ask if the user really want to leave
 			int n = JOptionPane.showConfirmDialog(null, "Exit Program ?",
 					"Confirm", JOptionPane.YES_NO_OPTION);
 			if (n == JOptionPane.YES_OPTION)

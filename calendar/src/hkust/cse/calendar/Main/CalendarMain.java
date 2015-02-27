@@ -11,6 +11,7 @@ public class CalendarMain {
 	public static boolean logOut = false;
 	
 	public static void main(String[] args) {
+		//starting point
 		while(true){
 			logOut = false;
 			try{
@@ -18,7 +19,8 @@ public class CalendarMain {
 			}catch(Exception e){
 				
 			}
-			LoginDialog loginDialog = new LoginDialog();
+			LoginDialog loginDialog = new LoginDialog(); //create a new Login Dialog
+			//go to constructor of LoginDialog.java
 			while(logOut == false){
 				try {
 					Thread.sleep(300);
