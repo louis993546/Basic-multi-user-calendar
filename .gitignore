@@ -187,6 +187,7 @@ local.properties
 /src/main/resources/rebel.xml
 # External tool builders
 .externalToolBuilders/
+.recommenders/
 
 # Locally stored "Eclipse launch configurations"
 *.launch
@@ -225,5 +226,3 @@ local.properties
 *.tis
 
 *.class
-
-.recommenders/index/
