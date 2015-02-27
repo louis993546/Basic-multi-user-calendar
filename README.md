@@ -36,4 +36,4 @@
 
 ### Method 2: Use Eclipse and EGit plugin
 
-[http://eclipsesource.com/blogs/tutorials/egit-tutorial/]
+<a href="http://eclipsesource.com/blogs/tutorials/egit-tutorial/">EGit Tutorial</a>
