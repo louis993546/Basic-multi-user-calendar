@@ -1,8 +1,14 @@
 #COMP3111 Project
 
+###Phrase 1 deadline: April 3rd
+
+##Where to start
+
+Go to the main class first. I(Louis) will be adding more and more comments explaining how the program works.
+
 ##How to use GitHub
 
-###Method 1: Use Eclipse + dedicated GitHub client
+####Method 1: Use Eclipse + dedicated GitHub client
 
 - Download GitHub client for your OS
 
@@ -34,6 +40,6 @@
 
 - Congragulation!
 
-### Method 2: Use Eclipse and EGit plugin
+####Method 2: Use Eclipse and EGit plugin
 
-<a href="http://eclipsesource.com/blogs/tutorials/egit-tutorial/">EGit Tutorial</a>
+* <a href="http://eclipsesource.com/blogs/tutorials/egit-tutorial/">EGit Tutorial</a>
