@@ -2,6 +2,8 @@
 
 ###Phrase 1 deadline: April 3rd
 
+###Phrase 2 deadline: May 8th
+
 ##Where to start
 
 Go to the main class first. I(Louis) will be adding more and more comments explaining how the program works.
