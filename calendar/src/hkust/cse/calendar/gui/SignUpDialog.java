@@ -87,11 +87,20 @@ public class SignUpDialog extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//define all button clicks
-		if (e.getSource() == signupB) //signup button
+		if (e.getSource() == signupB) //sign-up button
 		{
-			//get all textfield
+			boolean usernameAvail;
+			boolean passwordMatch = false;
+			//get all answers
+			String usernameS = usernameTF.getText();
+			String password1S = new String(password1PF.getPassword());
+			String password2S = new String(password2PF.getPassword());
 			//check if username is available
+			//?
 			//check if the 2 passwords are the same
+			if (password1S == password2S) {
+				passwordMatch = true;
+			}
 			//?
 		}
 		else if (e.getSource() == cancelB) //cancel button
