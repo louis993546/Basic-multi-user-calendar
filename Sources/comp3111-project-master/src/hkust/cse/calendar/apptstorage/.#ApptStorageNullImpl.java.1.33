@@ -1,0 +1,207 @@
+
+package hkust.cse.calendar.apptstorage;
+
+import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeSpan;
+import hkust.cse.calendar.unit.User;
+import hkust.cse.calendar.xmlfactory.ApptXmlFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+public class ApptStorageNullImpl extends ApptStorage {
+	
+	public ApptStorageNullImpl(User user)
+	{
+		defaultUser = user;
+		mAppts = ApptStorage.mUserToAppts.get(defaultUser.ID());
+		mAssignedApptID = 0;
+		apptXmlFactory = new ApptXmlFactory();
+		//ApptStorage.mUserToAppts.put(defaultUser, mAppts);
+		
+		for(user : users) {
+			HashMap<TimeSpan, Appt> mAppts = new HashMap<TimeSpan, Appt>();
+			for(appt :appts) {
+				//Get appt of user
+				
+				mAppts.put(TimeSpan, Appt);
+			}
+			ApptStorage.mUserToAppts.put(user.ID(), mAppts);
+		}
+		
+	}
+	
+	@Override
+	public void SaveAppt(Appt appt) {
+		// if it is an new appt, then set the id
+		if(appt.getID()==-1){
+			appt.setID(mAssignedApptID);
+			mAssignedApptID++;
+		}
+		mAppts.put(appt.TimeSpan(),appt);
+		// saveApptToXml(appt); // for xml
+	}
+
+	@Override
+	public boolean checkOverlap(Appt appt,Appt entry){
+
+		if(appt.TimeSpan().Overlap(entry.TimeSpan())){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean checkOverLaps(ArrayList<Appt>  appts){
+
+		for (Entry<TimeSpan, Appt> entry : mAppts.entrySet()) {
+			for (Appt appt: appts) {
+				// if it is an old appt, then don't check overlap
+				if(appt.getID() == entry.getValue().getID()) break;
+				// if overlap, then return true. otherwise, check next appt
+				if(checkOverlap(appt,entry.getValue())){
+					return true;
+				}
+				
+			}	
+		}
+		return false;
+	}
+
+	@Override
+	public Appt[] RetrieveAppts(TimeSpan d) {
+		ArrayList<Appt> temp = new ArrayList<Appt>();
+
+		for (Entry<TimeSpan, Appt> entry : mAppts.entrySet()) {
+			// if overlap, then retrieve that appt
+			if (d.Overlap(entry.getKey()))
+				temp.add(entry.getValue());			
+		}
+
+		return temp.toArray(new Appt[temp.size()]);
+	}
+	
+	@Override
+	public Appt[] RetrieveAppts(User entity, TimeSpan time) {
+		// TODO Auto-generated method stub
+		//defaultUser = entity;
+		return RetrieveAppts(time);
+	}
+
+	@Override
+	public Appt[] RetrieveAppts(int joinApptID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void UpdateAppt(Appt appt) {
+		// must use the iterator because once you remove an appt, the date of appt.getValue() contain the deleted appt so that it will crash the system
+		for(Iterator<Entry<TimeSpan, Appt>>it=mAppts.entrySet().iterator();it.hasNext();){
+		     Entry<TimeSpan, Appt> entry = it.next();
+		     Appt oldAppt = entry.getValue();
+				if(oldAppt.getID() == appt.getID()){
+					it.remove();
+					mAppts.put(appt.TimeSpan(),appt);
+				}	
+
+		 }
+
+	}
+
+	@Override
+	public void RemoveAppt(Appt appt) {
+		// must use the iterator because once you remove an appt, the date of appt.getValue() contain the deleted appt so that it will crash the system
+		// removeApptFromXml(appt); 
+		mAppts.remove(appt.TimeSpan());
+		for(Iterator<Entry<TimeSpan, Appt>>it = mAppts.entrySet().iterator(); it.hasNext();){
+		     Entry<TimeSpan, Appt> entry = it.next();
+				if(entry.getValue().getID() == appt.getID()){
+					it.remove();
+				}		
+		 }
+	}
+
+	@Override
+	public User getDefaultUser() {
+		// TODO Auto-generated method stub
+		return defaultUser;
+	}
+
+	/* begining of xml management functions*/
+	@Override
+	public void loadApptFromXml() {
+		mAssignedApptID = apptXmlFactory.loadApptFromXml(ApptStorage.apptFile, mAppts, defaultUser.ID());
+	}
+	@Override
+	public void saveApptToXml(Appt appt) {
+		apptXmlFactory.saveApptToXml(ApptStorage.apptFile, appt, defaultUser.ID());
+	}
+	@Override
+	public void removeApptFromXml(Appt appt) {
+		apptXmlFactory.removeApptFromXml(ApptStorage.apptFile, appt, defaultUser.ID());
+	}
+	/* end of xml management functions*/
+	
+	@Override // added a method to get the assigned appt id
+	public int getAssignedApptID(){
+		return mAssignedApptID;
+	}
+
+	@Override
+	public boolean checkApptsHaveLocation(String locationName) {
+		// TODO Auto-generated method stub
+		for(Appt mAppt : mAppts.values()) {
+			if(mAppt.getLocation().getLocationName().equals(locationName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/* Tempory method to get all the appts for the admin appts
+	 * Later will change it to get the specifi
+	 * */
+	
+	@Override
+	public Appt[] retrieveAllAppts(User user) {
+		// TODO Auto-generated method stub
+		ArrayList<Appt> appts = new ArrayList<Appt>();
+		HashMap<TimeSpan, Appt> userAppt = ApptStorage.mUserToAppts.get(user);
+		ArrayList<Integer> addedAppt = new ArrayList<Integer>();
+		
+		if(userAppt == null) {
+			return null;
+		}
+		
+		for(Appt appt : userAppt.values()) {
+			boolean added = false;			
+		
+			for(int i = 0; i < addedAppt.size(); i++) {
+				if(addedAppt.get(i).intValue() == appt.getID()) {
+					added = true;
+					break;
+				}
+			}
+			
+			if(!added) {
+				addedAppt.add(new Integer(appt.getID()));
+//				addedAppt.sort(null);
+				appts.add(appt);
+			}
+		}
+		/*
+		appts.sort(new Comparator<Appt>() {
+			@Override
+			public int compare(Appt o1, Appt o2) {
+				// TODO Auto-generated method stub
+				return (int) (o1.getStartDate().StartTime().getTime() - o2.getStartDate().StartTime().getTime());
+			}
+		});
+		*/
+		return appts.toArray(new Appt[appts.size()]);
+	}
+}

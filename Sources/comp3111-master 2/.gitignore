@@ -1,0 +1,5 @@
+/bin
+*CVS
+*.orig
+*.xml
+.DS_Store
