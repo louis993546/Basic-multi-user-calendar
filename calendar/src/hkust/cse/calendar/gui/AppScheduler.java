@@ -26,6 +26,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -43,19 +44,33 @@ public class AppScheduler extends JDialog implements ActionListener,
 		ComponentListener {
 
 	private JLabel yearL;
-	private JTextField yearF;
 	private JLabel monthL;
-	private JTextField monthF;
 	private JLabel dayL;
-	private JTextField dayF;
 	private JLabel sTimeHL;
-	private JTextField sTimeH;
 	private JLabel sTimeML;
-	private JTextField sTimeM;
 	private JLabel eTimeHL;
-	private JTextField eTimeH;
 	private JLabel eTimeML;
-	private JTextField eTimeM;
+	
+	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+//	private String[] dayS1 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
+//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28"};
+//	private String[] dayS2 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
+//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"};
+//	private String[] dayS3 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
+//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
+//	private String[] dayS4 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
+//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+	private String[] timeHS = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", 
+			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+	private String[] timeMS = {"00", "15", "30", "45"};
+	
+	private JTextField yearF;
+	private JComboBox monthF;
+	private JTextField dayF;
+	private JComboBox sTimeH;
+	private JComboBox sTimeM;
+	private JComboBox eTimeH;
+	private JComboBox eTimeM;
 
 	private DefaultListModel model;
 	private JTextField titleField;
@@ -101,7 +116,7 @@ public class AppScheduler extends JDialog implements ActionListener,
 		pDate.add(yearF);
 		monthL = new JLabel("MONTH: ");
 		pDate.add(monthL);
-		monthF = new JTextField(4);
+		monthF = new JComboBox(monthS);
 		pDate.add(monthF);
 		dayL = new JLabel("DAY: ");
 		pDate.add(dayL);
@@ -113,11 +128,11 @@ public class AppScheduler extends JDialog implements ActionListener,
 		psTime.setBorder(stimeBorder);
 		sTimeHL = new JLabel("Hour");
 		psTime.add(sTimeHL);
-		sTimeH = new JTextField(4);
+		sTimeH = new JComboBox(timeHS);
 		psTime.add(sTimeH);
 		sTimeML = new JLabel("Minute");
 		psTime.add(sTimeML);
-		sTimeM = new JTextField(4);
+		sTimeM = new JComboBox(timeMS);
 		psTime.add(sTimeM);
 
 		JPanel peTime = new JPanel();
@@ -125,11 +140,11 @@ public class AppScheduler extends JDialog implements ActionListener,
 		peTime.setBorder(etimeBorder);
 		eTimeHL = new JLabel("Hour");
 		peTime.add(eTimeHL);
-		eTimeH = new JTextField(4);
+		eTimeH = new JComboBox(timeHS);
 		peTime.add(eTimeH);
 		eTimeML = new JLabel("Minute");
 		peTime.add(eTimeML);
-		eTimeM = new JTextField(4);
+		eTimeM = new JComboBox(timeMS);
 		peTime.add(eTimeM);
 
 		JPanel pTime = new JPanel();
@@ -268,7 +283,7 @@ public class AppScheduler extends JDialog implements ActionListener,
 
 		int[] date = new int[3];
 		date[0] = Utility.getNumber(yearF.getText());
-		date[1] = Utility.getNumber(monthF.getText());
+		date[1] = Utility.getNumber(monthF.getSelectedItem().toString());
 		if (date[0] < 1980 || date[0] > 2100) {
 			JOptionPane.showMessageDialog(this, "Please input proper year",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
@@ -296,12 +311,12 @@ public class AppScheduler extends JDialog implements ActionListener,
 		return date;
 	}
 
-	private int getTime(JTextField h, JTextField min) {
+	private int getTime(JComboBox h, JComboBox eTimeM2) {
 
-		int hour = Utility.getNumber(h.getText());
+		int hour = Utility.getNumber(h.getSelectedItem().toString());
 		if (hour == -1)
 			return -1;
-		int minute = Utility.getNumber(min.getText());
+		int minute = Utility.getNumber(eTimeM2.getSelectedItem().toString());
 		if (minute == -1)
 			return -1;
 
@@ -321,8 +336,8 @@ public class AppScheduler extends JDialog implements ActionListener,
 			return null;
 		}
 		
-		if (!sTimeM.getText().equals("0") && !sTimeM.getText().equals("15") && !sTimeM.getText().equals("30") && !sTimeM.getText().equals("45") 
-			|| !eTimeM.getText().equals("0") && !eTimeM.getText().equals("15") && !eTimeM.getText().equals("30") && !eTimeM.getText().equals("45")){
+		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15") && !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45") 
+			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15") && !eTimeM.getSelectedItem().toString().equals("30") && !eTimeM.getSelectedItem().toString().equals("45")){
 			JOptionPane.showMessageDialog(this,
 					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
 					JOptionPane.ERROR_MESSAGE);
