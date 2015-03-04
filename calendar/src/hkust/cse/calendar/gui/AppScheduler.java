@@ -195,28 +195,32 @@ public class AppScheduler extends JDialog implements ActionListener,
 		
 		if (NewAppt != null) {
 			detailArea.setText(NewAppt.getInfo());
-
 		}
-		
+
+		//button JPanel
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-//		inviteBut = new JButton("Invite");
-//		inviteBut.addActionListener(this);
-//		buttonPanel.add(inviteBut);
-		
-		saveBut = new JButton("Save");
-		saveBut.addActionListener(this);
-		buttonPanel.add(saveBut);
+		//Invite button
+		inviteBut = new JButton("Invite");
+		inviteBut.addActionListener(this);
+		buttonPanel.add(inviteBut);
 
+		//reject button
 		rejectBut = new JButton("Reject");
 		rejectBut.addActionListener(this);
 		buttonPanel.add(rejectBut);
 		rejectBut.show(false);
 
+		//Cancel button
 		CancelBut = new JButton("Cancel");
 		CancelBut.addActionListener(this);
 		buttonPanel.add(CancelBut);
+		
+		//Save/Accept/Confirm button
+		saveBut = new JButton("Save");
+		saveBut.addActionListener(this);
+		buttonPanel.add(saveBut);
 
 		contentPane.add("South", buttonPanel);
 		NewAppt = new Appt();
@@ -322,6 +326,29 @@ public class AppScheduler extends JDialog implements ActionListener,
 		}
 		return date;
 	}
+	
+//	private boolean getValidDateBoolean() {
+//		int[] date = new int[3];
+//		date[0] = Utility.getNumber(yearF.getText());
+//		date[1] = Utility.getNumber(monthF.getSelectedItem().toString());
+//		if (date[0] < 1980 || date[0] > 2100) {
+//			return false;
+//		}
+//		if (date[1] <= 0 || date[1] > 12) {
+//			return false;
+//		}
+//		date[2] = Utility.getNumber(dayF.getText());
+//		int monthDay = CalGrid.monthDays[date[1] - 1];
+//		if (date[1] == 2) {
+//			GregorianCalendar c = new GregorianCalendar();
+//			if (c.isLeapYear(date[0]))
+//				monthDay = 29;
+//		}
+//		if (date[2] <= 0 || date[2] > monthDay) {
+//			return false;
+//		}
+//		return true;
+//	}
 
 //	private int[] getValidReminderDate() {
 //		//TO-DO: pretty similar to getValidDate
@@ -400,10 +427,8 @@ public class AppScheduler extends JDialog implements ActionListener,
 		 * reminder date/time happends after the event
 		 */
 
-		//get all data
 		String errorOutputString = "";
 		int[] date = getValidDate();
-		// int[] reminderDate = getValidReminderDate();			only if reminder is selected
 		String title = titleField.getText().trim();
 
 		//get valid date
