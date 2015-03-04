@@ -16,49 +16,54 @@ public class ApptStorageNullImpl extends ApptStorage {
 	@Override
 	public void SaveAppt(Appt appt) {
 		// TODO Auto-generated method stub
-
+		//Save appointment
 	}
 
 	@Override
 	public Appt[] RetrieveAppts(TimeSpan d) {
 		// TODO Auto-generated method stub
+		//retrieve an appointment record by a given timespan
 		return null;
 	}
 
 	@Override
 	public Appt[] RetrieveAppts(User entity, TimeSpan time) {
 		// TODO Auto-generated method stub
+		//retrieve an appointment record by a given user object and timespan
 		return null;
 	}
 
 	@Override
 	public Appt RetrieveAppts(int joinApptID) {
 		// TODO Auto-generated method stub
+		//retrieve appointment with the given joint appointment id
 		return null;
 	}
 
 	@Override
 	public void UpdateAppt(Appt appt) {
 		// TODO Auto-generated method stub
+		//update appointment record
 
 	}
 
 	@Override
 	public void RemoveAppt(Appt appt) {
 		// TODO Auto-generated method stub
+		//remove appointment record
 
 	}
 
 	@Override
 	public User getDefaultUser() {
 		// TODO Auto-generated method stub
-		return defaultUser;
+		return defaultUser; //return current user object
 	}
 
 	@Override
 	public void LoadApptFromXml() {
 		// TODO Auto-generated method stub
-
+		//load appointment from xml record into hash map
 	}
 
 }

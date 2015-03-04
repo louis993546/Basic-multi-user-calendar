@@ -26,6 +26,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -66,6 +67,7 @@ public class AppScheduler extends JDialog implements ActionListener,
 	private JComboBox eTimeM;
 	private JTextField reminderTF;
 	private JComboBox reminderCB;
+	private JCheckBox reminderChB;
 
 	private DefaultListModel model;
 	private JTextField titleField;
@@ -104,11 +106,10 @@ public class AppScheduler extends JDialog implements ActionListener,
 		JPanel top = new JPanel();
 		top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
 
-		
+		//Date JPanel
 		JPanel pDate = new JPanel();
 		Border dateBorder = new TitledBorder(null, "DATE");
 		pDate.setBorder(dateBorder);
-
 		yearL = new JLabel("YEAR: ");
 		pDate.add(yearL);
 		yearF = new JTextField(6);
@@ -122,6 +123,7 @@ public class AppScheduler extends JDialog implements ActionListener,
 		dayF = new JTextField(4);
 		pDate.add(dayF);
 
+		//Start time JPanel
 		JPanel psTime = new JPanel();
 		Border stimeBorder = new TitledBorder(null, "START TIME");
 		psTime.setBorder(stimeBorder);
@@ -134,6 +136,7 @@ public class AppScheduler extends JDialog implements ActionListener,
 		sTimeM = new JComboBox(timeMS);
 		psTime.add(sTimeM);
 
+		//End time JPanel
 		JPanel peTime = new JPanel();
 		Border etimeBorder = new TitledBorder(null, "END TIME");
 		peTime.setBorder(etimeBorder);
@@ -146,73 +149,80 @@ public class AppScheduler extends JDialog implements ActionListener,
 		eTimeM = new JComboBox(timeMS);
 		peTime.add(eTimeM);
 
+		//Time JPanel
 		JPanel pTime = new JPanel();
 		pTime.setLayout(new BorderLayout());
 		pTime.add("West", psTime);
 		pTime.add("East", peTime);
 
-		//Reminder panel, label, textField selectBox(enable reminder) and ComboBox
+		//Reminder JPanel
 		JPanel pReminder = new JPanel();
 		Border reminderBorder = new TitledBorder(null, "Reminder(Optional)");
 		pReminder.setBorder(reminderBorder);
+		reminderChB = new JCheckBox("On");
+		pReminder.add(reminderChB);
 		reminderTF = new JTextField(5);
 		pReminder.add(reminderTF);
 		reminderCB = new JComboBox(reminderS);
 		pReminder.add(reminderCB);
+		JLabel reminderL = new JLabel("before the event");
+		pReminder.add(reminderL);
 
-		top.add(pDate);
-		top.add(pTime);
-		top.add(pReminder);
-
-		contentPane.add("North", top);
-
+		//Title JPanel
 		JPanel titleAndTextPanel = new JPanel();
 		JLabel titleL = new JLabel("TITLE");
-		titleField = new JTextField(15);
+		titleField = new JTextField(30);
 		titleAndTextPanel.add(titleL);
 		titleAndTextPanel.add(titleField);
 
+		//Description JPanel
 		detailPanel = new JPanel();
 		detailPanel.setLayout(new BorderLayout());
 		Border detailBorder = new TitledBorder(null, "Appointment Description");
 		detailPanel.setBorder(detailBorder);
 		detailArea = new JTextArea(20, 30);
-
 		detailArea.setEditable(true);
 		JScrollPane detailScroll = new JScrollPane(detailArea);
 		detailPanel.add(detailScroll);
-
-//		pDes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, titleAndTextPanel, detailPanel);
-//		top.add(pDes);
+		
+		//Every all these JPanels to top JPanel
+		top.add(pDate);
+		top.add(pTime);
+		top.add(pReminder);
 		top.add(titleAndTextPanel);
 		top.add(detailPanel);
+		contentPane.add("North", top);
 		
 		if (NewAppt != null) {
 			detailArea.setText(NewAppt.getInfo());
-
 		}
-		
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-//		inviteBut = new JButton("Invite");
-//		inviteBut.addActionListener(this);
-//		panel2.add(inviteBut);
-		
-		saveBut = new JButton("Save");
-		saveBut.addActionListener(this);
-		panel2.add(saveBut);
+		//button JPanel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+		//Invite button
+		inviteBut = new JButton("Invite");
+		inviteBut.addActionListener(this);
+		buttonPanel.add(inviteBut);
+
+		//reject button
 		rejectBut = new JButton("Reject");
 		rejectBut.addActionListener(this);
-		panel2.add(rejectBut);
+		buttonPanel.add(rejectBut);
 		rejectBut.show(false);
 
+		//Cancel button
 		CancelBut = new JButton("Cancel");
 		CancelBut.addActionListener(this);
-		panel2.add(CancelBut);
+		buttonPanel.add(CancelBut);
+		
+		//Save/Accept/Confirm button
+		saveBut = new JButton("Save");
+		saveBut.addActionListener(this);
+		buttonPanel.add(saveBut);
 
-		contentPane.add("South", panel2);
+		contentPane.add("South", buttonPanel);
 		NewAppt = new Appt();
 
 		if (this.getTitle().equals("Join Appointment Content Change") || this.getTitle().equals("Join Appointment Invitation")){
@@ -316,6 +326,29 @@ public class AppScheduler extends JDialog implements ActionListener,
 		}
 		return date;
 	}
+	
+//	private boolean getValidDateBoolean() {
+//		int[] date = new int[3];
+//		date[0] = Utility.getNumber(yearF.getText());
+//		date[1] = Utility.getNumber(monthF.getSelectedItem().toString());
+//		if (date[0] < 1980 || date[0] > 2100) {
+//			return false;
+//		}
+//		if (date[1] <= 0 || date[1] > 12) {
+//			return false;
+//		}
+//		date[2] = Utility.getNumber(dayF.getText());
+//		int monthDay = CalGrid.monthDays[date[1] - 1];
+//		if (date[1] == 2) {
+//			GregorianCalendar c = new GregorianCalendar();
+//			if (c.isLeapYear(date[0]))
+//				monthDay = 29;
+//		}
+//		if (date[2] <= 0 || date[2] > monthDay) {
+//			return false;
+//		}
+//		return true;
+//	}
 
 //	private int[] getValidReminderDate() {
 //		//TO-DO: pretty similar to getValidDate
@@ -394,10 +427,8 @@ public class AppScheduler extends JDialog implements ActionListener,
 		 * reminder date/time happends after the event
 		 */
 
-		//get all data
 		String errorOutputString = "";
 		int[] date = getValidDate();
-		// int[] reminderDate = getValidReminderDate();			only if reminder is selected
 		String title = titleField.getText().trim();
 
 		//get valid date
