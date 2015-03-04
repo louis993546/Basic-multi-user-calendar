@@ -52,17 +52,10 @@ public class AppScheduler extends JDialog implements ActionListener,
 	private JLabel eTimeML;
 	
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-//	private String[] dayS1 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
-//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28"};
-//	private String[] dayS2 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
-//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"};
-//	private String[] dayS3 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
-//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
-//	private String[] dayS4 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
-//			"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
 	private String[] timeHS = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", 
 			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
 	private String[] timeMS = {"00", "15", "30", "45"};
+	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)"};
 	
 	private JTextField yearF;
 	private JComboBox monthF;
@@ -71,6 +64,8 @@ public class AppScheduler extends JDialog implements ActionListener,
 	private JComboBox sTimeM;
 	private JComboBox eTimeH;
 	private JComboBox eTimeM;
+	private JTextField reminderTF;
+	private JComboBox reminderCB;
 
 	private DefaultListModel model;
 	private JTextField titleField;
@@ -105,6 +100,10 @@ public class AppScheduler extends JDialog implements ActionListener,
 
 		Container contentPane;
 		contentPane = getContentPane();
+
+		JPanel top = new JPanel();
+		top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
+
 		
 		JPanel pDate = new JPanel();
 		Border dateBorder = new TitledBorder(null, "DATE");
@@ -152,11 +151,18 @@ public class AppScheduler extends JDialog implements ActionListener,
 		pTime.add("West", psTime);
 		pTime.add("East", peTime);
 
-		JPanel top = new JPanel();
-		top.setLayout(new BorderLayout());
-		top.setBorder(new BevelBorder(BevelBorder.RAISED));
-		top.add(pDate, BorderLayout.NORTH);
-		top.add(pTime, BorderLayout.CENTER);
+		//Reminder panel, label, textField selectBox(enable reminder) and ComboBox
+		JPanel pReminder = new JPanel();
+		Border reminderBorder = new TitledBorder(null, "Reminder(Optional)");
+		pReminder.setBorder(reminderBorder);
+		reminderTF = new JTextField(5);
+		pReminder.add(reminderTF);
+		reminderCB = new JComboBox(reminderS);
+		pReminder.add(reminderCB);
+
+		top.add(pDate);
+		top.add(pTime);
+		top.add(pReminder);
 
 		contentPane.add("North", top);
 
@@ -176,11 +182,11 @@ public class AppScheduler extends JDialog implements ActionListener,
 		JScrollPane detailScroll = new JScrollPane(detailArea);
 		detailPanel.add(detailScroll);
 
-		pDes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, titleAndTextPanel,
-				detailPanel);
-
-		top.add(pDes, BorderLayout.SOUTH);
-
+//		pDes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, titleAndTextPanel, detailPanel);
+//		top.add(pDes);
+		top.add(titleAndTextPanel);
+		top.add(detailPanel);
+		
 		if (NewAppt != null) {
 			detailArea.setText(NewAppt.getInfo());
 
@@ -311,6 +317,17 @@ public class AppScheduler extends JDialog implements ActionListener,
 		return date;
 	}
 
+//	private int[] getValidReminderDate() {
+//		//TO-DO: pretty similar to getValidDate
+//		
+//		/* what cannot happend
+//		 * negative number
+//		 * minutes not within 1-60 (inclusively)
+//		 * hour not within 1-24(inlcusively)
+//		 *
+//		 */
+//	}
+
 	private int getTime(JComboBox h, JComboBox eTimeM2) {
 
 		int hour = Utility.getNumber(h.getSelectedItem().toString());
@@ -366,8 +383,33 @@ public class AppScheduler extends JDialog implements ActionListener,
 	}
 
 	private void saveButtonResponse() {
-		// Fix Me!
+		// TO-DO
 		// Save the appointment to the hard disk
+
+		/*
+		 * possible error messges: 
+		 * empty date/time/title/description/location
+		 * event date time collision
+		 * date does not exist in that month/year
+		 * reminder date/time happends after the event
+		 */
+
+		//get all data
+		String errorOutputString = "";
+		int[] date = getValidDate();
+		// int[] reminderDate = getValidReminderDate();			only if reminder is selected
+		String title = titleField.getText().trim();
+
+		//get valid date
+			//output error message if date not valid
+		//get reminderSelection
+			//if it is checked
+				//get valid reminder date
+					//output error message if date not valid
+		//get title
+			//output error message if title is not valid
+		//get valid time
+			//output error message if time is not valid 
 	}
 
 	private Timestamp CreateTimeStamp(int[] date, int time) {
@@ -381,7 +423,7 @@ public class AppScheduler extends JDialog implements ActionListener,
 	}
 
 	public void updateSetApp(Appt appt) {
-		// Fix Me!
+		// TO-DO
 	}
 
 	public void componentHidden(ComponentEvent e) {
