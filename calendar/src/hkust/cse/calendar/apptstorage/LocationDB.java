@@ -2,8 +2,10 @@ package hkust.cse.calendar.apptstorage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -27,8 +29,6 @@ public class LocationDB {
 //	                   				 + "(START WITH 1, INCREMENT BY 1)," +
 	                   " LOCATION       TEXT                NOT NULL)"; 
 	      stmt.executeUpdate(sql);
-//	      stmt.close();
-//	      c.close();
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
@@ -54,4 +54,26 @@ public class LocationDB {
 	}
 	
 	//a function to load location into some kind of map
+	//return an array list of string
+	public ArrayList<String> getLocationList() {
+		ArrayList<String> temp = new ArrayList<String>(); 
+		try {
+			stmt = c.createStatement();
+	        ResultSet rs = stmt.executeQuery( "SELECT * FROM LOCATION;" );
+	        while ( rs.next() ) {
+				String name = rs.getString("LOCATION");
+				temp.add(name);
+	        }
+			return temp;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		} catch (NullPointerException e) {
+			//What is happening?
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		}
+	    return null;
+	}
 }

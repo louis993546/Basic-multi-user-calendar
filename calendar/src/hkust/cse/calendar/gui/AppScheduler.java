@@ -1,6 +1,7 @@
 package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
+import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
 
@@ -16,6 +17,7 @@ import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -57,8 +59,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private String[] timeHS = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", 
 			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
 	private String[] timeMS = {"00", "15", "30", "45"};
-	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)"};
+	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)", "Decade(s)"};
 	private String[] locationS = {"Temp location 1", "Temp location 2", "Temp location 3", "Temp location 4", "Temp location 5"};
+	private ArrayList<String> locationAL;
+	private String[] repeatS = {"Daily", "Weekly", "Monthly", "Yearly", "Decennially", "Centennially", "Millennially"};
 	
 	private JTextField yearF;
 	private JComboBox monthF;
@@ -95,12 +99,16 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 //	private JTextField waitingField;
 	private int selectedApptId = -1;
 	
+	private LocationDB ldb;
+	
 
 	private void commonConstructor(String title, CalGrid cal) {
 		parent = cal;
 		this.setAlwaysOnTop(true);
 		setTitle(title);
 		setModal(false);
+		ldb = new LocationDB();
+		locationAL = ldb.getLocationList();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -170,7 +178,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		JPanel lPanel = new JPanel();
 		Border lBorder = new TitledBorder(null, "Location");
 		lPanel.setBorder(lBorder);
-		JComboBox lCB = new JComboBox();
+		JComboBox lCB = new JComboBox(locationAL.toArray());
 		lPanel.add(lCB);
 		
 		//Repeat Panel
@@ -181,7 +189,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		rPanel.add(rChB);
 		JTextField rTF = new JTextField(5);
 		rPanel.add(rTF);
-		JComboBox rCB = new JComboBox();
+		JComboBox rCB = new JComboBox(repeatS);
 		rPanel.add(rCB);
 		
 		//Location + Repeat Panel

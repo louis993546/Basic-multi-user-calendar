@@ -246,6 +246,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		//mCurrUser = getCurrUser(); // totally meaningless code
 		Appmenu.setEnabled(true);
 		Locationmenu.setEnabled(true);
+		Usermenu.setEnabled(true); //iff the current user is admin
 
 		UpdateCal();
 		pack();				// sized the window to a preferred size
@@ -407,6 +408,17 @@ public class CalGrid extends JFrame implements ActionListener {
 		Locationmenu.add(nl);
 		
 		//modify user
+		menuBar.add(Usermenu);
+		Usermenu.setEnabled(false);
+		Usermenu.setMnemonic('p');
+		Appmenu.getAccessibleContext().setAccessibleDescription("User Management:");
+		JMenuItem mu = new JMenuItem("Modify User");
+		JMenuItem nu = new JMenuItem("New User");
+		mu.addActionListener(listener);
+		nu.addActionListener(listener);
+		Usermenu.add(mu);
+		Usermenu.add(nu);
+		
 
 		return menuBar;
 	}
