@@ -44,11 +44,14 @@ public class LocationDB {
 	public boolean addLocation(String l) throws SQLException {
 		if (!checkIfExists(l)) {
 			stmt = c.createStatement();
-			sql = "INSERT INTO LOCATION (LOCATION) " +
-	                "VALUES ('" + l + "' );"; 
+			//need to figure how to to increment id automatically
+			sql = "INSERT INTO LOCATION (ID, LOCATION) " +
+	                "VALUES (1, '" + l + "' );"; 
 			stmt.executeUpdate(sql);
 			return true;
 		}
 		else return false;
 	}
+	
+	//a function to load location into some kind of map
 }

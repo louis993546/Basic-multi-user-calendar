@@ -338,10 +338,10 @@ public class CalGrid extends JFrame implements ActionListener {
 					tableView.repaint();
 				}
 				else if (e.getActionCommand().equals("Modify Location")) {
-					//do something 
+					ModifyLocationDialog mld = new ModifyLocationDialog(ldb);
 				}
 				else if (e.getActionCommand().equals("New Location")) {
-					LocationDialog ld = new LocationDialog(ldb);
+					NewLocationDialog nld = new NewLocationDialog(ldb);
 				}
 
 			}
