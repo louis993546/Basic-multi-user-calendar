@@ -41,9 +41,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 
-public class AppScheduler extends JDialog implements ActionListener,
-		ComponentListener {
+public class AppScheduler extends JDialog implements ActionListener, ComponentListener {
 
+	//need to read all rows of appt.db and location.db
+	
 	private JLabel yearL;
 	private JLabel monthL;
 	private JLabel dayL;

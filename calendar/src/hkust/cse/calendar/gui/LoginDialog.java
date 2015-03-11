@@ -28,6 +28,7 @@ public class LoginDialog extends JFrame implements ActionListener
 	private JButton button;
 	private JButton closeButton;
 	private JButton signupButton;
+	//Need to access the user.db in phrase 2
 
 	//constructor
 	public LoginDialog()		// Create a dialog to log in
