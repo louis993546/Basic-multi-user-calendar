@@ -19,14 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LocationDialog extends JFrame implements ActionListener{
+public class NewLocationDialog extends JFrame implements ActionListener{
 	//GUI for adding new location
 	private JTextField locationTF;		//TextField for location
 	private JButton createB;			//Button for confirm
 	private JButton cancelB;			//Button for cancel
 	private LocationDB ldb;
 	
-	public LocationDialog() {	
+	public NewLocationDialog() {	
 		setTitle("New Location");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -67,7 +67,7 @@ public class LocationDialog extends JFrame implements ActionListener{
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-	public LocationDialog(LocationDB l) {
+	public NewLocationDialog(LocationDB l) {
 		// TODO Auto-generated constructor stub
 		this();
 		ldb = l;
