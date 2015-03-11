@@ -247,3 +247,4 @@ local.properties
 *.SF
 
 *.MF
+calendar/.classpath
