@@ -14,7 +14,7 @@ public class ApptDB {
 //	      JOptionPane.showMessageDialog(null, "Opened database successfully");
 
 	      stmt = c.createStatement();
-	      String sql = "CREATE TABLE IF NOT EXISTS COMPANY " +
+	      String sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
 	    		  	   "(ID                   INT PRIMARY KEY    NOT NULL," +
 	    		       " TITLE                TEXT               NOT NULL," +
 	    		       " DESCRIPTION          TEXT               NOT NULL," +

@@ -17,10 +17,10 @@ public class UserDB {
 //	      JOptionPane.showMessageDialog(null, "Opened database successfully");
 
 	      stmt = c.createStatement();
-	      String sql = "CREATE TABLE IF NOT EXISTS COMPANY " +
+	      String sql = "CREATE TABLE IF NOT EXISTS USER " +
 	                   "(ID             INT PRIMARY KEY     NOT NULL," +
 	                   " NAME           TEXT                NOT NULL," + 
-	                   " PASSWORDWHASH  TEXT                NOT NULL," + 
+	                   " PASSWORDHASH   TEXT                NOT NULL," + 
 	                   " ADMIN          INT                 NOT NULL)"; 
 	      stmt.executeUpdate(sql);
 	      stmt.close();

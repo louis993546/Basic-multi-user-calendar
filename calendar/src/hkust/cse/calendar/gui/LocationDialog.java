@@ -1,16 +1,20 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.LocationDB;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -18,8 +22,9 @@ import javax.swing.JTextField;
 public class LocationDialog extends JFrame implements ActionListener{
 	//GUI for adding new location
 	private JTextField locationTF;		//TextField for location
-	private JButton signupB;			//Button for confirm
+	private JButton createB;			//Button for confirm
 	private JButton cancelB;			//Button for cancel
+	private LocationDB ldb;
 	
 	public LocationDialog() {	
 		setTitle("New Location");
@@ -53,18 +58,37 @@ public class LocationDialog extends JFrame implements ActionListener{
 		cancelB = new JButton("Cancel");
 		cancelB.addActionListener(this);
 		butPanel.add(cancelB);
-		signupB = new JButton("Create");
-		signupB.addActionListener(this);
-		butPanel.add(signupB);
+		createB = new JButton("Create");
+		createB.addActionListener(this);
+		butPanel.add(createB);
 
 		contentPane.add("South", butPanel);
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
+	public LocationDialog(LocationDB l) {
+		// TODO Auto-generated constructor stub
+		this();
+		ldb = l;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == cancelB) {
+			int n = JOptionPane.showConfirmDialog(null, "Discard all changes?",
+					"Confirm", JOptionPane.YES_NO_OPTION);
+			if (n == JOptionPane.YES_OPTION)
+				dispose();
+		}
+		else if (e.getSource() == createB) {
+			try {
+				ldb.addLocation(locationTF.getText());
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 

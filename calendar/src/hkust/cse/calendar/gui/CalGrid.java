@@ -1,7 +1,10 @@
 package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.Main.CalendarMain;
+import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
+import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
@@ -105,6 +108,11 @@ public class CalGrid extends JFrame implements ActionListener {
 			"Veterans Day(US)\nThanksgiving Day(US)\n", "Christmas\n" };
 
 	private AppScheduler setAppDial;
+	
+	//Create/read database
+	ApptDB adb = new ApptDB();
+	UserDB udb = new UserDB();
+	LocationDB ldb = new LocationDB();
 
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
@@ -333,7 +341,7 @@ public class CalGrid extends JFrame implements ActionListener {
 					//do something 
 				}
 				else if (e.getActionCommand().equals("New Location")) {
-					LocationDialog ld = new LocationDialog();
+					LocationDialog ld = new LocationDialog(ldb);
 				}
 
 			}
