@@ -248,3 +248,4 @@ local.properties
 
 *.MF
 calendar/.classpath
+!calendar/sqlite-jdbc-3.8.7.jar
