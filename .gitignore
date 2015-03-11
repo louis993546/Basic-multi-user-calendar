@@ -230,3 +230,4 @@ local.properties
 *.png
 *.gz
 *.timestamps
+*.instance
