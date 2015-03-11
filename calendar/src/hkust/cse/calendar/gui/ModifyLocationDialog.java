@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,7 +29,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 	private JButton modifyButton;
 	private JButton exitButton;
 	private LocationDB ldb;
-	private String[] testStringArray = {"test1", "test2"};
+	private ArrayList<String> locationStringAL = new ArrayList<String>();
 	
 	public ModifyLocationDialog() {
 		
@@ -38,16 +39,17 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 				dispose();
 			}
 		});
-		
+		ldb = new LocationDB();
 		Container contentPane;
 		contentPane = getContentPane();
+		locationStringAL = ldb.getLocationList();
 
 		//create a new JPanel to hold everything
 		JPanel all = new JPanel();
 		all.setLayout(new BoxLayout(all, BoxLayout.X_AXIS));
 		
 		Box left = Box.createVerticalBox();
-		for (String a:testStringArray) {
+		for (String a:locationStringAL) {
 			locationListModel.addElement(a);
 		}
 		locationList = new JList(locationListModel);

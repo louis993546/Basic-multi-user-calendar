@@ -41,4 +41,9 @@ public class ApptDB {
 	    }
 //	    JOptionPane.showMessageDialog(null, "Table created successfully");
 	  }
+	
+	public boolean addNewAppt(String t, String d, String l) {
+		return false;
+		//SQL
+	}
 }

@@ -14,6 +14,12 @@
 * Need to figure out if the current implementation is suitable for phrase 2
 	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
 
+#### Error: Missing required library sqlite-jbdc
+- Right click project "calendar" on the left
+- Properties >> Java Build Path >> Libraries
+- Add external JARs
+- The file "sqlite-jdbc-3.8.7.jar" is located in folder "calendar"
+
 ##Phrase 1 deadline: April 3rd
 
 * Single User calendar in GUI
@@ -35,7 +41,7 @@
 			* weekly
 			* monthly
 			* for how long
-				* This will simply create a bunch of appointments and add them all to the database 
+				* This will simply create a bunch of appointments and add them all to the database
 		* optional reminder
 			* how much time ahead the reminder should be triggered
 			* display to the user at or less than the specified time interval before the scheduled time of the event

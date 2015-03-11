@@ -60,7 +60,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
 	private String[] timeMS = {"00", "15", "30", "45"};
 	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)", "Decade(s)"};
-	private String[] locationS = {"Temp location 1", "Temp location 2", "Temp location 3", "Temp location 4", "Temp location 5"};
 	private ArrayList<String> locationAL;
 	private String[] repeatS = {"Daily", "Weekly", "Monthly", "Yearly", "Decennially", "Centennially", "Millennially"};
 	
@@ -422,8 +421,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			return null;
 		}
 		
-		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15") && !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45") 
-			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15") && !eTimeM.getSelectedItem().toString().equals("30") && !eTimeM.getSelectedItem().toString().equals("45")){
+		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15") 
+				&& !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45") 
+			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15") 
+			&& !eTimeM.getSelectedItem().toString().equals("30") && !eTimeM.getSelectedItem().toString().equals("45")){
 			JOptionPane.showMessageDialog(this,
 					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
 					JOptionPane.ERROR_MESSAGE);

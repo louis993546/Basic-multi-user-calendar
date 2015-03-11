@@ -38,7 +38,6 @@ public class LocationDB {
 	
 	public boolean checkIfExists(String l) {
 		return false;
-		
 	}
 	
 	public boolean addLocation(String l) throws SQLException {
