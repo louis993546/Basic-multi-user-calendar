@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.management.loading.MLet;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -86,6 +87,8 @@ public class CalGrid extends JFrame implements ActionListener {
 	private StyledDocument mem_doc = null;
 	private SimpleAttributeSet sab = null;
 	// private boolean isLogin = false;
+	private JMenu Locationmenu = new JMenu("Location");
+	private JMenu Usermenu = new JMenu("User");
 	private JMenu Appmenu = new JMenu("Appointment");;
 
 	private final String[] holidays = {
@@ -234,6 +237,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		initializeSystem(); // for you to add.
 		//mCurrUser = getCurrUser(); // totally meaningless code
 		Appmenu.setEnabled(true);
+		Locationmenu.setEnabled(true);
 
 		UpdateCal();
 		pack();				// sized the window to a preferred size
@@ -325,6 +329,12 @@ public class CalGrid extends JFrame implements ActionListener {
 					tableView.setModel(t);
 					tableView.repaint();
 				}
+				else if (e.getActionCommand().equals("Modify Location")) {
+					//do something 
+				}
+				else if (e.getActionCommand().equals("New Location")) {
+					LocationDialog ld = new LocationDialog();
+				}
 
 			}
 		};
@@ -375,6 +385,20 @@ public class CalGrid extends JFrame implements ActionListener {
 		mi = new JMenuItem("Manual Scheduling");
 		mi.addActionListener(listener);
 		Appmenu.add(mi);
+		
+		//modify location
+		menuBar.add(Locationmenu);
+		Locationmenu.setEnabled(false);
+		Locationmenu.setMnemonic('p');
+		Appmenu.getAccessibleContext().setAccessibleDescription("Location Management:");
+		JMenuItem ml = new JMenuItem("Modify Location");
+		ml.addActionListener(listener);
+		JMenuItem nl = new JMenuItem("New Location");
+		nl.addActionListener(listener);
+		Locationmenu.add(ml);
+		Locationmenu.add(nl);
+		
+		//modify user
 
 		return menuBar;
 	}
