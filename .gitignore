@@ -227,3 +227,6 @@ local.properties
 
 *.class
 *.gif
+*.png
+*.gz
+*.timestamps
