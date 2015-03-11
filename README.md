@@ -1,9 +1,24 @@
 #COMP3111 Project
 
+###To-Do in this branch(louis)
+* Some GUI are still incomplete/missing
+	* ModifyLocationDialog looks ugly
+	* AddLocationDialog can be merge into ModifyLocationDialog?
+* Most buttons are still useless
+* More SQLite implementation
+	* Read data from SQLite
+	* Update data from SQLite
+	* Delete data from SQLite
+* Admin mode has not been implemented yet
+	* A UserDialog for admin to view and eidt information of each users
+* Need to figure out if the current implementation is suitable for phrase 2
+	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
+
 ##Phrase 1 deadline: April 3rd
 
-* Single User calendar
+* Single User calendar in GUI
 	* No other users are present or can view/access the information of the calendar.
+	* Need to extra implementation in this phrase
 * Basic event scheduling
 	* Able to provide basic scheduling capabilities for an individual user.
 		* starting time
@@ -19,6 +34,8 @@
 			* daily
 			* weekly
 			* monthly
+			* for how long
+				* This will simply create a bunch of appointments and add them all to the database 
 		* optional reminder
 			* how much time ahead the reminder should be triggered
 			* display to the user at or less than the specified time interval before the scheduled time of the event
@@ -38,34 +55,18 @@
 		* Cannot schedule events overlap in time or in space
 		* Can only ,odify/delete event happening in the future
 	* Time machine
-		* Do not program directly using computer's clock for testing purpose
+		* Do not program directly using computer's clock for testing purpose?
 
 ##Phrase 2 deadline: May 8th
 
-##Where to start
-
-Go to the main class first. I(Louis) will be adding more and more comments explaining how the program works.
-
-##How to use GitHub
-
-####Method 1: Use Eclipse + dedicated GitHub client
-
-- Download GitHub client for your OS
-- install GitHub client and login
-- press the plus icon on the top left corner
-- Go to clone
-- select the repo "louis993546/COMP-3111"
-- Save it wherever you want{folder X} (except Dropbox/Google Drive/OneDrive folder. They will ruin everything)
-- Wait for it to finish cloning
-- Open eclipse
-- set workspace as {folder X}
-- file >> Import Project
-- search "git". There should only be 1 choice left
-- "import from existing folder"(something like that)
-- Press "Add" and select {folder X} again
-- click next all the way to the end
-- Congragulation!
-
-####Method 2: Use Eclipse and EGit plugin
-
-* <a href="http://eclipsesource.com/blogs/tutorials/egit-tutorial/">EGit Tutorial</a>
+* Multi-User
+	* Normal user
+	* Admin
+* Differnt user sees differnt calendar
+	* Each appointments needs to specified who have the right to view/edit it
+* Group event
+	* Cannot be (Same place && Same Time)
+	* Each participant cannot go to 2+ event at the same time
+	* Appointment will not be added unless all participents reply "Yes"
+	* Only event creator can delete it
+* TBC
