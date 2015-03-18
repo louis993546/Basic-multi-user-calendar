@@ -1,9 +1,15 @@
 #COMP3111 Project
 
-###Tutorials
-* <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite></a>. I LITERALLY copy and paste things from here.
+###Schedule
+- Louis finish SQL related things before 23/3
+- Meeting next week
+- ?
 
-###To-Do in this branch(louis)
+###Tutorials
+* <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite</a>. I LITERALLY copy and paste things from here.
+* Anything else you want to learn?
+
+###To-Do in this branch
 * Some GUI are still incomplete/missing
 	* ModifyLocationDialog looks ugly
 		* wrap it in a JPanel maybe
