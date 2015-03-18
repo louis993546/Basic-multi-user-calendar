@@ -1,9 +1,39 @@
 #COMP3111 Project
 
+###Tutorials
+* <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite></a>. I LITERALLY copy and paste things from here.
+
+###To-Do in this branch(louis)
+* Some GUI are still incomplete/missing
+	* ModifyLocationDialog looks ugly
+		* wrap it in a JPanel maybe
+		* fixed size maybe?
+	* AddLocationDialog can be merge into ModifyLocationDialog?
+* Most buttons are still useless
+* More SQLite implementation
+	* Write data from SQLite across all DB
+	* Read data from SQLite across all DB
+	* Update data from SQLite across all DB
+	* Delete data from SQLite across all DB
+* Admin mode has not been implemented yet(Phrase 2)
+	* A UserDialog for admin to view and edit information of each users
+* Need to figure out if the current implementation is suitable for phrase 2
+	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
+
+#### Error: Missing required library sqlite-jbdc
+- Locate "sqlite-jdbc-3.8.7.jar" in "calendar"
+- If it does not exist, download the latest version of JBDC from <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">here</a>
+- Right click project "calendar" on the left
+- Properties >> Java Build Path >> Libraries
+- "Add external JARs"
+- select the .jar
+- done
+
 ##Phrase 1 deadline: April 3rd
 
-* Single User calendar
+* [DONE?] Single User calendar in GUI
 	* No other users are present or can view/access the information of the calendar.
+	* Need to extra implementation in this phrase
 * Basic event scheduling
 	* Able to provide basic scheduling capabilities for an individual user.
 		* starting time
@@ -19,6 +49,8 @@
 			* daily
 			* weekly
 			* monthly
+			* for how long
+				* This will simply create a bunch of appointments and add them all to the database
 		* optional reminder
 			* how much time ahead the reminder should be triggered
 			* display to the user at or less than the specified time interval before the scheduled time of the event
@@ -38,34 +70,18 @@
 		* Cannot schedule events overlap in time or in space
 		* Can only ,odify/delete event happening in the future
 	* Time machine
-		* Do not program directly using computer's clock for testing purpose
+		* Do not program directly using computer's clock for testing purpose?
 
 ##Phrase 2 deadline: May 8th
 
-##Where to start
-
-Go to the main class first. I(Louis) will be adding more and more comments explaining how the program works.
-
-##How to use GitHub
-
-####Method 1: Use Eclipse + dedicated GitHub client
-
-- Download GitHub client for your OS
-- install GitHub client and login
-- press the plus icon on the top left corner
-- Go to clone
-- select the repo "louis993546/COMP-3111"
-- Save it wherever you want{folder X} (except Dropbox/Google Drive/OneDrive folder. They will ruin everything)
-- Wait for it to finish cloning
-- Open eclipse
-- set workspace as {folder X}
-- file >> Import Project
-- search "git". There should only be 1 choice left
-- "import from existing folder"(something like that)
-- Press "Add" and select {folder X} again
-- click next all the way to the end
-- Congragulation!
-
-####Method 2: Use Eclipse and EGit plugin
-
-* <a href="http://eclipsesource.com/blogs/tutorials/egit-tutorial/">EGit Tutorial</a>
+* Multi-User
+	* Normal user
+	* Admin
+* Different user sees different calendar
+	* Each appointments needs to specified who have the right to view/edit it
+* Group event
+	* Cannot be (Same place && Same Time)
+	* Each participant cannot go to 2+ event at the same time
+	* Appointment will not be added unless all participants reply "Yes"
+	* Only event creator can delete it
+* TBC

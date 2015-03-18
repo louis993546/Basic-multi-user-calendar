@@ -2,8 +2,6 @@
 package hkust.cse.calendar.Main;
 
 
-import javax.swing.UIManager;
-
 import hkust.cse.calendar.gui.LoginDialog;
 
 
