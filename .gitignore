@@ -1,13 +1,13 @@
-# I just reset gitignore. I will add things back in bit by bit asap
+# I just reset gitignore. I will add things back bit by bit asap
 
-#do NOT ignore any files under these files/folders:
+# Things will NOT be be ignore
 !eclipse/
 !Sources/
 !SQLite Browser/
 !Zip/
 !calendar/sqlite-jdbc-3.8.7.jar
 
-#filetypes below will be ignore
+# Things will be ignore
 Desktop.ini
 .DS_Store
 $RECYCLE.BIN/

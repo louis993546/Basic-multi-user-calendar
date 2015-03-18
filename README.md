@@ -3,27 +3,32 @@
 ###To-Do in this branch(louis)
 * Some GUI are still incomplete/missing
 	* ModifyLocationDialog looks ugly
+		* wrap it in a JPanel maybe
+		* fixed size maybe?
 	* AddLocationDialog can be merge into ModifyLocationDialog?
 * Most buttons are still useless
 * More SQLite implementation
-	* Read data from SQLite
-	* Update data from SQLite
-	* Delete data from SQLite
-* Admin mode has not been implemented yet
-	* A UserDialog for admin to view and eidt information of each users
+	* Write data from SQLite across all DB
+	* Read data from SQLite across all DB
+	* Update data from SQLite across all DB
+	* Delete data from SQLite across all DB
+* Admin mode has not been implemented yet(Phrase 2)
+	* A UserDialog for admin to view and edit information of each users
 * Need to figure out if the current implementation is suitable for phrase 2
 	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
 
 #### Error: Missing required library sqlite-jbdc
-- Download the latest version of JBDC from <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">here</a>
+- Locate "sqlite-jdbc-3.8.7.jar" in "calendar"
+- If it does not exist, download the latest version of JBDC from <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">here</a>
 - Right click project "calendar" on the left
 - Properties >> Java Build Path >> Libraries
-- Add external JARs
-- select the .jar you just downloaded
+- "Add external JARs"
+- select the .jar
+- done
 
 ##Phrase 1 deadline: April 3rd
 
-* Single User calendar in GUI
+* [DONE?] Single User calendar in GUI
 	* No other users are present or can view/access the information of the calendar.
 	* Need to extra implementation in this phrase
 * Basic event scheduling
@@ -69,11 +74,11 @@
 * Multi-User
 	* Normal user
 	* Admin
-* Differnt user sees differnt calendar
+* Different user sees different calendar
 	* Each appointments needs to specified who have the right to view/edit it
 * Group event
 	* Cannot be (Same place && Same Time)
 	* Each participant cannot go to 2+ event at the same time
-	* Appointment will not be added unless all participents reply "Yes"
+	* Appointment will not be added unless all participants reply "Yes"
 	* Only event creator can delete it
 * TBC
