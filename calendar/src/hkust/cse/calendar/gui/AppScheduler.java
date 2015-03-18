@@ -2,6 +2,7 @@ package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
 
@@ -478,6 +479,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			//output error message if title is not valid
 		//get valid time
 			//output error message if time is not valid 
+		
+		Appointment newAppt = new Appointment();
 	}
 
 	private Timestamp CreateTimeStamp(int[] date, int time) {

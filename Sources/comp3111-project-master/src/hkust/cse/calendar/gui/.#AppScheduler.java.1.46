@@ -1,0 +1,835 @@
+package hkust.cse.calendar.gui;
+
+import hkust.cse.calendar.locationstorage.LocationStorageController;
+import hkust.cse.calendar.userstorage.UserStorageController;
+import hkust.cse.calendar.userstorage.UserStorageModel;
+import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.Location;
+import hkust.cse.calendar.unit.TimeSpan;
+import hkust.cse.calendar.unit.User;
+
+import java.awt.BorderLayout;
+import java.awt.CheckboxGroup;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Map.Entry;
+import java.util.Timer;
+
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+
+
+public class AppScheduler extends JDialog implements ActionListener, ComponentListener {
+
+	private JLabel syearL;
+	private JTextField syearF;
+	private JLabel smonthL;
+	private JTextField smonthF;
+	private JLabel sdayL;
+	private JTextField sdayF;
+
+	private JLabel eyearL;
+	private JTextField eyearF;
+	private JLabel emonthL;
+	private JTextField emonthF;
+	private JLabel edayL;
+	private JTextField edayF;
+
+	private JLabel sTimeHL;
+	private JTextField sTimeH;
+	private JLabel sTimeML;
+	private JTextField sTimeM;
+
+	private JLabel eTimeHL;
+	private JTextField eTimeH;
+	private JLabel eTimeML;
+	private JTextField eTimeM;
+
+	private DefaultListModel model;
+	private JTextField titleField;
+	private JButton jointBut;
+
+	private JRadioButton freqonetime;
+	private JRadioButton freqdaily;
+	private JRadioButton freqweekly;
+	private JRadioButton freqmonthly;
+	private ButtonGroup freqbg;
+
+	//	private JCheckBox weekEvery;
+	//	private JCheckBox weekMon;
+	//	private JCheckBox weekTue;
+	//	private JCheckBox weekWed;
+	//	private JCheckBox weekThur;
+	//	private JCheckBox weekFri;
+	//	private JCheckBox weekSat;
+	//	private JCheckBox weekSun;
+	//	private ButtonGroup weekgp;
+
+	private JComboBox locationlist;
+	private JComboBox reminderField;
+
+	private JRadioButton publicevent;
+	private JRadioButton privateevent;
+	private ButtonGroup eventbg;
+
+	private JButton saveBut;
+	private JButton CancelBut;
+	private JButton inviteBut;
+	private JButton rejectBut;
+
+	private Appt NewAppt;
+	private CalGrid parent;
+	private LocationStorageController locationController;
+	private boolean isNew = true;
+	private boolean isChanged = true;
+	private boolean isJoint = false;
+
+	private JTextArea detailArea;
+
+	private JSplitPane pDes;
+	JPanel detailPanel;
+
+	//	private JTextField attendField;
+	//	private JTextField rejectField;
+	//	private JTextField waitingField;
+	private int selectedApptId = -1;
+
+	private void commonConstructor(String title, CalGrid cal) {
+		parent = cal;
+		this.setAlwaysOnTop(false);
+		setTitle(title);
+		setModal(false);
+
+		Container contentPane;
+		contentPane = getContentPane();
+
+		JPanel psDate = new JPanel();
+		Border sdateBorder = new TitledBorder(null, "START DATE");
+		psDate.setBorder(sdateBorder);
+		syearL = new JLabel("YEAR: ");
+		psDate.add(syearL);
+		syearF = new JTextField(5);
+		psDate.add(syearF);
+		smonthL = new JLabel("MONTH: ");
+		psDate.add(smonthL);
+		smonthF = new JTextField(4);
+		psDate.add(smonthF);
+		sdayL = new JLabel("DAY: ");
+		psDate.add(sdayL);
+		sdayF = new JTextField(4);
+		psDate.add(sdayF);
+
+		/*JPanel pDate = new JPanel();
+		pDate.setLayout(new BorderLayout());
+
+		pDate.add("West", psDate);
+		pDate.add("East", peDate);*/
+
+		JPanel psTime = new JPanel();
+		Border stimeBorder = new TitledBorder(null, "START TIME");
+		psTime.setBorder(stimeBorder);
+		sTimeHL = new JLabel("HOUR: ");
+		psTime.add(sTimeHL);
+		sTimeH = new JTextField(8);
+		psTime.add(sTimeH);
+		sTimeML = new JLabel("MINUTE: ");
+		psTime.add(sTimeML);
+		sTimeM = new JTextField(8);
+		psTime.add(sTimeM);
+
+		JPanel peTime = new JPanel();
+		Border etimeBorder = new TitledBorder(null, "END TIME");
+		peTime.setBorder(etimeBorder);
+		eTimeHL = new JLabel("HOUR: ");
+		peTime.add(eTimeHL);
+		eTimeH = new JTextField(8);
+		peTime.add(eTimeH);
+		eTimeML = new JLabel("MINUTE: ");
+		peTime.add(eTimeML);
+		eTimeM = new JTextField(8);
+		peTime.add(eTimeM);
+
+		JPanel pTime = new JPanel();
+		pTime.setLayout(new BorderLayout());
+		pTime.add("West", psTime);
+		pTime.add("East", peTime);
+
+		JPanel top = new JPanel();
+		top.setLayout(new BorderLayout());
+		top.setBorder(new BevelBorder(BevelBorder.RAISED));
+
+		top.add(psDate, BorderLayout.NORTH);
+		top.add(pTime, BorderLayout.CENTER);
+
+		contentPane.add("North", top);
+
+		JPanel freqPanel = new JPanel();
+		freqPanel.setLayout(new BorderLayout());
+
+		JPanel frequencyPanel = new JPanel();
+		Border frequencyBorder = new TitledBorder(null, "FREQUENCY");
+		frequencyPanel.setBorder(frequencyBorder);
+		freqonetime = new JRadioButton("One Time ");
+		freqdaily = new JRadioButton("Daily ");
+		freqweekly = new JRadioButton("Weekly ");
+		freqmonthly = new JRadioButton("Monthly ");
+		freqbg = new ButtonGroup();
+		freqonetime.setActionCommand("OneTime");
+		freqdaily.setActionCommand("Daily");
+		freqweekly.setActionCommand("Weekly");
+		freqmonthly.setActionCommand("Monthly");		
+		freqbg.add(freqonetime);
+		freqbg.add(freqdaily);
+		freqbg.add(freqweekly);
+		freqbg.add(freqmonthly);
+		frequencyPanel.add(freqonetime);
+		frequencyPanel.add(freqdaily);
+		frequencyPanel.add(freqweekly);
+		frequencyPanel.add(freqmonthly);
+
+		freqonetime.setSelected(true);
+		freqonetime.addActionListener(this);
+		freqdaily.addActionListener(this);
+		freqweekly.addActionListener(this);
+		freqmonthly.addActionListener(this);
+
+		JPanel peDate = new JPanel();
+		Border edateBorder = new TitledBorder(null, "END DATE");
+		peDate.setBorder(edateBorder);
+		eyearL = new JLabel("YEAR: ");
+		peDate.add(eyearL);
+		eyearF = new JTextField(5);
+		eyearF.setEditable(false);
+		eyearF.setEnabled(false);
+		peDate.add(eyearF);
+		emonthL = new JLabel("MONTH: ");
+		peDate.add(emonthL);
+		emonthF = new JTextField(4);
+		emonthF.setEditable(false);
+		emonthF.setEnabled(false);
+		peDate.add(emonthF);
+		edayL = new JLabel("DAY: ");
+		peDate.add(edayL);
+		edayF = new JTextField(4);
+		edayF.setEditable(false);
+		edayF.setEnabled(false);
+		peDate.add(edayF);
+
+		freqPanel.add(frequencyPanel, BorderLayout.NORTH);
+		freqPanel.add(peDate, BorderLayout.SOUTH);
+
+		JPanel titleAndTextPanel = new JPanel();
+		Border titleBorder = new TitledBorder(null, "TITLE");
+		titleField = new JTextField(30);
+		titleField.setEditable(true);
+		jointBut = new JButton("Joint Appointment");
+		jointBut.addActionListener(this);
+		titleAndTextPanel.setBorder(titleBorder);
+		titleAndTextPanel.add(titleField);
+		titleAndTextPanel.add(jointBut);
+
+		JPanel locationPanel = new JPanel();
+		Border locationBorder = new TitledBorder(null, "LOCATION");
+		locationPanel.setBorder(locationBorder);
+		Location[] l = locationController.retrieveLocations();
+		String[] ls = new String[l.length];
+		for(int i = 0; i < l.length; i++) {
+			ls[i] = l[i].getLocationName();
+		}
+		locationlist = new JComboBox(ls);
+		locationlist.setEditable(false);
+		locationlist.addActionListener(this);
+		locationPanel.add(locationlist);
+
+		JPanel reminderPanel = new JPanel();
+		Border reminderBorder = new TitledBorder(null, "REMINDER");
+		reminderPanel.setBorder(reminderBorder);
+		String[] reminderList = {"Off", "0","15","30","45","60"};
+		reminderField = new JComboBox<String>(reminderList);
+		reminderField.setEditable(false);
+		reminderPanel.add(reminderField);
+
+		JPanel info1 = new JPanel();
+		info1.setLayout(new BorderLayout());
+		info1.add(freqPanel, BorderLayout.NORTH);
+		info1.add(titleAndTextPanel, BorderLayout.SOUTH);
+
+		JPanel info2 = new JPanel();
+		info2.setLayout(new BorderLayout());
+		info2.add(locationPanel, BorderLayout.NORTH);
+		info2.add(reminderPanel, BorderLayout.SOUTH);
+
+		JPanel infoPanel = new JPanel();
+		infoPanel.setLayout(new BorderLayout());
+		infoPanel.add(info1, BorderLayout.NORTH);
+		infoPanel.add(info2, BorderLayout.SOUTH);
+
+		detailPanel = new JPanel();
+		detailPanel.setLayout(new BorderLayout());
+		Border detailBorder = new TitledBorder(null, "Appointment Description");
+		detailPanel.setBorder(detailBorder);
+		detailArea = new JTextArea(10, 10);
+
+		detailArea.setEditable(true);
+		JScrollPane detailScroll = new JScrollPane(detailArea);
+		detailPanel.add(detailScroll);
+
+		pDes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, infoPanel,
+				detailPanel);
+
+		top.add(pDes, BorderLayout.SOUTH);
+
+		if (NewAppt != null) {
+			detailArea.setText(NewAppt.getInfo());
+		}
+
+		JPanel panel2 = new JPanel();
+		panel2.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+		//		inviteBut = new JButton("Invite");
+		//		inviteBut.addActionListener(this);
+		//		panel2.add(inviteBut);
+
+		publicevent = new JRadioButton("Public");
+		privateevent = new JRadioButton("Private");
+		eventbg = new ButtonGroup();
+		publicevent.setActionCommand("publicevent");
+		privateevent.setActionCommand("privateevent");	
+		eventbg.add(publicevent);
+		eventbg.add(privateevent);
+		panel2.add(publicevent);
+		panel2.add(privateevent);
+		
+		privateevent.setSelected(true);
+		publicevent.addActionListener(this);
+		privateevent.addActionListener(this);
+		
+		saveBut = new JButton("Save");
+		saveBut.addActionListener(this);
+		panel2.add(saveBut);
+
+		rejectBut = new JButton("Reject");
+		rejectBut.addActionListener(this);
+		panel2.add(rejectBut);
+		rejectBut.show(false);
+
+		CancelBut = new JButton("Cancel");
+		CancelBut.addActionListener(this);
+		panel2.add(CancelBut);
+
+		contentPane.add("South", panel2);
+		NewAppt = new Appt();
+
+		if (this.getTitle().equals("Join Appointment Content Change") || this.getTitle().equals("Join Appointment Invitation")){
+			inviteBut.show(false);
+			rejectBut.show(true);
+			CancelBut.setText("Consider Later");
+			saveBut.setText("Accept");
+		}
+		if (this.getTitle().equals("Someone has responded to your Joint Appointment invitation") ){
+			inviteBut.show(false);
+			rejectBut.show(false);
+			CancelBut.show(false);
+			saveBut.setText("confirmed");
+		}
+		if (this.getTitle().equals("Join Appointment Invitation") || this.getTitle().equals("Someone has responded to your Joint Appointment invitation") || this.getTitle().equals("Join Appointment Content Change")){
+			allDisableEdit();
+		}
+		pack();
+
+	}
+
+	AppScheduler(String title, CalGrid cal, int selectedApptId) {
+		this.selectedApptId = selectedApptId;
+		locationController = LocationStorageController.getInstance();
+		commonConstructor(title, cal);
+	}
+
+	AppScheduler(String title, CalGrid cal) {
+		locationController = LocationStorageController.getInstance();
+		commonConstructor(title, cal);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == freqonetime) {
+			eyearF.setEditable(false);
+			eyearF.setEnabled(false);
+			emonthF.setEditable(false);
+			emonthF.setEnabled(false);
+			edayF.setEditable(false);
+			edayF.setEnabled(false);
+		}
+		else if(e.getSource() == freqdaily || e.getSource() == freqmonthly || e.getSource() == freqweekly) {
+			eyearF.setEditable(true);
+			eyearF.setEnabled(true);
+			emonthF.setEditable(true);
+			emonthF.setEnabled(true);
+			edayF.setEditable(true);
+			edayF.setEnabled(true);
+		}
+
+		if (e.getSource() == jointBut) {
+			JointApptUserManager signupDialog = new JointApptUserManager(AppScheduler.this);
+		}
+		else if (e.getSource() == CancelBut) {
+			setVisible(false);
+			dispose();
+		} 
+		else if (e.getSource() == saveBut) {
+			boolean succeed = saveButtonResponse();
+			if(succeed) {
+				/* 
+				 * This is for if the appt is modified from the UserApptManager,
+				 * we would like to update the Appt List in the manager
+				 * */
+				if(UserApptManager.getInstance() != null) {
+					UserApptManager.updateApptList();
+				}
+				
+				setVisible(false);
+				dispose();
+			}
+		} 
+		else if (e.getSource() == rejectBut) {
+			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0){
+				NewAppt.addReject(getCurrentUser());
+				NewAppt.getAttendList().remove(getCurrentUser());
+				NewAppt.getWaitingList().remove(getCurrentUser());
+				this.setVisible(false);
+				dispose();
+			}
+		}
+		parent.getAppList().clear();
+		parent.getAppList().setTodayAppt(parent.GetTodayAppt());
+		parent.repaint();
+	}
+
+	private JPanel createPartOperaPane() {
+		JPanel POperaPane = new JPanel();
+		JPanel browsePane = new JPanel();
+		JPanel controPane = new JPanel();
+
+		POperaPane.setLayout(new BorderLayout());
+		TitledBorder titledBorder1 = new TitledBorder(BorderFactory
+				.createEtchedBorder(Color.white, new Color(178, 178, 178)),
+				"Add Participant:");
+		browsePane.setBorder(titledBorder1);
+
+		POperaPane.add(controPane, BorderLayout.SOUTH);
+		POperaPane.add(browsePane, BorderLayout.CENTER);
+		POperaPane.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		return POperaPane;
+
+	}
+
+	private int[] getValidDate() {
+
+		int[] date = new int[3];
+		date[0] = Utility.getNumber(syearF.getText());
+		date[1] = Utility.getNumber(smonthF.getText());
+		if (date[0] < 1980 || date[0] > 2100) {
+			JOptionPane.showMessageDialog(this, "Please input proper year of the start date",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (date[1] <= 0 || date[1] > 12) {
+			JOptionPane.showMessageDialog(this, "Please input proper month of the start date",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		date[2] = Utility.getNumber(sdayF.getText());
+		int monthDay = CalGrid.monthDays[date[1] - 1];
+		if (date[1] == 2) {
+			GregorianCalendar c = new GregorianCalendar();
+			if (c.isLeapYear(date[0]))
+				monthDay = 29;
+		}
+		if (date[2] <= 0 || date[2] > monthDay) {
+			JOptionPane.showMessageDialog(this,
+					"Please input proper month day of the start date", "Input Error",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		return date;
+	}
+	private int[] getValidEndDate() {
+
+		// valide and get the end date 
+		int[] date = new int[3];
+		date[0] = Utility.getNumber(eyearF.getText());
+		date[1] = Utility.getNumber(emonthF.getText());
+		if (date[0] < 1980 || date[0] > 2100) {
+			JOptionPane.showMessageDialog(this, "Please input proper year of the end date",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (date[1] <= 0 || date[1] > 12) {
+			JOptionPane.showMessageDialog(this, "Please input proper month of the end date",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		date[2] = Utility.getNumber(edayF.getText());
+		int monthDay = CalGrid.monthDays[date[1] - 1];
+		if (date[1] == 2) {
+			GregorianCalendar c = new GregorianCalendar();
+			if (c.isLeapYear(date[0]))
+				monthDay = 29;
+		}
+		if (date[2] <= 0 || date[2] > monthDay) {
+			JOptionPane.showMessageDialog(this,
+					"Please input proper month day of the end date", "Input Error",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		return date;
+	}
+
+
+	private int getTime(JTextField h, JTextField min) {
+
+		int hour = Utility.getNumber(h.getText());
+		if (hour == -1)
+			return -1;
+		int minute = Utility.getNumber(min.getText());
+		if (minute == -1)
+			return -1;
+
+		return (hour * 60 + minute);
+
+	}
+	private int getReminder(JComboBox reminder) {
+
+		int minute = Utility.getNumber(reminder.getSelectedItem().toString());
+		if (minute == -1)
+			return -1;
+
+		return (minute);
+
+	}
+	private Timestamp convertReminderToTimestamp(Timestamp start) {
+
+		if(reminderField.getSelectedItem().toString().equals("Off")) {
+			return null;
+		}
+
+		Calendar c = GregorianCalendar.getInstance();
+		Timestamp temp = start;
+		if(temp.getYear()>1900)
+			temp.setYear(start.getYear() - 1900);
+		c.setTime(new Date(temp.getTime()));
+		c.add(Calendar.MINUTE, -getReminder(reminderField));
+		return new Timestamp(c.getTime().getTime());
+
+	}
+
+
+	private String rollBackReminderTimestamp(Appt appt) {
+		if(appt.getReminder().getReminderTimestamp() == null) {
+			return "Off";
+		}
+		else {
+			return new Integer(new TimeSpan(appt.TimeSpan().StartTime(),appt.getReminder().getReminderTimestamp()).TimeLength()).toString();
+		}	
+	}	
+
+	private int[] getValidTimeInterval() {
+
+		int[] result = new int[2];
+		result[0] = getTime(sTimeH, sTimeM);
+		result[1] = getTime(eTimeH, eTimeM);
+		if ((result[0] % 15) != 0 || (result[1] % 15) != 0) {
+			JOptionPane.showMessageDialog(this,
+					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		if (!sTimeM.getText().equals("0") && !sTimeM.getText().equals("15") && !sTimeM.getText().equals("30") && !sTimeM.getText().equals("45") 
+				|| !eTimeM.getText().equals("0") && !eTimeM.getText().equals("15") && !eTimeM.getText().equals("30") && !eTimeM.getText().equals("45")){
+			JOptionPane.showMessageDialog(this,
+					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		if (result[1] == -1 || result[0] == -1) {
+			JOptionPane.showMessageDialog(this, "Please check time",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (result[1] <= result[0]) {
+			JOptionPane.showMessageDialog(this,
+					"End time should be bigger than \nstart time",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if ((result[0] < AppList.OFFSET * 60)
+				|| (result[1] > (AppList.OFFSET * 60 + AppList.ROWNUM * 2 * 15))) {
+			JOptionPane.showMessageDialog(this, "Out of Appointment Range !",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		return result;
+	}
+
+	private boolean saveButtonResponse() {
+		// create an appt
+		int[] time = getValidTimeInterval();
+		int[] date = getValidDate();
+
+		if(time == null || date == null) {
+			return false;
+		}
+
+		Timestamp start       = CreateTimeStamp(date, time[0]);
+		Timestamp end         = CreateTimeStamp(date, time[1]);
+		TimeSpan startTime    = new TimeSpan(start, end);
+		TimeSpan startDate = new TimeSpan(startTime);
+		
+		String freq = freqbg.getSelection().getActionCommand();
+		TimeSpan endTime = startTime;
+		if(freq != "OneTime") {
+			int[] enddate = getValidEndDate();
+			Timestamp start_of_end_date = CreateTimeStamp(enddate,time[0]);
+			Timestamp end_of_end_date = CreateTimeStamp(enddate,time[1]);
+			endTime = new TimeSpan(start_of_end_date,end_of_end_date);
+		}
+
+		Timestamp reminder  = convertReminderToTimestamp(start);
+		Location  location  = new Location(locationlist.getSelectedItem().toString());
+		
+		NewAppt.setTimeSpan(startTime);
+		NewAppt.setStartDate(startDate);
+		NewAppt.setEndDate(endTime);
+		NewAppt.setTitle(titleField.getText());
+		NewAppt.setInfo(detailArea.getText());
+		NewAppt.setReminderTime(reminder);
+		NewAppt.setLocation(location);		
+		NewAppt.setFrequency(freq.trim());
+		// set id for old appt
+		boolean isPublic = eventbg.getSelection().getActionCommand() == "publicevent" ? true : false;
+		NewAppt.setIsPublic(isPublic);
+		
+		if (selectedApptId != -1) 
+			NewAppt.setID(selectedApptId);
+
+		ArrayList<Appt> apptlist = new ArrayList<Appt>();
+		apptlist.add(NewAppt);
+
+		int frequency = -1; // that mean one time event
+		if (freq == "Daily"){
+			frequency = TimeSpan.DAY;
+		}
+		else if (freq == "Weekly") {
+			frequency = TimeSpan.WEEK;
+		}
+		else if (freq == "Monthly") {
+			frequency = TimeSpan.MONTH;
+		}
+
+		if(frequency != -1) { // if it is not one time event, we repeatly schedule new appt until the end date
+			int iteration = TimeSpan.getBetween(frequency,startTime,endTime);
+			for(int i=1;i<iteration;i++){
+				TimeSpan new_startTime = TimeSpan.addTime(startTime,frequency,i);
+				Appt clone = NewAppt.clone(new_startTime);
+				if (selectedApptId == -1) 
+					clone.setID(this.parent.controller.getAssignedApptID()); // for new appt, we set the ID equal to NewAppt so that the manager will not assign a new id to the clone appt
+				// for the old appt, the clone function will copy the ID of NewAppt, so that we don't need to set it again
+				clone.setReminderTime(convertReminderToTimestamp(new_startTime.StartTime())); // set remainder
+				
+				apptlist.add(clone);
+			}
+		}
+
+		// overlap checking
+		if(this.parent.controller.checkOverLaps(apptlist)) {
+			JOptionPane.showMessageDialog(null, "Appointment Overlapped!" , "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		// if we are modifing an appt, remove the old appts in the memory first
+		if(selectedApptId != -1){
+			this.parent.controller.ManageAppt(NewAppt, parent.controller.REMOVE);
+		}
+
+		// store the appts to the memory
+		for (Appt appt : apptlist) {
+			this.parent.controller.ManageAppt(appt, parent.controller.NEW);
+		}
+
+		return true;
+	}
+
+
+	private Timestamp CreateTimeStamp(int[] date, int time) {
+		Timestamp stamp = new Timestamp(0);
+		stamp.setYear(date[0]);
+		stamp.setMonth(date[1] - 1);
+		stamp.setDate(date[2]);
+		stamp.setHours(time / 60);
+		stamp.setMinutes(time % 60);
+		return stamp;
+	}
+
+	// set value of modify view
+	public void updateSetApp(Appt appt) {
+		Timestamp start = appt.TimeSpan().StartTime();
+		Timestamp end = appt.TimeSpan().EndTime();
+		
+		if(selectedApptId != -1) {
+			locationlist.setSelectedItem(appt.getLocation().getLocationName());
+			reminderField.setSelectedItem(rollBackReminderTimestamp(appt));
+			if (appt.getFrequency() != "OneTime") {
+				if (appt.getFrequency()=="Daily") {
+					freqdaily.setSelected(true);
+				} 
+				else if (appt.getFrequency()=="Weekly") {
+					freqweekly.setSelected(true);
+				} 
+				else if (appt.getFrequency()=="Monthly") {
+					freqmonthly.setSelected(true);
+				}
+				
+				eyearF.setEditable(true);
+				eyearF.setEnabled(true);
+				emonthF.setEditable(true);
+				emonthF.setEnabled(true);
+				edayF.setEditable(true);
+				edayF.setEnabled(true);
+			}
+			
+			start = appt.getStartDate().StartTime();
+			end = appt.getStartDate().EndTime();
+		}
+		
+		Timestamp start_of_end_date = appt.getEndDate().StartTime();
+
+		setTitle(appt.getTitle());
+		titleField.setText(appt.getTitle());
+		detailArea.setText(appt.getInfo());
+		syearF.setText(String.valueOf(start.getYear()+1900));
+		smonthF.setText(String.valueOf(start.getMonth()+1));
+		sdayF.setText(String.valueOf(start.getDate()));
+
+		eyearF.setText(String.valueOf(start_of_end_date.getYear()+1900));
+		emonthF.setText(String.valueOf(start_of_end_date.getMonth()+1));
+		edayF.setText(String.valueOf(start_of_end_date.getDate()));
+
+		sTimeH.setText(String.valueOf(start.getHours()));
+		sTimeM.setText(String.valueOf(start.getMinutes()));
+		eTimeH.setText(String.valueOf(end.getHours()));
+		eTimeM.setText(String.valueOf(end.getMinutes()));
+		
+		if(appt.isPublic()) {
+			publicevent.setSelected(true);
+		}
+		else {
+			privateevent.setSelected(true);
+		}
+	}
+
+	public void componentHidden(ComponentEvent e) {
+
+	}
+
+	public void componentMoved(ComponentEvent e) {
+
+	}
+
+	public void componentResized(ComponentEvent e) {
+
+		Dimension dm = pDes.getSize();
+		double width = dm.width * 0.93;
+		double height = dm.getHeight() * 0.6;
+		detailPanel.setSize((int) width, (int) height);
+
+	}
+
+	public void componentShown(ComponentEvent e) {
+
+	}
+
+	public String getCurrentUser()		// get the id of the current user
+	{
+		return this.parent.mCurrUser.ID();
+	}
+
+	private void allDisableEdit() {
+		syearF.setEditable(false);
+		smonthF.setEditable(false);
+		sdayF.setEditable(false);
+		sTimeH.setEditable(false);
+		sTimeM.setEditable(false);
+		eTimeH.setEditable(false);
+		eTimeM.setEditable(false);
+		titleField.setEditable(false);
+		detailArea.setEditable(false);
+	}
+
+	public static void testu(Appt appt) {
+		/*for (Appt lol = appt ; lol.TimeSpan().EndTime().before(new Timestamp(114,10,30,23,59,59,0)) ; lol = lol.clone()){
+			System.out.println(lol.TimeSpan().StartTime()+" "+lol.getReminder().getReminderTimestamp());
+		}*/
+	}	
+	public static Date setTime(int hour,int minute) {
+		Calendar c = GregorianCalendar.getInstance();
+		Date d = c.getTime();
+		d.setMinutes(d.getMinutes()+1);
+		return d;
+
+	}
+
+	//	private void setfreqbutton(boolean select) {
+	//		weekMon.setSelected(select);
+	//		weekTue.setSelected(select);
+	//		weekWed.setSelected(select);
+	//		weekThur.setSelected(select);
+	//		weekFri.setSelected(select);
+	//		weekSat.setSelected(select);
+	//		weekSun.setSelected(select);
+	//	}
+
+	//	private void disablefreqbutton() {
+	//		weekEvery.setEnabled(false);
+	//		weekMon.setEnabled(false);
+	//		weekTue.setEnabled(false);;
+	//		weekWed.setEnabled(false);
+	//		weekThur.setEnabled(false);
+	//		weekFri.setEnabled(false);
+	//		weekSat.setEnabled(false);
+	//		weekSun.setEnabled(false);
+	//	}
+}

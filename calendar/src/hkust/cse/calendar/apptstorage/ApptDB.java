@@ -110,4 +110,14 @@ public class ApptDB {
 		}
 		return null;
 	}
+	
+	public boolean addAppt(Appointment a) throws SQLException {
+		stmt = c.createStatement();
+		//1. need to figure how to to increment id automatically
+		//2. need to put EVERYTHING in(this one is copy from LocationDB
+		sql = "INSERT INTO APPOINTMENT (ID, LOCATION) " +
+                "VALUES (1, '" + a + "' );"; 
+		stmt.executeUpdate(sql);
+		return true;
+	}
 }

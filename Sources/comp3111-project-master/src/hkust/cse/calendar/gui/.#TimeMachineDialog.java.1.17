@@ -1,0 +1,465 @@
+package hkust.cse.calendar.gui;
+
+import hkust.cse.calendar.system.TimeMachine;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
+
+public class TimeMachineDialog extends JFrame implements ActionListener{
+	private JLabel selectmsg;
+	private JRadioButton defaulttime;
+	private JRadioButton customtime;
+	private ButtonGroup timegp;
+	
+	private JLabel yearL;
+	private JFormattedTextField yearT;
+//	private JButton yearUp;
+	private BasicArrowButton yearUp;
+	private BasicArrowButton yearDown;
+	private JLabel monthL;
+	private JFormattedTextField monthT;
+	private BasicArrowButton monthUp;
+	private BasicArrowButton monthDown;
+	private JLabel dayL;
+	private JFormattedTextField dayT;
+	private BasicArrowButton dayUp;
+	private BasicArrowButton dayDown;
+	private JLabel hourL;
+	private JFormattedTextField hourT;
+	private BasicArrowButton hourUp;
+	private BasicArrowButton hourDown;
+	private JLabel minuteL;
+	private JFormattedTextField minuteT;
+	private BasicArrowButton minuteUp;
+	private BasicArrowButton minuteDown;
+	private JLabel secondL;
+	private JFormattedTextField secondT;
+	private BasicArrowButton secondUp;
+	private BasicArrowButton secondDown;
+	
+	private JButton saveBut;
+	private CalGrid parent;
+	
+	private Timestamp today;
+	int date[] = new int [3];
+	int time[] = new int [3];
+	
+	public TimeMachineDialog(CalGrid cal) {
+		setTitle("Change Time Setting");
+		parent = cal;
+		Container contentPane;
+		contentPane = getContentPane();
+		
+		JPanel top = new JPanel();
+		top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
+		
+		JPanel selectPanel = new JPanel();
+		Border selectBorder = new TitledBorder(null, "SELECT TIME SETTING");
+		selectPanel.setBorder(selectBorder);
+		
+		selectmsg = new JLabel("Please select the time setting   ");
+		selectPanel.add(selectmsg);
+		
+		defaulttime = new JRadioButton("USE SYSTEM TIME   ");
+		customtime = new JRadioButton("USE CUSTOM TIME   ");
+		defaulttime.setActionCommand("default");
+		customtime.setActionCommand("custom");
+		timegp = new ButtonGroup();
+		timegp.add(defaulttime);
+		timegp.add(customtime);
+		selectPanel.add(defaulttime);
+		selectPanel.add(customtime);
+		defaulttime.setSelected(true);
+		defaulttime.addActionListener(this);
+		customtime.addActionListener(this);
+		top.add(selectPanel, BorderLayout.NORTH);
+		
+		JPanel timePanel = new JPanel();
+		Border timeBorder = new TitledBorder(null, "TIME MACHINE");
+		timePanel.setBorder(timeBorder);
+		yearL = new JLabel("YEAR: ");
+		yearT = new JFormattedTextField();
+		yearT.setColumns(5);
+//		yearUp = new JButton("\u25B2");
+		yearUp = new BasicArrowButton(BasicArrowButton.NORTH);
+		yearUp.addActionListener(this);
+		yearDown = new BasicArrowButton(BasicArrowButton.SOUTH);
+		yearDown.addActionListener(this);
+
+		monthL = new JLabel("MONTH: ");
+		monthT = new JFormattedTextField();
+		monthT.setColumns(5);
+		monthUp = new BasicArrowButton(BasicArrowButton.NORTH);
+		monthUp.addActionListener(this);
+		monthDown = new BasicArrowButton(BasicArrowButton.SOUTH);
+		monthDown.addActionListener(this);
+		
+		dayL = new JLabel("DAY: ");
+		dayT = new JFormattedTextField();
+		dayT.setColumns(5);
+		dayUp = new BasicArrowButton(BasicArrowButton.NORTH);
+		dayUp.addActionListener(this);
+		dayDown = new BasicArrowButton(BasicArrowButton.SOUTH);
+		dayDown.addActionListener(this);
+		
+		hourL = new JLabel("HOUR: ");
+		hourT = new JFormattedTextField();
+		hourT.setColumns(5);
+		hourUp = new BasicArrowButton(BasicArrowButton.NORTH);
+		hourUp.addActionListener(this);
+		hourDown = new BasicArrowButton(BasicArrowButton.SOUTH);
+		hourDown.addActionListener(this);
+		
+		minuteL = new JLabel("MINUTE: ");
+		minuteT = new JFormattedTextField();
+		minuteT.setColumns(5);
+		minuteUp = new BasicArrowButton(BasicArrowButton.NORTH);
+		minuteUp.addActionListener(this);
+		minuteDown = new BasicArrowButton(BasicArrowButton.SOUTH);
+		minuteDown.addActionListener(this);
+		
+		secondL = new JLabel("SECOND: ");
+		secondT = new JFormattedTextField();
+		secondT.setColumns(5);
+		secondUp = new BasicArrowButton(BasicArrowButton.NORTH);
+		secondUp.addActionListener(this);
+		secondDown = new BasicArrowButton(BasicArrowButton.SOUTH);
+		secondDown.addActionListener(this);
+
+		today = TimeMachine.getInstance().getNowTimestamp();
+		date[0] = today.getYear() + 1900;
+		date[1] = today.getMonth() + 1;
+		date[2] = today.getDate();
+		time[0] = today.getHours();
+		time[1] = today.getMinutes();
+		time[2] = today.getSeconds();
+		
+		yearT.setValue(date[0]);
+		yearT.setEnabled(false);
+		yearT.setEditable(false);
+//		yearUp.setActionCommand("yearUp");
+		yearUp.setEnabled(false);
+//		yearDown.setActionCommand("yearDown");
+		yearDown.setEnabled(false);
+
+		monthT.setValue(date[1]);
+		monthT.setEnabled(false);
+//		monthUp.setActionCommand("monthUp");
+		monthUp.setEnabled(false);
+//		monthDown.setActionCommand("monthDown");
+		monthDown.setEnabled(false);
+		
+		dayT.setValue(date[2]);
+		dayT.setEnabled(false);
+//		dayUp.setActionCommand("dayUp");
+		dayUp.setEnabled(false);
+//		dayDown.setActionCommand("dayDown");
+		dayDown.setEnabled(false);
+		
+		hourT.setValue(time[0]);
+		hourT.setEnabled(false);
+//		hourUp.setActionCommand("hourUp");
+		hourUp.setEnabled(false);
+//		hourDown.setActionCommand("hourDown");
+		hourDown.setEnabled(false);
+		
+		minuteT.setValue(time[1]);
+		minuteT.setEnabled(false);
+//		minuteUp.setActionCommand("minuteUp");
+		minuteUp.setEnabled(false);
+//		minuteDown.setActionCommand("minuteDown");
+		minuteDown.setEnabled(false);
+
+		secondT.setValue(time[2]);
+		secondT.setEnabled(false);
+//		secondUp.setActionCommand("secondUp");
+		secondUp.setEnabled(false);
+//		secondDown.setActionCommand("secondDown");
+		secondDown.setEnabled(false);
+		
+		timePanel.add(yearL);
+		timePanel.add(yearT);
+		timePanel.add(yearUp);
+		timePanel.add(yearDown);
+		timePanel.add(monthL);
+		timePanel.add(monthT);
+		timePanel.add(monthUp);
+		timePanel.add(monthDown);
+		timePanel.add(dayL);
+		timePanel.add(dayT);
+		timePanel.add(dayUp);
+		timePanel.add(dayDown);
+		timePanel.add(hourL);
+		timePanel.add(hourT);
+		timePanel.add(hourUp);
+		timePanel.add(hourDown);
+		timePanel.add(minuteL);
+		timePanel.add(minuteT);
+		timePanel.add(minuteUp);
+		timePanel.add(minuteDown);
+		timePanel.add(secondL);
+		timePanel.add(secondT);
+		timePanel.add(secondUp);
+		timePanel.add(secondDown);
+		top.add(timePanel, BorderLayout.SOUTH);
+		
+		contentPane.add("North", top);
+		
+		JPanel savePanel = new JPanel();
+		saveBut = new JButton("Save Time");
+		saveBut.addActionListener(this);
+		savePanel.add(saveBut);
+		contentPane.add("South", savePanel);
+		
+		pack();
+		setVisible(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub		
+		if (e.getSource() == saveBut) {
+			boolean succeed = saveButResponse(timegp.getSelection().getActionCommand());
+			if (succeed) {
+				setVisible(false);
+				dispose();
+			}
+		} 
+
+		if (e.getSource() == yearUp)
+			changeButtonResponse("year", "up");
+
+		if (e.getSource() == yearDown)
+			changeButtonResponse("year", "down");
+		
+		if (e.getSource() == monthUp)
+			changeButtonResponse("month", "up");
+
+		if (e.getSource() == monthDown)
+			changeButtonResponse("month", "down");
+		
+		if (e.getSource() == dayUp)
+			changeButtonResponse("day", "up");
+
+		if (e.getSource() == dayDown)
+			changeButtonResponse("day", "down");
+		
+		if (e.getSource() == hourUp)
+			changeButtonResponse("hour", "up");
+
+		if (e.getSource() == hourDown)
+			changeButtonResponse("hour", "down");
+
+		if (e.getSource() == minuteUp)
+			changeButtonResponse("minute", "up");
+
+		if (e.getSource() == minuteDown)
+			changeButtonResponse("minute", "down");
+
+		if (e.getSource() == secondUp)
+			changeButtonResponse("second", "up");
+
+		if (e.getSource() == secondDown)
+			changeButtonResponse("second", "down");
+		
+		if (defaulttime.isSelected()) {
+			yearUp.setEnabled(false);
+			yearDown.setEnabled(false);
+			monthUp.setEnabled(false);
+			monthDown.setEnabled(false);
+			dayUp.setEnabled(false);
+			dayDown.setEnabled(false);
+			hourUp.setEnabled(false);
+			hourDown.setEnabled(false);
+			minuteUp.setEnabled(false);
+			minuteDown.setEnabled(false);
+			secondUp.setEnabled(false);
+			secondDown.setEnabled(false);
+			
+			today = new Timestamp(System.currentTimeMillis());
+			date[0] = today.getYear() + 1900;
+			date[1] = today.getMonth();
+			date[2] = today.getDate();
+			time[0] = today.getHours();
+			time[1] = today.getMinutes();
+			time[2] = today.getSeconds();
+			
+			yearT.setValue(date[0]);
+			monthT.setValue(date[1]);
+			dayT.setValue(date[2]);
+			hourT.setValue(time[0]);
+			minuteT.setValue(time[1]);
+			secondT.setValue(time[2]);
+			
+			
+		} else if (customtime.isSelected()) {
+			yearUp.setEnabled(true);
+			yearDown.setEnabled(true);
+			monthUp.setEnabled(true);
+			monthDown.setEnabled(true);
+			dayUp.setEnabled(true);
+			dayDown.setEnabled(true);
+			hourUp.setEnabled(true);
+			hourDown.setEnabled(true);
+			minuteUp.setEnabled(true);
+			minuteDown.setEnabled(true);
+			secondUp.setEnabled(true);
+			secondDown.setEnabled(true);
+		}
+	}
+	
+	private int[] getDate() {
+
+		int[] date = new int[3];
+		date[0] = ((Integer)yearT.getValue()).intValue();
+		date[1] = ((Integer)monthT.getValue()).intValue();
+		if (date[0] < 1980 || date[0] > 2100) {
+			JOptionPane.showMessageDialog(this, "Please input proper year",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (date[1] <= 0 || date[1] > 12) {
+			JOptionPane.showMessageDialog(this, "Please input proper month",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		date[2] = ((Integer)dayT.getValue()).intValue();
+		int monthDay = CalGrid.monthDays[date[1] - 1];
+		if (date[1] == 2) {
+			GregorianCalendar c = new GregorianCalendar();
+			if (c.isLeapYear(date[0]))
+				monthDay = 29;
+		}
+		if (date[2] <= 0 || date[2] > monthDay) {
+			JOptionPane.showMessageDialog(this,
+			"Please input proper month day", "Input Error",
+			JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		return date;
+	}
+
+	private int getTime() {
+		int hour = ((Integer)hourT.getValue()).intValue();
+		if (hour < 0 || hour > 24) {
+			JOptionPane.showMessageDialog(this, "Please input proper hour [0 - 60]",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}
+		int minute = ((Integer)minuteT.getValue()).intValue();
+		if (minute < 0 || minute > 60) {
+			JOptionPane.showMessageDialog(this, "Please input proper minute [0 - 60]",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}
+		int second = ((Integer)secondT.getValue()).intValue();
+		if (second < 0 || second > 60) {
+			JOptionPane.showMessageDialog(this, "Please input proper second [0 - 60]",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}
+		return (hour * 3600 + minute * 60 + second);
+	}
+	
+	private boolean saveButResponse(String tmsetting){
+		if (tmsetting == "custom") {
+			int date[] = getDate();
+			int caltime = getTime();
+			
+			if (date[0] == -1 || date[1] == -1 || date[2] == -1 ||
+				time[0] == -1 || time[1] == -1 || time[2] == -1) {
+				return false;
+			}
+			//TimeMachine newtm = new TimeMachine();
+			//System.out.println(time / 3600);
+			//System.out.println((time / 60) % 60);
+			//System.out.println((time % 60) % 60);
+			TimeMachine timeMachine = TimeMachine.getInstance();
+			timeMachine.setTimeMachine(date[0], date[1] - 1, date[2], caltime / 3600, (caltime / 60) % 60, (caltime % 60) % 60);
+			return true;
+		} else {
+			today = new Timestamp(System.currentTimeMillis());
+			date[0] = today.getYear() + 1900;
+			date[1] = today.getMonth();
+			date[2] = today.getDate();
+			time[0] = today.getHours();
+			time[1] = today.getMinutes();
+			time[2] = today.getSeconds();
+			/*System.out.println(date[0]);
+			System.out.println(date[1]);
+			System.out.println(date[2]);
+			System.out.println(time[0]);
+			System.out.println(time[1]);
+			System.out.println(time[2]);*/
+			TimeMachine timeMachine = TimeMachine.getInstance();
+			timeMachine.setTimeMachine(date[0], date[1], date[2], time[0], time[1], time[2]);
+		}
+		return true;
+	}
+	
+	private void changeButtonResponse(String option, String arrow) {
+		int temp;
+		if (option == "year") {
+			temp = changevalueby1(arrow, ((Integer)yearT.getValue()).intValue());
+			yearT.setValue(temp);
+		} else if (option == "month") {
+			temp = changevalueby1(arrow, ((Integer)monthT.getValue()).intValue());
+			monthT.setValue(temp);
+		} else if (option == "day") {
+			temp = changevalueby1(arrow, ((Integer)dayT.getValue()).intValue());
+			dayT.setValue(temp);
+		} else if (option == "hour") {
+			temp = changevalueby1(arrow, ((Integer)hourT.getValue()).intValue());
+			if (temp < 24 && temp > -1)
+				hourT.setValue(temp);
+		} else if (option == "minute") {
+			temp = changevalueby1(arrow, ((Integer)minuteT.getValue()).intValue());
+			if (temp < 60 && temp > -1)
+				minuteT.setValue(temp);
+		} else if (option == "second") {
+			temp = changevalueby1(arrow, ((Integer)secondT.getValue()).intValue());
+			if (temp < 60 && temp > -1){
+				secondT.setValue(temp);
+			}
+		}
+		
+	}
+	
+	private int changevalueby1(String arrow, int num) {
+		if (arrow == "up") 
+			num += 1;
+		else 
+			num -= 1;
+		return num;
+	}
+	
+	private int changevalueby5(String arrow, int num) {
+		if (arrow == "up")
+			num += 5;
+		else 
+			num -= 5;
+		return num;
+	}
+
+}
