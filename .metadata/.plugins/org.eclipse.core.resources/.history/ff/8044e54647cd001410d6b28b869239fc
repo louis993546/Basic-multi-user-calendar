@@ -129,18 +129,6 @@ public class Appointment implements Comparable<Appointment> {
 		return endDay;
 	}
 	
-	public int getReminder() {
-		return reminder;
-	}
-	
-	public int getReminderTime() {
-		return reminderTime;
-	}
-	
-	public int getReminderUnit() {
-		return reminderUnit;
-	}
-	
 	public boolean isDateValid(int yr, int mon, int day) {
 		return false;
 	}

@@ -17,9 +17,6 @@ public class Appointment implements Comparable<Appointment> {
 	private int reminder;
 	private int reminderTime;
 	private int reminderUnit;
-	//attend list
-	//not attend list?
-	//waiting list
 
 	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru) {
 		title = t;
@@ -79,66 +76,6 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public String getTitle() {
 		return title;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public String getLocation() {
-		return location;
-	}
-	
-	public int getStartHour() {
-		return startHour;
-	}
-	
-	public int getStartMin() {
-		return startMin;
-	}
-	
-	public int getStartYear() {
-		return startYear;
-	}
-	
-	public int getStartMonth() {
-		return startMonth;
-	}
-	
-	public int getStartDay() {
-		return startDay;
-	}
-
-	public int getEndHour() {
-		return endHour;
-	}
-	
-	public int getEndMin() {
-		return endMin;
-	}
-	
-	public int getEndYear() {
-		return endYear;
-	}
-	
-	public int getEndMonth() {
-		return endMonth;
-	}
-	
-	public int getEndDay() {
-		return endDay;
-	}
-	
-	public int getReminder() {
-		return reminder;
-	}
-	
-	public int getReminderTime() {
-		return reminderTime;
-	}
-	
-	public int getReminderUnit() {
-		return reminderUnit;
 	}
 	
 	public boolean isDateValid(int yr, int mon, int day) {

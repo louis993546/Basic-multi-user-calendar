@@ -11,5 +11,5 @@
 Desktop.ini
 .DS_Store
 $RECYCLE.BIN/
-.class
-.jar
+*.class
+*.jar

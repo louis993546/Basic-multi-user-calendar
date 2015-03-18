@@ -93,54 +93,6 @@ public class Appointment implements Comparable<Appointment> {
 		return startHour;
 	}
 	
-	public int getStartMin() {
-		return startMin;
-	}
-	
-	public int getStartYear() {
-		return startYear;
-	}
-	
-	public int getStartMonth() {
-		return startMonth;
-	}
-	
-	public int getStartDay() {
-		return startDay;
-	}
-
-	public int getEndHour() {
-		return endHour;
-	}
-	
-	public int getEndMin() {
-		return endMin;
-	}
-	
-	public int getEndYear() {
-		return endYear;
-	}
-	
-	public int getEndMonth() {
-		return endMonth;
-	}
-	
-	public int getEndDay() {
-		return endDay;
-	}
-	
-	public int getReminder() {
-		return reminder;
-	}
-	
-	public int getReminderTime() {
-		return reminderTime;
-	}
-	
-	public int getReminderUnit() {
-		return reminderUnit;
-	}
-	
 	public boolean isDateValid(int yr, int mon, int day) {
 		return false;
 	}
