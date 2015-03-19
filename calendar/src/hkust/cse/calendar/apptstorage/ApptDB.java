@@ -22,7 +22,7 @@ public class ApptDB {
 
 	      stmt = c.createStatement();
 	      sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
-	    		  	   "(ID                   INT PRIMARY KEY    NOT NULL," +
+	    		  	   "(ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 	    		       " TITLE                TEXT               NOT NULL," +
 	    		       " DESCRIPTION          TEXT               NOT NULL," +
 	    		       " START_TIME_HOUR      INT                NOT NULL," +
@@ -115,8 +115,8 @@ public class ApptDB {
 		stmt = c.createStatement();
 		//1. need to figure how to to increment id automatically
 		//2. need to put EVERYTHING in(this one is copy from LocationDB
-		sql = "INSERT INTO APPOINTMENT (ID, TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT) " +
-                "VALUES (1, '" + a.getTitle() + "', '" + a.getDescription() + "', '"+a.getLocation() + "');"; 
+		sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT) " +
+                "VALUES ('" + a.getTitle() + "', '" + a.getDescription() + "', '"+a.getLocation() + "');"; 
 		stmt.executeUpdate(sql);
 		return true;
 	}

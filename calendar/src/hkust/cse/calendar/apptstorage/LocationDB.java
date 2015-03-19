@@ -24,7 +24,7 @@ public class LocationDB {
 
 	      stmt = c.createStatement();
 	      sql = "CREATE TABLE IF NOT EXISTS LOCATION " +
-	                   "(ID             INTEGER NOT NULL ," +
+	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 //	                   				 + "PRIMARY KEY GENERATED ALWAYS AS IDENTITY"
 //	                   				 + "(START WITH 1, INCREMENT BY 1)," +
 	                   " LOCATION       TEXT                NOT NULL)"; 
@@ -44,8 +44,8 @@ public class LocationDB {
 		if (!checkIfExists(l)) {
 			stmt = c.createStatement();
 			//need to figure how to to increment id automatically
-			sql = "INSERT INTO LOCATION (ID, LOCATION) " +
-	                "VALUES (1, '" + l + "' );"; 
+			sql = "INSERT INTO LOCATION (LOCATION) " +
+	                "VALUES ( '" + l + "' );"; 
 			stmt.executeUpdate(sql);
 			return true;
 		}
