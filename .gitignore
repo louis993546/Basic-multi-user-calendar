@@ -13,6 +13,8 @@ Desktop.ini
 $RECYCLE.BIN/
 *.class
 *.jar
+.recommenders/
+.metadata/
 
 # From online sources
 *.pydevproject
