@@ -3,12 +3,13 @@
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workbench>&#xA;&lt;mruList>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;ApptStorage.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/ApptStorage.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/ApptStorage.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;ApptDB.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/ApptDB.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/ApptDB.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;ApptStorageNullImpl.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/ApptStorageNullImpl.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/ApptStorageNullImpl.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;ApptStorageControllerImpl.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/ApptStorageControllerImpl.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/ApptStorageControllerImpl.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Appt.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/unit/Appt.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/unit/Appt.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;LocationDB.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;AppList.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/gui/AppList.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/gui/AppList.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Appointment.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/unit/Appointment.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/unit/Appointment.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;AppScheduler.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/gui/AppScheduler.java&quot;>&#xA;&lt;persistable path=&quot;/calendar/src/hkust/cse/calendar/gui/AppScheduler.java&quot;/>&#xA;&lt;/file>&#xA;&lt;/mruList>&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_6dY0McyvEeS3LLnR6WIOnw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_69ZxAcyvEeS3LLnR6WIOnw" label="%trimmedwindow.label.eclipseSDK" x="141" y="-26" width="1366" height="768">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_6dY0McyvEeS3LLnR6WIOnw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_69ZxAcyvEeS3LLnR6WIOnw" label="%trimmedwindow.label.eclipseSDK" x="141" y="-26" width="1366" height="741">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="workingSets" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workingSets/>"/>
     <persistedState key="aggregateWorkingSetId" value="Aggregate for window 1426601669856"/>
     <tags>topLevel</tags>
+    <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_69ZxAcyvEeS3LLnR6WIOnw" selectedElement="_69ZxAsyvEeS3LLnR6WIOnw" horizontal="true">
       <children xsi:type="advanced:PerspectiveStack" xmi:id="_69ZxAsyvEeS3LLnR6WIOnw" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_7MIwkcyvEeS3LLnR6WIOnw">
         <children xsi:type="advanced:Perspective" xmi:id="_7MIwkcyvEeS3LLnR6WIOnw" elementId="org.eclipse.jdt.ui.JavaPerspective" selectedElement="_7MIwksyvEeS3LLnR6WIOnw" label="Java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/eview16/jperspective.gif">
@@ -174,7 +175,7 @@
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_nhuB4M1TEeSZRr28c74Oyg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="LocationDB.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;LocationDB.java&quot; partName=&quot;LocationDB.java&quot; title=&quot;LocationDB.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1942&quot; selectionTopPixel=&quot;696&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;LocationDB.java&quot; partName=&quot;LocationDB.java&quot; title=&quot;LocationDB.java&quot; tooltip=&quot;calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1007&quot; selectionTopPixel=&quot;80&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
           <tags>removeOnHide</tags>
@@ -294,7 +295,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AMmUMyvEeS3LLnR6WIOnw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_5bjswM69EeSB06OUg3HA3A" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_6eckP8yvEeS3LLnR6WIOnw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_mCfUYM6_EeSTv9zGZVx2sw" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_6eckP8yvEeS3LLnR6WIOnw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AMmUcyvEeS3LLnR6WIOnw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -318,7 +319,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AN0cMyvEeS3LLnR6WIOnw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_5brBgM69EeSB06OUg3HA3A" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_6eaH5MyvEeS3LLnR6WIOnw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_mCnQMM6_EeSTv9zGZVx2sw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_6eaH5MyvEeS3LLnR6WIOnw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AObgMyvEeS3LLnR6WIOnw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -737,7 +738,7 @@
       <tags>platform:cocoa</tags>
       <parameters xmi:id="_4-n5JM69EeSB06OUg3HA3A" elementId="org.eclipse.ui.views.showView.viewId" name="org.eclipse.ui.views.showView.viewId" value="org.eclipse.ui.cheatsheets.views.CheatSheetView"/>
     </bindings>
-    <bindings xmi:id="_4_A6sM69EeSB06OUg3HA3A" keySequence="COMMAND+CTRL+F" command="_6gd9YsyvEeS3LLnR6WIOnw"/>
+    <bindings xmi:id="_loijUc6_EeSTv9zGZVx2sw" keySequence="COMMAND+CTRL+F" command="_6gd9YsyvEeS3LLnR6WIOnw"/>
   </bindingTables>
   <bindingTables xmi:id="_6fo28MyvEeS3LLnR6WIOnw" elementId="org.eclipse.jdt.ui.javaEditorScope" bindingContext="_6em8O8yvEeS3LLnR6WIOnw">
     <bindings xmi:id="_4-CDQc69EeSB06OUg3HA3A" keySequence="COMMAND+SHIFT+C" command="_6eUBR8yvEeS3LLnR6WIOnw"/>
@@ -893,7 +894,7 @@
     <bindings xmi:id="_6gB4hcyvEeS3LLnR6WIOnw" keySequence="F1" command="_6eTaOsyvEeS3LLnR6WIOnw"/>
   </bindingTables>
   <bindingTables xmi:id="_6gekdMyvEeS3LLnR6WIOnw" contributorURI="platform:/fragment/org.eclipse.e4.ui.workbench.renderers.swt.cocoa" bindingContext="_6dY0NsyvEeS3LLnR6WIOnw">
-    <bindings xmi:id="_4_BhwM69EeSB06OUg3HA3A" keySequence="M1+W" command="_6gekcsyvEeS3LLnR6WIOnw"/>
+    <bindings xmi:id="_lojKYM6_EeSTv9zGZVx2sw" keySequence="M1+W" command="_6gekcsyvEeS3LLnR6WIOnw"/>
   </bindingTables>
   <bindingTables xmi:id="_7Ll-AMyvEeS3LLnR6WIOnw" bindingContext="_7LlW8MyvEeS3LLnR6WIOnw"/>
   <bindingTables xmi:id="_7Ll-AsyvEeS3LLnR6WIOnw" bindingContext="_7Ll-AcyvEeS3LLnR6WIOnw"/>

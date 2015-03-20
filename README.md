@@ -1,14 +1,37 @@
 #COMP3111 Project
 
-###Schedule
-- Louis finish SQL related things before 23/3
-- Meeting next week
-- ?
+##What is in this README:
+- Tutorial websites
+- Errors + How-to
+- To-Do
+- Phrase 1 requirement
+- [Working] Phrase 2 requirement
 
 ###Tutorials
 * <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite</a>. I LITERALLY copy and paste things from here.
-* <a href="https://www.siteground.com/tutorials/git/commands.htm">Some basic git commands</a> 
+* <a href="https://www.siteground.com/tutorials/git/commands.htm">Some basic git commands</a>
 * Anything else you want to learn?
+* And Google, of course
+
+#### Error #1: Missing required library sqlite-jbdc
+- Locate "sqlite-jdbc-3.8.7.jar" in "calendar"
+- If it does not exist, download the latest version of JBDC from <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">here</a>
+- Right click project "calendar" on the left
+- Properties >> Java Build Path >> Libraries
+- "Add external JARs"
+- select the .jar
+- done
+
+#### Error #2: Not able to open eclipse.exe/eclipse.app
+* Just download another one from <a href="https://eclipse.org/downloads/">here</a>. Apparently eclipse cannot be sync to GitHub very successfully.
+
+#### How-to #1: Import project to GitHub
+- Make sure you are not already in the folder you want to import
+	* For example, you are in D:\GitHub\COMP3111, and the folder you want to import is D:\GitHub\COMP3111\calendar, this is fine
+	* But, if you are in D:\GitHub\COMP3111\calendar and you want to import D:\GitHub\COMP3111\calendar, it won't work.
+- Import existing directory
+- Select that folder.
+- Done
 
 ###To-Do in this branch
 * Some GUI are still incomplete/missing
@@ -27,14 +50,7 @@
 * Need to figure out if the current implementation is suitable for phrase 2
 	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
 
-#### Error: Missing required library sqlite-jbdc
-- Locate "sqlite-jdbc-3.8.7.jar" in "calendar"
-- If it does not exist, download the latest version of JBDC from <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">here</a>
-- Right click project "calendar" on the left
-- Properties >> Java Build Path >> Libraries
-- "Add external JARs"
-- select the .jar
-- done
+
 
 ##Phrase 1 deadline: April 3rd
 
