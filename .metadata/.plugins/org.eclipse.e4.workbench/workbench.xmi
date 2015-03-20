@@ -295,7 +295,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AMmUMyvEeS3LLnR6WIOnw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_mCfUYM6_EeSTv9zGZVx2sw" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_6eckP8yvEeS3LLnR6WIOnw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_k0mIcM7AEeSOJvtMLLJgPw" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_6eckP8yvEeS3LLnR6WIOnw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AMmUcyvEeS3LLnR6WIOnw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -319,7 +319,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AN0cMyvEeS3LLnR6WIOnw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_mCnQMM6_EeSTv9zGZVx2sw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_6eaH5MyvEeS3LLnR6WIOnw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_k0sPEc7AEeSOJvtMLLJgPw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_6eaH5MyvEeS3LLnR6WIOnw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_7AObgMyvEeS3LLnR6WIOnw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -738,7 +738,7 @@
       <tags>platform:cocoa</tags>
       <parameters xmi:id="_4-n5JM69EeSB06OUg3HA3A" elementId="org.eclipse.ui.views.showView.viewId" name="org.eclipse.ui.views.showView.viewId" value="org.eclipse.ui.cheatsheets.views.CheatSheetView"/>
     </bindings>
-    <bindings xmi:id="_loijUc6_EeSTv9zGZVx2sw" keySequence="COMMAND+CTRL+F" command="_6gd9YsyvEeS3LLnR6WIOnw"/>
+    <bindings xmi:id="_kZs8MM7AEeSOJvtMLLJgPw" keySequence="COMMAND+CTRL+F" command="_6gd9YsyvEeS3LLnR6WIOnw"/>
   </bindingTables>
   <bindingTables xmi:id="_6fo28MyvEeS3LLnR6WIOnw" elementId="org.eclipse.jdt.ui.javaEditorScope" bindingContext="_6em8O8yvEeS3LLnR6WIOnw">
     <bindings xmi:id="_4-CDQc69EeSB06OUg3HA3A" keySequence="COMMAND+SHIFT+C" command="_6eUBR8yvEeS3LLnR6WIOnw"/>
@@ -894,7 +894,7 @@
     <bindings xmi:id="_6gB4hcyvEeS3LLnR6WIOnw" keySequence="F1" command="_6eTaOsyvEeS3LLnR6WIOnw"/>
   </bindingTables>
   <bindingTables xmi:id="_6gekdMyvEeS3LLnR6WIOnw" contributorURI="platform:/fragment/org.eclipse.e4.ui.workbench.renderers.swt.cocoa" bindingContext="_6dY0NsyvEeS3LLnR6WIOnw">
-    <bindings xmi:id="_lojKYM6_EeSTv9zGZVx2sw" keySequence="M1+W" command="_6gekcsyvEeS3LLnR6WIOnw"/>
+    <bindings xmi:id="_kZtjQM7AEeSOJvtMLLJgPw" keySequence="M1+W" command="_6gekcsyvEeS3LLnR6WIOnw"/>
   </bindingTables>
   <bindingTables xmi:id="_7Ll-AMyvEeS3LLnR6WIOnw" bindingContext="_7LlW8MyvEeS3LLnR6WIOnw"/>
   <bindingTables xmi:id="_7Ll-AsyvEeS3LLnR6WIOnw" bindingContext="_7Ll-AcyvEeS3LLnR6WIOnw"/>
@@ -2182,6 +2182,13 @@
   <commands xmi:id="_68hAMcyvEeS3LLnR6WIOnw" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.tasks.ui.open.repositories.view" commandName="Show Task Repositories View" description="Show Task Repositories View" category="_6ePIwcyvEeS3LLnR6WIOnw"/>
   <commands xmi:id="_68hnQMyvEeS3LLnR6WIOnw" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.doc.legend.show.action" commandName="Show UI Legend" description="Show Tasks UI Legend" category="_6ePIwcyvEeS3LLnR6WIOnw"/>
   <commands xmi:id="_68hnQcyvEeS3LLnR6WIOnw" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.context.ui.actions.tasklist.focus" commandName="Focus on Workweek" description="Focus on Workweek" category="_6ePIwcyvEeS3LLnR6WIOnw"/>
+  <commands xmi:id="_kYD9cM7AEeSOJvtMLLJgPw" elementId="org.eclipse.egit.ui.ImportChangedProjectsCommandId" commandName="Import Changed Projects" description="Import or create in local Git repository" category="_6eOhyMyvEeS3LLnR6WIOnw"/>
+  <commands xmi:id="_kYD9cc7AEeSOJvtMLLJgPw" elementId="no.resheim.eclipse.launcherutil.commands.newInstance" commandName="%command.name" category="_6ePIwcyvEeS3LLnR6WIOnw">
+    <parameters xmi:id="_kYD9cs7AEeSOJvtMLLJgPw" elementId="no.resheim.eclipse.launcherutil.workspace" name="%commandParameter.name"/>
+  </commands>
+  <commands xmi:id="_kYD9c87AEeSOJvtMLLJgPw" elementId="org.eclipse.egit.ui.commit.StashDrop" commandName="Delete Stashed Commit..." category="_6ePIwcyvEeS3LLnR6WIOnw"/>
+  <commands xmi:id="_kYD9dM7AEeSOJvtMLLJgPw" elementId="org.eclipse.egit.ui.commit.StashApply" commandName="Apply Stashed Changes" category="_6ePIwcyvEeS3LLnR6WIOnw"/>
+  <commands xmi:id="_kYD9dc7AEeSOJvtMLLJgPw" elementId="org.eclipse.egit.ui.history.DeleteTag" commandName="&amp;Delete Tag" category="_6ePIwcyvEeS3LLnR6WIOnw"/>
   <addons xmi:id="_6dY0N8yvEeS3LLnR6WIOnw" elementId="org.eclipse.e4.core.commands.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6dY0OMyvEeS3LLnR6WIOnw" elementId="org.eclipse.e4.ui.contexts.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6dY0OcyvEeS3LLnR6WIOnw" elementId="org.eclipse.e4.ui.bindings.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
