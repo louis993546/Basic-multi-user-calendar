@@ -23,8 +23,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public class ModifyLocationDialog extends JFrame implements ActionListener{
-	private JList locationList;
-	private DefaultListModel locationListModel = new DefaultListModel();
+	private JList<String> locationList;
+	private DefaultListModel<String> locationListModel = new DefaultListModel<String>();
 	private JButton deleteButton;
 	private JButton modifyButton;
 	private JButton exitButton;
@@ -48,19 +48,24 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 		JPanel all = new JPanel();
 		all.setLayout(new BoxLayout(all, BoxLayout.X_AXIS));
 		
+		JPanel listPanel = new JPanel();
+		Border lpb = new TitledBorder(null, "Locations:");
+		listPanel.setBorder(lpb);
 		Box left = Box.createVerticalBox();
 		for (String a:locationStringAL) {
 			locationListModel.addElement(a);
 		}
-		locationList = new JList(locationListModel);
-		left.add(locationList);
-//		JTextField test = new JTextField("Testing");
-//		left.add(test);
+		locationList = new JList<String>(locationListModel);
+		listPanel.add(locationList);
+		left.add(listPanel);
 		
 		Box right = Box.createVerticalBox();
 		modifyButton = new JButton("Modify");
+		modifyButton.addActionListener(this);
 		deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(this);
 		exitButton = new JButton("Exit");
+		exitButton.addActionListener(this);
 		right.add(modifyButton);
 		right.add(deleteButton);
 		right.add(exitButton);
@@ -82,6 +87,26 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (e.getSource() == deleteButton)
+		{
+			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
+			if ((id != 0) || (id != -1)) {
+				ldb.deleteLocation(id);
+				locationListModel.removeElementAt(id-1);
+				System.out.println("Done");
+			}
+		}
+		else if (e.getSource() == modifyButton)
+		{
+			
+		}
+		else if (e.getSource() == exitButton)
+		{
+			
+		}
+		else
+		{
+			System.out.println("Something's wrong");
+		}
 	}
 }

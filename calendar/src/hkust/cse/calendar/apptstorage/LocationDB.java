@@ -78,22 +78,40 @@ public class LocationDB {
 
 	public int getLocationID(String l) {
 		try {
-			ArrayList<Integer> idAL = new ArrayList<>();
+			ArrayList<Integer> idAL = new ArrayList<Integer>();
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM LOCATION WHERE LOCATION='" + l + "';");
 			while (rs.next()) {
-				int ans = rs.getString("ID");
+				int ans = rs.getInt("ID");
 				idAL.add(ans);
 			}
 			switch (idAL.size()) {
-				case 0: return 0; break;			//does not exist
-				case 1: return idAl.get(1); break;	//only 1 exist (ideal scenario)
-				default: return -1; break;			//exist multiple times (should never occur)
+				case 0: return 0;			//does not exist
+				case 1:
+					return idAL.get(0);	//only 1 exist (ideal scenario)
+				default: return -1;			//exist multiple times (should never occur)
 			}
+		}
+		catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		    return -2;
 		}
 	}
 
 	public boolean deleteLocation(int id) {
-
+		try {
+			stmt = c.createStatement();
+		    String sql = "DELETE from LOCATION where ID=" + id + ";";
+		    stmt.executeUpdate(sql);
+		    c.commit();
+		    return true;
+		}
+		catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		    return false;
+		}
+		
 	}
 }

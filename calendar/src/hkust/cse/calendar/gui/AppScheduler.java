@@ -295,7 +295,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		// distinguish which button is clicked and continue with require function
 		if (e.getSource() == CancelBut) {
-
 			setVisible(false);
 			dispose();
 		} else if (e.getSource() == saveBut) {
