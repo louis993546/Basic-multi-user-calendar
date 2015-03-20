@@ -7,6 +7,7 @@
 
 ###Tutorials
 * <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite</a>. I LITERALLY copy and paste things from here.
+* <a href="https://www.siteground.com/tutorials/git/commands.htm">Some basic git commands</a> 
 * Anything else you want to learn?
 
 ###To-Do in this branch
