@@ -1,5 +1,6 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.unit.Appointment;
@@ -17,6 +18,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -100,7 +102,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private int selectedApptId = -1;
 	
 	private LocationDB ldb;
-	
+	private ApptDB adb;
 
 	private void commonConstructor(String title, CalGrid cal) {
 		parent = cal;
@@ -297,7 +299,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			setVisible(false);
 			dispose();
 		} else if (e.getSource() == saveBut) {
-			saveButtonResponse();
+			try {
+				saveButtonResponse();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		} else if (e.getSource() == rejectBut){
 			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0){
@@ -453,7 +460,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		return result;
 	}
 
-	private void saveButtonResponse() {
+	private void saveButtonResponse() throws SQLException {
 		// TO-DO
 		// Save the appointment to the hard disk
 
@@ -481,6 +488,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			//output error message if time is not valid 
 		
 		Appointment newAppt = new Appointment();
+		
+		//remove the following codes once testing is done
+		//create a random one to test the db
+		adb = new ApptDB();
+		adb.addAppt(newAppt);
 	}
 
 	private Timestamp CreateTimeStamp(int[] date, int time) {

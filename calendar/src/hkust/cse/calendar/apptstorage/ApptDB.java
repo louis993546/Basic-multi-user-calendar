@@ -11,7 +11,8 @@ public class ApptDB {
 	Connection c = null;
     Statement stmt = null;
     String sql = null;
-	public ApptDB()
+	
+    public ApptDB()
 	  {
 		c = null;
 	    stmt = null;
@@ -111,13 +112,25 @@ public class ApptDB {
 		return null;
 	}
 	
-	public boolean addAppt(Appointment a) throws SQLException {
-		stmt = c.createStatement();
-		//1. need to figure how to to increment id automatically
-		//2. need to put EVERYTHING in(this one is copy from LocationDB
-		sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT) " +
-                "VALUES ('" + a.getTitle() + "', '" + a.getDescription() + "', '"+a.getLocation() + "');"; 
-		stmt.executeUpdate(sql);
-		return true;
+	public boolean addAppt(Appointment a)
+	//DONE
+	{
+		try {
+			stmt = c.createStatement();
+			String x = a.getTitle();
+			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
+				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
+				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT) " +
+					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," + 
+				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," + 
+				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," + 
+				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + ");";
+			stmt.executeUpdate(sql);
+			return true;
+		}
+		catch (SQLException sqle) {
+			System.err.println( sqle.getClass().getName() + ": " + sqle.getMessage() );
+		}
+		return false;
 	}
 }
