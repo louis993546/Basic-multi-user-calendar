@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class LocationDB {
-	
+
 	Connection c = null;
     Statement stmt = null;
     String sql = null;
-    
+
 	public LocationDB()
 	  {
 	    try {
@@ -27,7 +27,7 @@ public class LocationDB {
 	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 //	                   				 + "PRIMARY KEY GENERATED ALWAYS AS IDENTITY"
 //	                   				 + "(START WITH 1, INCREMENT BY 1)," +
-	                   " LOCATION       TEXT                NOT NULL)"; 
+	                   " LOCATION       TEXT                NOT NULL)";
 	      stmt.executeUpdate(sql);
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
@@ -35,27 +35,27 @@ public class LocationDB {
 	    }
 //	    JOptionPane.showMessageDialog(null, "Table created successfully");
 	  }
-	
+
 	public boolean checkIfExists(String l) {
 		return false;
 	}
-	
+
 	public boolean addLocation(String l) throws SQLException {
 		if (!checkIfExists(l)) {
 			stmt = c.createStatement();
 			//need to figure how to to increment id automatically
 			sql = "INSERT INTO LOCATION (LOCATION) " +
-	                "VALUES ( '" + l + "' );"; 
+	                "VALUES ( '" + l + "' );";
 			stmt.executeUpdate(sql);
 			return true;
 		}
 		else return false;
 	}
-	
+
 	//a function to load location into some kind of map
 	//return an array list of string
 	public ArrayList<String> getLocationList() {
-		ArrayList<String> temp = new ArrayList<String>(); 
+		ArrayList<String> temp = new ArrayList<String>();
 		try {
 			stmt = c.createStatement();
 	        ResultSet rs = stmt.executeQuery( "SELECT * FROM LOCATION;" );
@@ -74,5 +74,26 @@ public class LocationDB {
 		    System.exit(0);
 		}
 	    return null;
+	}
+
+	public int getLocationID(String l) {
+		try {
+			ArrayList<Integer> idAL = new ArrayList<>();
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM LOCATION WHERE LOCATION='" + l + "';");
+			while (rs.next()) {
+				int ans = rs.getString("ID");
+				idAL.add(ans);
+			}
+			switch (idAL.size()) {
+				case 0: return 0; break;			//does not exist
+				case 1: return idAl.get(1); break;	//only 1 exist (ideal scenario)
+				default: return -1; break;			//exist multiple times (should never occur)
+			}
+		}
+	}
+
+	public boolean deleteLocation(int id) {
+
 	}
 }

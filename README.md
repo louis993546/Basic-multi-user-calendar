@@ -29,7 +29,7 @@
 - Make sure you are not already in the folder you want to import
 	* For example, you are in D:\GitHub\COMP3111, and the folder you want to import is D:\GitHub\COMP3111\calendar, this is fine
 	* But, if you are in D:\GitHub\COMP3111\calendar and you want to import D:\GitHub\COMP3111\calendar, it won't work.
-- Import existing directory
+- "File" >> "Import" >> Search "Existing Projects into Workspace"
 - Select that folder.
 - Done
 
