@@ -53,3 +53,8 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+.metadata/.log
+
+
+*.class
