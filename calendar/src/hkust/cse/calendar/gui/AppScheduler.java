@@ -49,7 +49,7 @@ import javax.swing.border.TitledBorder;
 public class AppScheduler extends JDialog implements ActionListener, ComponentListener {
 
 	//need to read all rows of appt.db and location.db
-	
+
 	private JLabel yearL;
 	private JLabel monthL;
 	private JLabel dayL;
@@ -57,18 +57,21 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JLabel sTimeML;
 	private JLabel eTimeHL;
 	private JLabel eTimeML;
-	
+
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-	private String[] timeHS = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", 
+	private String[] timeHS = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
 			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
 	private String[] timeMS = {"00", "15", "30", "45"};
 	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)", "Decade(s)"};
 	private ArrayList<String> locationAL;
 	private String[] repeatS = {"Daily", "Weekly", "Monthly", "Yearly", "Decennially", "Centennially", "Millennially"};
-	
-	private JTextField yearF;
-	private JComboBox monthF;
-	private JTextField dayF;
+
+	private JTextField yearSF;
+	private JComboBox monthSF;
+	private JTextField daySF;
+	private JTextField yearEF;
+	private JComboBox monthEF;
+	private JTextField dayEF;
 	private JComboBox sTimeH;
 	private JComboBox sTimeM;
 	private JComboBox eTimeH;
@@ -76,6 +79,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JTextField reminderTF;
 	private JComboBox reminderCB;
 	private JCheckBox reminderChB;
+	
+	private JComboBox lCB;
 
 	private DefaultListModel model;
 	private JTextField titleField;
@@ -84,7 +89,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JButton CancelBut;
 	private JButton inviteBut;
 	private JButton rejectBut;
-	
+
 	private Appt NewAppt;
 	private CalGrid parent;
 	private boolean isNew = true;
@@ -100,7 +105,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 //	private JTextField rejectField;
 //	private JTextField waitingField;
 	private int selectedApptId = -1;
-	
+
 	private LocationDB ldb;
 	private ApptDB adb;
 
@@ -125,23 +130,23 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		titleAndTextPanel.setBorder(titleBorder);
 		titleField = new JTextField(50);
 		titleAndTextPanel.add(titleField);
-		
+
 		//Start JPanel
 		JPanel pStart = new JPanel();
 		Border startBorder = new TitledBorder(null, "START TIME");
 		pStart.setBorder(startBorder);
 		yearL = new JLabel("YEAR: ");
 		pStart.add(yearL);
-		yearF = new JTextField(6);
-		pStart.add(yearF);
+		yearSF = new JTextField(6);
+		pStart.add(yearSF);
 		monthL = new JLabel("MONTH: ");
 		pStart.add(monthL);
-		monthF = new JComboBox(monthS);
-		pStart.add(monthF);
+		monthSF = new JComboBox(monthS);
+		pStart.add(monthSF);
 		dayL = new JLabel("DAY: ");
 		pStart.add(dayL);
-		dayF = new JTextField(4);
-		pStart.add(dayF);
+		daySF = new JTextField(4);
+		pStart.add(daySF);
 		sTimeHL = new JLabel("Hour");
 		pStart.add(sTimeHL);
 		sTimeH = new JComboBox(timeHS);
@@ -150,23 +155,23 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pStart.add(sTimeML);
 		sTimeM = new JComboBox(timeMS);
 		pStart.add(sTimeM);
-		
+
 		//End JPanel
 		JPanel pEnd = new JPanel();
 		Border endBorder = new TitledBorder(null, "END TIME");
 		pEnd.setBorder(endBorder);
 		yearL = new JLabel("YEAR: ");
 		pEnd.add(yearL);
-		yearF = new JTextField(6);
-		pEnd.add(yearF);
+		yearEF = new JTextField(6);
+		pEnd.add(yearEF);
 		monthL = new JLabel("MONTH: ");
 		pEnd.add(monthL);
-		monthF = new JComboBox(monthS);
-		pEnd.add(monthF);
+		monthEF = new JComboBox(monthS);
+		pEnd.add(monthEF);
 		dayL = new JLabel("DAY: ");
 		pEnd.add(dayL);
-		dayF = new JTextField(4);
-		pEnd.add(dayF);
+		dayEF = new JTextField(4);
+		pEnd.add(dayEF);
 		eTimeHL = new JLabel("Hour");
 		pEnd.add(eTimeHL);
 		eTimeH = new JComboBox(timeHS);
@@ -180,9 +185,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		JPanel lPanel = new JPanel();
 		Border lBorder = new TitledBorder(null, "Location");
 		lPanel.setBorder(lBorder);
-		JComboBox lCB = new JComboBox(locationAL.toArray());
+		lCB = new JComboBox(locationAL.toArray());
 		lPanel.add(lCB);
-		
+
 		//Repeat Panel
 		JPanel rPanel = new JPanel();
 		Border rBorder = new TitledBorder(null, "Repeat(Optional)");
@@ -193,12 +198,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		rPanel.add(rTF);
 		JComboBox rCB = new JComboBox(repeatS);
 		rPanel.add(rCB);
-		
+
 		//Location + Repeat Panel
 		JPanel lrPanel = new JPanel();
 		lrPanel.add("West", lPanel);
 		lrPanel.add("East", rPanel);
-		
+
 		//Description JPanel
 		detailPanel = new JPanel();
 		detailPanel.setLayout(new BorderLayout());
@@ -208,7 +213,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		detailArea.setEditable(true);
 		JScrollPane detailScroll = new JScrollPane(detailArea);
 		detailPanel.add(detailScroll);
-		
+
 		//Reminder JPanel
 		JPanel pReminder = new JPanel();
 		Border reminderBorder = new TitledBorder(null, "Reminder(Optional)");
@@ -221,7 +226,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pReminder.add(reminderCB);
 		JLabel reminderL = new JLabel("before the event");
 		pReminder.add(reminderL);
-		
+
 		//Every all these JPanels to top JPanel
 		top.add(titleAndTextPanel);
 		top.add(pStart);
@@ -230,7 +235,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		top.add(detailPanel);
 		top.add(pReminder);
 		contentPane.add("North", top);
-		
+
 		if (NewAppt != null) {
 			detailArea.setText(NewAppt.getInfo());
 		}
@@ -254,7 +259,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		CancelBut = new JButton("Cancel");
 		CancelBut.addActionListener(this);
 		buttonPanel.add(CancelBut);
-		
+
 		//Save/Accept/Confirm button
 		saveBut = new JButton("Save");
 		saveBut.addActionListener(this);
@@ -281,7 +286,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pack();
 
 	}
-	
+
 	AppScheduler(String title, CalGrid cal, int selectedApptId) {
 		this.selectedApptId = selectedApptId;
 		commonConstructor(title, cal);
@@ -290,7 +295,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	AppScheduler(String title, CalGrid cal) {
 		commonConstructor(title, cal);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 
 		// distinguish which button is clicked and continue with require function
@@ -337,11 +342,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	}
 
-	private int[] getValidDate() {
+	private int[] getValidDate(JTextField a, JComboBox b, JTextField d) {
 
 		int[] date = new int[3];
-		date[0] = Utility.getNumber(yearF.getText());
-		date[1] = Utility.getNumber(monthF.getSelectedItem().toString());
+		date[0] = Utility.getNumber(a.getText());
+		date[1] = Utility.getNumber(b.getSelectedItem().toString());
 		if (date[0] < 1980 || date[0] > 2100) {
 			JOptionPane.showMessageDialog(this, "Please input proper year",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
@@ -353,7 +358,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			return null;
 		}
 
-		date[2] = Utility.getNumber(dayF.getText());
+		date[2] = Utility.getNumber(d.getText());
 		int monthDay = CalGrid.monthDays[date[1] - 1];
 		if (date[1] == 2) {
 			GregorianCalendar c = new GregorianCalendar();
@@ -368,40 +373,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		}
 		return date;
 	}
-	
-//	private boolean getValidDateBoolean() {
-//		int[] date = new int[3];
-//		date[0] = Utility.getNumber(yearF.getText());
-//		date[1] = Utility.getNumber(monthF.getSelectedItem().toString());
-//		if (date[0] < 1980 || date[0] > 2100) {
-//			return false;
-//		}
-//		if (date[1] <= 0 || date[1] > 12) {
-//			return false;
-//		}
-//		date[2] = Utility.getNumber(dayF.getText());
-//		int monthDay = CalGrid.monthDays[date[1] - 1];
-//		if (date[1] == 2) {
-//			GregorianCalendar c = new GregorianCalendar();
-//			if (c.isLeapYear(date[0]))
-//				monthDay = 29;
-//		}
-//		if (date[2] <= 0 || date[2] > monthDay) {
-//			return false;
-//		}
-//		return true;
-//	}
-
-//	private int[] getValidReminderDate() {
-//		//TO-DO: pretty similar to getValidDate
-//		
-//		/* what cannot happend
-//		 * negative number
-//		 * minutes not within 1-60 (inclusively)
-//		 * hour not within 1-24(inlcusively)
-//		 *
-//		 */
-//	}
 
 	private int getTime(JComboBox h, JComboBox eTimeM2) {
 
@@ -427,17 +398,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		
-		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15") 
-				&& !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45") 
-			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15") 
+
+		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15")
+				&& !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45")
+			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15")
 			&& !eTimeM.getSelectedItem().toString().equals("30") && !eTimeM.getSelectedItem().toString().equals("45")){
 			JOptionPane.showMessageDialog(this,
 					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		
+
 		if (result[1] == -1 || result[0] == -1) {
 			JOptionPane.showMessageDialog(this, "Please check time",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
@@ -461,35 +432,13 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private void saveButtonResponse() throws SQLException {
 		// TO-DO
-		// Save the appointment to the hard disk
 
-		/*
-		 * possible error messges: 
-		 * empty date/time/title/description/location
-		 * event date time collision
-		 * date does not exist in that month/year
-		 * reminder date/time happends after the event
-		 */
-
-		String errorOutputString = "";
-		int[] date = getValidDate();
+		int[] startDate = getValidDate(yearSF, monthSF, daySF);
+		int[] endDate = getValidDate(yearEF, monthEF, dayEF);
 		String title = titleField.getText().trim();
-
-		//get valid date
-			//output error message if date not valid
-		//get reminderSelection
-			//if it is checked
-				//get valid reminder date
-					//output error message if date not valid
-		//get title
-			//output error message if title is not valid
-		//get valid time
-			//output error message if time is not valid 
-		
-		Appointment newAppt = new Appointment();
-		
-		//remove the following codes once testing is done
-		//create a random one to test the db
+		String description = detailArea.getText();
+		String location = lCB.getSelectedItem().toString();
+		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0);
 		adb = new ApptDB();
 		adb.addAppt(newAppt);
 	}
@@ -528,16 +477,19 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	public void componentShown(ComponentEvent e) {
 
 	}
-	
+
 	public String getCurrentUser()		// get the id of the current user
 	{
 		return this.parent.mCurrUser.ID();
 	}
-	
+
 	private void allDisableEdit(){
-		yearF.setEditable(false);
-		monthF.setEditable(false);
-		dayF.setEditable(false);
+		yearSF.setEditable(false);
+		yearEF.setEditable(false);
+		monthSF.setEditable(false);
+		monthEF.setEditable(false);
+		daySF.setEditable(false);
+		dayEF.setEditable(false);
 		sTimeH.setEditable(false);
 		sTimeM.setEditable(false);
 		eTimeH.setEditable(false);

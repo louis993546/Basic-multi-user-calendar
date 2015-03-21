@@ -20,20 +20,15 @@ public class LocationDB {
 	    try {
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection("jdbc:sqlite:location.db");
-//	      JOptionPane.showMessageDialog(null, "Opened database successfully");
-
 	      stmt = c.createStatement();
 	      sql = "CREATE TABLE IF NOT EXISTS LOCATION " +
 	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-//	                   				 + "PRIMARY KEY GENERATED ALWAYS AS IDENTITY"
-//	                   				 + "(START WITH 1, INCREMENT BY 1)," +
 	                   " LOCATION       TEXT                NOT NULL)";
 	      stmt.executeUpdate(sql);
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-//	    JOptionPane.showMessageDialog(null, "Table created successfully");
 	  }
 
 	public boolean checkIfExists(String l) {
@@ -43,7 +38,6 @@ public class LocationDB {
 	public boolean addLocation(String l) throws SQLException {
 		if (!checkIfExists(l)) {
 			stmt = c.createStatement();
-			//need to figure how to to increment id automatically
 			sql = "INSERT INTO LOCATION (LOCATION) " +
 	                "VALUES ( '" + l + "' );";
 			stmt.executeUpdate(sql);
@@ -65,11 +59,9 @@ public class LocationDB {
 	        }
 			return temp;
 		} catch (SQLException e) {
-			// TODO: handle exception
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 		    System.exit(0);
 		} catch (NullPointerException e) {
-			//What is happening?
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 		    System.exit(0);
 		}
@@ -83,11 +75,13 @@ public class LocationDB {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM LOCATION WHERE LOCATION='" + l + "';");
 			while (rs.next()) {
 				int ans = rs.getInt("ID");
+				System.out.println("id = " + ans);
 				idAL.add(ans);
 			}
 			switch (idAL.size()) {
 				case 0: return 0;			//does not exist
 				case 1:
+					System.out.println(idAL.get(0));
 					return idAL.get(0);	//only 1 exist (ideal scenario)
 				default: return -1;			//exist multiple times (should never occur)
 			}
@@ -102,14 +96,17 @@ public class LocationDB {
 	public boolean deleteLocation(int id) {
 		try {
 			stmt = c.createStatement();
-		    String sql = "DELETE from LOCATION where ID=" + id + ";";
+			System.out.println("1");
+		    String sql = "DELETE from LOCATION WHERE ID=" + id + ";";
+		    System.out.println("2");
 		    stmt.executeUpdate(sql);
+		    System.out.println("3");
 		    c.commit();
+		    System.out.println("4");
 		    return true;
 		}
 		catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
-		    System.exit(0);
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		    return false;
 		}
 		

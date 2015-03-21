@@ -11,7 +11,7 @@ public class ApptDB {
 	Connection c = null;
     Statement stmt = null;
     String sql = null;
-	
+
     public ApptDB()
 	  {
 		c = null;
@@ -49,14 +49,9 @@ public class ApptDB {
 	    }
 //	    JOptionPane.showMessageDialog(null, "Table created successfully");
 	  }
-	
-	public boolean addNewAppt(String t, String d, String l) {
-		return false;
-		//SQL
-	}
-	
+    
 	public ArrayList<Appointment> getAppointmentList() {
-		ArrayList<Appointment> temp = new ArrayList<Appointment>(); 
+		ArrayList<Appointment> temp = new ArrayList<Appointment>();
 		try {
 			stmt = c.createStatement();
 	        ResultSet rs = stmt.executeQuery( "SELECT * FROM APPOINTMENT;" );
@@ -111,9 +106,8 @@ public class ApptDB {
 		}
 		return null;
 	}
-	
+
 	public boolean addAppt(Appointment a)
-	//DONE
 	{
 		try {
 			stmt = c.createStatement();
@@ -121,9 +115,9 @@ public class ApptDB {
 			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
 				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
 				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT) " +
-					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," + 
-				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," + 
-				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," + 
+					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," +
+				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," +
+				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," +
 				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + ");";
 			stmt.executeUpdate(sql);
 			return true;
@@ -132,5 +126,47 @@ public class ApptDB {
 			System.err.println( sqle.getClass().getName() + ": " + sqle.getMessage() );
 		}
 		return false;
+	}
+
+	public int getApptID(Appointment a)
+	{
+		//return id iff every details match
+		try {
+			ArrayList<Integer> idAL = new ArrayList<Integer>();
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+					+ "TITLE='" + a.getTitle()
+					+ "DESCIRPTION='" + a.getDescription()
+					+ "LOCATION='" + a.getLocation()
+					+ "START_TIME_HOUR='" + a.getStartHour()
+					+ "START_TIME_MINUTE='" + a.getStartMin()
+					+ "START_TIME_YEAR='" + a.getStartYear()
+					+ "START_TIME_MONTH='" + a.getStartMonth()
+					+ "START_TIME_DAY='" + a.getStartDay()
+					+ "END_TIME_HOUR='" + a.getEndHour()
+					+ "END_TIME_MINUTE='" + a.getEndMin()
+					+ "END_TIME_YEAR='" + a.getEndYear()
+					+ "END_TIME_MONTH='" + a.getEndMonth()
+					+ "END_TIME_DAY='" + a.getEndDay()
+					+ "REMINDER='" + a.getReminder()
+					+ "REMINDER_TIME='" + a.getReminderTime()
+					+ "REMINDER_UNIT='" + a.getReminderUnit()
+					+ "';");
+			while (rs.next()) {
+				int ans = rs.getInt("ID");
+				idAL.add(ans);
+			}
+			switch (idAL.size()) {
+				case 0: return 0;			//does not exist
+				case 1:
+					return idAL.get(0);	//only 1 exist (ideal scenario)
+				default: return -1;			//exist multiple times (should never occur)
+			}
+		}
+		catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		    return -2;
+		}
 	}
 }
