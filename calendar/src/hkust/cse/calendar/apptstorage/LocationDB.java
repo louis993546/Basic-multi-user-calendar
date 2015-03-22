@@ -96,19 +96,31 @@ public class LocationDB {
 	public boolean deleteLocation(int id) {
 		try {
 			stmt = c.createStatement();
-			System.out.println("1");
 		    String sql = "DELETE from LOCATION WHERE ID=" + id + ";";
-		    System.out.println("2");
 		    stmt.executeUpdate(sql);
-		    System.out.println("3");
 		    c.commit();
-		    System.out.println("4");
 		    return true;
 		}
 		catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		    return false;
+		}	
+	}
+	
+	public boolean modifyLocation(int id, String what)
+	{
+		try
+		{
+			stmt = c.createStatement();
+		    String sql = "UPDATE LOCATION set LOCATION = " + what + " where ID=" + id + ";";
+		    stmt.executeUpdate(sql);
+		    c.commit();
+		    return true;
 		}
-		
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return false;
+		}
 	}
 }

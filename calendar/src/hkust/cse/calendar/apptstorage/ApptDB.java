@@ -71,11 +71,7 @@ public class ApptDB {
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
 	        String LOCATION = "";
-	        Appointment tempAppointment = new Appointment();
 	        while ( rs.next() ) {
-	        	//create new appointment
-	        	//store every data into appointment
-	        	//temp.add(appointment)
 				TITLE = rs.getString("TITLE");
 				DESCRIPTION = rs.getString("DESCRIPTION");
 				START_TIME_HOUR = rs.getInt("START_TIME_HOUR");
@@ -92,7 +88,7 @@ public class ApptDB {
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
-				tempAppointment.setAppointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT);
+				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT);
 				temp.add(tempAppointment);
 	        }
 			return temp;
