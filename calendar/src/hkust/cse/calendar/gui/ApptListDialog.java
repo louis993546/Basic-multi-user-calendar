@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -23,7 +24,9 @@ public class ApptListDialog extends JFrame implements ActionListener{
 	JList<String> apptList;
 	ArrayList<Appointment> aal= new ArrayList<Appointment>();
 	DefaultListModel<String> aall = new DefaultListModel<String>();
+	JButton delete = new JButton("Delete");
 	String op = "";
+	ApptDB adb = new ApptDB();
 	
 	public ApptListDialog()
 	{
@@ -41,27 +44,28 @@ public class ApptListDialog extends JFrame implements ActionListener{
 		Border allBorder = new TitledBorder(null, "List of appointments:");
 		all.setBorder(allBorder);		//Add border text
 		
+		JPanel buttons = new JPanel();
+		delete.addActionListener(this);
+		buttons.add(delete);
+		
 		//Load data
 		ApptDB adb = new ApptDB();
 		aal = adb.getAppointmentList();
 		int aalSize = aal.size();
 		for (int i = 0; i<aalSize; i++)
 		{
-//			System.out.println("Size = " + aalSize);
-			op = op + "Title: ";
+//			op = op + "Title: ";
 			op = op + aal.get(i).getTitle();
+//			op = op + "Location: ";
+//			op = op + aal.get(i).getLocation();
 			aall.addElement(op);
 			op = "";
-			op = op + "Location: ";
-			op = op + aal.get(i).getLocation();
-			aall.addElement(op);
-			op = "";
-			aall.addElement("<html><br></html>");
 		}
 		apptList = new JList<String>(aall);
 		all.add(apptList);
 		
-		contentPane.add("North", all);
+		contentPane.add("West", all);
+		contentPane.add("East", buttons);
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -69,7 +73,19 @@ public class ApptListDialog extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if (e.getSource() == delete)
+		{
+			Appointment tempAppt = new Appointment(); //not done
+//			int id = adb.getApptID(tempAppt);
+			int id = adb.getApptIDByTitle(apptList.getSelectedValue().toString());
+			if ((id != 0) || (id != -1)) {
+				adb.deleteAppt(id);
+				aall.removeElementAt(apptList.getSelectedIndex());
+			}
+		}
+		else
+		{
+			
+		}
 	}
 }

@@ -5,4 +5,5 @@
 <fullyQualifiedTypeName name="hkust.cse.calendar.apptstorage.ApptDB"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="hkust.cse.calendar.unit.Appointment"/>
+<fullyQualifiedTypeName name="javax.swing.JButton"/>
 </qualifiedTypeNameHistroy>

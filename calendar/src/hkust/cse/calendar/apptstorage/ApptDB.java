@@ -161,8 +161,49 @@ public class ApptDB {
 		}
 		catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
-		    System.exit(0);
 		    return -2;
+		}
+	}
+	
+	public int getApptIDByTitle(String title)
+	{
+		try {
+			ArrayList<Integer> idAL = new ArrayList<Integer>();
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+					+ "TITLE='" + title
+					+ "';");
+			while (rs.next()) {
+				int ans = rs.getInt("ID");
+				idAL.add(ans);
+			}
+			switch (idAL.size()) {
+			case 0: return 0;			//does not exist
+			case 1:
+				return idAL.get(0);	//only 1 exist (ideal scenario)
+			default: return -1;			//exist multiple times (should never occur)
+			}
+		}
+		catch (SQLException e) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return -2;
+		}
+	}
+	
+	public boolean deleteAppt(int id)
+	{
+		try
+		{
+			stmt = c.createStatement();
+		    String sql = "DELETE from APPOINTMENT WHERE ID=" + id + ";";
+		    stmt.executeUpdate(sql);
+//		    c.commit();
+			return true;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			return false;
 		}
 	}
 }
