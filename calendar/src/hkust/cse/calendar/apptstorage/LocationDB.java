@@ -25,7 +25,7 @@ public class LocationDB {
 	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 	                   " LOCATION       TEXT                NOT NULL)";
 	      stmt.executeUpdate(sql);
-	      addLocation("N/A");
+//	      addLocation("N/A");
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);

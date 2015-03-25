@@ -17,6 +17,11 @@ public class Appt implements Serializable {
 		return a.getTimeSpan();
 	}
 	
+	public Appointment getAppointment()
+	{
+		return a;
+	}
+	
 	// Getter of the appointment title
 	public String getTitle() {
 		return a.getTitle();
