@@ -50,7 +50,7 @@ public class Appointment implements Comparable<Appointment> {
 	}
 	
 	public Appointment() {
-		//TO-DO
+		//TODO timespan has not been implemented
 		title = "Untitled";
 		description = "";
 		location = "";
@@ -104,22 +104,30 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean setReminder(int r, int rt, int ru)
 	{
-		//TO-DO
+		reminder = r;
+		reminderTime = rt;
+		reminderUnit = ru;
 		return true;
 	}
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
-		//TO-DO
+		//TODO
 		return false;
 		//check if date is valid
 		//check if time is valid
 	}
 	
 	public boolean setEndDateTime(int ehr, int emin, int eyr, int emon, int eday) {
-		//TO-DO
+		//TODO check if date is valid
 		return false;
 		//check if date is valid
 		//check if time is valid
+	}
+	
+	public boolean endAfterStart(int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday)
+	{
+		//TODO check if end datetime is after start datetime
+		return false;
 	}
 	
 	public boolean setID(int i)
@@ -136,49 +144,56 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean deleteFromAttend(String name)
 	{
-		//TO-DO
+		//TODO
 		return true;
 	}
 	
 	public boolean deleteFromReject(String name)
 	{
-		//TO-DO
+		try
+		{
+			reject.remove(name);
+		}
+		catch (Exception e)
+		{
+			//TODO I don't know
+		}
 		return true;
 	}
 	
 	public boolean deleteFromWaiting(String name)
 	{
-		//TO-DO
+		//TODO
 		return true;
 	}
 	
 	public boolean waitingToAttend(String name)
 	{
-		//TO-DO
+		//TODO
 		return false;
 	}
 	
 	public boolean waitingToReject(String name)
 	{
-		//TO-DO
+		//TODO
 		return false;
 	}
 	
 	public boolean addToAttend(String name)
 	{
-		//TO-DO
+		//TODO
 		return true;
 	}
 	
 	public boolean addToReject(String name)
 	{
-		//TO-DO
+		//TODO
 		return true;
 	}
 	
 	public boolean addWaiting(String name)
 	{
-		//TO-DO
+		//TODO
 		return false;
 	}
 	
@@ -330,7 +345,7 @@ public class Appointment implements Comparable<Appointment> {
 	
 	@Override
 	public int compareTo(Appointment a) {
-		//TO-DO
+		//TODO
 		return 0;
 	}
 }

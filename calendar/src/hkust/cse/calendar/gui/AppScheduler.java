@@ -431,7 +431,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	private void saveButtonResponse() throws SQLException {
-		// TO-DO
+		// TODO unfinished save button
 
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
 		int[] endDate = getValidDate(yearEF, monthEF, dayEF);
@@ -439,7 +439,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-		//TO-DO
+		//TODO
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp);
@@ -458,7 +458,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void updateSetApp(Appt appt) {
-		// TO-DO
+		// TODO
 	}
 
 	public void componentHidden(ComponentEvent e) {

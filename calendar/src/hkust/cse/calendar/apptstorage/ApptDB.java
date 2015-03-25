@@ -67,7 +67,6 @@ public class ApptDB {
 	{
 		try {
 			stmt = c.createStatement();
-			String x = a.getTitle();
 			SimpleDateFormat dtSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dt = dtSDF.toString();
 			dt = dt + a.getTitle();
@@ -172,6 +171,7 @@ public class ApptDB {
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
 				ARW = rs.getString("ARW");
 				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
+				//TODO
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2));
 				temp.add(tempAppointment);
 	        }
