@@ -1,31 +1,24 @@
 package hkust.cse.calendar.unit;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class Appt implements Serializable {
 
 	private TimeSpan mTimeSpan;					// Include day, start time and end time of the appointments
-
 	private String mTitle;						// The Title of the appointments
-
 	private String mInfo;						// Store the content of the appointments description
-
 	private int mApptID;						// The appointment id
-	
 	private int joinApptID;						// The join appointment id
-
 	private boolean isjoint;					// The appointment is a joint appointment
-	
 	private LinkedList<String> attend;			// The Attendant list
-	
 	private LinkedList<String> reject;			// The reject list
-	
 	private LinkedList<String> waiting;			// The waiting list
-	
 	private Appointment a;
 	
 	public Appt() {								// A default constructor used to set all the attribute to default values
+		//original
 		mApptID = 0;
 		mTimeSpan = null;
 		mTitle = "Untitled";
@@ -35,21 +28,24 @@ public class Appt implements Serializable {
 		reject = new LinkedList<String>();
 		waiting = new LinkedList<String>();
 		joinApptID = -1;
+		//delete the above code once all //TO-DO on this page is done
+		
+		a = new Appointment();
 	}
 
 	// Getter of the mTimeSpan
 	public TimeSpan TimeSpan() {
-		return mTimeSpan;
+		return a.getTimeSpan();
 	}
 	
 	// Getter of the appointment title
 	public String getTitle() {
-		return mTitle;
+		return a.getTitle();
 	}
 
 	// Getter of appointment description
 	public String getInfo() {
-		return a.getTitle();
+		return a.getDescription();
 	}
 
 	// Getter of the appointment id
@@ -63,54 +59,60 @@ public class Appt implements Serializable {
 	}
 
 	public void setJoinID(int joinID){
-		this.joinApptID = joinID;
+		a.setJID(joinID);
 	}
+	
 	// Getter of the attend LinkedList<String>
 	public LinkedList<String> getAttendList(){
-		return attend;
+		return a.getAttend();
 	}
 	
 	// Getter of the reject LinkedList<String>
 	public LinkedList<String> getRejectList(){
-		return reject;
+		return a.getReject();
 	}
 	
 	// Getter of the waiting LinkedList<String>
 	public LinkedList<String> getWaitingList(){
-		return waiting;
+		return a.getWaiting();
 	}
 	
 	public LinkedList<String> getAllPeople(){
 		LinkedList<String> allList = new LinkedList<String>();
-		allList.addAll(attend);
-		allList.addAll(reject);
-		allList.addAll(waiting);
+		allList.addAll(getAttendList());
+		allList.addAll(getRejectList());
+		allList.addAll(getWaitingList());
 		return allList;
 	}
 	
 	public void addAttendant(String addID){
+		//TO-DO
 		if (attend == null)
 			attend = new LinkedList<String>();
 		attend.add(addID);
 	}
 	
 	public void addReject(String addID){
+		//TO-DO
 		if (reject == null)
 			reject = new LinkedList<String>();
 		reject.add(addID);
 	}
 	
 	public void addWaiting(String addID){
+		//TO-DO
 		if (waiting == null)
 			waiting = new LinkedList<String>();
 		waiting.add(addID);
 	}
 	
 	public void setWaitingList(LinkedList<String> waitingList){
+		//TO-DO
 		waiting = waitingList;
 	}
 	
 	public void setWaitingList(String[] waitingList){
+		//TO-DO
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (waitingList !=null){
 			for (int a=0; a<waitingList.length; a++){
@@ -121,10 +123,12 @@ public class Appt implements Serializable {
 	}
 	
 	public void setRejectList(LinkedList<String> rejectLinkedList) {
+		//TO-DO
 		reject = rejectLinkedList;
 	}
 	
 	public void setRejectList(String[] rejectList){
+		//TO-DO
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (rejectList !=null){
 			for (int a=0; a<rejectList.length; a++){
@@ -135,10 +139,12 @@ public class Appt implements Serializable {
 	}
 	
 	public void setAttendList(LinkedList<String> attendLinkedList) {
+		//TO-DO
 		attend = attendLinkedList;
 	}
 	
 	public void setAttendList(String[] attendList){
+		//TO-DO
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (attendList !=null){
 			for (int a=0; a<attendList.length; a++){
@@ -149,21 +155,22 @@ public class Appt implements Serializable {
 	}
 	// Getter of the appointment title
 	public String toString() {
-		return mTitle;
+		return a.getTitle();
 	}
 
 	// Setter of the appointment title
 	public void setTitle(String t) {
-		mTitle = t;
+		a.setTitle(t);
 	}
 
 	// Setter of the appointment description
 	public void setInfo(String in) {
-		mInfo = in;
+		a.setDescription(in);
 	}
 
 	// Setter of the mTimeSpan
 	public void setTimeSpan(TimeSpan d) {
+		//TO-DO
 		mTimeSpan = d;
 	}
 
@@ -174,6 +181,7 @@ public class Appt implements Serializable {
 	
 	// check whether this is a joint appointment
 	public boolean isJoint(){
+		//TO-DO
 		return isjoint;
 	}
 
@@ -181,7 +189,4 @@ public class Appt implements Serializable {
 	public void setJoint(boolean isjoint){
 		this.isjoint = isjoint;
 	}
-
-
-
 }

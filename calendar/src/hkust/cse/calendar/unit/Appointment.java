@@ -1,5 +1,6 @@
 package hkust.cse.calendar.unit;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class Appointment implements Comparable<Appointment> {
@@ -24,6 +25,7 @@ public class Appointment implements Comparable<Appointment> {
 	private LinkedList<String> waiting;
 	private int id;
 	private int jid;
+	private boolean isJoint;
 	
 	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
 		title = t;
@@ -48,29 +50,61 @@ public class Appointment implements Comparable<Appointment> {
 	}
 	
 	public Appointment() {
-		// TODO Auto-generated constructor stub
+		title = "Untitled";
+		description = "";
+		location = "";
+		id = 0;
+		jid = -1;
+		attend = new LinkedList<String>();
+		reject = new LinkedList<String>();
+		waiting = new LinkedList<String>();
+		//time
 	}
 	
-	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
+//	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
+//		title = t;
+//		description = d;
+//		location = l;
+//		startHour = shr;
+//		startMin = smin;
+//		startYear = syr;
+//		startMonth = smon;
+//		startDay = sday;
+//		endHour = ehr;
+//		endMin = emin;
+//		endYear = eyr;
+//		endMonth = emon;
+//		endDay = eday;
+//		reminder = r;
+//		reminderTime = rt;
+//		reminderUnit = ru;
+//		attend = aal;
+//		reject = ral;
+//		waiting = wal;
+//	}
+	
+	public boolean setTitle(String t)
+	{
 		title = t;
+		return true;
+	}
+	
+	public boolean setDescription(String d)
+	{
 		description = d;
+		return true;
+	}
+	
+	public boolean setLocation(String l)
+	{
 		location = l;
-		startHour = shr;
-		startMin = smin;
-		startYear = syr;
-		startMonth = smon;
-		startDay = sday;
-		endHour = ehr;
-		endMin = emin;
-		endYear = eyr;
-		endMonth = emon;
-		endDay = eday;
-		reminder = r;
-		reminderTime = rt;
-		reminderUnit = ru;
-		attend = aal;
-		reject = ral;
-		waiting = wal;
+		return true;
+	}
+	
+	public boolean setReminder(int r, int rt, int ru)
+	{
+		//TO-DO
+		return true;
 	}
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
@@ -85,6 +119,36 @@ public class Appointment implements Comparable<Appointment> {
 		//check if time is valid
 	}
 	
+	public boolean setID(int i)
+	{
+		id = i;
+		return true;
+	}
+	
+	public boolean setJID(int j)
+	{
+		jid = j;
+		return true;
+	}
+	
+	public boolean deleteFromAttend(String name)
+	{
+		//TO-DO
+		return true;
+	}
+	
+	public boolean deleteFromReject(String name)
+	{
+		//TO-DO
+		return true;
+	}
+	
+	public boolean deleteFromWaiting(String name)
+	{
+		//TO-DO
+		return true;
+	}
+	
 	public boolean waitingToAttend(String name)
 	{
 		return false;
@@ -97,10 +161,28 @@ public class Appointment implements Comparable<Appointment> {
 
 	}
 	
+	public boolean addToAttend(String name)
+	{
+		//TO-DO
+		return true;
+	}
+	
+	public boolean addToReject(String name)
+	{
+		//TO-DO
+		return true;
+	}
+	
 	public boolean addWaiting(String name)
 	{
 		return false;
 
+	}
+	
+	public boolean setIsJoint(boolean i)
+	{
+		isJoint = i;
+		return true;
 	}
 	
 	//get functions
@@ -197,6 +279,15 @@ public class Appointment implements Comparable<Appointment> {
 		if (hr >= 0 && hr <= 24 && min >= 0 && min <= 60)
 			return true;
 		return false;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public TimeSpan getTimeSpan()
+	{
+		Timestamp st = new Timestamp(startYear, startMonth, startDay, startHour, startMin, 0, 0);
+		Timestamp et = new Timestamp(endYear, endMonth, endDay, endHour, endMin, 0, 0);
+		TimeSpan a = new TimeSpan(st, et);
+		return a;	
 	}
 	
 	@Override

@@ -1,3 +1,5 @@
+//MORE COMMENTS
+
 package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.Appointment;
@@ -42,7 +44,7 @@ public class ApptDB {
 	          " REMINDER_UNIT        INT                NOT NULL," +
 	          " ARW                  TEXT               NOT NULL)";
 	      stmt.executeUpdate(sql);
-	    } catch ( Exception e ) {
+	    } catch (Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }

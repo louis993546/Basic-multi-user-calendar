@@ -24,8 +24,8 @@ public class LocationDB {
 	      sql = "CREATE TABLE IF NOT EXISTS LOCATION " +
 	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 	                   " LOCATION       TEXT                NOT NULL)";
-	      System.out.println(sql);
 	      stmt.executeUpdate(sql);
+	      addLocation("N/A");
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
@@ -81,9 +81,7 @@ public class LocationDB {
 			}
 			switch (idAL.size()) {
 				case 0: return 0;			//does not exist
-				case 1:
-					System.out.println(idAL.get(0));
-					return idAL.get(0);	//only 1 exist (ideal scenario)
+				case 1: return idAL.get(0);	//only 1 exist (ideal scenario)
 				default: return -1;			//exist multiple times (should never occur)
 			}
 		}

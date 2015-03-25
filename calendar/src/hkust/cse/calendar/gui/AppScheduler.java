@@ -435,6 +435,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
 		int[] endDate = getValidDate(yearEF, monthEF, dayEF);
+		//check if end date earlier then start date
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
@@ -461,11 +462,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void componentHidden(ComponentEvent e) {
-
+		//ask ta
 	}
 
 	public void componentMoved(ComponentEvent e) {
-
+		//ask ta
 	}
 
 	public void componentResized(ComponentEvent e) {

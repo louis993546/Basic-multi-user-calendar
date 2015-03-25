@@ -346,7 +346,14 @@ public class CalGrid extends JFrame implements ActionListener {
 				}
 				else if (e.getActionCommand().equals("Appointment List"))
 				{
-					ApptListDialog a = new ApptListDialog();
+					try
+					{
+						ApptListDialog a = new ApptListDialog();
+					}
+					catch (Exception ex)
+					{
+						System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
+					}
 				}
 				else
 				{
