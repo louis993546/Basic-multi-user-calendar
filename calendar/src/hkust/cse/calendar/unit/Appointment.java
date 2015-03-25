@@ -1,5 +1,7 @@
 package hkust.cse.calendar.unit;
 
+import java.util.LinkedList;
+
 public class Appointment implements Comparable<Appointment> {
 	private String title;
 	private String description;
@@ -17,11 +19,13 @@ public class Appointment implements Comparable<Appointment> {
 	private int reminder;
 	private int reminderTime;
 	private int reminderUnit;
-	//attend list
-	//not attend list?
-	//waiting list
-
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru) {
+	private LinkedList<String> attend;
+	private LinkedList<String> reject;
+	private LinkedList<String> waiting;
+	private int id;
+	private int jid;
+	
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
 		title = t;
 		description = d;
 		location = l;
@@ -38,13 +42,16 @@ public class Appointment implements Comparable<Appointment> {
 		reminder = r;
 		reminderTime = rt;
 		reminderUnit = ru;
+		attend = aal;
+		reject = ral;
+		waiting = wal;
 	}
 	
 	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru) {
+	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
 		title = t;
 		description = d;
 		location = l;
@@ -61,6 +68,9 @@ public class Appointment implements Comparable<Appointment> {
 		reminder = r;
 		reminderTime = rt;
 		reminderUnit = ru;
+		attend = aal;
+		reject = ral;
+		waiting = wal;
 	}
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
@@ -73,6 +83,24 @@ public class Appointment implements Comparable<Appointment> {
 		return false;
 		//check if date is valid
 		//check if time is valid
+	}
+	
+	public boolean waitingToAttend(String name)
+	{
+		return false;
+
+	}
+	
+	public boolean waitingToReject(String name)
+	{
+		return false;
+
+	}
+	
+	public boolean addWaiting(String name)
+	{
+		return false;
+
 	}
 	
 	//get functions
@@ -139,6 +167,26 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public int getReminderUnit() {
 		return reminderUnit;
+	}
+	
+	public LinkedList<String> getAttend() {
+		return attend;
+	}
+	
+	public LinkedList<String> getReject() {
+		return reject;
+	}
+	
+	public LinkedList<String> getWaiting() {
+		return waiting;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public int getJID() {
+		return jid;
 	}
 	
 	public boolean isDateValid(int yr, int mon, int day) {

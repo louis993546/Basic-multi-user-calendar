@@ -23,6 +23,8 @@ public class Appt implements Serializable {
 	
 	private LinkedList<String> waiting;			// The waiting list
 	
+	private Appointment a;
+	
 	public Appt() {								// A default constructor used to set all the attribute to default values
 		mApptID = 0;
 		mTimeSpan = null;
@@ -47,17 +49,17 @@ public class Appt implements Serializable {
 
 	// Getter of appointment description
 	public String getInfo() {
-		return mInfo;
+		return a.getTitle();
 	}
 
 	// Getter of the appointment id
 	public int getID() {
-		return mApptID;
+		return a.getID();
 	}
 	
 	// Getter of the join appointment id
 	public int getJoinID(){
-		return joinApptID;
+		return a.getJID();
 	}
 
 	public void setJoinID(int joinID){

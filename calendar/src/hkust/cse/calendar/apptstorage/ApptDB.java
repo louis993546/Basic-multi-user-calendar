@@ -3,7 +3,9 @@ package hkust.cse.calendar.apptstorage;
 import hkust.cse.calendar.unit.Appointment;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
@@ -13,42 +15,116 @@ public class ApptDB {
     String sql = null;
 
     public ApptDB()
-	  {
-		c = null;
-	    stmt = null;
-	    try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:appt.db");
-//	      JOptionPane.showMessageDialog(null, "Opened database successfully");
-
-	      stmt = c.createStatement();
-	      sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
-	    		  	   "(ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-	    		       " TITLE                TEXT               NOT NULL," +
-	    		       " DESCRIPTION          TEXT               NOT NULL," +
-	    		       " START_TIME_HOUR      INT                NOT NULL," +
-	    		       " START_TIME_MINUTE    INT                NOT NULL," +
-	    		       " START_TIME_YEAR      INT                NOT NULL," +
-	    		       " START_TIME_MONTH     INT                NOT NULL," +
-	    		       " START_TIME_DAY       INT                NOT NULL," +
-	    		       " END_TIME_HOUR        INT                NOT NULL," +
-	    		       " END_TIME_MINUTE      INT                NOT NULL," +
-	    		       " END_TIME_YEAR        INT                NOT NULL," +
-	    		       " END_TIME_MONTH       INT                NOT NULL," +
-	    		       " END_TIME_DAY         INT                NOT NULL," +
-	    		       " REMINDER             INT                NOT NULL," +
-	    		       " REMINDER_TIME        INT                NOT NULL," +
-	    		       " REMINDER_UNIT        INT                NOT NULL," +
-	    		       " LOCATION             TEXT               NOT NULL)";
+	{
+	c = null;
+	stmt = null;
+    try {
+	    Class.forName("org.sqlite.JDBC");
+	    c = DriverManager.getConnection("jdbc:sqlite:appt.db");
+	    stmt = c.createStatement();
+	    sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
+	   	  	  "(ID                   INTEGER            NOT NULL        PRIMARY KEY AUTOINCREMENT," +
+	   	      " TITLE                TEXT               NOT NULL," +
+	   	      " DESCRIPTION          TEXT               NOT NULL," +
+	   	      " LOCATION             TEXT               NOT NULL," +
+	          " START_TIME_HOUR      INT                NOT NULL," +
+	          " START_TIME_MINUTE    INT                NOT NULL," +
+	          " START_TIME_YEAR      INT                NOT NULL," +
+	          " START_TIME_MONTH     INT                NOT NULL," +
+	          " START_TIME_DAY       INT                NOT NULL," +
+	          " END_TIME_HOUR        INT                NOT NULL," +
+	          " END_TIME_MINUTE      INT                NOT NULL," +
+	          " END_TIME_YEAR        INT                NOT NULL," +
+	          " END_TIME_MONTH       INT                NOT NULL," +
+	          " END_TIME_DAY         INT                NOT NULL," +
+	          " REMINDER             INT                NOT NULL," +
+	          " REMINDER_TIME        INT                NOT NULL," +
+	          " REMINDER_UNIT        INT                NOT NULL," +
+	          " ARW                  TEXT               NOT NULL)";
 	      stmt.executeUpdate(sql);
-//	      stmt.close();
-//	      c.close();
 	    } catch ( Exception e ) {
-	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-//	    JOptionPane.showMessageDialog(null, "Table created successfully");
 	  }
+    
+    public boolean addARW(Appointment a)
+    {
+    	try {
+			stmt = c.createStatement();
+			sql = "INSERT INTO ";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+    	
+    }
+    
+    public boolean addAppt(Appointment a)
+	{
+		try {
+			stmt = c.createStatement();
+			String x = a.getTitle();
+			SimpleDateFormat dtSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+			String dt = dtSDF.toString();
+			dt = dt + a.getTitle();
+			dt = "" + dt.hashCode();
+			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
+				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
+				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT, ARW) " +
+					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," +
+				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," +
+				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," +
+				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + "," + dt + ");";
+			stmt.executeUpdate(sql);
+			//create 1 new table with 3 columns
+			System.out.println(dt);
+			sql = "CREATE TABLE IF NOT EXISTS " + dt + 
+					" (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+					"  ATTEND TEXT," +
+					"  REJECT TEXT," +
+					"  WAITING TEXT)";
+			System.out.println(sql);
+			stmt.executeUpdate(sql);
+			return true;
+		}
+		catch (SQLException sqle) {
+			System.err.println( sqle.getClass().getName() + ": " + sqle.getMessage() );
+		}
+		return false;
+	}
+    
+    public LinkedList<LinkedList<String>> getARWList(String name)
+    {
+    	LinkedList<String> aal = new LinkedList<String>();
+    	LinkedList<String> ral = new LinkedList<String>();
+    	LinkedList<String> wal = new LinkedList<String>();
+    	try
+    	{
+    		stmt = c.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM " + name + ";");
+    		while (rs.next())
+    		{
+    			String attend = rs.getString("ATTEND");
+    			String reject = rs.getString("REJECT");
+    			String waiting = rs.getString("WAITING");
+				aal.add(attend);
+				ral.add(reject);
+				wal.add(waiting);
+    		}
+    		LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
+    		arwList.add(aal);
+    		arwList.add(ral);
+    		arwList.add(wal);
+    		return arwList;
+    	}
+    	catch (SQLException e)
+    	{
+    		System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+    		return null;
+    	}
+    }
     
 	public ArrayList<Appointment> getAppointmentList() {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
@@ -57,6 +133,7 @@ public class ApptDB {
 	        ResultSet rs = stmt.executeQuery( "SELECT * FROM APPOINTMENT;" );
 	        String TITLE = "";
 	        String DESCRIPTION = "";
+	        String LOCATION = "";
 	        int START_TIME_HOUR;
 	        int START_TIME_MINUTE;
 	        int START_TIME_YEAR;
@@ -70,7 +147,10 @@ public class ApptDB {
 	        int REMINDER;
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
-	        String LOCATION = "";
+	        String ARW = "";
+	        ArrayList<String> attend = new ArrayList<String>();
+	        ArrayList<String> reject = new ArrayList<String>();
+	        ArrayList<String> waiting = new ArrayList<String>();
 	        while ( rs.next() ) {
 				TITLE = rs.getString("TITLE");
 				DESCRIPTION = rs.getString("DESCRIPTION");
@@ -88,7 +168,9 @@ public class ApptDB {
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
-				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT);
+				ARW = rs.getString("ARW");
+				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
+				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2));
 				temp.add(tempAppointment);
 	        }
 			return temp;
@@ -103,26 +185,7 @@ public class ApptDB {
 		return null;
 	}
 
-	public boolean addAppt(Appointment a)
-	{
-		try {
-			stmt = c.createStatement();
-			String x = a.getTitle();
-			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
-				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
-				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT) " +
-					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," +
-				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," +
-				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," +
-				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + ");";
-			stmt.executeUpdate(sql);
-			return true;
-		}
-		catch (SQLException sqle) {
-			System.err.println( sqle.getClass().getName() + ": " + sqle.getMessage() );
-		}
-		return false;
-	}
+	
 
 	public int getApptID(Appointment a)
 	{

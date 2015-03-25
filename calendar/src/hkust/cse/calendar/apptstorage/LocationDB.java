@@ -24,6 +24,7 @@ public class LocationDB {
 	      sql = "CREATE TABLE IF NOT EXISTS LOCATION " +
 	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 	                   " LOCATION       TEXT                NOT NULL)";
+	      System.out.println(sql);
 	      stmt.executeUpdate(sql);
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );

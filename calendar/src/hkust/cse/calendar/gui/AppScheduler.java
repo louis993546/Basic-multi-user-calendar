@@ -438,7 +438,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0);
+		//TO-DO
+		//currently it provide 3 empty linkedlist
+		LinkedList<String> temp = new LinkedList<String>();
+		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp);
 		adb = new ApptDB();
 		adb.addAppt(newAppt);
 	}
