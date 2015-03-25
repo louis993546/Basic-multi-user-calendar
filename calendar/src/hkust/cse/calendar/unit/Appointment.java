@@ -50,6 +50,7 @@ public class Appointment implements Comparable<Appointment> {
 	}
 	
 	public Appointment() {
+		//TO-DO
 		title = "Untitled";
 		description = "";
 		location = "";
@@ -108,12 +109,14 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
+		//TO-DO
 		return false;
 		//check if date is valid
 		//check if time is valid
 	}
 	
 	public boolean setEndDateTime(int ehr, int emin, int eyr, int emon, int eday) {
+		//TO-DO
 		return false;
 		//check if date is valid
 		//check if time is valid
@@ -151,14 +154,14 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean waitingToAttend(String name)
 	{
+		//TO-DO
 		return false;
-
 	}
 	
 	public boolean waitingToReject(String name)
 	{
+		//TO-DO
 		return false;
-
 	}
 	
 	public boolean addToAttend(String name)
@@ -175,14 +178,44 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean addWaiting(String name)
 	{
+		//TO-DO
 		return false;
-
 	}
 	
 	public boolean setIsJoint(boolean i)
 	{
 		isJoint = i;
 		return true;
+	}
+	
+	public void initiateAttend()
+	{
+		attend = new LinkedList<String>();
+	}
+	
+	public void initiateReject()
+	{
+		reject = new LinkedList<String>();
+	}
+	
+	public void initiateWaiting()
+	{
+		waiting = new LinkedList<String>();
+	}
+	
+	public void setAttend(LinkedList<String> a)
+	{
+		attend = a;
+	}
+	
+	public void setReject(LinkedList<String> r)
+	{
+		reject = r;
+	}
+	
+	public void setWaiting(LinkedList<String> w)
+	{
+		waiting = w;
 	}
 	
 	//get functions
@@ -271,6 +304,11 @@ public class Appointment implements Comparable<Appointment> {
 		return jid;
 	}
 	
+	public boolean getIsJoint()
+	{
+		return isJoint;
+	}
+	
 	public boolean isDateValid(int yr, int mon, int day) {
 		return false;
 	}
@@ -292,7 +330,7 @@ public class Appointment implements Comparable<Appointment> {
 	
 	@Override
 	public int compareTo(Appointment a) {
-		// TODO Auto-generated method stub
+		//TO-DO
 		return 0;
 	}
 }

@@ -6,30 +6,9 @@ import java.util.LinkedList;
 
 public class Appt implements Serializable {
 
-	private TimeSpan mTimeSpan;					// Include day, start time and end time of the appointments
-	private String mTitle;						// The Title of the appointments
-	private String mInfo;						// Store the content of the appointments description
-	private int mApptID;						// The appointment id
-	private int joinApptID;						// The join appointment id
-	private boolean isjoint;					// The appointment is a joint appointment
-	private LinkedList<String> attend;			// The Attendant list
-	private LinkedList<String> reject;			// The reject list
-	private LinkedList<String> waiting;			// The waiting list
 	private Appointment a;
 	
 	public Appt() {								// A default constructor used to set all the attribute to default values
-		//original
-		mApptID = 0;
-		mTimeSpan = null;
-		mTitle = "Untitled";
-		mInfo = "";
-		isjoint = false;
-		attend = new LinkedList<String>();
-		reject = new LinkedList<String>();
-		waiting = new LinkedList<String>();
-		joinApptID = -1;
-		//delete the above code once all //TO-DO on this page is done
-		
 		a = new Appointment();
 	}
 
@@ -86,72 +65,63 @@ public class Appt implements Serializable {
 	}
 	
 	public void addAttendant(String addID){
-		//TO-DO
-		if (attend == null)
-			attend = new LinkedList<String>();
-		attend.add(addID);
+		if (a.getAttend() == null)
+			a.initiateAttend();
+		a.addToAttend(addID);
 	}
 	
 	public void addReject(String addID){
-		//TO-DO
-		if (reject == null)
-			reject = new LinkedList<String>();
-		reject.add(addID);
+		if (a.getReject() == null)
+			a.initiateReject();
+		a.addToReject(addID);
 	}
 	
 	public void addWaiting(String addID){
-		//TO-DO
-		if (waiting == null)
-			waiting = new LinkedList<String>();
-		waiting.add(addID);
+		if (a.getWaiting() == null)
+			a.initiateWaiting();
+		a.addWaiting(addID);
 	}
 	
 	public void setWaitingList(LinkedList<String> waitingList){
-		//TO-DO
-		waiting = waitingList;
+		a.setWaiting(waitingList);
 	}
 	
 	public void setWaitingList(String[] waitingList){
-		//TO-DO
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (waitingList !=null){
 			for (int a=0; a<waitingList.length; a++){
 				tempLinkedList.add(waitingList[a].trim());
 			}
 		}
-		waiting = tempLinkedList;
+		a.setWaiting(tempLinkedList);
 	}
 	
 	public void setRejectList(LinkedList<String> rejectLinkedList) {
-		//TO-DO
-		reject = rejectLinkedList;
+		a.setReject(rejectLinkedList);
 	}
 	
 	public void setRejectList(String[] rejectList){
-		//TO-DO
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (rejectList !=null){
 			for (int a=0; a<rejectList.length; a++){
 				tempLinkedList.add(rejectList[a].trim());
 			}
 		}
-		reject = tempLinkedList;
+		a.setReject(tempLinkedList);
 	}
 	
 	public void setAttendList(LinkedList<String> attendLinkedList) {
-		//TO-DO
-		attend = attendLinkedList;
+		a.setAttend(attendLinkedList);
 	}
 	
 	public void setAttendList(String[] attendList){
-		//TO-DO
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (attendList !=null){
 			for (int a=0; a<attendList.length; a++){
 				tempLinkedList.add(attendList[a].trim());
 			}
 		}
-		attend = tempLinkedList;
+		a.setAttend(tempLinkedList);
 	}
 	// Getter of the appointment title
 	public String toString() {
@@ -169,24 +139,24 @@ public class Appt implements Serializable {
 	}
 
 	// Setter of the mTimeSpan
+	@SuppressWarnings("deprecation")
 	public void setTimeSpan(TimeSpan d) {
-		//TO-DO
-		mTimeSpan = d;
+		a.setStartDateTime(d.StartTime().getHours(), d.StartTime().getMinutes(), d.StartTime().getYear(), d.StartTime().getMonth(), d.StartTime().getDay());
+		a.setEndDateTime(d.EndTime().getHours(), d.EndTime().getMinutes(), d.EndTime().getYear(), d.EndTime().getMonth(), d.EndTime().getDay());
 	}
 
 	// Setter if the appointment id
 	public void setID(int id) {
-		mApptID = id;
+		a.setID(id);
 	}
 	
 	// check whether this is a joint appointment
 	public boolean isJoint(){
-		//TO-DO
-		return isjoint;
+		return a.getIsJoint();
 	}
 
 	// setter of the isJoint
 	public void setJoint(boolean isjoint){
-		this.isjoint = isjoint;
+		a.setIsJoint(isjoint);
 	}
 }
