@@ -80,14 +80,20 @@ public class ApptDB {
 				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + "," + dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
-			System.out.println(dt);
-			sql = "CREATE TABLE IF NOT EXISTS " + dt + 
-					" (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-					"  ATTEND TEXT," +
-					"  REJECT TEXT," +
-					"  WAITING TEXT)";
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
+			//TODO fix this SQL syntax error
+			
+//			java.sql.SQLException: near "1967676291": syntax error
+//			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)
+//			java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (near "1967676291": syntax error)
+
+//			System.out.println(dt);
+//			sql = "CREATE TABLE IF NOT EXISTS " + dt + 
+//					" (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+//					"  ATTEND TEXT," +
+//					"  REJECT TEXT," +
+//					"  WAITING TEXT)";
+//			System.out.println(sql);
+//			stmt.executeUpdate(sql);
 			return true;
 		}
 		catch (SQLException sqle) {
@@ -170,7 +176,14 @@ public class ApptDB {
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
 				ARW = rs.getString("ARW");
-				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
+				
+				//TODO these 4 lines are just temporary
+				//remove these codes once bug in addAppt has been fixed
+				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
+				arwList.add(new LinkedList<String>());
+				arwList.add(new LinkedList<String>());
+				arwList.add(new LinkedList<String>());
+//				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
 				//TODO extract the 3 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2));
 				temp.add(tempAppointment);
