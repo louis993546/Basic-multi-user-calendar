@@ -163,8 +163,14 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean deleteFromWaiting(String name)
 	{
-		//TODO
-		return true;
+		if (waiting.remove(name) == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean waitingToAttend(String name)
@@ -175,25 +181,32 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean waitingToReject(String name)
 	{
-		//TODO
-		return false;
+		if (waiting.remove(name) == true)
+		{
+			reject.add(name);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean addToAttend(String name)
 	{
-		//TODO
+		attend.add(name);
 		return true;
 	}
 	
 	public boolean addToReject(String name)
 	{
-		//TODO
+		reject.add(name);
 		return true;
 	}
 	
 	public boolean addWaiting(String name)
 	{
-		//TODO
+		waiting.add(name);
 		return false;
 	}
 	
@@ -345,7 +358,7 @@ public class Appointment implements Comparable<Appointment> {
 	
 	@Override
 	public int compareTo(Appointment a) {
-		//TODO
+		//TODO comparing appointments
 		return 0;
 	}
 }

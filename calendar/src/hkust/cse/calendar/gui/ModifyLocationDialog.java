@@ -86,7 +86,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		//TODO modify and exit button still useless
 		if (e.getSource() == deleteButton)
 		{
 			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
