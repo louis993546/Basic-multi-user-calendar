@@ -13,11 +13,8 @@ Desktop.ini
 $RECYCLE.BIN/
 *.class
 *.jar
-.recommenders/
-.metadata/
 calendar/appt.db
 calendar/location.db
-.metadata/*
 
 # From online sources
 *.pydevproject
