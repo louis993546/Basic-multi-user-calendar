@@ -7,7 +7,7 @@ import java.util.LinkedList;
 public class Appt implements Serializable {
 
 	private Appointment a;
-	
+
 	public Appt() {								// A default constructor used to set all the attribute to default values
 		a = new Appointment();
 	}
@@ -16,12 +16,12 @@ public class Appt implements Serializable {
 	public TimeSpan TimeSpan() {
 		return a.getTimeSpan();
 	}
-	
+
 	public Appointment getAppointment()
 	{
 		return a;
 	}
-	
+
 	// Getter of the appointment title
 	public String getTitle() {
 		return a.getTitle();
@@ -36,7 +36,7 @@ public class Appt implements Serializable {
 	public int getID() {
 		return a.getID();
 	}
-	
+
 	// Getter of the join appointment id
 	public int getJoinID(){
 		return a.getJID();
@@ -45,22 +45,22 @@ public class Appt implements Serializable {
 	public void setJoinID(int joinID){
 		a.setJID(joinID);
 	}
-	
+
 	// Getter of the attend LinkedList<String>
 	public LinkedList<String> getAttendList(){
 		return a.getAttend();
 	}
-	
+
 	// Getter of the reject LinkedList<String>
 	public LinkedList<String> getRejectList(){
 		return a.getReject();
 	}
-	
+
 	// Getter of the waiting LinkedList<String>
 	public LinkedList<String> getWaitingList(){
 		return a.getWaiting();
 	}
-	
+
 	public LinkedList<String> getAllPeople(){
 		LinkedList<String> allList = new LinkedList<String>();
 		allList.addAll(getAttendList());
@@ -68,29 +68,29 @@ public class Appt implements Serializable {
 		allList.addAll(getWaitingList());
 		return allList;
 	}
-	
+
 	public void addAttendant(String addID){
 		if (a.getAttend() == null)
 			a.initiateAttend();
 		a.addToAttend(addID);
 	}
-	
+
 	public void addReject(String addID){
 		if (a.getReject() == null)
 			a.initiateReject();
 		a.addToReject(addID);
 	}
-	
+
 	public void addWaiting(String addID){
 		if (a.getWaiting() == null)
 			a.initiateWaiting();
 		a.addWaiting(addID);
 	}
-	
+
 	public void setWaitingList(LinkedList<String> waitingList){
 		a.setWaiting(waitingList);
 	}
-	
+
 	public void setWaitingList(String[] waitingList){
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (waitingList !=null){
@@ -100,11 +100,11 @@ public class Appt implements Serializable {
 		}
 		a.setWaiting(tempLinkedList);
 	}
-	
+
 	public void setRejectList(LinkedList<String> rejectLinkedList) {
 		a.setReject(rejectLinkedList);
 	}
-	
+
 	public void setRejectList(String[] rejectList){
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (rejectList !=null){
@@ -114,11 +114,11 @@ public class Appt implements Serializable {
 		}
 		a.setReject(tempLinkedList);
 	}
-	
+
 	public void setAttendList(LinkedList<String> attendLinkedList) {
 		a.setAttend(attendLinkedList);
 	}
-	
+
 	public void setAttendList(String[] attendList){
 		LinkedList<String> tempLinkedList = new LinkedList<String>();
 		if (attendList !=null){
@@ -146,15 +146,16 @@ public class Appt implements Serializable {
 	// Setter of the mTimeSpan
 	@SuppressWarnings("deprecation")
 	public void setTimeSpan(TimeSpan d) {
-		a.setStartDateTime(d.StartTime().getHours(), d.StartTime().getMinutes(), d.StartTime().getYear(), d.StartTime().getMonth(), d.StartTime().getDay());
-		a.setEndDateTime(d.EndTime().getHours(), d.EndTime().getMinutes(), d.EndTime().getYear(), d.EndTime().getMonth(), d.EndTime().getDay());
+		//TODO timestamp year starts from 1900, not sure if it can work correctly
+		a.setStartDateTime(d.StartTime().getHours(), d.StartTime().getMinutes(), d.StartTime().getYear()+1900, d.StartTime().getMonth(), d.StartTime().getDay());
+		a.setEndDateTime(d.EndTime().getHours(), d.EndTime().getMinutes(), d.EndTime().getYear()+1900, d.EndTime().getMonth(), d.EndTime().getDay());
 	}
 
 	// Setter if the appointment id
 	public void setID(int id) {
 		a.setID(id);
 	}
-	
+
 	// check whether this is a joint appointment
 	public boolean isJoint(){
 		return a.getIsJoint();
