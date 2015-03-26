@@ -111,14 +111,14 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
-		//TODO
+		//TODO check if start date is valid
 		return false;
 		//check if date is valid
 		//check if time is valid
 	}
 	
 	public boolean setEndDateTime(int ehr, int emin, int eyr, int emon, int eday) {
-		//TODO check if date is valid
+		//TODO check if end date is valid
 		return false;
 		//check if date is valid
 		//check if time is valid
@@ -144,21 +144,26 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean deleteFromAttend(String name)
 	{
-		//TODO
-		return true;
+		if (attend.remove(name) == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean deleteFromReject(String name)
 	{
-		try
+		if (reject.remove(name) == true)
 		{
-			reject.remove(name);
+			return true;
 		}
-		catch (Exception e)
+		else
 		{
-			//TODO I don't know
+			return false;
 		}
-		return true;
 	}
 	
 	public boolean deleteFromWaiting(String name)
@@ -175,8 +180,15 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean waitingToAttend(String name)
 	{
-		//TODO
-		return false;
+		if (waiting.remove(name) == true)
+		{
+			attend.add(name);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean waitingToReject(String name)

@@ -74,7 +74,6 @@ public class NewLocationDialog extends JFrame implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == cancelB) {
 			int n = JOptionPane.showConfirmDialog(null, "Discard all changes?",
 					"Confirm", JOptionPane.YES_NO_OPTION);

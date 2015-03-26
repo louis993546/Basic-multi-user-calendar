@@ -171,7 +171,7 @@ public class ApptDB {
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
 				ARW = rs.getString("ARW");
 				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
-				//TODO
+				//TODO extract the 3 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2));
 				temp.add(tempAppointment);
 	        }

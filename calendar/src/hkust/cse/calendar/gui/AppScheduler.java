@@ -439,7 +439,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-		//TODO
+
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp);
@@ -458,15 +458,15 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void updateSetApp(Appt appt) {
-		// TODO
+		// TODO I have no idea
 	}
 
 	public void componentHidden(ComponentEvent e) {
-		//ask ta
+		// TODO I have no idea
 	}
 
 	public void componentMoved(ComponentEvent e) {
-		//ask ta
+		// TODO I have no idea
 	}
 
 	public void componentResized(ComponentEvent e) {
