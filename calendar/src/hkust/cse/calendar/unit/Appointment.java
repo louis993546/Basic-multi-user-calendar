@@ -1,5 +1,8 @@
 package hkust.cse.calendar.unit;
 
+import java.sql.Timestamp;
+import java.util.LinkedList;
+
 public class Appointment implements Comparable<Appointment> {
 	private String title;
 	private String description;
@@ -17,11 +20,14 @@ public class Appointment implements Comparable<Appointment> {
 	private int reminder;
 	private int reminderTime;
 	private int reminderUnit;
-	//attend list
-	//not attend list?
-	//waiting list
-
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru) {
+	private LinkedList<String> attend;
+	private LinkedList<String> reject;
+	private LinkedList<String> waiting;
+	private int id;
+	private int jid;
+	private boolean isJoint;
+	
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
 		title = t;
 		description = d;
 		location = l;
@@ -38,41 +44,218 @@ public class Appointment implements Comparable<Appointment> {
 		reminder = r;
 		reminderTime = rt;
 		reminderUnit = ru;
+		attend = aal;
+		reject = ral;
+		waiting = wal;
 	}
 	
 	public Appointment() {
-		// TODO Auto-generated constructor stub
+		//TODO timespan has not been implemented
+		title = "Untitled";
+		description = "";
+		location = "";
+		id = 0;
+		jid = -1;
+		attend = new LinkedList<String>();
+		reject = new LinkedList<String>();
+		waiting = new LinkedList<String>();
+		//time
 	}
 	
-	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru) {
+//	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
+//		title = t;
+//		description = d;
+//		location = l;
+//		startHour = shr;
+//		startMin = smin;
+//		startYear = syr;
+//		startMonth = smon;
+//		startDay = sday;
+//		endHour = ehr;
+//		endMin = emin;
+//		endYear = eyr;
+//		endMonth = emon;
+//		endDay = eday;
+//		reminder = r;
+//		reminderTime = rt;
+//		reminderUnit = ru;
+//		attend = aal;
+//		reject = ral;
+//		waiting = wal;
+//	}
+	
+	public boolean setTitle(String t)
+	{
 		title = t;
+		return true;
+	}
+	
+	public boolean setDescription(String d)
+	{
 		description = d;
+		return true;
+	}
+	
+	public boolean setLocation(String l)
+	{
 		location = l;
-		startHour = shr;
-		startMin = smin;
-		startYear = syr;
-		startMonth = smon;
-		startDay = sday;
-		endHour = ehr;
-		endMin = emin;
-		endYear = eyr;
-		endMonth = emon;
-		endDay = eday;
+		return true;
+	}
+	
+	public boolean setReminder(int r, int rt, int ru)
+	{
 		reminder = r;
 		reminderTime = rt;
 		reminderUnit = ru;
+		return true;
 	}
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
+		//TODO check if start date is valid
 		return false;
 		//check if date is valid
 		//check if time is valid
 	}
 	
 	public boolean setEndDateTime(int ehr, int emin, int eyr, int emon, int eday) {
+		//TODO check if end date is valid
 		return false;
 		//check if date is valid
 		//check if time is valid
+	}
+	
+	public boolean endAfterStart(int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday)
+	{
+		//TODO check if end datetime is after start datetime
+		return false;
+	}
+	
+	public boolean setID(int i)
+	{
+		id = i;
+		return true;
+	}
+	
+	public boolean setJID(int j)
+	{
+		jid = j;
+		return true;
+	}
+	
+	public boolean deleteFromAttend(String name)
+	{
+		if (attend.remove(name) == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean deleteFromReject(String name)
+	{
+		if (reject.remove(name) == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean deleteFromWaiting(String name)
+	{
+		if (waiting.remove(name) == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean waitingToAttend(String name)
+	{
+		if (waiting.remove(name) == true)
+		{
+			attend.add(name);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean waitingToReject(String name)
+	{
+		if (waiting.remove(name) == true)
+		{
+			reject.add(name);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean addToAttend(String name)
+	{
+		attend.add(name);
+		return true;
+	}
+	
+	public boolean addToReject(String name)
+	{
+		reject.add(name);
+		return true;
+	}
+	
+	public boolean addWaiting(String name)
+	{
+		waiting.add(name);
+		return false;
+	}
+	
+	public boolean setIsJoint(boolean i)
+	{
+		isJoint = i;
+		return true;
+	}
+	
+	public void initiateAttend()
+	{
+		attend = new LinkedList<String>();
+	}
+	
+	public void initiateReject()
+	{
+		reject = new LinkedList<String>();
+	}
+	
+	public void initiateWaiting()
+	{
+		waiting = new LinkedList<String>();
+	}
+	
+	public void setAttend(LinkedList<String> a)
+	{
+		attend = a;
+	}
+	
+	public void setReject(LinkedList<String> r)
+	{
+		reject = r;
+	}
+	
+	public void setWaiting(LinkedList<String> w)
+	{
+		waiting = w;
 	}
 	
 	//get functions
@@ -141,6 +324,31 @@ public class Appointment implements Comparable<Appointment> {
 		return reminderUnit;
 	}
 	
+	public LinkedList<String> getAttend() {
+		return attend;
+	}
+	
+	public LinkedList<String> getReject() {
+		return reject;
+	}
+	
+	public LinkedList<String> getWaiting() {
+		return waiting;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public int getJID() {
+		return jid;
+	}
+	
+	public boolean getIsJoint()
+	{
+		return isJoint;
+	}
+	
 	public boolean isDateValid(int yr, int mon, int day) {
 		return false;
 	}
@@ -151,9 +359,18 @@ public class Appointment implements Comparable<Appointment> {
 		return false;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public TimeSpan getTimeSpan()
+	{
+		Timestamp st = new Timestamp(startYear, startMonth, startDay, startHour, startMin, 0, 0);
+		Timestamp et = new Timestamp(endYear, endMonth, endDay, endHour, endMin, 0, 0);
+		TimeSpan a = new TimeSpan(st, et);
+		return a;	
+	}
+	
 	@Override
 	public int compareTo(Appointment a) {
-		// TODO Auto-generated method stub
+		//TODO comparing appointments
 		return 0;
 	}
 }

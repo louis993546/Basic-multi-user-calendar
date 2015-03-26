@@ -29,28 +29,18 @@
 - Make sure you are not already in the folder you want to import
 	* For example, you are in D:\GitHub\COMP3111, and the folder you want to import is D:\GitHub\COMP3111\calendar, this is fine
 	* But, if you are in D:\GitHub\COMP3111\calendar and you want to import D:\GitHub\COMP3111\calendar, it won't work.
-- Import existing directory
+- "File" >> "Import" >> Search "Existing Projects into Workspace"
 - Select that folder.
 - Done
 
 ###To-Do in this branch
-* Some GUI are still incomplete/missing
-	* ModifyLocationDialog looks ugly
-		* wrap it in a JPanel maybe
-		* fixed size maybe?
-	* AddLocationDialog can be merge into ModifyLocationDialog?
 * Most buttons are still useless
 * More SQLite implementation
-	* Write data from SQLite across all DB
-	* Read data from SQLite across all DB
 	* Update data from SQLite across all DB
-	* Delete data from SQLite across all DB
-* Admin mode has not been implemented yet(Phrase 2)
-	* A UserDialog for admin to view and edit information of each users
 * Need to figure out if the current implementation is suitable for phrase 2
 	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
-
-
+* Need to replace JList with JTable in ApptListDialog
+* Need to feed Appointment back to Appt
 
 ##Phrase 1 deadline: April 3rd
 

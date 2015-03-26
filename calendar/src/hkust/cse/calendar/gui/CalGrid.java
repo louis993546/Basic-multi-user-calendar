@@ -344,7 +344,21 @@ public class CalGrid extends JFrame implements ActionListener {
 				else if (e.getActionCommand().equals("New Location")) {
 					NewLocationDialog nld = new NewLocationDialog(ldb);
 				}
-
+				else if (e.getActionCommand().equals("Appointment List"))
+				{
+					try
+					{
+						ApptListDialog a = new ApptListDialog();
+					}
+					catch (Exception ex)
+					{
+						System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
+					}
+				}
+				else
+				{
+					System.out.println("Somethings wrong");
+				}
 			}
 		};
 		JMenuBar menuBar = new JMenuBar();
@@ -393,7 +407,10 @@ public class CalGrid extends JFrame implements ActionListener {
 				"Appointment Management");
 		mi = new JMenuItem("Manual Scheduling");
 		mi.addActionListener(listener);
+		JMenuItem ald = new JMenuItem("Appointment List");
+		ald.addActionListener(listener);
 		Appmenu.add(mi);
+		Appmenu.add(ald);
 		
 		//modify location
 		menuBar.add(Locationmenu);

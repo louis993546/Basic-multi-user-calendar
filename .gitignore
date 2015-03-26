@@ -11,9 +11,9 @@
 Desktop.ini
 .DS_Store
 $RECYCLE.BIN/
-*.class
 *.jar
-.metadata/*
+calendar/appt.db
+calendar/location.db
 
 # From online sources
 *.pydevproject
@@ -52,3 +52,7 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+.metadata/.log
+
+.recommenders

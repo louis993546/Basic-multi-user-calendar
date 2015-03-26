@@ -7,6 +7,9 @@ import hkust.cse.calendar.unit.User;
 public class ApptStorageNullImpl extends ApptStorage {
 
 	private User defaultUser = null;
+	private ApptDB adb = new ApptDB();
+	private LocationDB ldb = new LocationDB();
+	private UserDB usb = new UserDB();
 	
 	public ApptStorageNullImpl( User user )
 	{
@@ -15,14 +18,16 @@ public class ApptStorageNullImpl extends ApptStorage {
 	
 	@Override
 	public void SaveAppt(Appt appt) {
-		// TODO Auto-generated method stub
 		//Save appointment
+		adb.addAppt(appt.getAppointment());
 	}
 
 	@Override
 	public Appt[] RetrieveAppts(TimeSpan d) {
 		// TODO Auto-generated method stub
 		//retrieve an appointment record by a given timespan
+		
+		//use toArray
 		return null;
 	}
 
@@ -49,9 +54,8 @@ public class ApptStorageNullImpl extends ApptStorage {
 
 	@Override
 	public void RemoveAppt(Appt appt) {
-		// TODO Auto-generated method stub
 		//remove appointment record
-
+		adb.deleteAppt(appt.getAppointment().getID());
 	}
 
 	@Override
