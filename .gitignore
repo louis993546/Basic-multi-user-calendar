@@ -11,7 +11,6 @@
 Desktop.ini
 .DS_Store
 $RECYCLE.BIN/
-*.class
 *.jar
 calendar/appt.db
 calendar/location.db
@@ -55,6 +54,3 @@ local.properties
 .texlipse
 
 .metadata/.log
-
-
-*.class
