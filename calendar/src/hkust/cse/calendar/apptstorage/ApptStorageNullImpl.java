@@ -37,7 +37,25 @@ public class ApptStorageNullImpl extends ApptStorage {
 	public Appt[] RetrieveAppts(User entity, TimeSpan time) {
 		// TODO Auto-generated method stub
 		//retrieve an appointment record by a given user object and timespan
-		return null;
+		
+		//temp implementation
+		ArrayList<Appointment> dataALA = adb.getAppointmentList();
+		ArrayList<Appt> dataLLA = new ArrayList<Appt>();
+		mAppts = new HashMap<Integer, Appt>();
+		if (dataALA.size()!=0)
+		{
+			for (Appointment a:dataALA)
+			{
+				Appt tempAppt = new Appt(a);
+				dataLLA.add(tempAppt);
+			}
+		}
+		Appt[] tempArray = new Appt[dataLLA.size()];
+		for (int i = 0; i<dataLLA.size(); i++)
+		{
+			tempArray[i] = dataLLA.get(i);
+		}
+		return tempArray;
 	}
 
 	@Override

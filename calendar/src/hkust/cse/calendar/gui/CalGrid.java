@@ -446,8 +446,8 @@ public class CalGrid extends JFrame implements ActionListener {
 
 		mCurrUser = this.controller.getDefaultUser();	//get User from controller
 		controller.LoadApptFromXml();
+		//TODO Load the saved appointments from disk
 		// Fix Me !
-		// Load the saved appointments from disk
 		checkUpdateJoinAppt();
 	}
 

@@ -26,9 +26,11 @@ public class Appointment implements Comparable<Appointment> {
 	private int id;
 	private int jid;
 	private boolean isJoint;
+	private User creater;
 
 	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
 		//TODO create unique id for each appointment upon creation
+		//TODO initiate creater
 		title = t;
 		description = d;
 		location = l;
