@@ -69,7 +69,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private BasicArrowButton eButton;
 	private BasicArrowButton wButton;
 	private JLabel year;
-	private JComboBox month;
+	private JComboBox<String> month;
 
 	private final Object[][] data = new Object[6][7];
 	//private final Vector[][] apptMarker = new Vector[6][7];
@@ -273,6 +273,7 @@ public class CalGrid extends JFrame implements ActionListener {
 				return names[column];
 			}
 
+			@SuppressWarnings("unchecked")
 			public Class getColumnClass(int c) {
 				return getValueAt(0, c).getClass();
 			}
@@ -289,6 +290,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		return dataModel;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void getDateArray(Object[][] data) {
 		GregorianCalendar c = new GregorianCalendar(currentY, currentM - 1, 1);
 		int day;
@@ -333,7 +335,7 @@ public class CalGrid extends JFrame implements ActionListener {
 							.createDefaultAppt(currentY, currentM, currentD,
 									mCurrUser));
 					a.setLocationRelativeTo(null);
-					a.show();
+					a.setVisible(true);
 					TableModel t = prepareTableModel();
 					tableView.setModel(t);
 					tableView.repaint();
@@ -540,6 +542,7 @@ public class CalGrid extends JFrame implements ActionListener {
 //		applist.clear();
 //	}
 
+	@SuppressWarnings("deprecation")
 	private Appt[] GetMonthAppts() {
 		Timestamp start = new Timestamp(0);
 		start.setYear(currentY);
@@ -597,6 +600,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		updateAppList();
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean IsTodayAppt(Appt appt) {
 		if (appt.TimeSpan().StartTime().getYear() + 1900 != currentY)
 			return false;
@@ -607,6 +611,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean IsMonthAppts(Appt appt) {
 
 		if (appt.TimeSpan().StartTime().getYear() + 1900 != currentY)
@@ -617,6 +622,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public Appt[] GetTodayAppt() {
 		Integer temp;
 		temp = new Integer(currentD);

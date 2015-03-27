@@ -13,6 +13,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
+
 import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -328,6 +329,7 @@ public class AppList extends JPanel implements ActionListener {
 	}
 
 	// colouring the appointment list
+	@SuppressWarnings("deprecation")
 	public void addAppt(Appt appt) {
 		Color color;
 		currColor = new Color(0,240-(appt.TimeSpan().StartTime().getHours()-8)*25,255-(appt.TimeSpan().StartTime().getMinutes()*3));
@@ -336,10 +338,6 @@ public class AppList extends JPanel implements ActionListener {
 			color = currColor;
 		else
 			color = currColorForJoint;
-		
-		if (appt == null)
-			return;
-
 		Timestamp temp;
 
 		temp = appt.TimeSpan().StartTime();
@@ -423,7 +421,7 @@ public class AppList extends JPanel implements ActionListener {
 		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle.getID());
 
 		setAppDial.updateSetApp(apptTitle);
-		setAppDial.show();
+		setAppDial.setVisible(true);
 		setAppDial.setResizable(false);
 
 	}
@@ -478,7 +476,7 @@ public class AppList extends JPanel implements ActionListener {
 				parent.currentY, parent.currentM, parent.currentD,
 				parent.mCurrUser, startTime));
 		a.setLocationRelativeTo(null);
-		a.show();
+		a.setVisible(true);
 		
 	}
 

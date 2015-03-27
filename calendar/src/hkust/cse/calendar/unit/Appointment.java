@@ -27,7 +27,7 @@ public class Appointment implements Comparable<Appointment> {
 	private int jid;
 	private boolean isJoint;
 
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
 		//TODO create unique id for each appointment upon creation
 		title = t;
 		description = d;
@@ -48,6 +48,7 @@ public class Appointment implements Comparable<Appointment> {
 		attend = aal;
 		reject = ral;
 		waiting = wal;
+		id = i;
 	}
 
 	public Appointment() {
@@ -125,13 +126,14 @@ public class Appointment implements Comparable<Appointment> {
 		//check if time is valid
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean endAfterStart(int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday)
 	{
 		Timestamp st = new Timestamp(syr-1900, smon, sday, shr, smin, 0, 0);
 		Timestamp et = new Timestamp(eyr-1900, emon, eday, ehr, emin, 0, 0);
 		if (st.compareTo(et) < 0)
 		{
-			return true
+			return true;
 		}
 		else
 		{

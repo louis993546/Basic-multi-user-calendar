@@ -1,8 +1,6 @@
 package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.LocationDB;
-
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,8 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 

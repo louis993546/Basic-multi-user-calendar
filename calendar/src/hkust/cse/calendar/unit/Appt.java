@@ -1,7 +1,6 @@
 package hkust.cse.calendar.unit;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class Appt implements Serializable {
@@ -10,6 +9,11 @@ public class Appt implements Serializable {
 
 	public Appt() {								// A default constructor used to set all the attribute to default values
 		a = new Appointment();
+	}
+	
+	public Appt(Appointment ap)
+	{
+		a = ap;
 	}
 
 	// Getter of the mTimeSpan
