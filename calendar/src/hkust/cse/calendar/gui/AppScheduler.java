@@ -300,6 +300,21 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		commonConstructor(title, cal);
 	}
 	
+	AppScheduler(String title, CalGrid cal, int hr, int min, int y, int m, int d)
+	{
+		commonConstructor(title, cal);
+		
+		//TODO not working
+		yearSF.setText(""+y);
+		yearEF.setText(""+y);
+		//month
+		daySF.setText(""+d);
+		dayEF.setText(""+d);
+		
+		sTimeH.setSelectedItem(""+hr);
+		sTimeM.setSelectedItem(""+min);
+	}
+	
 	AppScheduler(String title, CalGrid cal, Appt appt)
 	{
 		tempAppt = appt;

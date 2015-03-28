@@ -233,7 +233,7 @@ public class ApptDB {
 			    	+ " AND END_TIME_MONTH=" + END_TIME_MONTH
 			    	+ " AND END_TIME_DAY=" + END_TIME_DAY
 			    	+ ");" ;
-		    System.out.println(sql);
+//		    System.out.println(sql);
 		    ResultSet rs = stmt.executeQuery(sql);
 		    while ( rs.next() ) {
 				TITLE = rs.getString("TITLE");
