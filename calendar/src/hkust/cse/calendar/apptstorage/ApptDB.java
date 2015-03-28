@@ -73,7 +73,6 @@ public class ApptDB {
 			String dt = dtSDF.toString();
 			dt = dt + a.getTitle();
 			dt = "" + dt.hashCode();
-			System.out.println("Look here" + a.getStartHour());
 			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
 				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
 				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT, ARW) " +
@@ -372,6 +371,56 @@ public class ApptDB {
 		catch (SQLException e)
 		{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			return false;
+		}
+	}
+	
+	public boolean modifyAppt(int id, Appointment newAppt)
+	{
+		try
+		{
+			stmt = c.createStatement();
+	        String sql = "UPDATE APPOINTMENT set "
+	    		  //title
+	    		  + "TITLE = " + newAppt.getTitle()
+	    		  //description
+	    		  + "DESCRIPTION = " + newAppt.getDescription()
+	    		  //location
+	    		  + "LOCATION = " + newAppt.getLocation()
+	    		  //start time hour
+	    		  + "START_TIME_HOUR =" + newAppt.getStartHour()
+	    		  //start time min
+	    		  + "START_TIME_MIN = " + newAppt.getStartMin()
+	    		  //start time year
+	    		  + "START_TIME_YEAR = " + newAppt.getStartYear()
+	    		  //start time month
+	    		  + "START_TIME_MONTH = " + newAppt.getStartMonth()
+	    		  //start time day
+	    		  + "START_TIME_DAY = " + newAppt.getStartDay()
+	    		  //end time hour
+	    		  + "END_TIME_HOUR = " + newAppt.getEndHour()
+	    		  //end time min
+	    		  + "END_TIME_MIN = " + newAppt.getEndMin()
+	    		  //end time year
+	    		  + "END_TIME_YEAR = " + newAppt.getEndYear()
+	    		  //end time month
+	    		  + "END_TIME_MONTH = " + newAppt.getEndMonth()
+	    		  //end time day
+	    		  + "END_TIME_DAY = " + newAppt.getEndDay()
+	    		  //reminder
+	    		  + "REMINDER = " + newAppt.getReminder()
+	    		  //reminder time
+	    		  + "REMINDER_TIME = " + newAppt.getReminderTime()
+	    		  //reminder unit
+	    		  + "REMINDER_UNIT = " + newAppt.getReminderUnit()
+	    		  + "where ID=" + id + 
+	    		  ";";
+				stmt.executeUpdate(sql);
+				c.commit();
+				return true;
+		}
+		catch (SQLException e)
+		{
 			return false;
 		}
 	}

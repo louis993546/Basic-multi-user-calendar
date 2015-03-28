@@ -149,6 +149,7 @@ public class AppList extends JPanel implements ActionListener {
 		mi = (JMenuItem) pop.add(new JMenuItem("Modify"));
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("salfjasd;lfjadsl;fj");
 				modify();
 			}
 		});
@@ -441,9 +442,15 @@ public class AppList extends JPanel implements ActionListener {
 	private void modify() {
 		Appt apptTitle = getSelectedAppTitle();
 		if (apptTitle == null)
+		{
+			System.out.println("1234567890");
 			return;
-		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle.getID());
-
+		}
+		System.out.println("0987654321");
+			
+//		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle.getID());
+		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
+		System.out.println("Is this working?");
 		setAppDial.updateSetApp(apptTitle);
 		setAppDial.setVisible(true);
 		setAppDial.setResizable(false);
@@ -451,23 +458,29 @@ public class AppList extends JPanel implements ActionListener {
 	}
 
 	public Appt getSelectedAppTitle() {
-		
+		System.out.println("1");
 		Object apptTitle;
+		System.out.println("2");
+		
 		if (currentRow < 0 || currentRow > ROWNUM - 1) {
 			JOptionPane.showMessageDialog(parent, "Please Select Again !",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			
+			System.out.println("3");
 			selectedAppt=null;
+			System.out.println("4");
 			return selectedAppt;
 		}
+		System.out.println("5");
 		if (currentCol < 3) {
+			System.out.println("6");
 			apptTitle = tableView.getModel().getValueAt(currentRow, 1);
 		} else
 			apptTitle = tableView.getModel().getValueAt(currentRow, 4);
 		
-
+		System.out.println("7");
 		if (apptTitle instanceof Appt)
 		{
+			System.out.println("1");
 			selectedAppt=(Appt) apptTitle;
 			return  selectedAppt;
 		}		
