@@ -445,10 +445,8 @@ public class AppList extends JPanel implements ActionListener {
 		{
 			return;
 		}
-			
-//		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle.getID());
+		
 		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
-		System.out.println("Is this working?");
 		setAppDial.updateSetApp(apptTitle);
 		setAppDial.setVisible(true);
 		setAppDial.setResizable(false);

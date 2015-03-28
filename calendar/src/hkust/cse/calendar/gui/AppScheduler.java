@@ -306,7 +306,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		saveOrModify=1;
 		commonConstructor(title, cal);
 		//TODO put info of appt into each field
-		this.sTimeH.setSelectedItem(appt.getAppointment().getStartHour());
+		sTimeH.setSelectedItem("0" + appt.getAppointment().getStartHour());
+		sTimeM.setSelectedItem("0" + appt.getAppointment().getStartMin());
+		titleField.setText(appt.getTitle());
+		yearEF.setText("" + appt.getAppointment().getEndYear());
+		yearSF.setText("" + appt.getAppointment().getStartYear());
 	}
 
 	public void actionPerformed(ActionEvent e) {
