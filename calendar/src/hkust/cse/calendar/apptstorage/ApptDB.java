@@ -1,8 +1,10 @@
-//MORE COMMENTS
+//TODO MORE COMMENTS
 
 package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.Appointment;
+import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeSpan;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -155,6 +157,7 @@ public class ApptDB {
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
 	        String ARW = "";
+	        int ID;
 	        ArrayList<String> attend = new ArrayList<String>();
 	        ArrayList<String> reject = new ArrayList<String>();
 	        ArrayList<String> waiting = new ArrayList<String>();
@@ -176,7 +179,7 @@ public class ApptDB {
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
 				ARW = rs.getString("ARW");
-				
+				ID = rs.getInt("ID");
 				//TODO these 4 lines are just temporary
 				//remove these codes once bug in addAppt has been fixed
 				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
@@ -185,7 +188,7 @@ public class ApptDB {
 				arwList.add(new LinkedList<String>());
 //				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
 				//TODO extract the 3 lists from arwList
-				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2));
+				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID);
 				temp.add(tempAppointment);
 	        }
 			return temp;
@@ -200,7 +203,21 @@ public class ApptDB {
 		return null;
 	}
 
+	public Appt[] getApptByTime(TimeSpan d)
+	{
+		//TODO implement this
+		//create a bunch of Appt
+		//create a bunch of Appointment
+		//create a LinkedList of Appt
+		//convert LinkedList to array
+		return null;
+	}
 	
+	public Appt getApptByJID(int j)
+	{
+		//TODO
+		return null;
+	}
 
 	public int getApptID(Appointment a)
 	{

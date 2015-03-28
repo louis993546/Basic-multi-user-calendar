@@ -78,6 +78,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		area.setEditable(false);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void Display(Appt appt) {
 
 		Timestamp sTime = appt.TimeSpan().StartTime();

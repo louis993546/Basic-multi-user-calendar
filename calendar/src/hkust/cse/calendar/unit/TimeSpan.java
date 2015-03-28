@@ -11,6 +11,7 @@ public class TimeSpan implements Serializable {
 	private Timestamp mEndTime;
 
 	/* Create a new TimeSpan object with the specific starting time and ending time */
+	@SuppressWarnings("deprecation")
 	public TimeSpan(Timestamp start, Timestamp end) {
 
 		if (start.getYear() >= 1900) {
@@ -44,6 +45,7 @@ public class TimeSpan implements Serializable {
 	}
 
 	/* Calculate the length of the time span if the starting time and ending time are within the same day */
+	@SuppressWarnings("deprecation")
 	public int TimeLength() {
 		
 		/* return -1 if the starting time and ending time are not in the same day */

@@ -67,20 +67,20 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private String[] repeatS = {"Daily", "Weekly", "Monthly", "Yearly", "Decennially", "Centennially", "Millennially"};
 
 	private JTextField yearSF;
-	private JComboBox monthSF;
+	private JComboBox<String> monthSF;
 	private JTextField daySF;
 	private JTextField yearEF;
-	private JComboBox monthEF;
+	private JComboBox<String> monthEF;
 	private JTextField dayEF;
-	private JComboBox sTimeH;
-	private JComboBox sTimeM;
-	private JComboBox eTimeH;
-	private JComboBox eTimeM;
+	private JComboBox<String> sTimeH;
+	private JComboBox<String> sTimeM;
+	private JComboBox<String> eTimeH;
+	private JComboBox<String> eTimeM;
 	private JTextField reminderTF;
-	private JComboBox reminderCB;
+	private JComboBox<String> reminderCB;
 	private JCheckBox reminderChB;
 	
-	private JComboBox lCB;
+	private JComboBox<String> lCB;
 
 	private DefaultListModel model;
 	private JTextField titleField;
@@ -141,7 +141,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pStart.add(yearSF);
 		monthL = new JLabel("MONTH: ");
 		pStart.add(monthL);
-		monthSF = new JComboBox(monthS);
+		monthSF = new JComboBox<String>(monthS);
 		pStart.add(monthSF);
 		dayL = new JLabel("DAY: ");
 		pStart.add(dayL);
@@ -149,11 +149,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pStart.add(daySF);
 		sTimeHL = new JLabel("Hour");
 		pStart.add(sTimeHL);
-		sTimeH = new JComboBox(timeHS);
+		sTimeH = new JComboBox<String>(timeHS);
 		pStart.add(sTimeH);
 		sTimeML = new JLabel("Minute");
 		pStart.add(sTimeML);
-		sTimeM = new JComboBox(timeMS);
+		sTimeM = new JComboBox<String>(timeMS);
 		pStart.add(sTimeM);
 
 		//End JPanel
@@ -166,7 +166,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pEnd.add(yearEF);
 		monthL = new JLabel("MONTH: ");
 		pEnd.add(monthL);
-		monthEF = new JComboBox(monthS);
+		monthEF = new JComboBox<String>(monthS);
 		pEnd.add(monthEF);
 		dayL = new JLabel("DAY: ");
 		pEnd.add(dayL);
@@ -174,11 +174,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pEnd.add(dayEF);
 		eTimeHL = new JLabel("Hour");
 		pEnd.add(eTimeHL);
-		eTimeH = new JComboBox(timeHS);
+		eTimeH = new JComboBox<String>(timeHS);
 		pEnd.add(eTimeH);
 		eTimeML = new JLabel("Minute");
 		pEnd.add(eTimeML);
-		eTimeM = new JComboBox(timeMS);
+		eTimeM = new JComboBox<String>(timeMS);
 		pEnd.add(eTimeM);
 
 		//Location Panel
@@ -222,7 +222,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		pReminder.add(reminderChB);
 		reminderTF = new JTextField(5);
 		pReminder.add(reminderTF);
-		reminderCB = new JComboBox(reminderS);
+		reminderCB = new JComboBox<String>(reminderS);
 		pReminder.add(reminderCB);
 		JLabel reminderL = new JLabel("before the event");
 		pReminder.add(reminderL);
@@ -253,7 +253,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		rejectBut = new JButton("Reject");
 		rejectBut.addActionListener(this);
 		buttonPanel.add(rejectBut);
-		rejectBut.show(false);
+		rejectBut.setVisible(false);
 
 		//Cancel button
 		CancelBut = new JButton("Cancel");
@@ -269,15 +269,15 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		NewAppt = new Appt();
 
 		if (this.getTitle().equals("Join Appointment Content Change") || this.getTitle().equals("Join Appointment Invitation")){
-			inviteBut.show(false);
-			rejectBut.show(true);
+			inviteBut.setVisible(false);
+			rejectBut.setVisible(true);
 			CancelBut.setText("Consider Later");
 			saveBut.setText("Accept");
 		}
 		if (this.getTitle().equals("Someone has responded to your Joint Appointment invitation") ){
-			inviteBut.show(false);
-			rejectBut.show(false);
-			CancelBut.show(false);
+			inviteBut.setVisible(false);
+			rejectBut.setVisible(false);
+			CancelBut.setVisible(false);
 			saveBut.setText("confirmed");
 		}
 		if (this.getTitle().equals("Join Appointment Invitation") || this.getTitle().equals("Someone has responded to your Joint Appointment invitation") || this.getTitle().equals("Join Appointment Content Change")){
@@ -442,11 +442,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
-		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp);
+		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
 		adb = new ApptDB();
 		adb.addAppt(newAppt);
 	}
 
+	@SuppressWarnings("deprecation")
 	private Timestamp CreateTimeStamp(int[] date, int time) {
 		Timestamp stamp = new Timestamp(0);
 		stamp.setYear(date[0]);

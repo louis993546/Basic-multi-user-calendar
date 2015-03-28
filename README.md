@@ -10,17 +10,7 @@
 ###Tutorials
 * <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite</a>. I LITERALLY copy and paste things from here.
 * <a href="https://www.siteground.com/tutorials/git/commands.htm">Some basic git commands</a>
-* Anything else you want to learn?
-* And Google, of course
-
-#### Error #1: Missing required library sqlite-jbdc
-- Locate "sqlite-jdbc-3.8.7.jar" in "calendar"
-- If it does not exist, download the latest version of JBDC from <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">here</a>
-- Right click project "calendar" on the left
-- Properties >> Java Build Path >> Libraries
-- "Add external JARs"
-- select the .jar
-- done
+* Google
 
 #### Error #2: Not able to open eclipse.exe/eclipse.app
 * Just download another one from <a href="https://eclipse.org/downloads/">here</a>. Apparently eclipse cannot be sync to GitHub very successfully.
@@ -34,13 +24,7 @@
 - Done
 
 ###To-Do in this branch
-* Most buttons are still useless
-* More SQLite implementation
-	* Update data from SQLite across all DB
-* Need to figure out if the current implementation is suitable for phrase 2
-	* e.g. if there is anything that will required extensive changes in order to make phrase 2 possible
-* Need to replace JList with JTable in ApptListDialog
-* Need to feed Appointment back to Appt
+* Check the various TODO in eclipse
 
 ##Phrase 1 deadline: April 3rd
 
@@ -83,7 +67,7 @@
 		* Cannot schedule events overlap in time or in space
 		* Can only ,odify/delete event happening in the future
 	* Time machine
-		* Do not program directly using computer's clock for testing purpose?
+		* Create a custom clock
 
 ##Phrase 2 deadline: May 8th
 
