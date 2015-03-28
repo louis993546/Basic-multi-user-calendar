@@ -304,6 +304,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		} else if (e.getSource() == saveBut) {
 			try {
 				saveButtonResponse();
+				setVisible(false);
+				dispose();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -448,6 +450,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
 		adb = new ApptDB();
 		adb.addAppt(newAppt);
+		JOptionPane.showMessageDialog(null, "Saved.",
+				"Exit", JOptionPane.YES_NO_OPTION);
 	}
 
 	@SuppressWarnings("deprecation")

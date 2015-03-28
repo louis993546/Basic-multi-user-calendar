@@ -209,20 +209,12 @@ public class ApptDB {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
 		try {
 			stmt = c.createStatement();
-//			int START_TIME_HOUR = d.StartTime().getHours();
-//		    int START_TIME_MINUTE = d.StartTime().getMinutes();
 		    int START_TIME_YEAR = d.StartTime().getYear()+1900;
 		    int START_TIME_MONTH = d.StartTime().getMonth()+1;
 		    int START_TIME_DAY = d.StartTime().getDate();
-//		   	int END_TIME_HOUR = d.EndTime().getHours();
-//		    int END_TIME_MINUTE = d.EndTime().getMinutes();
 		    int END_TIME_YEAR = d.EndTime().getYear()+1900;
 		    int END_TIME_MONTH = d.EndTime().getMonth()+1;
 		    int END_TIME_DAY = d.EndTime().getDate();
-//		    System.out.println("d.StartTime().getMonth(): "+ d.StartTime().getMonth());
-//		    System.out.println("d.EndTime().getMonth(): "+ d.EndTime().getMonth());
-//		    System.out.println("d.StartTime().getDay(): "+ d.StartTime().getDate());
-//		    System.out.println("d.EndTime().getDay(): "+ d.EndTime().getDate());
 		    String TITLE = "";
 		    String DESCRIPTION = "";
 		    String LOCATION = "";
@@ -235,13 +227,9 @@ public class ApptDB {
 		    ArrayList<String> reject = new ArrayList<String>();
 		    ArrayList<String> waiting = new ArrayList<String>();
 		    String sql = "SELECT * FROM APPOINTMENT WHERE ("
-//			    	+ " START_TIME_HOUR=" + START_TIME_HOUR
-//			    	+ " AND START_TIME_MINUTE=" + START_TIME_MINUTE
 			    	+ " START_TIME_YEAR=" + START_TIME_YEAR
 			    	+ " AND START_TIME_MONTH=" + START_TIME_MONTH
 			    	+ " AND START_TIME_DAY=" + START_TIME_DAY
-//			    	+ " AND END_TIME_HOUR=" + END_TIME_HOUR
-//			    	+ " AND END_TIME_MINUTE=" + END_TIME_MINUTE
 			    	+ " AND END_TIME_YEAR=" + END_TIME_YEAR
 			    	+ " AND END_TIME_MONTH=" + END_TIME_MONTH
 			    	+ " AND END_TIME_DAY=" + END_TIME_DAY
