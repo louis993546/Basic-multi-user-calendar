@@ -100,6 +100,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private JSplitPane pDes;
 	JPanel detailPanel;
+	
+	private Appt tempAppt;
+	private int saveOrModify = 0;
 
 //	private JTextField attendField;
 //	private JTextField rejectField;
@@ -288,12 +291,26 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	AppScheduler(String title, CalGrid cal, int selectedApptId) {
+		
 		this.selectedApptId = selectedApptId;
 		commonConstructor(title, cal);
 	}
 
 	AppScheduler(String title, CalGrid cal) {
 		commonConstructor(title, cal);
+	}
+	
+	AppScheduler(String title, CalGrid cal, Appt appt)
+	{
+		tempAppt = appt;
+		saveOrModify=1;
+		commonConstructor(title, cal);
+		//TODO put info of appt into each field
+		sTimeH.setSelectedItem("0" + appt.getAppointment().getStartHour());
+		sTimeM.setSelectedItem("0" + appt.getAppointment().getStartMin());
+		titleField.setText(appt.getTitle());
+		yearEF.setText("" + appt.getAppointment().getEndYear());
+		yearSF.setText("" + appt.getAppointment().getStartYear());
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -304,6 +321,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		} else if (e.getSource() == saveBut) {
 			try {
 				saveButtonResponse();
+				setVisible(false);
+				dispose();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -447,7 +466,16 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		LinkedList<String> temp = new LinkedList<String>();
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
 		adb = new ApptDB();
-		adb.addAppt(newAppt);
+		if (saveOrModify == 0)
+		{
+			adb.addAppt(newAppt);
+		}
+		else
+		{
+			adb.modifyAppt(tempAppt.getID(), newAppt);
+		}
+		JOptionPane.showMessageDialog(null, "Saved.",
+				"Exit", JOptionPane.YES_NO_OPTION);
 	}
 
 	@SuppressWarnings("deprecation")

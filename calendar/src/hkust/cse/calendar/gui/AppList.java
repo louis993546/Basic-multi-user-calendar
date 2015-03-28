@@ -149,6 +149,7 @@ public class AppList extends JPanel implements ActionListener {
 		mi = (JMenuItem) pop.add(new JMenuItem("Modify"));
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("salfjasd;lfjadsl;fj");
 				modify();
 			}
 		});
@@ -376,8 +377,8 @@ public class AppList extends JPanel implements ActionListener {
 			pos = calRowColNum(i);
 			if (i == startMin) {
 				tableView.getModel().setValueAt(appt, pos[0], pos[1]);
-				System.out.println(pos);
-				setTextAt(appt.getTitle(), pos[0], pos[1]);
+//				setTextAt(appt.getTitle(), pos[0], pos[1]);
+				
 				if (pos[1] == 1) {
 					cellCMD[pos[0]][0] = COLORED_TITLE;
 					cellColor[pos[0]][0] = color;
@@ -441,9 +442,11 @@ public class AppList extends JPanel implements ActionListener {
 	private void modify() {
 		Appt apptTitle = getSelectedAppTitle();
 		if (apptTitle == null)
+		{
 			return;
-		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle.getID());
-
+		}
+		
+		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
 		setAppDial.updateSetApp(apptTitle);
 		setAppDial.setVisible(true);
 		setAppDial.setResizable(false);
@@ -451,21 +454,21 @@ public class AppList extends JPanel implements ActionListener {
 	}
 
 	public Appt getSelectedAppTitle() {
-		
 		Object apptTitle;
+		
 		if (currentRow < 0 || currentRow > ROWNUM - 1) {
 			JOptionPane.showMessageDialog(parent, "Please Select Again !",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			
 			selectedAppt=null;
 			return selectedAppt;
-		}
+		};
 		if (currentCol < 3) {
 			apptTitle = tableView.getModel().getValueAt(currentRow, 1);
 		} else
 			apptTitle = tableView.getModel().getValueAt(currentRow, 4);
 		
-
+//		System.out.println(apptTitle.toString());
+//		System.out.println(apptTitle instanceof Appt);
 		if (apptTitle instanceof Appt)
 		{
 			selectedAppt=(Appt) apptTitle;
