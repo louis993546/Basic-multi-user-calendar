@@ -349,6 +349,7 @@ public class AppList extends JPanel implements ActionListener {
 	// colouring the appointment list
 	@SuppressWarnings("deprecation")
 	public void addAppt(Appt appt) {
+//		System.out.println(appt.toString());
 		Color color;
 		currColor = setColor(0, 240-(appt.TimeSpan().StartTime().getHours()-8)*25, 255-(appt.TimeSpan().StartTime().getMinutes()*3));
 		currColorForJoint = setColor(255-(appt.TimeSpan().StartTime().getHours()-8)*25, 0, 190-(appt.TimeSpan().StartTime().getMinutes()*3));
@@ -359,19 +360,24 @@ public class AppList extends JPanel implements ActionListener {
 		Timestamp temp;
 
 		temp = appt.TimeSpan().StartTime();
+		System.out.println("From applist:" + temp.toString());
 		int startMin = temp.getHours() * 60 + temp.getMinutes();
 		startMin = startMin - OFFSET * 60;
-
+		
 		temp = appt.TimeSpan().EndTime();
 		int endMin = temp.getHours() * 60 + temp.getMinutes();
 		endMin = endMin - OFFSET * 60;
 
+		System.out.println(startMin);
+		System.out.println(endMin);
+		
 		int[] pos = new int[2];
 		for (int i = startMin; i < endMin; i = i + SMALLEST_DURATION) {
 			pos = calRowColNum(i);
 			if (i == startMin) {
 				tableView.getModel().setValueAt(appt, pos[0], pos[1]);
-
+				System.out.println(pos);
+				setTextAt(appt.getTitle(), pos[0], pos[1]);
 				if (pos[1] == 1) {
 					cellCMD[pos[0]][0] = COLORED_TITLE;
 					cellColor[pos[0]][0] = color;

@@ -297,7 +297,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
 		// distinguish which button is clicked and continue with require function
 		if (e.getSource() == CancelBut) {
 			setVisible(false);
@@ -306,7 +305,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			try {
 				saveButtonResponse();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -435,6 +433,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
 		int[] endDate = getValidDate(yearEF, monthEF, dayEF);
+		//TODO get time using getValidTimeInterval()
+		int shr = Integer.parseInt(sTimeH.getSelectedItem().toString());
+		int smin = Integer.parseInt(sTimeM.getSelectedItem().toString());
+		int ehr = Integer.parseInt(eTimeH.getSelectedItem().toString());
+		int emin = Integer.parseInt(eTimeM.getSelectedItem().toString());
 		//check if end date earlier then start date
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
@@ -442,7 +445,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
-		Appointment newAppt = new Appointment(title, description, location, 0, 0, startDate[0], startDate[1], startDate[2], 0, 0, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
+		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
 		adb = new ApptDB();
 		adb.addAppt(newAppt);
 	}

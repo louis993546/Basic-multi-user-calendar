@@ -73,6 +73,7 @@ public class ApptDB {
 			String dt = dtSDF.toString();
 			dt = dt + a.getTitle();
 			dt = "" + dt.hashCode();
+			System.out.println("Look here" + a.getStartHour());
 			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
 				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
 				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT, ARW) " +
@@ -82,7 +83,7 @@ public class ApptDB {
 				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + "," + dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
-			//TODO fix this SQL syntax error
+			//TODO fix this SQL syntax error or google serializable
 			
 //			java.sql.SQLException: near "1967676291": syntax error
 //			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)
@@ -205,11 +206,94 @@ public class ApptDB {
 
 	public Appt[] getApptByTime(TimeSpan d)
 	{
-		//TODO implement this
-		//create a bunch of Appt
-		//create a bunch of Appointment
-		//create a LinkedList of Appt
-		//convert LinkedList to array
+		ArrayList<Appointment> temp = new ArrayList<Appointment>();
+		try {
+			stmt = c.createStatement();
+//			int START_TIME_HOUR = d.StartTime().getHours();
+//		    int START_TIME_MINUTE = d.StartTime().getMinutes();
+		    int START_TIME_YEAR = d.StartTime().getYear()+1900;
+		    int START_TIME_MONTH = d.StartTime().getMonth()+1;
+		    int START_TIME_DAY = d.StartTime().getDate();
+//		   	int END_TIME_HOUR = d.EndTime().getHours();
+//		    int END_TIME_MINUTE = d.EndTime().getMinutes();
+		    int END_TIME_YEAR = d.EndTime().getYear()+1900;
+		    int END_TIME_MONTH = d.EndTime().getMonth()+1;
+		    int END_TIME_DAY = d.EndTime().getDate();
+//		    System.out.println("d.StartTime().getMonth(): "+ d.StartTime().getMonth());
+//		    System.out.println("d.EndTime().getMonth(): "+ d.EndTime().getMonth());
+//		    System.out.println("d.StartTime().getDay(): "+ d.StartTime().getDate());
+//		    System.out.println("d.EndTime().getDay(): "+ d.EndTime().getDate());
+		    String TITLE = "";
+		    String DESCRIPTION = "";
+		    String LOCATION = "";
+		    int REMINDER;
+		    int REMINDER_TIME;
+		    int REMINDER_UNIT;
+		    String ARW = "";
+		    int ID;
+		    ArrayList<String> attend = new ArrayList<String>();
+		    ArrayList<String> reject = new ArrayList<String>();
+		    ArrayList<String> waiting = new ArrayList<String>();
+		    String sql = "SELECT * FROM APPOINTMENT WHERE ("
+//			    	+ " START_TIME_HOUR=" + START_TIME_HOUR
+//			    	+ " AND START_TIME_MINUTE=" + START_TIME_MINUTE
+			    	+ " START_TIME_YEAR=" + START_TIME_YEAR
+			    	+ " AND START_TIME_MONTH=" + START_TIME_MONTH
+			    	+ " AND START_TIME_DAY=" + START_TIME_DAY
+//			    	+ " AND END_TIME_HOUR=" + END_TIME_HOUR
+//			    	+ " AND END_TIME_MINUTE=" + END_TIME_MINUTE
+			    	+ " AND END_TIME_YEAR=" + END_TIME_YEAR
+			    	+ " AND END_TIME_MONTH=" + END_TIME_MONTH
+			    	+ " AND END_TIME_DAY=" + END_TIME_DAY
+			    	+ ");" ;
+		    System.out.println(sql);
+		    ResultSet rs = stmt.executeQuery(sql);
+		    while ( rs.next() ) {
+				TITLE = rs.getString("TITLE");
+				DESCRIPTION = rs.getString("DESCRIPTION");
+				int START_TIME_HOUR = rs.getInt("START_TIME_HOUR");
+				int START_TIME_MINUTE =rs.getInt("START_TIME_MINUTE");
+				START_TIME_YEAR =rs.getInt("START_TIME_YEAR");
+				START_TIME_MONTH =rs.getInt("START_TIME_MONTH");
+				START_TIME_DAY =rs.getInt("START_TIME_DAY");
+				int END_TIME_HOUR =rs.getInt("END_TIME_HOUR");
+				int END_TIME_MINUTE =rs.getInt("END_TIME_MINUTE");
+				END_TIME_YEAR =rs.getInt("END_TIME_YEAR");
+				END_TIME_MONTH =rs.getInt("END_TIME_MONTH");
+				END_TIME_DAY =rs.getInt("END_TIME_DAY");
+				REMINDER =rs.getInt("REMINDER");
+				REMINDER_TIME =rs.getInt("REMINDER_TIME");
+				LOCATION = rs.getString("LOCATION");
+				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
+				ARW = rs.getString("ARW");
+				ID = rs.getInt("ID");
+				//TODO these 4 lines are just temporary
+				//remove these codes once bug in addAppt has been fixed
+				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
+				arwList.add(new LinkedList<String>());
+				arwList.add(new LinkedList<String>());
+				arwList.add(new LinkedList<String>());
+//						LinkedList<LinkedList<String>> arwList = getARWList(ARW);
+				//TODO extract the 3 lists from arwList
+				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID);
+				temp.add(tempAppointment);
+		    }
+//			return (Appt[]) temp.toArray(); //TODO WRONG
+			Appt[] temparray = new Appt[temp.size()];
+			for (int i = 0; i<temp.size(); i++)
+			{
+				Appt tempappt = new Appt(temp.get(i));
+				temparray[i] = tempappt;
+			}
+			return temparray;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//		    System.exit(0);
+		} catch (NullPointerException e) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//		    System.exit(0);
+		}
 		return null;
 	}
 	

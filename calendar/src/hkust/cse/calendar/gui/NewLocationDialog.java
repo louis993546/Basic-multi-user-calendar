@@ -68,7 +68,6 @@ public class NewLocationDialog extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	public NewLocationDialog(LocationDB l) {
-		// TODO Auto-generated constructor stub
 		this();
 		ldb = l;
 	}
@@ -84,7 +83,6 @@ public class NewLocationDialog extends JFrame implements ActionListener{
 			try {
 				ldb.addLocation(locationTF.getText());
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}

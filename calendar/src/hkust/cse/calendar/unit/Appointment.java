@@ -116,13 +116,20 @@ public class Appointment implements Comparable<Appointment> {
 
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
 		//TODO check if start date is valid
+		//Not sure if this is actually necessary
+		//check getValidDate from AppScheduler
 		return false;
 		//check if date is valid
+		//leap year
+		//if day exist in that month
+		//larger than 0
 		//check if time is valid
 	}
 
 	public boolean setEndDateTime(int ehr, int emin, int eyr, int emon, int eday) {
 		//TODO check if end date is valid
+		//Not sure if this is actually necessary
+		//check getValidDate from AppScheduler
 		return false;
 		//check if date is valid
 		//check if time is valid

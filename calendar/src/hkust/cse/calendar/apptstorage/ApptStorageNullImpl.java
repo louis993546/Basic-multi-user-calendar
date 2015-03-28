@@ -35,27 +35,31 @@ public class ApptStorageNullImpl extends ApptStorage {
 
 	@Override
 	public Appt[] RetrieveAppts(User entity, TimeSpan time) {
-		// TODO Auto-generated method stub
+		// TODO fix this returveAppts with user and time
 		//retrieve an appointment record by a given user object and timespan
-		
-		//temp implementation
-		ArrayList<Appointment> dataALA = adb.getAppointmentList();
-		ArrayList<Appt> dataLLA = new ArrayList<Appt>();
-		mAppts = new HashMap<Integer, Appt>();
-		if (dataALA.size()!=0)
-		{
-			for (Appointment a:dataALA)
-			{
-				Appt tempAppt = new Appt(a);
-				dataLLA.add(tempAppt);
-			}
-		}
-		Appt[] tempArray = new Appt[dataLLA.size()];
-		for (int i = 0; i<dataLLA.size(); i++)
-		{
-			tempArray[i] = dataLLA.get(i);
-		}
-		return tempArray;
+//		temp implementation. It just gets everything
+//		because the SQL part is not done yet
+		System.out.println(time.StartTime().toString());
+		System.out.println(time.EndTime().toString());
+				return adb.getApptByTime(time);
+//
+//		ArrayList<Appointment> dataALA = adb.getAppointmentList();
+//		ArrayList<Appt> dataLLA = new ArrayList<Appt>();
+//		mAppts = new HashMap<Integer, Appt>();
+//		if (dataALA.size()!=0)
+//		{
+//			for (Appointment a:dataALA)
+//			{
+//				Appt tempAppt = new Appt(a);
+//				dataLLA.add(tempAppt);
+//			}
+//		}
+//		Appt[] tempArray = new Appt[dataLLA.size()];
+//		for (int i = 0; i<dataLLA.size(); i++)
+//		{
+//			tempArray[i] = dataLLA.get(i);
+//		}
+//		return tempArray;
 	}
 
 	@Override
