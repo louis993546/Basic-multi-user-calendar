@@ -339,6 +339,7 @@ public class CalGrid extends JFrame implements ActionListener {
 					TableModel t = prepareTableModel();
 					tableView.setModel(t);
 					tableView.repaint();
+					//TODO refresh hashmap
 				}
 				else if (e.getActionCommand().equals("Modify Location")) {
 					ModifyLocationDialog mld = new ModifyLocationDialog(ldb);
