@@ -377,8 +377,8 @@ public class AppList extends JPanel implements ActionListener {
 			pos = calRowColNum(i);
 			if (i == startMin) {
 				tableView.getModel().setValueAt(appt, pos[0], pos[1]);
-				System.out.println(pos);
-				setTextAt(appt.getTitle(), pos[0], pos[1]);
+//				setTextAt(appt.getTitle(), pos[0], pos[1]);
+				
 				if (pos[1] == 1) {
 					cellCMD[pos[0]][0] = COLORED_TITLE;
 					cellColor[pos[0]][0] = color;
@@ -443,10 +443,8 @@ public class AppList extends JPanel implements ActionListener {
 		Appt apptTitle = getSelectedAppTitle();
 		if (apptTitle == null)
 		{
-			System.out.println("1234567890");
 			return;
 		}
-		System.out.println("0987654321");
 			
 //		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle.getID());
 		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
@@ -458,29 +456,23 @@ public class AppList extends JPanel implements ActionListener {
 	}
 
 	public Appt getSelectedAppTitle() {
-		System.out.println("1");
 		Object apptTitle;
-		System.out.println("2");
 		
 		if (currentRow < 0 || currentRow > ROWNUM - 1) {
 			JOptionPane.showMessageDialog(parent, "Please Select Again !",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			System.out.println("3");
 			selectedAppt=null;
-			System.out.println("4");
 			return selectedAppt;
-		}
-		System.out.println("5");
+		};
 		if (currentCol < 3) {
-			System.out.println("6");
 			apptTitle = tableView.getModel().getValueAt(currentRow, 1);
 		} else
 			apptTitle = tableView.getModel().getValueAt(currentRow, 4);
 		
-		System.out.println("7");
+//		System.out.println(apptTitle.toString());
+//		System.out.println(apptTitle instanceof Appt);
 		if (apptTitle instanceof Appt)
 		{
-			System.out.println("1");
 			selectedAppt=(Appt) apptTitle;
 			return  selectedAppt;
 		}		
