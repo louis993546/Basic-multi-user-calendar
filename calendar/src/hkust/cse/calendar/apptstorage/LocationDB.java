@@ -76,7 +76,6 @@ public class LocationDB {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM LOCATION WHERE LOCATION='" + l + "';");
 			while (rs.next()) {
 				int ans = rs.getInt("ID");
-				System.out.println("id = " + ans);
 				idAL.add(ans);
 			}
 			switch (idAL.size()) {

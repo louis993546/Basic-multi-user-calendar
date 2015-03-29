@@ -59,7 +59,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JLabel eTimeML;
 
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-	private String[] timeHS = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+	private String[] timeHS = {"08", "09", "10", "11",
 			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
 	private String[] timeMS = {"00", "15", "30", "45"};
 	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)", "Decade(s)"};
@@ -300,32 +300,23 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		commonConstructor(title, cal);
 	}
 	
-	AppScheduler(String title, CalGrid cal, int hr, int min, int y, int m, int d)
+	String getTimeInCorrectFormat(int time)
 	{
-		commonConstructor(title, cal);
-		
-		//TODO not working
-		yearSF.setText(""+y);
-		yearEF.setText(""+y);
-		//month
-		daySF.setText(""+d);
-		dayEF.setText(""+d);
-		
-		sTimeH.setSelectedItem(""+hr);
-		sTimeM.setSelectedItem(""+min);
+		String timeS;
+		if (time<10)
+			return ("0"+time);
+		else
+			return ""+time;
 	}
 	
 	AppScheduler(String title, CalGrid cal, Appt appt)
 	{
+		//TODO need to get all info to their box/field but it is not working perfectly
 		tempAppt = appt;
 		saveOrModify=1;
 		commonConstructor(title, cal);
-		//TODO put info of appt into each field
-		sTimeH.setSelectedItem("0" + appt.getAppointment().getStartHour());
-		sTimeM.setSelectedItem("0" + appt.getAppointment().getStartMin());
-		titleField.setText(appt.getTitle());
-		yearEF.setText("" + appt.getAppointment().getEndYear());
-		yearSF.setText("" + appt.getAppointment().getStartYear());
+		
+		updateSetApp(appt);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -476,7 +467,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-
+		//reminders
+		
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
@@ -489,8 +481,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		{
 			adb.modifyAppt(tempAppt.getID(), newAppt);
 		}
-		JOptionPane.showMessageDialog(null, "Saved.",
-				"Exit", JOptionPane.YES_NO_OPTION);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -505,7 +495,38 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void updateSetApp(Appt appt) {
-		// TODO I have no idea
+		// TODO set TF/CB/etc of this AppScheduler
+		sTimeH.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getStartHour()));
+		sTimeM.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getStartMin()));
+		
+		eTimeH.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getEndHour()));
+		eTimeM.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getEndMin()));
+		
+		titleField.setText(appt.getTitle());
+		
+		detailArea.setText(appt.getInfo());
+		
+		lCB.setSelectedItem(appt.getAppointment().getLocation());
+		
+		yearSF.setText("" + appt.getAppointment().getStartYear());
+		monthSF.setSelectedItem("" + appt.getAppointment().getStartMonth());
+		daySF.setText(""+appt.getAppointment().getStartDay());
+		
+		yearEF.setText("" + appt.getAppointment().getEndYear());
+		monthEF.setSelectedItem("" + appt.getAppointment().getEndMonth());
+		dayEF.setText(""+appt.getAppointment().getEndDay());
+		
+		//TODO not all have been implemented
+		reminderCB.setSelectedItem("" + appt.getAppointment().getReminderUnit());
+		reminderTF.setText(""+appt.getAppointment().getReminderTime());
+		boolean apptR;
+		if (appt.getAppointment().getReminder() == 0)
+			apptR = false;
+		else
+			apptR = true;
+		reminderChB.setSelected(apptR);
+		
+		//TODO invitation and stuff like that in phrase 2
 	}
 
 	public void componentHidden(ComponentEvent e) {

@@ -1,6 +1,8 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
+import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
 
 import java.awt.BorderLayout;
@@ -113,6 +115,7 @@ public class AppList extends JPanel implements ActionListener {
 	private Color[][] cellColor = new Color[20][2];
 	public Appt selectedAppt=null;
 	private MouseEvent tempe;
+	
 	public AppList() {
 		setLayout(new BorderLayout());
 		currentRow = 0;
@@ -154,7 +157,7 @@ public class AppList extends JPanel implements ActionListener {
 		});
 		pop.add(new JPopupMenu.Separator());
 		JMenuItem j = new JMenuItem("Details");
-		j.setFont(f);
+//		j.setFont(f); Why?
 		pop.add(j);
 
 		j.addActionListener(new ActionListener() {
@@ -360,16 +363,12 @@ public class AppList extends JPanel implements ActionListener {
 		Timestamp temp;
 
 		temp = appt.TimeSpan().StartTime();
-		System.out.println("From applist:" + temp.toString());
 		int startMin = temp.getHours() * 60 + temp.getMinutes();
 		startMin = startMin - OFFSET * 60;
 		
 		temp = appt.TimeSpan().EndTime();
 		int endMin = temp.getHours() * 60 + temp.getMinutes();
 		endMin = endMin - OFFSET * 60;
-
-		System.out.println(startMin);
-		System.out.println(endMin);
 		
 		int[] pos = new int[2];
 		for (int i = startMin; i < endMin; i = i + SMALLEST_DURATION) {
@@ -429,27 +428,30 @@ public class AppList extends JPanel implements ActionListener {
 			return;
 
 		DetailsDialog info = new DetailsDialog(apptTitle, "Appointment Details");
-
 		info.setVisible(true);
 
 	}
 
 	private void delete() {
-
+		Appt apptTitle = getSelectedAppTitle();
+		if (apptTitle != null)
+		{
+			ApptDB adb = new ApptDB();
+			adb.deleteAppt(apptTitle.getID());
+			parent.updateAppList();
+		}
 	}
 
 	private void modify() {
 		Appt apptTitle = getSelectedAppTitle();
-		if (apptTitle == null)
+		if (apptTitle != null)
 		{
-			return;
+			AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
+			setAppDial.updateSetApp(apptTitle);
+			setAppDial.setVisible(true);
+			setAppDial.setResizable(false);
+			parent.updateAppList(); //This should work, but the SQL side is not working, so......
 		}
-		
-		AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
-		setAppDial.updateSetApp(apptTitle);
-		setAppDial.setVisible(true);
-		setAppDial.setResizable(false);
-
 	}
 
 	public Appt getSelectedAppTitle() {
@@ -465,9 +467,7 @@ public class AppList extends JPanel implements ActionListener {
 			apptTitle = tableView.getModel().getValueAt(currentRow, 1);
 		} else
 			apptTitle = tableView.getModel().getValueAt(currentRow, 4);
-		
-//		System.out.println(apptTitle.toString());
-//		System.out.println(apptTitle instanceof Appt);
+
 		if (apptTitle instanceof Appt)
 		{
 			selectedAppt=(Appt) apptTitle;
@@ -483,7 +483,6 @@ public class AppList extends JPanel implements ActionListener {
 	}
 	
 	private void NewAppt() {
-		
 		if (parent.mCurrUser == null)
 			return;
 		if (currentRow < 0 || currentRow > ROWNUM - 1) {
@@ -498,9 +497,14 @@ public class AppList extends JPanel implements ActionListener {
 		else
 			startTime = (currentRow + 20) * 15 + 480;
 		AppScheduler a = new AppScheduler("New", parent);
-		a.updateSetApp(hkust.cse.calendar.gui.Utility.createDefaultAppt(
-				parent.currentY, parent.currentM, parent.currentD,
-				parent.mCurrUser, startTime));
+		//TODO put data into this tempA
+		Appointment tempA = new Appointment();
+		tempA.setTitle("Untitled");
+		tempA.setDescription("Insert some description here");
+//		tempA.setStartDateTime(shr, smin, syr, smon, sday);
+//		tempA.setEndDateTime(ehr, emin, eyr, emon, eday);
+		Appt tempAppt = new Appt();
+		a.updateSetApp(tempAppt);
 		a.setLocationRelativeTo(null);
 		a.setVisible(true);
 		

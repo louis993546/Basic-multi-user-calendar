@@ -66,28 +66,6 @@ public class Appointment implements Comparable<Appointment> {
 		//time
 	}
 
-//	public void setAppointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal) {
-//		title = t;
-//		description = d;
-//		location = l;
-//		startHour = shr;
-//		startMin = smin;
-//		startYear = syr;
-//		startMonth = smon;
-//		startDay = sday;
-//		endHour = ehr;
-//		endMin = emin;
-//		endYear = eyr;
-//		endMonth = emon;
-//		endDay = eday;
-//		reminder = r;
-//		reminderTime = rt;
-//		reminderUnit = ru;
-//		attend = aal;
-//		reject = ral;
-//		waiting = wal;
-//	}
-
 	public boolean setTitle(String t)
 	{
 		title = t;

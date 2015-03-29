@@ -17,6 +17,7 @@ public class ApptDB {
 	Connection c = null;
     Statement stmt = null;
     String sql = null;
+    ResultSet rs = null;
 
     public ApptDB()
 	{
@@ -27,7 +28,7 @@ public class ApptDB {
 	    c = DriverManager.getConnection("jdbc:sqlite:appt.db");
 	    stmt = c.createStatement();
 	    sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
-	   	  	  "(ID                   INTEGER            NOT NULL        PRIMARY KEY AUTOINCREMENT," +
+	   	  	  "(ID                   INT                NOT NULL        PRIMARY KEY AUTOINCREMENT," +
 	   	      " TITLE                TEXT               NOT NULL," +
 	   	      " DESCRIPTION          TEXT               NOT NULL," +
 	   	      " LOCATION             TEXT               NOT NULL," +
@@ -73,16 +74,44 @@ public class ApptDB {
 			String dt = dtSDF.toString();
 			dt = dt + a.getTitle();
 			dt = "" + dt.hashCode();
-			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
-				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
-				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT, ARW) " +
-					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," +
-				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," +
-				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," +
-				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + "," + dt + ");";
+			sql = "INSERT INTO APPOINTMENT ("
+				+ "TITLE, "
+				+ "DESCRIPTION, "
+				+ "LOCATION, "
+				+ "START_TIME_HOUR, "
+				+ "START_TIME_MINUTE, "
+				+ "START_TIME_YEAR, "
+				+ "START_TIME_MONTH, "
+				+ "START_TIME_DAY, "
+				+ "END_TIME_HOUR, "
+				+ "END_TIME_MINUTE, "
+				+ "END_TIME_YEAR, "
+				+ "END_TIME_MONTH, "
+				+ "END_TIME_DAY, "
+				+ "REMINDER, "
+				+ "REMINDER_TIME, "
+				+ "REMINDER_UNIT, ARW) " +
+					"VALUES ('" 
+				+ a.getTitle() + "','" 
+				+ a.getDescription() + "','" 
+				+ a.getLocation() + "',"
+				+ a.getStartHour() + "," 
+				+ a.getStartMin() + "," 
+				+ a.getStartYear() + "," 
+				+ a.getStartMonth() + "," 
+				+ a.getStartDay() + "," 
+				+ a.getEndHour() + "," 
+				+ a.getEndMin() + "," 
+				+ a.getEndYear() + "," 
+				+ a.getEndMonth() + "," 
+				+ a.getEndDay() + "," 
+				+ a.getReminder() + "," 
+				+ a.getReminderTime() + "," 
+				+ a.getReminderUnit() + "," 
+				+ dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
-			//TODO fix this SQL syntax error or google serializable
+			//TODO fix this SQL syntax error or google serializable/hibernate/i don't know
 			
 //			java.sql.SQLException: near "1967676291": syntax error
 //			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)
@@ -112,7 +141,7 @@ public class ApptDB {
     	try
     	{
     		stmt = c.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM " + name + ";");
+    		rs = stmt.executeQuery("SELECT * FROM " + name + ";");
     		while (rs.next())
     		{
     			String attend = rs.getString("ATTEND");
@@ -139,7 +168,7 @@ public class ApptDB {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
 		try {
 			stmt = c.createStatement();
-	        ResultSet rs = stmt.executeQuery( "SELECT * FROM APPOINTMENT;" );
+	        rs = stmt.executeQuery( "SELECT * FROM APPOINTMENT;" );
 	        String TITLE = "";
 	        String DESCRIPTION = "";
 	        String LOCATION = "";
@@ -233,8 +262,7 @@ public class ApptDB {
 			    	+ " AND END_TIME_MONTH=" + END_TIME_MONTH
 			    	+ " AND END_TIME_DAY=" + END_TIME_DAY
 			    	+ ");" ;
-//		    System.out.println(sql);
-		    ResultSet rs = stmt.executeQuery(sql);
+		    rs = stmt.executeQuery(sql);
 		    while ( rs.next() ) {
 				TITLE = rs.getString("TITLE");
 				DESCRIPTION = rs.getString("DESCRIPTION");
@@ -296,7 +324,7 @@ public class ApptDB {
 		try {
 			ArrayList<Integer> idAL = new ArrayList<Integer>();
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+			rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
 					+ "TITLE='" + a.getTitle()
 					+ "DESCIRPTION='" + a.getDescription()
 					+ "LOCATION='" + a.getLocation()
@@ -336,7 +364,7 @@ public class ApptDB {
 		try {
 			ArrayList<Integer> idAL = new ArrayList<Integer>();
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+			rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
 					+ "TITLE='" + title
 					+ "';");
 			while (rs.next()) {
@@ -365,7 +393,6 @@ public class ApptDB {
 			stmt = c.createStatement();
 		    String sql = "DELETE from APPOINTMENT WHERE ID=" + id + ";";
 		    stmt.executeUpdate(sql);
-//		    c.commit();
 			return true;
 		}
 		catch (SQLException e)
@@ -378,49 +405,34 @@ public class ApptDB {
 	public boolean modifyAppt(int id, Appointment newAppt)
 	{
 		try
-		{
+		{	
 			stmt = c.createStatement();
-	        String sql = "UPDATE APPOINTMENT set "
-	    		  //title
-	    		  + "TITLE = " + newAppt.getTitle()
-	    		  //description
-	    		  + "DESCRIPTION = " + newAppt.getDescription()
-	    		  //location
-	    		  + "LOCATION = " + newAppt.getLocation()
-	    		  //start time hour
-	    		  + "START_TIME_HOUR =" + newAppt.getStartHour()
-	    		  //start time min
-	    		  + "START_TIME_MIN = " + newAppt.getStartMin()
-	    		  //start time year
-	    		  + "START_TIME_YEAR = " + newAppt.getStartYear()
-	    		  //start time month
-	    		  + "START_TIME_MONTH = " + newAppt.getStartMonth()
-	    		  //start time day
-	    		  + "START_TIME_DAY = " + newAppt.getStartDay()
-	    		  //end time hour
-	    		  + "END_TIME_HOUR = " + newAppt.getEndHour()
-	    		  //end time min
-	    		  + "END_TIME_MIN = " + newAppt.getEndMin()
-	    		  //end time year
-	    		  + "END_TIME_YEAR = " + newAppt.getEndYear()
-	    		  //end time month
-	    		  + "END_TIME_MONTH = " + newAppt.getEndMonth()
-	    		  //end time day
-	    		  + "END_TIME_DAY = " + newAppt.getEndDay()
-	    		  //reminder
-	    		  + "REMINDER = " + newAppt.getReminder()
-	    		  //reminder time
-	    		  + "REMINDER_TIME = " + newAppt.getReminderTime()
-	    		  //reminder unit
-	    		  + "REMINDER_UNIT = " + newAppt.getReminderUnit()
-	    		  + "where ID=" + id + 
-	    		  ";";
-				stmt.executeUpdate(sql);
-				c.commit();
-				return true;
+	        sql = "UPDATE APPOINTMENT SET"
+	    		  + "        TITLE = '"           + newAppt.getTitle()
+	    		  + "' ,   DESCRIPTION = '"     + newAppt.getDescription()
+	    		  + "' ,   LOCATION = '"        + newAppt.getLocation()
+	    		  + "' ,   START_TIME_HOUR="    + newAppt.getStartHour()
+	    		  + "  ,   START_TIME_MINUTE= " + newAppt.getStartMin()
+	    		  + "  ,   START_TIME_YEAR= "   + newAppt.getStartYear()
+	    		  + "  ,   START_TIME_MONTH= "  + newAppt.getStartMonth()
+	    		  + "  ,   START_TIME_DAY= "    + newAppt.getStartDay()
+	    		  + "  ,   END_TIME_HOUR= "     + newAppt.getEndHour()
+	    		  + "  ,   END_TIME_MINUTE= "   + newAppt.getEndMin()
+	    		  + "  ,   END_TIME_YEAR= "     + newAppt.getEndYear()
+	    		  + "  ,   END_TIME_MONTH= "    + newAppt.getEndMonth()
+	    		  + "  ,   END_TIME_DAY= "      + newAppt.getEndDay()
+	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
+	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
+	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
+	    		  + "  WHERE ID="                 + id
+	    		  + ";";
+			stmt.executeUpdate(sql);
+
+			return true;
 		}
 		catch (SQLException e)
 		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			return false;
 		}
 	}
