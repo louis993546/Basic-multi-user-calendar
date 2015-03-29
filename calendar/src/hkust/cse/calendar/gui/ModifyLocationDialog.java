@@ -89,7 +89,6 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 			if ((id != 0) || (id != -1)) {
 				ldb.deleteLocation(id);
 				locationListModel.removeElementAt(locationList.getSelectedIndex());
-				System.out.println("Done");
 			}
 		}
 		else if (e.getSource() == modifyButton)

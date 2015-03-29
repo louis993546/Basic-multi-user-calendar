@@ -73,16 +73,44 @@ public class ApptDB {
 			String dt = dtSDF.toString();
 			dt = dt + a.getTitle();
 			dt = "" + dt.hashCode();
-			sql = "INSERT INTO APPOINTMENT (TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, "
-				+ "START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, "
-				+ "REMINDER, REMINDER_TIME, REMINDER_UNIT, ARW) " +
-					"VALUES ('" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "'," +
-				a.getStartHour() + "," + a.getStartMin() + "," + a.getStartYear() + "," + a.getStartMonth() + "," + a.getStartDay() + "," +
-				a.getEndHour() + "," + a.getEndMin() + "," + a.getEndYear() + "," + a.getEndMonth() + "," + a.getEndDay() + "," +
-				a.getReminder() + "," + a.getReminderTime() + "," + a.getReminderUnit() + "," + dt + ");";
+			sql = "INSERT INTO APPOINTMENT ("
+				+ "TITLE, "
+				+ "DESCRIPTION, "
+				+ "LOCATION, "
+				+ "START_TIME_HOUR, "
+				+ "START_TIME_MINUTE, "
+				+ "START_TIME_YEAR, "
+				+ "START_TIME_MONTH, "
+				+ "START_TIME_DAY, "
+				+ "END_TIME_HOUR, "
+				+ "END_TIME_MINUTE, "
+				+ "END_TIME_YEAR, "
+				+ "END_TIME_MONTH, "
+				+ "END_TIME_DAY, "
+				+ "REMINDER, "
+				+ "REMINDER_TIME, "
+				+ "REMINDER_UNIT, ARW) " +
+					"VALUES ('" 
+				+ a.getTitle() + "','" 
+				+ a.getDescription() + "','" 
+				+ a.getLocation() + "',"
+				+ a.getStartHour() + "," 
+				+ a.getStartMin() + "," 
+				+ a.getStartYear() + "," 
+				+ a.getStartMonth() + "," 
+				+ a.getStartDay() + "," 
+				+ a.getEndHour() + "," 
+				+ a.getEndMin() + "," 
+				+ a.getEndYear() + "," 
+				+ a.getEndMonth() + "," 
+				+ a.getEndDay() + "," 
+				+ a.getReminder() + "," 
+				+ a.getReminderTime() + "," 
+				+ a.getReminderUnit() + "," 
+				+ dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
-			//TODO fix this SQL syntax error or google serializable
+			//TODO fix this SQL syntax error or google serializable/hibernate/i don't know
 			
 //			java.sql.SQLException: near "1967676291": syntax error
 //			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)

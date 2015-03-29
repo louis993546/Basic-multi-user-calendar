@@ -300,32 +300,44 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		commonConstructor(title, cal);
 	}
 	
-	AppScheduler(String title, CalGrid cal, int hr, int min, int y, int m, int d)
-	{
-		commonConstructor(title, cal);
-		
-		//TODO not working
-		yearSF.setText(""+y);
-		yearEF.setText(""+y);
-		//month
-		daySF.setText(""+d);
-		dayEF.setText(""+d);
-		
-		sTimeH.setSelectedItem(""+hr);
-		sTimeM.setSelectedItem(""+min);
-	}
-	
 	AppScheduler(String title, CalGrid cal, Appt appt)
 	{
+		//TODO need to get all info to their box/field but it is not working perfectly
 		tempAppt = appt;
 		saveOrModify=1;
 		commonConstructor(title, cal);
-		//TODO put info of appt into each field
+		
 		sTimeH.setSelectedItem("0" + appt.getAppointment().getStartHour());
 		sTimeM.setSelectedItem("0" + appt.getAppointment().getStartMin());
+		
+		eTimeH.setSelectedItem("0" + appt.getAppointment().getEndHour());
+		eTimeM.setSelectedItem("0" + appt.getAppointment().getEndMin());
+		
 		titleField.setText(appt.getTitle());
-		yearEF.setText("" + appt.getAppointment().getEndYear());
+		
+		detailArea.setText(appt.getInfo());
+		
+		lCB.setSelectedItem(appt.getAppointment().getLocation());
+		
 		yearSF.setText("" + appt.getAppointment().getStartYear());
+		monthSF.setSelectedItem("" + appt.getAppointment().getStartMonth());
+		daySF.setText(""+appt.getAppointment().getStartDay());
+		
+		yearEF.setText("" + appt.getAppointment().getEndYear());
+		monthEF.setSelectedItem("" + appt.getAppointment().getEndMonth());
+		dayEF.setText(""+appt.getAppointment().getEndDay());
+		
+		//TODO not all have been implemented
+		reminderCB.setSelectedItem("" + appt.getAppointment().getReminderUnit());
+		reminderTF.setText(""+appt.getAppointment().getReminderTime());
+		boolean apptR;
+		if (appt.getAppointment().getReminder() == 0)
+			apptR = false;
+		else
+			apptR = true;
+		reminderChB.setSelected(apptR);
+		
+		//TODO invitation and stuff like that in phrase 2
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -476,21 +488,23 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-
+		//reminders
+		
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
 		adb = new ApptDB();
 		if (saveOrModify == 0)
 		{
+			//TODO remove this println
+			System.out.println("This is a new appointment!");
 			adb.addAppt(newAppt);
 		}
 		else
 		{
+			System.out.println("This is NOT a new appointment!");
 			adb.modifyAppt(tempAppt.getID(), newAppt);
 		}
-		JOptionPane.showMessageDialog(null, "Saved.",
-				"Exit", JOptionPane.YES_NO_OPTION);
 	}
 
 	@SuppressWarnings("deprecation")

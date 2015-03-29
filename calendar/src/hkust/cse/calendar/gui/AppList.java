@@ -367,9 +367,6 @@ public class AppList extends JPanel implements ActionListener {
 		temp = appt.TimeSpan().EndTime();
 		int endMin = temp.getHours() * 60 + temp.getMinutes();
 		endMin = endMin - OFFSET * 60;
-
-		System.out.println(startMin);
-		System.out.println(endMin);
 		
 		int[] pos = new int[2];
 		for (int i = startMin; i < endMin; i = i + SMALLEST_DURATION) {
