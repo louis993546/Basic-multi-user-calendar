@@ -23,6 +23,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 	public void SaveAppt(Appt appt) {
 		//Save appointment
 		adb.addAppt(appt.getAppointment());
+		LoadApptFromXml();
 	}
 
 	@Override
@@ -45,13 +46,14 @@ public class ApptStorageNullImpl extends ApptStorage {
 	@Override
 	public void UpdateAppt(Appt appt) {
 		adb.modifyAppt(appt.getID(), appt.getAppointment());
-
+		LoadApptFromXml();
 	}
 
 	@Override
 	public void RemoveAppt(Appt appt) {
 		//remove appointment record
 		adb.deleteAppt(appt.getAppointment().getID());
+		LoadApptFromXml();
 	}
 
 	@Override

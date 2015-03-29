@@ -393,7 +393,6 @@ public class ApptDB {
 			stmt = c.createStatement();
 		    String sql = "DELETE from APPOINTMENT WHERE ID=" + id + ";";
 		    stmt.executeUpdate(sql);
-//		    c.commit();
 			return true;
 		}
 		catch (SQLException e)
@@ -405,46 +404,31 @@ public class ApptDB {
 	
 	public boolean modifyAppt(int id, Appointment newAppt)
 	{
+		//TODO I don't think this part is working properly
 		try
 		{
 			stmt = c.createStatement();
 	        String sql = "UPDATE APPOINTMENT set "
-	    		  //title
 	    		  + "TITLE = " + newAppt.getTitle()
-	    		  //description
 	    		  + "DESCRIPTION = " + newAppt.getDescription()
-	    		  //location
 	    		  + "LOCATION = " + newAppt.getLocation()
-	    		  //start time hour
 	    		  + "START_TIME_HOUR =" + newAppt.getStartHour()
-	    		  //start time min
 	    		  + "START_TIME_MIN = " + newAppt.getStartMin()
-	    		  //start time year
 	    		  + "START_TIME_YEAR = " + newAppt.getStartYear()
-	    		  //start time month
 	    		  + "START_TIME_MONTH = " + newAppt.getStartMonth()
-	    		  //start time day
 	    		  + "START_TIME_DAY = " + newAppt.getStartDay()
-	    		  //end time hour
 	    		  + "END_TIME_HOUR = " + newAppt.getEndHour()
-	    		  //end time min
 	    		  + "END_TIME_MIN = " + newAppt.getEndMin()
-	    		  //end time year
 	    		  + "END_TIME_YEAR = " + newAppt.getEndYear()
-	    		  //end time month
 	    		  + "END_TIME_MONTH = " + newAppt.getEndMonth()
-	    		  //end time day
 	    		  + "END_TIME_DAY = " + newAppt.getEndDay()
-	    		  //reminder
 	    		  + "REMINDER = " + newAppt.getReminder()
-	    		  //reminder time
 	    		  + "REMINDER_TIME = " + newAppt.getReminderTime()
-	    		  //reminder unit
 	    		  + "REMINDER_UNIT = " + newAppt.getReminderUnit()
+	    		  //fail to location appt
 	    		  + "where ID=" + id + 
 	    		  ";";
 				stmt.executeUpdate(sql);
-				c.commit();
 				return true;
 		}
 		catch (SQLException e)
