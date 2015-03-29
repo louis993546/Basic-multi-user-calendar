@@ -17,6 +17,7 @@ public class ApptDB {
 	Connection c = null;
     Statement stmt = null;
     String sql = null;
+    ResultSet rs = null;
 
     public ApptDB()
 	{
@@ -27,7 +28,7 @@ public class ApptDB {
 	    c = DriverManager.getConnection("jdbc:sqlite:appt.db");
 	    stmt = c.createStatement();
 	    sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
-	   	  	  "(ID                   INTEGER            NOT NULL        PRIMARY KEY AUTOINCREMENT," +
+	   	  	  "(ID                   INT                NOT NULL        PRIMARY KEY AUTOINCREMENT," +
 	   	      " TITLE                TEXT               NOT NULL," +
 	   	      " DESCRIPTION          TEXT               NOT NULL," +
 	   	      " LOCATION             TEXT               NOT NULL," +
@@ -140,7 +141,7 @@ public class ApptDB {
     	try
     	{
     		stmt = c.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM " + name + ";");
+    		rs = stmt.executeQuery("SELECT * FROM " + name + ";");
     		while (rs.next())
     		{
     			String attend = rs.getString("ATTEND");
@@ -167,7 +168,7 @@ public class ApptDB {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
 		try {
 			stmt = c.createStatement();
-	        ResultSet rs = stmt.executeQuery( "SELECT * FROM APPOINTMENT;" );
+	        rs = stmt.executeQuery( "SELECT * FROM APPOINTMENT;" );
 	        String TITLE = "";
 	        String DESCRIPTION = "";
 	        String LOCATION = "";
@@ -261,8 +262,7 @@ public class ApptDB {
 			    	+ " AND END_TIME_MONTH=" + END_TIME_MONTH
 			    	+ " AND END_TIME_DAY=" + END_TIME_DAY
 			    	+ ");" ;
-//		    System.out.println(sql);
-		    ResultSet rs = stmt.executeQuery(sql);
+		    rs = stmt.executeQuery(sql);
 		    while ( rs.next() ) {
 				TITLE = rs.getString("TITLE");
 				DESCRIPTION = rs.getString("DESCRIPTION");
@@ -324,7 +324,7 @@ public class ApptDB {
 		try {
 			ArrayList<Integer> idAL = new ArrayList<Integer>();
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+			rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
 					+ "TITLE='" + a.getTitle()
 					+ "DESCIRPTION='" + a.getDescription()
 					+ "LOCATION='" + a.getLocation()
@@ -364,7 +364,7 @@ public class ApptDB {
 		try {
 			ArrayList<Integer> idAL = new ArrayList<Integer>();
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+			rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
 					+ "TITLE='" + title
 					+ "';");
 			while (rs.next()) {
@@ -404,35 +404,35 @@ public class ApptDB {
 	
 	public boolean modifyAppt(int id, Appointment newAppt)
 	{
-		//TODO I don't think this part is working properly
 		try
-		{
+		{	
 			stmt = c.createStatement();
-	        String sql = "UPDATE APPOINTMENT set "
-	    		  + "TITLE = " + newAppt.getTitle()
-	    		  + "DESCRIPTION = " + newAppt.getDescription()
-	    		  + "LOCATION = " + newAppt.getLocation()
-	    		  + "START_TIME_HOUR =" + newAppt.getStartHour()
-	    		  + "START_TIME_MIN = " + newAppt.getStartMin()
-	    		  + "START_TIME_YEAR = " + newAppt.getStartYear()
-	    		  + "START_TIME_MONTH = " + newAppt.getStartMonth()
-	    		  + "START_TIME_DAY = " + newAppt.getStartDay()
-	    		  + "END_TIME_HOUR = " + newAppt.getEndHour()
-	    		  + "END_TIME_MIN = " + newAppt.getEndMin()
-	    		  + "END_TIME_YEAR = " + newAppt.getEndYear()
-	    		  + "END_TIME_MONTH = " + newAppt.getEndMonth()
-	    		  + "END_TIME_DAY = " + newAppt.getEndDay()
-	    		  + "REMINDER = " + newAppt.getReminder()
-	    		  + "REMINDER_TIME = " + newAppt.getReminderTime()
-	    		  + "REMINDER_UNIT = " + newAppt.getReminderUnit()
-	    		  //fail to location appt
-	    		  + "where ID=" + id + 
-	    		  ";";
-				stmt.executeUpdate(sql);
-				return true;
+	        sql = "UPDATE APPOINTMENT SET"
+	    		  + "        TITLE = '"           + newAppt.getTitle()
+	    		  + "' ,   DESCRIPTION = '"     + newAppt.getDescription()
+	    		  + "' ,   LOCATION = '"        + newAppt.getLocation()
+	    		  + "' ,   START_TIME_HOUR="    + newAppt.getStartHour()
+	    		  + "  ,   START_TIME_MINUTE= " + newAppt.getStartMin()
+	    		  + "  ,   START_TIME_YEAR= "   + newAppt.getStartYear()
+	    		  + "  ,   START_TIME_MONTH= "  + newAppt.getStartMonth()
+	    		  + "  ,   START_TIME_DAY= "    + newAppt.getStartDay()
+	    		  + "  ,   END_TIME_HOUR= "     + newAppt.getEndHour()
+	    		  + "  ,   END_TIME_MINUTE= "   + newAppt.getEndMin()
+	    		  + "  ,   END_TIME_YEAR= "     + newAppt.getEndYear()
+	    		  + "  ,   END_TIME_MONTH= "    + newAppt.getEndMonth()
+	    		  + "  ,   END_TIME_DAY= "      + newAppt.getEndDay()
+	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
+	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
+	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
+	    		  + "  WHERE ID="                 + id
+	    		  + ";";
+			stmt.executeUpdate(sql);
+
+			return true;
 		}
 		catch (SQLException e)
 		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			return false;
 		}
 	}

@@ -475,13 +475,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		adb = new ApptDB();
 		if (saveOrModify == 0)
 		{
-			//TODO remove this println
-			System.out.println("This is a new appointment!");
 			adb.addAppt(newAppt);
 		}
 		else
 		{
-			System.out.println("This is NOT a new appointment!");
 			adb.modifyAppt(tempAppt.getID(), newAppt);
 		}
 	}

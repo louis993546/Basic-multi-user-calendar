@@ -157,7 +157,7 @@ public class AppList extends JPanel implements ActionListener {
 		});
 		pop.add(new JPopupMenu.Separator());
 		JMenuItem j = new JMenuItem("Details");
-		j.setFont(f);
+//		j.setFont(f); Why?
 		pop.add(j);
 
 		j.addActionListener(new ActionListener() {
@@ -363,7 +363,6 @@ public class AppList extends JPanel implements ActionListener {
 		Timestamp temp;
 
 		temp = appt.TimeSpan().StartTime();
-		System.out.println("From applist:" + temp.toString());
 		int startMin = temp.getHours() * 60 + temp.getMinutes();
 		startMin = startMin - OFFSET * 60;
 		
