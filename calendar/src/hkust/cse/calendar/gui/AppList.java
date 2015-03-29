@@ -446,7 +446,7 @@ public class AppList extends JPanel implements ActionListener {
 		Appt apptTitle = getSelectedAppTitle();
 		if (apptTitle != null)
 		{
-			AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
+			AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);//<--AppScheduler(String,CalGrid, int)
 			setAppDial.updateSetApp(apptTitle);
 			setAppDial.setVisible(true);
 			setAppDial.setResizable(false);
@@ -497,14 +497,20 @@ public class AppList extends JPanel implements ActionListener {
 		else
 			startTime = (currentRow + 20) * 15 + 480;
 		AppScheduler a = new AppScheduler("New", parent);
+
 		//TODO put data into this tempA
 		Appointment tempA = new Appointment();
-		tempA.setTitle("Untitled");
+		tempA.setTitle("Untitled??");
 		tempA.setDescription("Insert some description here");
+		//???
+		
 //		tempA.setStartDateTime(shr, smin, syr, smon, sday);
 //		tempA.setEndDateTime(ehr, emin, eyr, emon, eday);
-		Appt tempAppt = new Appt();
-		a.updateSetApp(tempAppt);
+		Appt tempAppt = new Appt();		
+
+		//commented next line because tempAppt is just a default object
+		//and it give 0 value for default year, day...
+		//a.updateSetApp(tempAppt);
 		a.setLocationRelativeTo(null);
 		a.setVisible(true);
 		

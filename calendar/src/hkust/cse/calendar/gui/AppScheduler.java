@@ -159,6 +159,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		sTimeM = new JComboBox<String>(timeMS);
 		pStart.add(sTimeM);
 
+		//TODO
+		//These 3 lines give default value for new appointment
+		//according to upper right table.
+		//But cannot set hour or min in this constructor
+		//It may be done by adding parameter, 
+		//eg. (String title, CalGrid cal, int startTime=480)
+		//480 means 8:00am = 8*60min
+		daySF.setText(String.valueOf(cal.currentD));
+		monthSF.setSelectedIndex(cal.currentM - 1);//1~12 ->0~11 (index of list) 
+		yearSF.setText(String.valueOf(cal.currentY));
+		
 		//End JPanel
 		JPanel pEnd = new JPanel();
 		Border endBorder = new TitledBorder(null, "END TIME");
