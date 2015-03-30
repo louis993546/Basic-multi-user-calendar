@@ -175,6 +175,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//eg.495-> hour= 8, min=15   ->  index:{0, 1}
 		//so, 8-8=0, 15/15=1
 		//req function are (startTime/60)-8->indexOfHour; (startTime%60)/15->indexOfMin
+		System.out.print("\nSelect default start time for new appt: "+startTime+";"+((startTime/60)-8)+";"+((startTime%60)/15));
 		sTimeH.setSelectedIndex((startTime/60)-8);
 		sTimeM.setSelectedIndex((startTime%60)/15);
 		

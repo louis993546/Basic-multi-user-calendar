@@ -353,6 +353,7 @@ public class AppList extends JPanel implements ActionListener {
 	@SuppressWarnings("deprecation")
 	public void addAppt(Appt appt) {
 //		System.out.println(appt.toString());
+		//What does joint mean??
 		Color color;
 		currColor = setColor(0, 240-(appt.TimeSpan().StartTime().getHours()-8)*25, 255-(appt.TimeSpan().StartTime().getMinutes()*3));
 		currColorForJoint = setColor(255-(appt.TimeSpan().StartTime().getHours()-8)*25, 0, 190-(appt.TimeSpan().StartTime().getMinutes()*3));
@@ -496,7 +497,7 @@ public class AppList extends JPanel implements ActionListener {
 			startTime = currentRow * 15 + 480;
 		else
 			startTime = (currentRow + 20) * 15 + 480;
-		AppScheduler a = new AppScheduler("New", parent);
+		AppScheduler a = new AppScheduler("New", parent, startTime);
 
 		//TODO put data into this tempA
 		Appointment tempA = new Appointment();
