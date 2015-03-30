@@ -13,16 +13,29 @@ class CalCellRenderer extends DefaultTableCellRenderer
 
 	private int c;
 
+	public CalCellRenderer(Object value, boolean hasAppointment ) {
+		CommonCalCellRenderer(value, hasAppointment);
+	}
+
 	public CalCellRenderer(Object value) {
+		CommonCalCellRenderer(value, false);//default has Appointment = false
+	}
+	
+	public void CommonCalCellRenderer(Object value, boolean hasAppointment) {
 		if (value != null) {
 			setForeground(Color.red);
 		} else
 			setForeground(Color.black);
-		setBackground(Color.white);
+		if(hasAppointment){
+			setBackground(Color.orange);
+		}else{
+			setBackground(Color.white);
+		}
+		
 		setHorizontalAlignment(SwingConstants.RIGHT);
-		setVerticalAlignment(SwingConstants.TOP);
+		setVerticalAlignment(SwingConstants.TOP);		
 	}
-
+	
 	public int row() {
 		return r;
 	}

@@ -60,7 +60,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 	private String[] timeHS = {"08", "09", "10", "11",
-			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+			"12", "13", "14", "15", "16", "17", "18"};//8am~6pm
 	private String[] timeMS = {"00", "15", "30", "45"};
 	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)", "Decade(s)"};
 	private ArrayList<String> locationAL;
@@ -112,7 +112,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private LocationDB ldb;
 	private ApptDB adb;
 
-	private void commonConstructor(String title, CalGrid cal) {
+	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		parent = cal;
 		this.setAlwaysOnTop(true);
 		setTitle(title);
@@ -166,26 +166,36 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//It may be done by adding parameter, 
 		//eg. (String title, CalGrid cal, int startTime=480)
 		//480 means 8:00am = 8*60min
+		titleField.setText("Default");
 		daySF.setText(String.valueOf(cal.currentD));
 		monthSF.setSelectedIndex(cal.currentM - 1);//1~12 ->0~11 (index of list) 
 		yearSF.setText(String.valueOf(cal.currentY));
+		//startTime/60->hour; startTime%60->min
+		//hourlist:{08,09,...,18}, minlist:{00,15,30,45}
+		//eg.495-> hour= 8, min=15   ->  index:{0, 1}
+		//so, 8-8=0, 15/15=1
+		//req function are (startTime/60)-8->indexOfHour; (startTime%60)/15->indexOfMin
+		sTimeH.setSelectedIndex((startTime/60)-8);
+		sTimeM.setSelectedIndex((startTime%60)/15);
 		
 		//End JPanel
 		JPanel pEnd = new JPanel();
 		Border endBorder = new TitledBorder(null, "END TIME");
 		pEnd.setBorder(endBorder);
-		yearL = new JLabel("YEAR: ");
-		pEnd.add(yearL);
-		yearEF = new JTextField(6);
-		pEnd.add(yearEF);
-		monthL = new JLabel("MONTH: ");
-		pEnd.add(monthL);
-		monthEF = new JComboBox<String>(monthS);
-		pEnd.add(monthEF);
-		dayL = new JLabel("DAY: ");
-		pEnd.add(dayL);
-		dayEF = new JTextField(4);
-		pEnd.add(dayEF);
+//		yearL = new JLabel("YEAR: ");
+//		pEnd.add(yearL);
+//		yearEF = new JTextField(6);
+//		pEnd.add(yearEF);
+//		monthL = new JLabel("MONTH: ");
+//		pEnd.add(monthL);
+//		monthEF = new JComboBox<String>(monthS);
+//		pEnd.add(monthEF);
+//		dayL = new JLabel("DAY: ");
+//		pEnd.add(dayL);
+//		dayEF = new JTextField(4);
+//		pEnd.add(dayEF);
+		//end date == start date
+		
 		eTimeHL = new JLabel("Hour");
 		pEnd.add(eTimeHL);
 		eTimeH = new JComboBox<String>(timeHS);
@@ -301,14 +311,20 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	}
 
-	AppScheduler(String title, CalGrid cal, int selectedApptId) {
+	AppScheduler(String title, CalGrid cal, int startTime, int selectedApptId) {
 		
 		this.selectedApptId = selectedApptId;
-		commonConstructor(title, cal);
+		commonConstructor(title, cal, startTime);
+	}
+	
+	AppScheduler(String title, CalGrid cal,int startTime) {
+		
+		
+		commonConstructor(title, cal, startTime);
 	}
 
 	AppScheduler(String title, CalGrid cal) {
-		commonConstructor(title, cal);
+		commonConstructor(title, cal, 480);
 	}
 	
 	String getTimeInCorrectFormat(int time)
@@ -325,7 +341,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO need to get all info to their box/field but it is not working perfectly
 		tempAppt = appt;
 		saveOrModify=1;
-		commonConstructor(title, cal);
+		commonConstructor(title, cal, 480);
 		
 		updateSetApp(appt);
 	}
@@ -353,6 +369,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				dispose();
 			}
 		}
+		//System.out.print("Refresh bottom highlight after save,reject, or cancel appointment\n");
 		parent.getAppList().clear();
 		parent.getAppList().setTodayAppt(parent.GetTodayAppt());
 		parent.repaint();
@@ -468,7 +485,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		// TODO unfinished save button
 
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
-		int[] endDate = getValidDate(yearEF, monthEF, dayEF);
+		int[] endDate = getValidDate(yearSF, monthSF, daySF); //end date == start date
 		//TODO get time using getValidTimeInterval()
 		int shr = Integer.parseInt(sTimeH.getSelectedItem().toString());
 		int smin = Integer.parseInt(sTimeM.getSelectedItem().toString());
@@ -523,9 +540,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		monthSF.setSelectedItem("" + appt.getAppointment().getStartMonth());
 		daySF.setText(""+appt.getAppointment().getStartDay());
 		
-		yearEF.setText("" + appt.getAppointment().getEndYear());
-		monthEF.setSelectedItem("" + appt.getAppointment().getEndMonth());
-		dayEF.setText(""+appt.getAppointment().getEndDay());
+//		yearEF.setText("" + appt.getAppointment().getEndYear());
+//		monthEF.setSelectedItem("" + appt.getAppointment().getEndMonth());
+//		dayEF.setText(""+appt.getAppointment().getEndDay());
 		
 		//TODO not all have been implemented
 		reminderCB.setSelectedItem("" + appt.getAppointment().getReminderUnit());
@@ -568,11 +585,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private void allDisableEdit(){
 		yearSF.setEditable(false);
-		yearEF.setEditable(false);
+//		yearEF.setEditable(false);
 		monthSF.setEditable(false);
-		monthEF.setEditable(false);
+//		monthEF.setEditable(false);
 		daySF.setEditable(false);
-		dayEF.setEditable(false);
+//		dayEF.setEditable(false);
 		sTimeH.setEditable(false);
 		sTimeM.setEditable(false);
 		eTimeH.setEditable(false);
