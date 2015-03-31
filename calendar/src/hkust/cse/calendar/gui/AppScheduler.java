@@ -175,7 +175,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//eg.495-> hour= 8, min=15   ->  index:{0, 1}
 		//so, 8-8=0, 15/15=1
 		//req function are (startTime/60)-8->indexOfHour; (startTime%60)/15->indexOfMin
-		System.out.print("\nSelect default start time for new appt: "+startTime+";"+((startTime/60)-8)+";"+((startTime%60)/15));
 		sTimeH.setSelectedIndex((startTime/60)-8);
 		sTimeM.setSelectedIndex((startTime%60)/15);
 		
@@ -376,7 +375,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				dispose();
 			}
 		}
-		//System.out.print("Refresh bottom highlight after save,reject, or cancel appointment\n");
 		parent.getAppList().clear();
 		parent.getAppList().setTodayAppt(parent.GetTodayAppt());
 		parent.repaint();
@@ -410,7 +408,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 					"Input Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if (date[1] <= 0 || date[1] > 12) {//mm
+		if (date[1] <= 0 || date[1] > 12) {//mm 1~12
 			JOptionPane.showMessageDialog(this, "Please input proper month",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
 			return null;
@@ -427,7 +425,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			JOptionPane.showMessageDialog(this,
 			"Please input proper month day", "Input Error",
 			JOptionPane.ERROR_MESSAGE);
-			System.out.println("AppScheduler.getValidDate(): monthday");
 			return null;
 		}
 		return date;
@@ -505,13 +502,29 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			return false; 
 		}
 		
-		System.out.println("AppScheduler.saveButtonResponse()");
-		System.out.println(""+startAndEndTime[0]+startAndEndTime[1]);
+		
+		
+
 		int shr = startAndEndTime[0]/60;
 		int smin = startAndEndTime[0]%60;
 		int ehr = startAndEndTime[1]/60;
 		int emin = startAndEndTime[1]%60;
 
+		TimeSpan newTimeSpan=new TimeSpan(2015, startDate[1],	startDate[2], 
+				shr, smin, ehr, emin);
+		TimeSpan wholeDay=new TimeSpan(2015, startDate[1],	startDate[2], 
+				0, 0, 23, 59);
+		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
+		
+		for (Appt tempAppt : listAppt) {
+			if(tempAppt.TimeSpan().Overlap(newTimeSpan)==true){
+				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+						"Time Conflict", JOptionPane.ERROR_MESSAGE);
+				return false;//cannot save
+			}				
+		}
+		
+		
 		
 		
 		//check if end date earlier then start date

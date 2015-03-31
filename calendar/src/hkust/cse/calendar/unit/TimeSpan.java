@@ -24,6 +24,47 @@ public class TimeSpan implements Serializable {
 		mEndTime = end;
 	}
 
+	public TimeSpan(int currentY, int currentM,
+			int currentD, int hour, int min, int endHour, int endMin) {
+
+		Timestamp start = new Timestamp(0);
+		start.setYear(currentY);
+		start.setMonth(currentM-1); //set month is 0-based, ie. 0~11
+		start.setDate(currentD);
+		start.setHours(hour);
+		start.setMinutes(min);
+
+		Timestamp end = new Timestamp(0);
+		end.setYear(currentY);
+		end.setMonth(currentM-1);
+		end.setDate(currentD);
+		end.setHours(endHour);
+		end.setMinutes(endMin);
+		
+		if (start.getYear() >= 1900) {
+			start.setYear(start.getYear() - 1900);
+		}
+		if (end.getYear() >= 1900) {
+			end.setYear(end.getYear() - 1900);
+		}
+		mStartTime = start;
+		mEndTime = end;
+	}
+
+	public String toString() {
+		return 
+			"\nsYear    : " + mStartTime.getYear()   +
+			"\tsMonth   : " + mStartTime.getMonth()  +
+			"\tsDate    : " + mStartTime.getDate()   +
+			"\tsHours   : " + mStartTime.getHours()  +
+			"\tsMinutes : " + mStartTime.getMinutes()+
+			"\neYear    : " + mEndTime.  getYear()   +
+			"\teMonth   : " + mEndTime.  getMonth()  +
+			"\teDate    : " + mEndTime.  getDate()   +
+			"\teHours   : " + mEndTime.  getHours()  +
+			"\teMinutes : " + mEndTime.  getMinutes();
+	}
+	
 	/* Get the starting time */
 	public Timestamp StartTime() {
 		return mStartTime;
@@ -36,10 +77,13 @@ public class TimeSpan implements Serializable {
 
 	/* Check whether a time span overlaps with this time span */
 	public boolean Overlap(TimeSpan d) {
-		if (d.EndTime().before(mStartTime) || d.EndTime().equals(mStartTime))	// If the time span ends before or at the starting time of this time span then these two time spans do not overlap
+		System.out.println("\nTimeSpan d:     test of Overlap function"+d+"\nTimeSpan this: test of Overlap function"+this);
+		if (d.EndTime().before(mStartTime) || d.EndTime().equals(mStartTime)){	// If the time span ends before or at the starting time of this time span then these two time spans do not overlap
 			return false;
-		if (d.StartTime().equals(mEndTime) || mEndTime.before(d.StartTime()))	// If the time span starts after or at the ending time of this time span then these two time spans do not overlap
+		}
+		if (d.StartTime().equals(mEndTime) || mEndTime.before(d.StartTime())){	// If the time span starts after or at the ending time of this time span then these two time spans do not overlap
 			return false;
+		}
 		return true;		// Else, the time span overlaps with this time span
 
 	}

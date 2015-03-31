@@ -99,7 +99,7 @@ public class CalGrid extends JFrame implements ActionListener {
 			"President's Day (US)\n",
 			"",
 			"Ching Ming Festival\nGood Friday\nThe day following Good Friday\nEaster Monday\n",
-			"Labour Day\nThe Buddhaþý™s Birthday\nTuen Ng Festival\n",
+			"Labour Day\nThe Buddha Birthday\nTuen Ng Festival\n",
 			"",
 			"Hong Kong Special Administrative Region Establishment Day\n",
 			"Civic Holiday(CAN)\n",
@@ -202,10 +202,6 @@ public class CalGrid extends JFrame implements ActionListener {
 					Timestamp currentDateStart = Timestamp.valueOf(String.format("%04d-%02d-%02d 00:00:00.0", currentY, currentM, Integer.parseInt(tem)));
 					Timestamp currentDateEnd = Timestamp.valueOf(String.format("%04d-%02d-%02d 23:59:59.0", currentY, currentM, Integer.parseInt(tem)));
 					TimeSpan currentDateSpan = new TimeSpan(currentDateStart, currentDateEnd);
-//					System.out.print("\nFor start time =" + 
-//							String.format("%04d-%02d-%02d 00:00:00.0", currentY, currentM, currentD));
-//					System.out.print(", controller.RetrieveAppts(mCurrUser, currentDateSpan).length ="+
-//							controller.RetrieveAppts(mCurrUser, currentDateSpan).length+"   (test of CalGrid cell rendering)");
 					boolean hasAppointment=controller.RetrieveAppts(mCurrUser, currentDateSpan).length>0;
 
 					
@@ -214,13 +210,8 @@ public class CalGrid extends JFrame implements ActionListener {
 								&& today.get(today.MONTH) + 1 == currentM
 								&& today.get(today.DAY_OF_MONTH) == Integer
 										.parseInt(tem)) {
-							//System.out.print();
-//							System.out.print("\nToday is " + 
-//							Integer.parseInt(tem)+"/"+currentM+"          (test of CalGrid cell rendering)");
 							return new CalCellRenderer(today,hasAppointment);
 						}else{
-//							System.out.print("\nCurrent day is " + 
-//							Integer.parseInt(tem)+"/"+currentM+"    (test of CalGrid cell rendering)");
 							return new CalCellRenderer(null,hasAppointment);
 						}
 					} catch (Throwable e) {
@@ -228,9 +219,6 @@ public class CalGrid extends JFrame implements ActionListener {
 					}
 
 				}
-				//System.out.print("\nNull "+"                  (test of CalGrid cell rendering)");
-				//System.out.print(Integer.parseInt(tem));
-				
 				return new CalCellRenderer(null);
 			}
 		};

@@ -28,7 +28,7 @@ public class ApptDB {
 	    c = DriverManager.getConnection("jdbc:sqlite:appt.db");
 	    stmt = c.createStatement();
 	    sql = "CREATE TABLE IF NOT EXISTS APPOINTMENT " +
-	   	  	  "(ID                   INT                NOT NULL        PRIMARY KEY AUTOINCREMENT," +
+	   	  	  "(ID                   INTEGER            NOT NULL        PRIMARY KEY AUTOINCREMENT," +
 	   	      " TITLE                TEXT               NOT NULL," +
 	   	      " DESCRIPTION          TEXT               NOT NULL," +
 	   	      " LOCATION             TEXT               NOT NULL," +

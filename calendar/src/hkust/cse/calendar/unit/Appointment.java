@@ -10,12 +10,12 @@ public class Appointment implements Comparable<Appointment> {
 	private int startHour;
 	private int startMin;
 	private int startYear;
-	private int startMonth;
+	private int startMonth;//1~12
 	private int startDay;
 	private int endHour;
 	private int endMin;
 	private int endYear;
-	private int endMonth;
+	private int endMonth;//1~12
 	private int endDay;
 	private int reminder;
 	private int reminderTime;
@@ -360,8 +360,8 @@ public class Appointment implements Comparable<Appointment> {
 	@SuppressWarnings("deprecation")
 	public TimeSpan getTimeSpan()
 	{
-		Timestamp st = new Timestamp(startYear-1900, startMonth, startDay, startHour, startMin, 0, 0);
-		Timestamp et = new Timestamp(endYear-1900, endMonth, endDay, endHour, endMin, 0, 0);
+		Timestamp st = new Timestamp(startYear-1900, startMonth-1, startDay, startHour, startMin, 0, 0);
+		Timestamp et = new Timestamp(endYear-1900, endMonth-1, endDay, endHour, endMin, 0, 0);//month of timestamp is 0-based, ie. 0~11
 		TimeSpan a = new TimeSpan(st, et);
 		return a;
 	}
