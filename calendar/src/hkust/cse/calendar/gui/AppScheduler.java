@@ -206,6 +206,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		eTimeM = new JComboBox<String>(timeMS);
 		pEnd.add(eTimeM);
 
+		
 		//Location Panel
 		JPanel lPanel = new JPanel();
 		Border lBorder = new TitledBorder(null, "Location");
@@ -354,9 +355,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			dispose();
 		} else if (e.getSource() == saveBut) {
 			try {
-				saveButtonResponse();
-				setVisible(false);
-				dispose();
+				if(saveButtonResponse()==true){ //mean data of new appointment is valid
+					setVisible(false);
+					dispose();
+				}
+				
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -397,14 +400,14 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private int[] getValidDate(JTextField a, JComboBox b, JTextField d) {
 
 		int[] date = new int[3];
-		date[0] = Utility.getNumber(a.getText());
-		date[1] = Utility.getNumber(b.getSelectedItem().toString());
-		if (date[0] < 1980 || date[0] > 2100) {
+		date[0] = Utility.getNumber(a.getText());//yyyy
+		date[1] = Utility.getNumber(b.getSelectedItem().toString());//mm
+		if (date[0] < 1980 || date[0] > 2100) {//yyyy
 			JOptionPane.showMessageDialog(this, "Please input proper year",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if (date[1] <= 0 || date[1] > 12) {
+		if (date[1] <= 0 || date[1] > 12) {//mm
 			JOptionPane.showMessageDialog(this, "Please input proper month",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
 			return null;
@@ -412,15 +415,16 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		date[2] = Utility.getNumber(d.getText());
 		int monthDay = CalGrid.monthDays[date[1] - 1];
-		if (date[1] == 2) {
+		if (date[1] == 2) {//feb 28 or 29
 			GregorianCalendar c = new GregorianCalendar();
 			if (c.isLeapYear(date[0]))
 				monthDay = 29;
 		}
-		if (date[2] <= 0 || date[2] > monthDay) {
+		if (date[2] <= 0 || date[2] > monthDay) {//dd
 			JOptionPane.showMessageDialog(this,
 			"Please input proper month day", "Input Error",
 			JOptionPane.ERROR_MESSAGE);
+			System.out.println("AppScheduler.getValidDate(): monthday");
 			return null;
 		}
 		return date;
@@ -428,10 +432,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private int getTime(JComboBox h, JComboBox eTimeM2) {
 
-		int hour = Utility.getNumber(h.getSelectedItem().toString());
+		int hour = h.getSelectedIndex()+8;//eg. 8am -> index 0
 		if (hour == -1)
 			return -1;
-		int minute = Utility.getNumber(eTimeM2.getSelectedItem().toString());
+		int minute = eTimeM2.getSelectedIndex()*15;//{00, 15,30, 45}
 		if (minute == -1)
 			return -1;
 
@@ -440,9 +444,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	private int[] getValidTimeInterval() {
-
+		System.out.println("getValidTimeInterval()");
 		int[] result = new int[2];
-		result[0] = getTime(sTimeH, sTimeM);
+		result[0] = getTime(sTimeH, sTimeM);//eg. 480 ->8am
 		result[1] = getTime(eTimeH, eTimeM);
 		if ((result[0] % 15) != 0 || (result[1] % 15) != 0) {
 			JOptionPane.showMessageDialog(this,
@@ -451,16 +455,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			return null;
 		}
 
-		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15")
-				&& !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45")
-			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15")
-			&& !eTimeM.getSelectedItem().toString().equals("30") && !eTimeM.getSelectedItem().toString().equals("45")){
-			JOptionPane.showMessageDialog(this,
-					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-
+//		if (!sTimeM.getSelectedItem().toString().equals("0") && !sTimeM.getSelectedItem().toString().equals("15")
+//				&& !sTimeM.getSelectedItem().toString().equals("30") && !sTimeM.getSelectedItem().toString().equals("45")
+//			|| !eTimeM.getSelectedItem().toString().equals("0") && !eTimeM.getSelectedItem().toString().equals("15")
+//			&& !eTimeM.getSelectedItem().toString().equals("30") && !eTimeM.getSelectedItem().toString().equals("45")){
+//			JOptionPane.showMessageDialog(this,
+//					"Minute Must be 0, 15, 30, or 45 !", "Input Error",
+//					JOptionPane.ERROR_MESSAGE);
+//			return null;
+//		}
+		//above check not needed?
+		
 		if (result[1] == -1 || result[0] == -1) {
 			JOptionPane.showMessageDialog(this, "Please check time",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
@@ -482,16 +487,30 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		return result;
 	}
 
-	private void saveButtonResponse() throws SQLException {
+	private boolean saveButtonResponse() throws SQLException {
 		// TODO unfinished save button
 
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
-		int[] endDate = getValidDate(yearSF, monthSF, daySF); //end date == start date
-		//TODO get time using getValidTimeInterval()
-		int shr = Integer.parseInt(sTimeH.getSelectedItem().toString());
-		int smin = Integer.parseInt(sTimeM.getSelectedItem().toString());
-		int ehr = Integer.parseInt(eTimeH.getSelectedItem().toString());
-		int emin = Integer.parseInt(eTimeM.getSelectedItem().toString());
+		int[] endDate = null;
+		if (startDate != null) {
+			endDate=startDate.clone();
+		}
+		//int[] endDate = getValidDate(yearSF, monthSF, daySF); //end date == start date
+		int[] startAndEndTime =getValidTimeInterval();
+		
+		if ((startDate==null) || (endDate==null) || (startAndEndTime==null)){
+			return false; 
+		}
+		
+		System.out.println("AppScheduler.saveButtonResponse()");
+		System.out.println(""+startAndEndTime[0]+startAndEndTime[1]);
+		int shr = startAndEndTime[0]/60;
+		int smin = startAndEndTime[0]%60;
+		int ehr = startAndEndTime[1]/60;
+		int emin = startAndEndTime[1]%60;
+
+		
+		
 		//check if end date earlier then start date
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
@@ -510,6 +529,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		{
 			adb.modifyAppt(tempAppt.getID(), newAppt);
 		}
+		return true;
 	}
 
 	@SuppressWarnings("deprecation")
