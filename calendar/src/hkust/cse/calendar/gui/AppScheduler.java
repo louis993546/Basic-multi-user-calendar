@@ -206,6 +206,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		eTimeM = new JComboBox<String>(timeMS);
 		pEnd.add(eTimeM);
 
+		//set end time=start time
+		eTimeH.setSelectedIndex(sTimeH.getSelectedIndex());
+		eTimeM.setSelectedIndex(sTimeM.getSelectedIndex());
 		
 		//Location Panel
 		JPanel lPanel = new JPanel();
