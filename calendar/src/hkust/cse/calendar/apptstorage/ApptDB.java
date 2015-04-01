@@ -181,7 +181,7 @@ public class ApptDB {
 	        int END_TIME_YEAR;
 	        int END_TIME_MONTH;
 	        int END_TIME_DAY;
-	        int REMINDER;
+	        boolean REMINDER;
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
 	        String ARW = "";
@@ -202,7 +202,7 @@ public class ApptDB {
 				END_TIME_YEAR =rs.getInt("END_TIME_YEAR");
 				END_TIME_MONTH =rs.getInt("END_TIME_MONTH");
 				END_TIME_DAY =rs.getInt("END_TIME_DAY");
-				REMINDER =rs.getInt("REMINDER");
+				REMINDER =(rs.getInt("REMINDER")==1)? true:false;
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
@@ -244,7 +244,7 @@ public class ApptDB {
 		    String TITLE = "";
 		    String DESCRIPTION = "";
 		    String LOCATION = "";
-		    int REMINDER;
+		    boolean REMINDER;
 		    int REMINDER_TIME;
 		    int REMINDER_UNIT;
 		    String ARW = "";
@@ -274,7 +274,7 @@ public class ApptDB {
 				END_TIME_YEAR =rs.getInt("END_TIME_YEAR");
 				END_TIME_MONTH =rs.getInt("END_TIME_MONTH");
 				END_TIME_DAY =rs.getInt("END_TIME_DAY");
-				REMINDER =rs.getInt("REMINDER");
+				REMINDER =(rs.getInt("REMINDER")==1)?true:false;
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");

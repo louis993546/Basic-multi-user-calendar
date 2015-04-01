@@ -12,15 +12,15 @@ import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
 public class ApptStorageNullImpl extends ApptStorage {
-	
+
 	private User defaultUser = null;
 	private ApptDB adb = new ApptDB();
-	
+
 	public ApptStorageNullImpl( User user )
 	{
 		defaultUser = user;
 	}
-	
+
 	@Override
 	public void SaveAppt(Appt appt) {
 		//Save appointment
@@ -86,11 +86,11 @@ public class ApptStorageNullImpl extends ApptStorage {
 			//generate reminder table and store it to reminderAL
 			for (Appointment a:dataALA)
 			{
-				if (a.getReminder() == 1) //there is a reminder
+				if (a.getReminder() == true ) //there is a reminder
 				{
 					//TODO calculate the actual time
 					// {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)"
-					// 1               2          3          4     
+					// 1               2          3          4
 					int msToMinus = 0;
 					Timestamp tempTS = a.getTimeSpan().StartTime();
 					//get start time of a
@@ -98,7 +98,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 					switch (a.getReminderUnit())
 					{
 					case 1:
-						msToMinus = a.getReminderTime()*60*1000; 
+						msToMinus = a.getReminderTime()*60*1000;
 						break;
 					case 2:
 						msToMinus = a.getReminderTime()*60*60*1000;
