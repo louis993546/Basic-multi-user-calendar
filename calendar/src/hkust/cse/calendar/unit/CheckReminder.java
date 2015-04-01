@@ -8,8 +8,6 @@ import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
-import hkust.cse.calendar.gui.CalGrid;
-
 import javax.swing.JOptionPane;
 
 
@@ -17,36 +15,21 @@ public class CheckReminder extends Thread {
 	User mCurrUser;
 	Appt[] Apptlist;
 	int size = 0;
-	CalGrid parent;
 	
-	public CheckReminder(){
-		
-	}
-    public CheckReminder(User mCurrUser, Appt[] getTodayAppt, CalGrid parent) {
+	
+    public CheckReminder(User mCurrUser, Appt[] getTodayAppt) {
     	this.mCurrUser = mCurrUser;
     	this.Apptlist = getTodayAppt;
-    	this.parent = parent;
     }
 
 
     public void run() {
 	    while(true){
 			try {
-				
-				//int waittime=15-parent.timeMachine.getMTimestamp().getMinutes()%15;//time to 00, 15, 30, 45
-				
-				//Thread.sleep(waittime*60*1000);
+				Thread.sleep(50000);
 				while(true){
-//					minToCheck = parent.timeMachine.getMTimestamp().getMinutes()%15
-//					for(Appt tempAppt :Apptlist){
-//						
-//
-//						if(tempAppt.getAppointment().getTimeSpan().Overlap(new)){//??
-//							
-//						}
-//					}
-//					
-					Thread.sleep(15*60*1000);//15*60*1000 ->15min
+					System.out.println("try\n");
+					Thread.sleep(10000);
 		    		
 				}
 	    	} catch (InterruptedException e) {
@@ -57,10 +40,6 @@ public class CheckReminder extends Thread {
     
     private void sort() {
     	
-    }
-    
-    public void changeDayForReminder(Appt[] getTodayAppt){
-    	this.Apptlist = getTodayAppt;
     }
 
 	private void reminder() throws InterruptedException {
