@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -491,6 +493,22 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		return result;
 	}
+	
+	private static boolean isValidDate(String input) {
+        String formatString = "MM/dd/yyyy";
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(formatString);
+            format.setLenient(false);
+            format.parse(input);
+        } catch (ParseException e) {
+            return false;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        return true;
+    }
 
 	private boolean saveButtonResponse() throws SQLException {
 		// TODO unfinished save button
@@ -556,25 +574,100 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				{
 					//day +1
 					//need to check if the month/year changes
+					long adding = (long) 1 * 24 * 60 * 60 * 1000;
+					Timestamp tempTS = newAppt.getTimeSpan().StartTime();
+					tempTS.setTime(tempTS.getTime()+adding); //now tempTS contains the new day
+					newAppt.setStartEndYear(tempTS.getYear()+1900); //set year
+					newAppt.setStartEndMonth(tempTS.getMonth()+ 1 ); //set month
+					newAppt.setStartEndDay(tempTS.getDate()); //set day
+					if (newAppt.getStartYear()<2100)
+					{
+						wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
+						listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
+						for (Appt tempAppt : listAppt) {
+							if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
+								JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+										"Time Conflict", JOptionPane.ERROR_MESSAGE);
+								return false;//cannot save
+							}				
+						}
+						adb = new ApptDB();
+						if (saveOrModify == 0)	//new appt
+							adb.addAppt(newAppt);
+						else					//modify appt
+							adb.modifyAppt(tempAppt.getID(), newAppt);
+					}
 				}
 				else if (freqUnit == "Weekly")
 				{
 					//day +7
 					//need to check if the month/year changes
+					long adding = (long) 7 * 24 * 60 * 60 * 1000;
+					Timestamp tempTS = newAppt.getTimeSpan().StartTime();
+					tempTS.setTime(tempTS.getTime()+adding); //now tempTS contains the new day
+					newAppt.setStartEndYear(tempTS.getYear()+1900); //set year
+					newAppt.setStartEndMonth(tempTS.getMonth()+ 1 ); //set month
+					newAppt.setStartEndDay(tempTS.getDate()); //set day
+					if (newAppt.getStartYear()<2100)
+					{
+						wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
+						listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
+						for (Appt tempAppt : listAppt) {
+							if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
+								JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+										"Time Conflict", JOptionPane.ERROR_MESSAGE);
+								return false;//cannot save
+							}				
+						}
+						adb = new ApptDB();
+						if (saveOrModify == 0)	//new appt
+							adb.addAppt(newAppt);
+						else					//modify appt
+							adb.modifyAppt(tempAppt.getID(), newAppt);
+					}
 				}
 				else if (freqUnit == "Monthly")
 				{
-					//if month + 1 >12
-						//year + 1
-						//month = 1
-					//else
-						//month + 1
+					int y = newAppt.getStartYear(); //remember to +1900
+					int m = newAppt.getStartMonth();
+					int d = newAppt.getStartDay();
+					if (m + 1 == 13)
+					{
+						m = 1;
+						y = y+1;
+					}
+					else
+						m++;
+					newAppt.setStartEndYear(y);
+					newAppt.setStartEndMonth(m);
+					System.out.println(m + "/" + d + "/" + y);
+					System.out.println(isValidDate(m + "/" + d + "/" + y));
+					if (isValidDate(m + "/" + d + "/" + y ) == true) //
+					{
+						if (newAppt.getStartYear()<2100)
+						{
+							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
+							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
+							for (Appt tempAppt : listAppt) {
+								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
+									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+											"Time Conflict", JOptionPane.ERROR_MESSAGE);
+									return false;//cannot save
+								}				
+							}
+							adb = new ApptDB();
+							if (saveOrModify == 0)	//new appt
+								adb.addAppt(newAppt);
+							else					//modify appt
+								adb.modifyAppt(tempAppt.getID(), newAppt);
+						}
+					}
+					
 				}
 				else if (freqUnit == "Yearly")
 				{
 					//year + 1
 					newAppt.setStartEndYear(startDate[0] + i + 1);
-					System.out.println(newAppt.getStartYear()<2100);
 					if (newAppt.getStartYear()<2100)
 					{
 						wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
@@ -597,7 +690,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				{
 					//year + 10
 					newAppt.setStartEndYear(startDate[0] + (i*10) + 10);
-					System.out.println(newAppt.getStartYear()<2100);
 					if (newAppt.getStartYear()<2100)
 					{
 						wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
@@ -620,7 +712,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				{
 					//year + 100
 					newAppt.setStartEndYear(startDate[0] + (i*100) + 100);
-					System.out.println(newAppt.getStartYear()<2100);
 					if (newAppt.getStartYear()<2100)
 					{
 						wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
@@ -643,7 +734,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				{
 					//year + 1000
 					newAppt.setStartEndYear(startDate[0] + (i*1000) + 1000);
-					System.out.println(newAppt.getStartYear()<2100);
 					if (newAppt.getStartYear()<2100)
 					{
 						wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
