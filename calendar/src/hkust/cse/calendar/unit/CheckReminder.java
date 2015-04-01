@@ -26,7 +26,7 @@ public class CheckReminder extends Thread {
     public void run() {
 	    while(true){
 			try {
-				Thread.sleep(gettime);
+				Thread.sleep(50000);
 				while(true){
 					System.out.println("try\n");
 					Thread.sleep(10000);

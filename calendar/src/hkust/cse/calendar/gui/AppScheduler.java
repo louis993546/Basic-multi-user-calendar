@@ -103,6 +103,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	
 	private Appt tempAppt;
 	private int saveOrModify = 0;
+	
+	private int idofappt=0;
 
 //	private JTextField attendField;
 //	private JTextField rejectField;
@@ -346,7 +348,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		tempAppt = appt;
 		saveOrModify=1;
 		commonConstructor(title, cal, 480);
-		
+		idofappt=appt.getID();
 		updateSetApp(appt);
 	}
 
@@ -444,7 +446,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	private int[] getValidTimeInterval() {
-		System.out.println("getValidTimeInterval()");
 		int[] result = new int[2];
 		result[0] = getTime(sTimeH, sTimeM);//eg. 480 ->8am
 		result[1] = getTime(eTimeH, eTimeM);
@@ -517,7 +518,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
 		
 		for (Appt tempAppt : listAppt) {
-			if(tempAppt.TimeSpan().Overlap(newTimeSpan)==true){
+			if(tempAppt.TimeSpan().Overlap(newTimeSpan)==true && idofappt!=tempAppt.getID()){
+				
 				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
 						"Time Conflict", JOptionPane.ERROR_MESSAGE);
 				return false;//cannot save

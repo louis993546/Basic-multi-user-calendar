@@ -77,7 +77,7 @@ public class TimeSpan implements Serializable {
 
 	/* Check whether a time span overlaps with this time span */
 	public boolean Overlap(TimeSpan d) {
-		System.out.println("\nTimeSpan d:     test of Overlap function"+d+"\nTimeSpan this: test of Overlap function"+this);
+		//System.out.println("\nTimeSpan d:     test of Overlap function"+d+"\nTimeSpan this: test of Overlap function"+this);
 		if (d.EndTime().before(mStartTime) || d.EndTime().equals(mStartTime)){	// If the time span ends before or at the starting time of this time span then these two time spans do not overlap
 			return false;
 		}
