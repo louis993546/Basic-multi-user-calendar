@@ -1,24 +1,26 @@
 package hkust.cse.calendar.apptstorage;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.Reminder;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
 public class ApptStorageNullImpl extends ApptStorage {
-	
+
 	private User defaultUser = null;
 	private ApptDB adb = new ApptDB();
-	
+
 	public ApptStorageNullImpl( User user )
 	{
 		defaultUser = user;
 	}
-	
+
 	@Override
 	public void SaveAppt(Appt appt) {
 		//Save appointment
@@ -79,6 +81,40 @@ public class ApptStorageNullImpl extends ApptStorage {
 				{
 					mAppts = new HashMap<Integer, Appt>();
 					mAppts.put(b.getID(), b);
+				}
+			}
+			//generate reminder table and store it to reminderAL
+			for (Appointment a:dataALA)
+			{
+				if (a.getReminder() == true ) //there is a reminder
+				{
+					//TODO calculate the actual time
+					// {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)"
+					// 1               2          3          4
+					int msToMinus = 0;
+					Timestamp tempTS = a.getTimeSpan().StartTime();
+					//get start time of a
+					//get reminder unit
+					switch (a.getReminderUnit())
+					{
+					case 1:
+						msToMinus = a.getReminderTime()*60*1000;
+						break;
+					case 2:
+						msToMinus = a.getReminderTime()*60*60*1000;
+						break;
+					case 3:
+						msToMinus = a.getReminderTime()*60*60*24*1000;
+						break;
+					case 4:
+						msToMinus = a.getReminderTime()*60*60*24*7*1000;
+						break;
+					default:
+					}
+					//set new timestamp
+					tempTS.setTime(tempTS.getTime()- msToMinus);
+					Reminder newReminder = new Reminder(a.getTitle(), tempTS);
+					reminderAL.add(newReminder);
 				}
 			}
 		}
