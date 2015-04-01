@@ -1,19 +1,10 @@
 #COMP3111 Project
 
-##What is in this README:
-- Tutorial websites
-- Errors + How-to
-- To-Do
-- Phrase 1 requirement
-- [Working] Phrase 2 requirement
-
 ###Tutorials
 * <a href="http://www.tutorialspoint.com/sqlite/sqlite_java.htm">SQLite</a>. I LITERALLY copy and paste things from here.
 * <a href="https://www.siteground.com/tutorials/git/commands.htm">Some basic git commands</a>
 * Google
-
-#### Error #2: Not able to open eclipse.exe/eclipse.app
-* Just download another one from <a href="https://eclipse.org/downloads/">here</a>. Apparently eclipse cannot be sync to GitHub very successfully.
+* <a href="http://www.javapractices.com/topic/TopicAction.do?Id=234">Fake System Clock</a>
 
 #### How-to #1: Import project to GitHub
 - Make sure you are not already in the folder you want to import

@@ -353,6 +353,7 @@ public class AppList extends JPanel implements ActionListener {
 	@SuppressWarnings("deprecation")
 	public void addAppt(Appt appt) {
 //		System.out.println(appt.toString());
+		//What does joint mean??
 		Color color;
 		currColor = setColor(0, 240-(appt.TimeSpan().StartTime().getHours()-8)*25, 255-(appt.TimeSpan().StartTime().getMinutes()*3));
 		currColorForJoint = setColor(255-(appt.TimeSpan().StartTime().getHours()-8)*25, 0, 190-(appt.TimeSpan().StartTime().getMinutes()*3));
@@ -446,7 +447,7 @@ public class AppList extends JPanel implements ActionListener {
 		Appt apptTitle = getSelectedAppTitle();
 		if (apptTitle != null)
 		{
-			AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);
+			AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);//<--AppScheduler(String,CalGrid, int)
 			setAppDial.updateSetApp(apptTitle);
 			setAppDial.setVisible(true);
 			setAppDial.setResizable(false);
@@ -496,15 +497,21 @@ public class AppList extends JPanel implements ActionListener {
 			startTime = currentRow * 15 + 480;
 		else
 			startTime = (currentRow + 20) * 15 + 480;
-		AppScheduler a = new AppScheduler("New", parent);
+		AppScheduler a = new AppScheduler("New", parent, startTime);
+
 		//TODO put data into this tempA
 		Appointment tempA = new Appointment();
-		tempA.setTitle("Untitled");
+		tempA.setTitle("Untitled??");
 		tempA.setDescription("Insert some description here");
+		//???
+		
 //		tempA.setStartDateTime(shr, smin, syr, smon, sday);
 //		tempA.setEndDateTime(ehr, emin, eyr, emon, eday);
-		Appt tempAppt = new Appt();
-		a.updateSetApp(tempAppt);
+		Appt tempAppt = new Appt();		
+
+		//commented next line because tempAppt is just a default object
+		//and it give 0 value for default year, day...
+		//a.updateSetApp(tempAppt);
 		a.setLocationRelativeTo(null);
 		a.setVisible(true);
 		

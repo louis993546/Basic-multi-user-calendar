@@ -6,6 +6,7 @@ import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
@@ -72,6 +73,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private JLabel year;
 	private JComboBox<String> month;
 
+
 	private final Object[][] data = new Object[6][7];
 	private final Vector[][] apptMarker = new Vector[6][7];
 	private final String[] names = { "Sunday", "Monday", "Tuesday",
@@ -93,14 +95,16 @@ public class CalGrid extends JFrame implements ActionListener {
 	// private boolean isLogin = false;
 	private JMenu Locationmenu = new JMenu("Location");
 	private JMenu Usermenu = new JMenu("User");
-	private JMenu Appmenu = new JMenu("Appointment");;
+	private JMenu Appmenu = new JMenu("Appointment");
+	private JMenu Clockmenu = new JMenu("Clock"); 
+	
 
 	private final String[] holidays = {
 			"New Years Day\nSpring Festival\n",
 			"President's Day (US)\n",
 			"",
 			"Ching Ming Festival\nGood Friday\nThe day following Good Friday\nEaster Monday\n",
-			"Labour Day\nThe Buddha’s Birthday\nTuen Ng Festival\n",
+			"Labour Day\nThe Buddha Birthday\nTuen Ng Festival\n",
 			"",
 			"Hong Kong Special Administrative Region Establishment Day\n",
 			"Civic Holiday(CAN)\n",
@@ -137,11 +141,14 @@ public class CalGrid extends JFrame implements ActionListener {
 
 		setJMenuBar(createMenuBar());
 
-		today = new GregorianCalendar();
+		//today = new GregorianCalendar();
+		TimeMachine timeMachine = TimeMachine.getInstance();
+		today = timeMachine.getMToday();
 		currentY = today.get(Calendar.YEAR);
 		currentD = today.get(today.DAY_OF_MONTH);
 		int temp = today.get(today.MONTH) + 1;
 		currentM = 12;
+		
 
 		getDateArray(data);
 
@@ -197,14 +204,24 @@ public class CalGrid extends JFrame implements ActionListener {
 		tableView = new JTable(dataModel) {
 			public TableCellRenderer getCellRenderer(int row, int col) {
 				String tem = (String) data[row][col];
-
+				
+				
 				if (tem.equals("") == false) {
+					Timestamp currentDateStart = Timestamp.valueOf(String.format("%04d-%02d-%02d 00:00:00.0", currentY, currentM, Integer.parseInt(tem)));
+					Timestamp currentDateEnd = Timestamp.valueOf(String.format("%04d-%02d-%02d 23:59:59.0", currentY, currentM, Integer.parseInt(tem)));
+					TimeSpan currentDateSpan = new TimeSpan(currentDateStart, currentDateEnd);
+					boolean hasAppointment=controller.RetrieveAppts(mCurrUser, currentDateSpan).length>0;
+
+					
 					try {
 						if (today.get(Calendar.YEAR) == currentY
 								&& today.get(today.MONTH) + 1 == currentM
 								&& today.get(today.DAY_OF_MONTH) == Integer
 										.parseInt(tem)) {
-							return new CalCellRenderer(today);
+							System.out.println(today.get(today.MONTH) + 1);
+							return new CalCellRenderer(today,hasAppointment);
+						}else{
+							return new CalCellRenderer(null,hasAppointment);
 						}
 					} catch (Throwable e) {
 						System.exit(1);
@@ -248,6 +265,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		Appmenu.setEnabled(true);
 		Locationmenu.setEnabled(true);
 		Usermenu.setEnabled(true); //iff the current user is admin
+		Clockmenu.setEnabled(true);
 
 		UpdateCal();
 		pack();				// sized the window to a preferred size
@@ -360,6 +378,10 @@ public class CalGrid extends JFrame implements ActionListener {
 						System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
 					}
 				}
+				else if (e.getActionCommand().equals("Modify Clock")){
+					TimeMachineDialog tmd = new TimeMachineDialog(CalGrid.this);
+				
+				}		
 				else
 				{
 					System.out.println("Somethings wrong");
@@ -441,6 +463,14 @@ public class CalGrid extends JFrame implements ActionListener {
 		Usermenu.add(mu);
 		Usermenu.add(nu);
 		
+		 //modify clock
+		menuBar.add(Clockmenu);
+		Clockmenu.setEnabled(false);
+		Clockmenu.setMnemonic('c');
+		Appmenu.getAccessibleContext().setAccessibleDescription("Clock Management:");
+		JMenuItem mc = new JMenuItem("Modify Clock");
+		mc.addActionListener(listener);
+		Clockmenu.add(mc);
 
 		return menuBar;
 	}
