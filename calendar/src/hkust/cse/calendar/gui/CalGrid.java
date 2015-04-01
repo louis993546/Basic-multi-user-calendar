@@ -9,7 +9,6 @@ import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
-import hkust.cse.calendar.unit.CheckReminder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,7 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-import java.util.Set;
 
 import javax.management.loading.MLet;
 import javax.swing.JComboBox;
@@ -54,14 +52,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import com.sun.xml.internal.ws.api.server.ThreadLocalContainerResolver;
-
 
 public class CalGrid extends JFrame implements ActionListener {
 
-	public TimeMachine timeMachine = TimeMachine.getInstance();
-	public Thread threadReminder = null;
-	long threadReminderID=0;
 	// private User mNewUser;
 	private static final long serialVersionUID = 1L;
 	public ApptStorageControllerImpl controller;
@@ -134,12 +127,6 @@ public class CalGrid extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
-				
-		threadReminder=new CheckReminder();
-		threadReminder.start();
-		threadReminderID=threadReminder.getId();
-//		System.out.println(threadReminderID);
-//		System.out.println(threadReminder.isAlive());
 
 		controller = con;
 		mCurrUser = null;
@@ -155,7 +142,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		setJMenuBar(createMenuBar());
 
 		//today = new GregorianCalendar();
-		
+		TimeMachine timeMachine = TimeMachine.getInstance();
 		today = timeMachine.getMToday();
 		currentY = today.get(Calendar.YEAR);
 		currentD = today.get(today.DAY_OF_MONTH);
@@ -395,25 +382,8 @@ public class CalGrid extends JFrame implements ActionListener {
 					TimeMachineDialog tmd = new TimeMachineDialog(CalGrid.this);
 				
 				}		
-				else if (e.getActionCommand().equals("New User"))
+				else
 				{
-					System.out.println(threadReminderID);
-					System.out.println(threadReminder.getId());
-//					Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-//					Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
-//					for (Thread tempThread : threadArray) {
-//						System.out.println(""+tempThread+" "+tempThread.getId());
-//					}
-					System.out.println("try interrupt");
-//					for (Thread t : Thread.getAllStackTraces().keySet()) {
-//						if (t.getId()==threadReminderID){
-//							t.interrupt();
-//						};
-//					}
-					threadReminder.interrupt();
-					System.out.println("tried interrupt");
-					
-				}else{
 					System.out.println("Somethings wrong");
 				}
 			}
