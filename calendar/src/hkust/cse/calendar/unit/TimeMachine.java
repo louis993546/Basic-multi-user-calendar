@@ -42,6 +42,6 @@ public class TimeMachine {
 	
 	public void setTimeMachine(int year, int month, int day, int hour, int minute, int second) {
 		mToday.set(year, month, day, hour, minute, second);
-		System.out.println(month);
+//		System.out.println(month);
 	}
 }
