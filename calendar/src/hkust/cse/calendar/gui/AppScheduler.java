@@ -64,7 +64,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private String[] timeHS = {"08", "09", "10", "11",
 			"12", "13", "14", "15", "16", "17", "18"};//8am~6pm
 	private String[] timeMS = {"00", "15", "30", "45"};
-	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)", "Decade(s)"};
+	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)"};
 	private ArrayList<String> locationAL;
 	private String[] repeatS = {"Daily", "Weekly", "Monthly", "Yearly", "Decennially", "Centennially", "Millennially"};
 
