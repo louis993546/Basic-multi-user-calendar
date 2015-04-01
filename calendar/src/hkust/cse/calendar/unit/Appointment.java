@@ -91,6 +91,13 @@ public class Appointment implements Comparable<Appointment> {
 		return true;
 	}
 
+	public void setStartEndYear(int yr)
+	{
+		//Warning: this does not do any checking
+		startYear = yr;
+		endYear = yr;
+	}
+	
 	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
 		//TODO check if start date is valid
 		//Not sure if this is actually necessary
