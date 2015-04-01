@@ -54,7 +54,6 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public Appointment() {
-		//TODO timespan has not been implemented
 		title = "Untitled";
 		description = "";
 		location = "";
@@ -63,7 +62,7 @@ public class Appointment implements Comparable<Appointment> {
 		attend = new LinkedList<String>();
 		reject = new LinkedList<String>();
 		waiting = new LinkedList<String>();
-		//time
+		//TODO not sure if time needs to be initiate
 	}
 
 	public boolean setTitle(String t)

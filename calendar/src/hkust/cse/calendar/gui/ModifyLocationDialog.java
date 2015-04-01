@@ -82,7 +82,6 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//TODO modify and exit button still useless
 		if (e.getSource() == deleteButton)
 		{
 			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
@@ -93,11 +92,15 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 		}
 		else if (e.getSource() == modifyButton)
 		{
-			
+			//TODO modify button
+			//new GUI
+			//load string into that GUI
+			//call update method in LocationDB
+			//TODO Location needs ID field
 		}
 		else if (e.getSource() == exitButton)
 		{
-			
+			dispose();
 		}
 		else
 		{

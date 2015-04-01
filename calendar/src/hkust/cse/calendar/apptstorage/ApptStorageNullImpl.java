@@ -58,7 +58,6 @@ public class ApptStorageNullImpl extends ApptStorage {
 
 	@Override
 	public User getDefaultUser() {
-		// TODO Auto-generated method stub
 		return defaultUser; //return current user object
 	}
 
