@@ -308,7 +308,24 @@ public class ApptDB {
 	
 	public Appt getApptByJID(int j)
 	{
-		//TODO
+		//TODO [Phrase 2?] get Appt by JID
+		try
+		{
+			ArrayList<Appointment> AppointmentALJID = new ArrayList<Appointment>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM APPOINTMENT WHERE JID=" + j;
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				//This part is pretty much the same as getApptByTime,
+				//And since the structure of the DB is not finalized yet, 
+				//Finish this part later
+			}
+		}
+		catch (SQLException e)
+		{
+			//TODO what to do with this exception?
+		}
 		return null;
 	}
 
