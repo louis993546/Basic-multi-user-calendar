@@ -75,15 +75,16 @@ public class ApptStorageNullImpl extends ApptStorage {
 				Appt tempAppt = new Appt(a);
 				dataLLA.add(tempAppt);
 			}
+			mAppts = new HashMap<Integer, Appt>();
 			if (dataLLA.size()!=0)
 			{
 				for (Appt b:dataLLA)
 				{
-					mAppts = new HashMap<Integer, Appt>();
 					mAppts.put(b.getID(), b);
 				}
 			}
 			//generate reminder table and store it to reminderAL
+			reminderAL = new ArrayList<Reminder>();
 			for (Appointment a:dataALA)
 			{
 				if (a.getReminder() == 1) //there is a reminder

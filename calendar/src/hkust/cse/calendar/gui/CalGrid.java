@@ -267,6 +267,8 @@ public class CalGrid extends JFrame implements ActionListener {
 		Usermenu.setEnabled(true); //iff the current user is admin
 		Clockmenu.setEnabled(true);
 
+		ReminderChecker rc = new ReminderChecker(this, timeMachine);
+		
 		UpdateCal();
 		pack();				// sized the window to a preferred size
 		setVisible(true);	//set the window to be visible

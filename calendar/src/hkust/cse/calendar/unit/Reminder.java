@@ -31,4 +31,10 @@ public class Reminder {
 	{
 		return t;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return title;
+	}
 }
