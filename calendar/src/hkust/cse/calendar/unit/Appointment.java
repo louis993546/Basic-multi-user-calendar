@@ -17,7 +17,7 @@ public class Appointment implements Comparable<Appointment> {
 	private int endYear;
 	private int endMonth;//1~12
 	private int endDay;
-	private int reminder;
+	private boolean reminder;
 	private int reminderTime;
 	private int reminderUnit;
 	private LinkedList<String> attend;
@@ -28,7 +28,7 @@ public class Appointment implements Comparable<Appointment> {
 	private boolean isJoint;
 	private User creater;
 
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, boolean r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
 		//TODO create unique id for each appointment upon creation
 		//TODO initiate creater
 		title = t;
@@ -83,7 +83,7 @@ public class Appointment implements Comparable<Appointment> {
 		return true;
 	}
 
-	public boolean setReminder(int r, int rt, int ru)
+	public boolean setReminder(boolean r, int rt, int ru)
 	{
 		reminder = r;
 		reminderTime = rt;
@@ -309,7 +309,7 @@ public class Appointment implements Comparable<Appointment> {
 		return endDay;
 	}
 
-	public int getReminder() {
+	public boolean getReminder() {
 		return reminder;
 	}
 

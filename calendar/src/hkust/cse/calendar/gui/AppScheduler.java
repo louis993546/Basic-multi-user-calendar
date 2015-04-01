@@ -537,7 +537,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		
 		//currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
-		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], 0, 0, 0, temp, temp, temp, 12);
+		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], false, 0, 0, temp, temp, temp, 12);
 		adb = new ApptDB();
 		if (saveOrModify == 0)
 		{
@@ -587,7 +587,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		reminderCB.setSelectedItem("" + appt.getAppointment().getReminderUnit());
 		reminderTF.setText(""+appt.getAppointment().getReminderTime());
 		boolean apptR;
-		if (appt.getAppointment().getReminder() == 0)
+		if (appt.getAppointment().getReminder() == false)
 			apptR = false;
 		else
 			apptR = true;
