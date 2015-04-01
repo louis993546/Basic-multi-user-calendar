@@ -1,5 +1,3 @@
-//TODO MORE COMMENTS
-
 package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.Appointment;
@@ -59,7 +57,6 @@ public class ApptDB {
 			stmt = c.createStatement();
 			sql = "INSERT INTO ";
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -68,6 +65,8 @@ public class ApptDB {
     
     public boolean addAppt(Appointment a)
 	{
+    	//TODO add iff no time conflict
+    	
 		try {
 			stmt = c.createStatement();
 			SimpleDateFormat dtSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -111,7 +110,7 @@ public class ApptDB {
 				+ dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
-			//TODO fix this SQL syntax error or google serializable/hibernate/i don't know
+			//TODO try to switch to  seriable/hibernate
 			
 //			java.sql.SQLException: near "1967676291": syntax error
 //			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)
@@ -216,13 +215,12 @@ public class ApptDB {
 				arwList.add(new LinkedList<String>());
 				arwList.add(new LinkedList<String>());
 //				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
-				//TODO extract the 3 lists from arwList
+				//TODO [Phrase 2] extract the 3 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID);
 				temp.add(tempAppointment);
 	        }
 			return temp;
 		} catch (SQLException e) {
-			// TODO: handle exception
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 		    System.exit(0);
 		} catch (NullPointerException e) {
@@ -289,11 +287,10 @@ public class ApptDB {
 				arwList.add(new LinkedList<String>());
 				arwList.add(new LinkedList<String>());
 //						LinkedList<LinkedList<String>> arwList = getARWList(ARW);
-				//TODO extract the 3 lists from arwList
+				//TODO [Phrase 2] extract the 3 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID);
 				temp.add(tempAppointment);
 		    }
-//			return (Appt[]) temp.toArray(); //TODO WRONG
 			Appt[] temparray = new Appt[temp.size()];
 			for (int i = 0; i<temp.size(); i++)
 			{
@@ -302,12 +299,9 @@ public class ApptDB {
 			}
 			return temparray;
 		} catch (SQLException e) {
-			// TODO: handle exception
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//		    System.exit(0);
 		} catch (NullPointerException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//		    System.exit(0);
 		}
 		return null;
 	}

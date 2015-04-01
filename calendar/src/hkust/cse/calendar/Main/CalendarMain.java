@@ -23,7 +23,6 @@ public class CalendarMain {
 				try {
 					Thread.sleep(300);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

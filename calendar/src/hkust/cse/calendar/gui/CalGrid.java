@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
 import javax.management.loading.MLet;
 import javax.swing.JComboBox;
@@ -72,7 +73,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private JComboBox<String> month;
 
 	private final Object[][] data = new Object[6][7];
-	//private final Vector[][] apptMarker = new Vector[6][7];
+	private final Vector[][] apptMarker = new Vector[6][7];
 	private final String[] names = { "Sunday", "Monday", "Tuesday",
 			"Wednesday", "Thursday", "Friday", "Saturday" };
 	private final String[] months = { "January", "Feburary", "March", "April",
@@ -109,7 +110,7 @@ public class CalGrid extends JFrame implements ActionListener {
 
 	private AppScheduler setAppDial;
 	
-	//Create/read database
+	//database
 	ApptDB adb = new ApptDB();
 	UserDB udb = new UserDB();
 	LocationDB ldb = new LocationDB();
@@ -339,7 +340,8 @@ public class CalGrid extends JFrame implements ActionListener {
 					TableModel t = prepareTableModel();
 					tableView.setModel(t);
 					tableView.repaint();
-					//TODO refresh hashmap
+					controller.LoadApptFromXml();
+					
 				}
 				else if (e.getActionCommand().equals("Modify Location")) {
 					ModifyLocationDialog mld = new ModifyLocationDialog(ldb);
@@ -444,11 +446,8 @@ public class CalGrid extends JFrame implements ActionListener {
 	}
 
 	private void initializeSystem() {
-
 		mCurrUser = this.controller.getDefaultUser();	//get User from controller
 		controller.LoadApptFromXml();
-		//TODO Load the saved appointments from disk
-		// Fix Me !
 		checkUpdateJoinAppt();
 	}
 
@@ -522,9 +521,9 @@ public class CalGrid extends JFrame implements ActionListener {
 			Appt[] monthAppts = null;
 			GetMonthAppts();
 
-//			for (int i = 0; i < 6; i++)
-//				for (int j = 0; j < 7; j++)
-//					apptMarker[i][j] = new Vector(10, 1);
+			for (int i = 0; i < 6; i++)
+				for (int j = 0; j < 7; j++)
+					apptMarker[i][j] = new Vector(10, 1);
 
 			TableModel t = prepareTableModel();
 			this.tableView.setModel(t);
@@ -533,15 +532,15 @@ public class CalGrid extends JFrame implements ActionListener {
 		}
 	}
 
-//	public void clear() {
-//		for (int i = 0; i < 6; i++)
-//			for (int j = 0; j < 7; j++)
-//				apptMarker[i][j] = new Vector(10, 1);
-//		TableModel t = prepareTableModel();
-//		tableView.setModel(t);
-//		tableView.repaint();
-//		applist.clear();
-//	}
+	public void clear() {
+		for (int i = 0; i < 6; i++)
+			for (int j = 0; j < 7; j++)
+				apptMarker[i][j] = new Vector(10, 1);
+		TableModel t = prepareTableModel();
+		tableView.setModel(t);
+		tableView.repaint();
+		applist.clear();
+	}
 
 	@SuppressWarnings("deprecation")
 	private Appt[] GetMonthAppts() {

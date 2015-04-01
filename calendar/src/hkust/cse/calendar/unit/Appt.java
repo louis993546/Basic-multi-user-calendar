@@ -150,7 +150,6 @@ public class Appt implements Serializable {
 	// Setter of the mTimeSpan
 	@SuppressWarnings("deprecation")
 	public void setTimeSpan(TimeSpan d) {
-		//TODO timestamp year starts from 1900, not sure if it can work correctly
 		a.setStartDateTime(d.StartTime().getHours(), d.StartTime().getMinutes(), d.StartTime().getYear()+1900, d.StartTime().getMonth(), d.StartTime().getDay());
 		a.setEndDateTime(d.EndTime().getHours(), d.EndTime().getMinutes(), d.EndTime().getYear()+1900, d.EndTime().getMonth(), d.EndTime().getDay());
 	}
