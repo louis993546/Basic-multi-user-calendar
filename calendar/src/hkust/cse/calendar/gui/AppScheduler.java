@@ -541,9 +541,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			reminderTime = Integer.parseInt(reminderTF.getText());
 			if (reminderCB.getSelectedItem().toString() == "Minute(s)") //TODO may have something wrong with this one
 			{
+			//	System.out.println("reminderUnit = 1;");
 				reminderUnit = 1;
 			}
-			if (reminderCB.getSelectedItem().toString() == "Hour(s)")
+			else if (reminderCB.getSelectedItem().toString() == "Hour(s)")
 			{
 				reminderUnit = 2;
 			}
@@ -558,7 +559,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			else
 			{
 				System.out.println("Something's wrong");
-				System.out.println(reminderCB.getSelectedItem().toString());
+//				System.out.println(reminderCB.getSelectedItem().toString());
+//				System.out.println(reminderCB.getSelectedItem().toString() == "Minute(s)");
 			}
 		}
 		

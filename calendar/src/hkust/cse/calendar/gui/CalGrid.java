@@ -55,12 +55,14 @@ import javax.swing.text.StyledDocument;
 
 public class CalGrid extends JFrame implements ActionListener {
 
+	public TimeMachine timeMachine=null; 
+	public GregorianCalendar today;
 	// private User mNewUser;
 	private static final long serialVersionUID = 1L;
 	public ApptStorageControllerImpl controller;
 	public User mCurrUser;
 	private String mCurrTitle = "Desktop Calendar - No User - ";
-	private GregorianCalendar today;
+	
 	public int currentD;
 	public int currentM;
 	public int currentY;
@@ -72,7 +74,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private BasicArrowButton wButton;
 	private JLabel year;
 	private JComboBox<String> month;
-
+	
 
 	private final Object[][] data = new Object[6][7];
 	private final Vector[][] apptMarker = new Vector[6][7];
@@ -142,8 +144,9 @@ public class CalGrid extends JFrame implements ActionListener {
 		setJMenuBar(createMenuBar());
 
 		//today = new GregorianCalendar();
-		TimeMachine timeMachine = TimeMachine.getInstance();
-		today = timeMachine.getMToday();
+		timeMachine = new TimeMachine(this);
+		today = new GregorianCalendar();
+		today.setTime(timeMachine.getTMTimestamp());
 		currentY = today.get(Calendar.YEAR);
 		currentD = today.get(today.DAY_OF_MONTH);
 		int temp = today.get(today.MONTH) + 1;
@@ -382,6 +385,10 @@ public class CalGrid extends JFrame implements ActionListener {
 				}
 				else if (e.getActionCommand().equals("Modify Clock")){
 					TimeMachineDialog tmd = new TimeMachineDialog(CalGrid.this);
+				
+				}
+				else if (e.getActionCommand().equals("New User")){
+					System.out.println(timeMachine);
 				
 				}		
 				else

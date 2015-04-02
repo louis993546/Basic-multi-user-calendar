@@ -12,8 +12,10 @@ import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,7 +29,8 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	private JLabel timeSL;
 	
 	private JTextField yearF;
-	private JTextField monthF;
+	private JComboBox monthF;
+	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 	private JTextField dayF;
 	private JTextField timeHF;
 	private JTextField timeMF;
@@ -36,7 +39,7 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	private JButton btnModify;
 	private CalGrid cal;
 	
-	private Timestamp today;
+	private Timestamp today=null;//??
 	//private GregorianCalendar today;
 	int date[] = new int [3];
 	int time[] = new int [3];
@@ -44,16 +47,16 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	public TimeMachineDialog(CalGrid grid){
 		cal = grid;
 		
-		//today = TimeMachine.getInstance().getMToday();
-		today = TimeMachine.getInstance().getMTimestamp();
+		//today = TimeMachine.getInstance().getMToday(); 
 		//date[0] = today.get(Calendar.YEAR);
 		//date[1] = today.get(today.MONTH) + 1;
 		//date[2] = today.get(today.DAY_OF_MONTH);
 		//time[0] = 0;
 		//time[1] = 0;
 		//time[2] = 0;
-		date[0] = today.getYear() + 1900;
-		date[1] = today.getMonth() + 1;
+		today=cal.timeMachine.getTMTimestamp();//??
+		date[0] = today.getYear()+ 1900;
+		date[1] = today.getMonth() + 1 - 1;
 		date[2] = today.getDate();
 		time[0] = today.getHours();
 		time[1] = today.getMinutes();
@@ -76,16 +79,21 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 		timeHL = new JLabel("Hour: ");
 		timeML = new JLabel("Minute: ");
 		timeSL = new JLabel("Second: ");
+
 		
 		yearF = new JTextField(4);
-		monthF = new JTextField(2);
+		//monthF = new JTextField(2);
+		//monthL = new JLabel("MONTH: ");
+		//pStart.add(monthL);
+		monthF = new JComboBox<String>(monthS);
+		
 		dayF = new JTextField(2);
 		timeHF = new JTextField(2);
 		timeMF = new JTextField(2);
 		timeSF = new JTextField(2);
 		
 		yearF.setText(Integer.toString(date[0]));
-		monthF.setText(Integer.toString(date[1]));
+		monthF.setSelectedIndex(date[1]);
 		dayF.setText(Integer.toString(date[2]));
 		timeHF.setText(Integer.toString(time[0]));
 		timeMF.setText(Integer.toString(time[1]));
@@ -123,7 +131,7 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	public int[] getDate() {
 		int[] date = new int[3];
 		date[0] = Integer.parseInt(yearF.getText());
-		date[1] = Integer.parseInt(monthF.getText());
+		date[1] = monthF.getSelectedIndex()+1;//0~11 -> 1~12
 		date[2] = Integer.parseInt(dayF.getText());
 		
 		return date;
@@ -142,20 +150,84 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == btnModify){
-			modifyButtonResponse();
-			setVisible(false);
+			if(modifyButtonResponse()==true){
+				setVisible(false);
+				dispose();
+			}
 		}
 		
 		
 	}
-	private void modifyButtonResponse(){
-		int date[] = getDate();
-		int time[] = getTime();
-
-		TimeMachine timeMachine = TimeMachine.getInstance();
-		timeMachine.setTimeMachine(date[0], date[1] - 1 , date[2], time[0], time[1], time[2]);
+	private boolean modifyButtonResponse(){
+		int[] jumpDate = getValidDate(yearF,monthF,dayF);
+		int[] jumpTime =getValidTime(timeHF,timeMF,timeSF);
+		if ((jumpDate==null) || (jumpTime==null)){
+			return false;//input again
+		}
+		System.out.println("input for"+jumpDate[0]+"/"+jumpDate[1]+"/"+jumpDate[2]+" "+ 
+				jumpTime[0]+":"+jumpTime[1]+":"+jumpTime[2]);
+		cal.timeMachine.setTimeMachine(jumpDate[0], jumpDate[1]  , jumpDate[2], 
+				jumpTime[0], jumpTime[1], jumpTime[2]);
 		cal.UpdateCal();
+		return true; //ok
 		
 	}
+	
+	private int[] getValidDate(JTextField a, JComboBox b, JTextField d) {
 
+		int[] date = new int[3];
+		date[0] = Utility.getNumber(a.getText());//yyyy
+		date[1] = Utility.getNumber(b.getSelectedItem().toString());//mm
+		if (date[0] < 1980 || date[0] > 2100) {//yyyy
+			JOptionPane.showMessageDialog(this, "Please input proper year",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (date[1] <= 0 || date[1] > 12) {//mm 1~12
+			JOptionPane.showMessageDialog(this, "Please input proper month",
+					"Input Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		date[2] = Utility.getNumber(d.getText());
+		int monthDay = CalGrid.monthDays[date[1] - 1];
+		if (date[1] == 2) {//feb 28 or 29
+			GregorianCalendar c = new GregorianCalendar();
+			if (c.isLeapYear(date[0]))
+				monthDay = 29;
+		}
+		if (date[2] <= 0 || date[2] > monthDay) {//dd
+			JOptionPane.showMessageDialog(this,
+			"Please input proper month day", "Input Error",
+			JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		return date;
+	}
+
+	private int[] getValidTime(JTextField h, JTextField m, JTextField s	) {
+		int hr=Utility.getNumber(h.getText());
+		int min=Utility.getNumber(m.getText());
+		int sec=Utility.getNumber(s.getText());
+		if( !(0<=hr && hr<24) || !(0<=min && min<60) || !(0<=sec && sec<60) ){
+			JOptionPane.showMessageDialog(this,
+					"Invalid Time", "Input Error",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		int[] result=new int[3];
+		result[0]=hr;
+		result[1]=min;
+		result[2]=sec;
+		return result;
+		//int hour = h.getSelectedIndex()+8;//eg. 8am -> index 0
+//		if (hour == -1)
+//			return -1;
+//		int minute = eTimeM2.getSelectedIndex()*15;//{00, 15,30, 45}
+//		if (minute == -1)
+//			return -1;
+
+		
+
+	}
 }

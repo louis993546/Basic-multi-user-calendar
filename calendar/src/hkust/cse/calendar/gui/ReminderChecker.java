@@ -42,25 +42,33 @@ public class ReminderChecker {
 						//TODO compare time with the fake clock
 						System.out.println(r.getTitle() + " : " + r.getTime());
 						java.util.Date date= new java.util.Date();
-						System.out.println("Fake system time: " + (timeM.getMTimestamp().getYear()+1900) + "/" + (1 + timeM.getMTimestamp().getMonth()) + "/" + timeM.getMTimestamp().getDate() + " " + timeM.getMTimestamp().getHours() + ":" + timeM.getMTimestamp().getMinutes() + ":" + timeM.getMTimestamp().getSeconds());
-//						System.out.println(timeM.getMTimestamp().getYear());
-//						System.out.println(timeM.getMTimestamp().getMonth());
-//						System.out.println(timeM.getMTimestamp().getDate());
-//						System.out.println(timeM.getMTimestamp().getHours());
-//						System.out.println(timeM.getMTimestamp().getMinutes());
-						if (r.getTime().getYear() == timeM.getMTimestamp().getYear())
+						System.out.println("Fake system time: " +timeM.getTMTimestamp()); 
+//								(timeM.getTMTimestamp().getYear()+1900) + "/" + 
+//								(1 + timeM.getTMTimestamp().getMonth()) + "/" + 
+//								timeM.getTMTimestamp().getDate() + " " + 
+//								timeM.getTMTimestamp().getHours() + ":" + 
+//								timeM.getTMTimestamp().getMinutes() + ":" + 
+//								timeM.getTMTimestamp().getSeconds());
+//						System.out.println(timeM.getTMTimestamp().getYear());
+//						System.out.println(timeM.getTMTimestamp().getMonth());
+//						System.out.println(timeM.getTMTimestamp().getDate());
+//						System.out.println(timeM.getTMTimestamp().getHours());
+//						System.out.println(timeM.getTMTimestamp().getMinutes());
+						if (r.getTime().getYear() == timeM.getTMTimestamp().getYear())
 						{
-							if (r.getTime().getMonth() == timeM.getMTimestamp().getMonth())
+							if (r.getTime().getMonth() == timeM.getTMTimestamp().getMonth())
 							{
-								if (r.getTime().getDate() == timeM.getMTimestamp().getDate())
+								if (r.getTime().getDate() == timeM.getTMTimestamp().getDate())
 								{
-									if (r.getTime().getMinutes() == timeM.getMTimestamp().getMinutes())
+									if (r.getTime().getMinutes() == timeM.getTMTimestamp().getMinutes())
 									{
-										if (r.getTime().getHours() == timeM.getMTimestamp().getHours())
+										if (r.getTime().getHours() == timeM.getTMTimestamp().getHours())
 										{
 											System.out.println("The is the reminder for " + r.getTitle());
 											JOptionPane.showMessageDialog(null, "This is the reminder for " + r.getTitle() );
 											//TODO delete printed reminder
+											//ral[] -r ??
+											ral.remove(r);//?
 										}
 									}
 								}
