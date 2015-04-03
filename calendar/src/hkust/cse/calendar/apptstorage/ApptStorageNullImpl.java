@@ -67,7 +67,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 	public void LoadApptFromXml() {
 		//load appointment from xml record into hash map
 		ArrayList<Appointment> dataALA = adb.getAppointmentList();
-		if (dataALA.size()!=0)
+		if (true)//dataALA.size()!=0)  ,this is because when deleting the last appointment, need to update the reminder list
 		{
 			LinkedList<Appt> dataLLA = new LinkedList<Appt>();
 			for (Appointment a:dataALA)
