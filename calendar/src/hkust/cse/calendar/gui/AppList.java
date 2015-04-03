@@ -440,6 +440,9 @@ public class AppList extends JPanel implements ActionListener {
 			ApptDB adb = new ApptDB();
 			adb.deleteAppt(apptTitle.getID());
 			parent.updateAppList();
+			parent.updateDB();
+			parent.UpdateCal();
+			parent.updateReminderCheckerApptlist();
 		}
 		else
 		{
