@@ -1,3 +1,7 @@
+/**
+* This class is for phrase 2, and it is far from finished
+*/
+
 package hkust.cse.calendar.unit;
 
 import java.io.Serializable;

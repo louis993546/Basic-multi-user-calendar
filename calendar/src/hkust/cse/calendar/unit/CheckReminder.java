@@ -30,7 +30,6 @@ public class CheckReminder extends Thread {
 				while(true){
 					System.out.println("try\n");
 					Thread.sleep(10000);
-		    		
 				}
 	    	} catch (InterruptedException e) {
 	            System.out.println("interrupted\n");

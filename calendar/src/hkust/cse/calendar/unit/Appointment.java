@@ -1,3 +1,14 @@
+/**
+* This class was created in an attempt to fit more data into each appointment without messing around with
+* how the existing skelton code access each Appt.
+* most of the whole program does not access Appointment object directly, but through Appt
+*
+* @deprecated a lot of getter for Timestamp are deprecated, and it is still being used by this program
+* 			  through our the whole program
+* @see Appt.java, ApptDB.java
+* @version 1.0
+*/
+
 package hkust.cse.calendar.unit;
 
 import java.sql.Timestamp;

@@ -1,3 +1,11 @@
+/**
+* This class is based on the skleton code, but since all variables have been replaced with a Appointment 
+* object, all methods have been modify, but their functionality remains the same
+* 
+* @see Appointment.java
+* @version 1.0
+*/
+
 package hkust.cse.calendar.unit;
 
 import java.io.Serializable;

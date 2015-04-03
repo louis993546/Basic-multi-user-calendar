@@ -1,3 +1,7 @@
+/**
+* Each reminder object consists of 2 variable: a title and a time. 
+*/
+
 package hkust.cse.calendar.unit;
 
 import java.sql.Timestamp;
