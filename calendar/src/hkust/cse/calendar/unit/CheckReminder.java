@@ -21,6 +21,11 @@ public class CheckReminder extends Thread {
     	this.mCurrUser = mCurrUser;
     	this.Apptlist = getTodayAppt;
     }
+    
+    public void updateApplist(Appt[] getTodayAppt)
+    {
+    	Apptlist = getTodayAppt;
+    }
 
 
     public void run() {

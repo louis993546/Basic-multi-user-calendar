@@ -27,6 +27,11 @@ public class ReminderChecker {
 		timer.schedule(new ReminderAction(), 0, 10000);
 	}
 	
+	public void updateRal()
+	{
+		ral = cg.controller.getReminders();
+	}
+	
 	class ReminderAction extends TimerTask
 	{
 		int loop = 10000;
@@ -36,24 +41,13 @@ public class ReminderChecker {
 			{
 				try
 				{
-					ral = cg.controller.getReminders(); //TODO fail to update reminder list
+					updateRal(); //TODO fail to update reminder list
 					for (Reminder r:ral)
 					{
 						//TODO compare time with the fake clock
 						System.out.println(r.getTitle() + " : " + r.getTime());
 						java.util.Date date= new java.util.Date();
 						System.out.println("Fake system time: " +timeM.getTMTimestamp()); 
-//								(timeM.getTMTimestamp().getYear()+1900) + "/" + 
-//								(1 + timeM.getTMTimestamp().getMonth()) + "/" + 
-//								timeM.getTMTimestamp().getDate() + " " + 
-//								timeM.getTMTimestamp().getHours() + ":" + 
-//								timeM.getTMTimestamp().getMinutes() + ":" + 
-//								timeM.getTMTimestamp().getSeconds());
-//						System.out.println(timeM.getTMTimestamp().getYear());
-//						System.out.println(timeM.getTMTimestamp().getMonth());
-//						System.out.println(timeM.getTMTimestamp().getDate());
-//						System.out.println(timeM.getTMTimestamp().getHours());
-//						System.out.println(timeM.getTMTimestamp().getMinutes());
 						if (r.getTime().getYear() == timeM.getTMTimestamp().getYear())
 						{
 							if (r.getTime().getMonth() == timeM.getTMTimestamp().getMonth())
@@ -67,7 +61,6 @@ public class ReminderChecker {
 											System.out.println("The is the reminder for " + r.getTitle());
 											JOptionPane.showMessageDialog(null, "This is the reminder for " + r.getTitle() );
 											//TODO delete printed reminder
-											//ral[] -r ??
 											ral.remove(r);//?
 										}
 									}

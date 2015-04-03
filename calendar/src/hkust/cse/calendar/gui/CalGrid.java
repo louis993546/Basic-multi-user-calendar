@@ -74,7 +74,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private BasicArrowButton wButton;
 	private JLabel year;
 	private JComboBox<String> month;
-	
+	public ReminderChecker rc;
 
 	private final Object[][] data = new Object[6][7];
 	private final Vector[][] apptMarker = new Vector[6][7];
@@ -270,7 +270,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		Usermenu.setEnabled(true); //iff the current user is admin
 		Clockmenu.setEnabled(true);
 
-		ReminderChecker rc = new ReminderChecker(this, timeMachine);
+		rc = new ReminderChecker(this, timeMachine);
 		
 		UpdateCal();
 		pack();				// sized the window to a preferred size
@@ -697,5 +697,15 @@ public class CalGrid extends JFrame implements ActionListener {
 	public void checkUpdateJoinAppt(){
 		// Fix Me!
 	}
-
+	
+	public void updateReminderCheckerApptlist()
+	{
+		rc.updateRal();
+	}
+	
+	public void updateDB()
+	{
+		controller.LoadApptFromXml();
+	}
+	
 }

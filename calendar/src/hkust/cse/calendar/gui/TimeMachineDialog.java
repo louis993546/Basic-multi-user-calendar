@@ -169,6 +169,9 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 		cal.timeMachine.setTimeMachine(jumpDate[0], jumpDate[1]  , jumpDate[2], 
 				jumpTime[0], jumpTime[1], jumpTime[2]);
 		cal.UpdateCal();
+		cal.updateAppList();
+		cal.updateReminderCheckerApptlist();
+		cal.updateDB();
 		return true; //ok
 		
 	}
@@ -220,14 +223,5 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 		result[1]=min;
 		result[2]=sec;
 		return result;
-		//int hour = h.getSelectedIndex()+8;//eg. 8am -> index 0
-//		if (hour == -1)
-//			return -1;
-//		int minute = eTimeM2.getSelectedIndex()*15;//{00, 15,30, 45}
-//		if (minute == -1)
-//			return -1;
-
-		
-
 	}
 }
