@@ -575,11 +575,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			else
 			{
 				System.out.println("Something's wrong");
-//				System.out.println(reminderCB.getSelectedItem().toString());
-//				System.out.println(reminderCB.getSelectedItem().toString() == "Minute(s)");
 			}
 		}
-		
 		
 		//TODO currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
@@ -807,7 +804,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		
 		//call savebuttonresponse again
 		//
-		
+		parent.updateDB();
+		parent.UpdateCal();
+		parent.updateDB();
+		parent.updateReminderCheckerApptlist();
 		return true;
 	}
 
