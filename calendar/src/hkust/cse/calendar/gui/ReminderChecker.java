@@ -43,6 +43,7 @@ public class ReminderChecker {
 				try
 				{
 					updateRal(); //TODO fail to update reminder list
+					System.out.println("");
 					for (Reminder r:ral)
 					{
 						//TODO compare time with the fake clock

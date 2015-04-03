@@ -221,7 +221,7 @@ public class CalGrid extends JFrame implements ActionListener {
 								&& today.get(today.MONTH) + 1 == currentM
 								&& today.get(today.DAY_OF_MONTH) == Integer
 										.parseInt(tem)) {
-							System.out.println(today.get(today.MONTH) + 1);
+							//System.out.println(today.get(today.MONTH) + 1);
 							return new CalCellRenderer(today,hasAppointment);
 						}else{
 							return new CalCellRenderer(null,hasAppointment);
