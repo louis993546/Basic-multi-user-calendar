@@ -126,14 +126,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		setTitle(title);
 		setModal(false);
 		ldb = new LocationDB();
-		try
-		{
-			ldb.addLocation("N/A");
-		}
-		catch (SQLException e)
-		{
-			System.out.println("Something's wrong with LocationDB");
-		}
 		locationAL = ldb.getLocationList();
 
 		Container contentPane;
@@ -229,6 +221,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		JPanel lPanel = new JPanel();
 		Border lBorder = new TitledBorder(null, "Location");
 		lPanel.setBorder(lBorder);
+		locationAL.add("N/A");
 		lCB = new JComboBox(locationAL.toArray());
 		lCB.setSelectedItem("N/A");
 		lPanel.add(lCB);
