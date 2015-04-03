@@ -230,8 +230,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		Border lBorder = new TitledBorder(null, "Location");
 		lPanel.setBorder(lBorder);
 		lCB = new JComboBox(locationAL.toArray());
+		lCB.setSelectedItem("N/A");
 		lPanel.add(lCB);
-
+		
 		//Repeat Panel
 		JPanel rPanel = new JPanel();
 		Border rBorder = new TitledBorder(null, "Repeat(Optional)");
