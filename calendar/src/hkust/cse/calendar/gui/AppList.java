@@ -435,23 +435,31 @@ public class AppList extends JPanel implements ActionListener {
 
 	private void delete() {
 		Appt apptTitle = getSelectedAppTitle();
-		if (apptTitle != null)
+		if (apptTitle != null && (apptTitle.TimeSpan().StartTime().after(parent.timeMachine.getTMTimestamp())))
 		{
 			ApptDB adb = new ApptDB();
 			adb.deleteAppt(apptTitle.getID());
 			parent.updateAppList();
 		}
+		else
+		{
+			JOptionPane.showMessageDialog(parent, "You cannot modify things in the past!", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void modify() {
 		Appt apptTitle = getSelectedAppTitle();
-		if (apptTitle != null)
+		if (apptTitle != null && (apptTitle.TimeSpan().StartTime().after(parent.timeMachine.getTMTimestamp())))
 		{
 			AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);//<--AppScheduler(String,CalGrid, int)
 			setAppDial.updateSetApp(apptTitle);
 			setAppDial.setVisible(true);
 			setAppDial.setResizable(false);
 			parent.updateAppList(); //This should work, but the SQL side is not working, so......
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(parent, "You cannot modify things in the past!", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

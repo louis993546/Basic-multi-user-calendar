@@ -126,6 +126,14 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		setTitle(title);
 		setModal(false);
 		ldb = new LocationDB();
+		try
+		{
+			ldb.addLocation("N/A");
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Something's wrong with LocationDB");
+		}
 		locationAL = ldb.getLocationList();
 
 		Container contentPane;
@@ -510,6 +518,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
         return true;
     }
 
+	@SuppressWarnings("deprecation")
 	private boolean saveButtonResponse() throws SQLException {
 		// TODO unfinished save button
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
@@ -523,6 +532,13 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		int smin = startAndEndTime[0]%60;
 		int ehr = startAndEndTime[1]/60;
 		int emin = startAndEndTime[1]%60;
+		Timestamp tempTS2 = new Timestamp(startDate[0], startDate[1], startDate[2], shr, smin, 0, 0);
+		if (tempTS2.before(parent.timeMachine.getTMTimestamp()))
+		{
+			JOptionPane.showMessageDialog(this, "It's all in the past",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		
 		//check if end date earlier then start date
 		String title = titleField.getText().trim();
