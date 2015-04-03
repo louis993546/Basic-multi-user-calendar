@@ -5,6 +5,7 @@ import hkust.cse.calendar.unit.TimeMachine;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -74,6 +75,10 @@ public class ReminderChecker {
 //					System.out.println("Nothing appointments with reminders yet");
 					//It means no appointments with reminder
 					//i.e. do nothing
+				}
+				catch (ConcurrentModificationException e)
+				{
+					//Do nothing, and 10 seconds later it should refresh again, hopefully they won't be editing/reading at the same time again
 				}
 //				System.out.println("Still running: " + loop);
 				loop--;
