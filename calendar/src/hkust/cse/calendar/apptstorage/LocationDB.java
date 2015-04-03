@@ -25,7 +25,6 @@ public class LocationDB {
 	                   "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 	                   " LOCATION       TEXT                NOT NULL)";
 	      stmt.executeUpdate(sql);
-//	      addLocation("N/A");
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
@@ -33,7 +32,24 @@ public class LocationDB {
 	  }
 
 	public boolean checkIfExists(String l) {
-		return false;
+		try {
+			ArrayList<Integer> idAL = new ArrayList<Integer>();
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM LOCATION WHERE LOCATION='" + l + "';");
+			while (rs.next()) {
+				int ans = rs.getInt("ID");
+				idAL.add(ans);
+			}
+			if (idAL.size()>0)
+				return true;
+			else
+				return false;
+		}
+		catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		    return false;
+		}
 	}
 
 	public boolean addLocation(String l) throws SQLException {
@@ -44,7 +60,11 @@ public class LocationDB {
 			stmt.executeUpdate(sql);
 			return true;
 		}
-		else return false;
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Location already exists", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 	}
 
 	//a function to load location into some kind of map
@@ -96,7 +116,6 @@ public class LocationDB {
 			stmt = c.createStatement();
 		    String sql = "DELETE from LOCATION WHERE ID=" + id + ";";
 		    stmt.executeUpdate(sql);
-		    c.commit();
 		    return true;
 		}
 		catch (SQLException e) {
@@ -112,7 +131,6 @@ public class LocationDB {
 			stmt = c.createStatement();
 		    String sql = "UPDATE LOCATION set LOCATION = " + what + " where ID=" + id + ";";
 		    stmt.executeUpdate(sql);
-		    c.commit();
 		    return true;
 		}
 		catch (SQLException e)
