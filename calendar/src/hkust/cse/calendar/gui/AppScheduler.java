@@ -532,7 +532,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		int smin = startAndEndTime[0]%60;
 		int ehr = startAndEndTime[1]/60;
 		int emin = startAndEndTime[1]%60;
-		Timestamp tempTS2 = new Timestamp(startDate[0], startDate[1], startDate[2], shr, smin, 0, 0);
+		Timestamp tempTS2 = new Timestamp(startDate[0]-1900, startDate[1]-1, startDate[2], shr, smin, 0, 0);
 		if (tempTS2.before(parent.timeMachine.getTMTimestamp()))
 		{
 			JOptionPane.showMessageDialog(this, "It's all in the past",
