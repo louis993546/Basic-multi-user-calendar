@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-public class ModifyLocationDialog extends JFrame implements ActionListener{
+public class ModifyLocationDialog extends JFrame implements ActionListener {
 	private JList<String> locationList;
 	private DefaultListModel<String> locationListModel = new DefaultListModel<String>();
 	private JButton deleteButton;
@@ -26,9 +26,9 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 	private JButton exitButton;
 	private LocationDB ldb;
 	private ArrayList<String> locationStringAL = new ArrayList<String>();
-	
+
 	public ModifyLocationDialog() {
-		
+
 		setTitle("Modify Location");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -40,21 +40,21 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 		contentPane = getContentPane();
 		locationStringAL = ldb.getLocationList();
 
-		//create a new JPanel to hold everything
+		// create a new JPanel to hold everything
 		JPanel all = new JPanel();
 		all.setLayout(new BoxLayout(all, BoxLayout.X_AXIS));
-		
+
 		JPanel listPanel = new JPanel();
 		Border lpb = new TitledBorder(null, "Locations:");
 		listPanel.setBorder(lpb);
 		Box left = Box.createVerticalBox();
-		for (String a:locationStringAL) {
-			locationListModel.addElement(a);
+		for (String a : locationStringAL) {
+			locationListModel.addElement(a + ": " + ldb.getCapacityByName(a));
 		}
 		locationList = new JList<String>(locationListModel);
 		listPanel.add(locationList);
 		left.add(listPanel);
-		
+
 		Box right = Box.createVerticalBox();
 		modifyButton = new JButton("Modify");
 		modifyButton.addActionListener(this);
@@ -65,10 +65,10 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 		right.add(modifyButton);
 		right.add(deleteButton);
 		right.add(exitButton);
-		
+
 		all.add(left);
 		all.add(right);
-		
+
 		contentPane.add("North", all);
 		pack();
 		setLocationRelativeTo(null);
@@ -82,28 +82,23 @@ public class ModifyLocationDialog extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == deleteButton)
-		{
-			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
+		if (e.getSource() == deleteButton) {
+			int id = ldb.getLocationID(locationList.getSelectedValue()
+					.toString());
 			if ((id != 0) || (id != -1)) {
 				ldb.deleteLocation(id);
-				locationListModel.removeElementAt(locationList.getSelectedIndex());
+				locationListModel.removeElementAt(locationList
+						.getSelectedIndex());
 			}
-		}
-		else if (e.getSource() == modifyButton)
-		{
-			//TODO modify button
-			//new GUI
-			//load string into that GUI
-			//call update method in LocationDB
-			//TODO Location needs ID field
-		}
-		else if (e.getSource() == exitButton)
-		{
+		} else if (e.getSource() == modifyButton) {
+			// TODO modify button
+			// new GUI
+			// load string into that GUI
+			// call update method in LocationDB
+			// TODO Location needs ID field
+		} else if (e.getSource() == exitButton) {
 			dispose();
-		}
-		else
-		{
+		} else {
 			System.out.println("Something's wrong");
 		}
 	}
