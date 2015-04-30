@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,10 +23,13 @@ public class SignUpDialog extends JFrame implements ActionListener{
 	private JTextField emailTF;			//TextField for email
 	private JButton signupB;			//Button for confirm signup
 	private JButton cancelB;			//Button for cancel signup
+	private UserDB udb;
 
 	//constructor: construct the GUI
 	public SignUpDialog ()
 	{
+		udb = new UserDB();
+
 		setTitle("Sign up");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -89,19 +91,32 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		//define all button clicks
 		if (e.getSource() == signupB) //sign-up button
 		{
-			boolean usernameAvail;
+			boolean usernameAvail = false;
 			boolean passwordMatch = false;
 			//get all answers
 			String usernameS = usernameTF.getText();
 			String password1S = new String(password1PF.getPassword());
 			String password2S = new String(password2PF.getPassword());
+			//TODO get Admin or not
+			//TODO use ValidString
 			//check if username is available
-			//?
 			//check if the 2 passwords are the same
 			if (password1S == password2S) {
 				passwordMatch = true;
+				User newuser = new User(usernameS, password1S);
+				if (udb.checkIfExist(newuser) == false)
+				{
+					//continue insert into udb
+				}
+				else
+				{
+					//messagebox: id already exist
+				}
 			}
-			//?
+			else
+			{
+				//MessageBox: password does not match
+			}
 		}
 		else if (e.getSource() == cancelB) //cancel button
 		{

@@ -1,9 +1,14 @@
 package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 public class UserDB 
@@ -34,16 +39,25 @@ public class UserDB
 		{
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	public boolean addUser(User u)
 	{
 		//TODO
-		stmt = c.createStatement();
-		sql = "INSERT INTO USERTABLE (ID, PASSWORD, ADMIN) VALUES ('" + 
-			u.ID() + "','" + u.Password() + "'," + u.Admin() + ")";
-		stmt.executeUpdate();
+		try {
+			stmt = c.createStatement();
+			sql = "INSERT INTO USERTABLE (ID, PASSWORD, ADMIN) VALUES ('" + 
+					u.ID() + "','" + u.Password() + "'," + u.Admin() + ")";
+//			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean deleteUser(User u)
@@ -84,7 +98,7 @@ public class UserDB
 		}
 	}
 
-	public boolean checkIfexist(User u)
+	public boolean checkIfExist(User u)
 	{
 		//TODO return true if user exist and password is correct
 		try
@@ -94,7 +108,7 @@ public class UserDB
 			sql = "SELECT count(*) FROM USERTABLE WHERE (" + 
 			"ID = " + u.ID() + " AND " + 
 			"PASSWORD = " + u.Password() + ");";
-			rs = stmt.executeUpdate(sql);
+			rs = stmt.executeQuery(sql);
 			while (rs.next())
 			{
 				String id = rs.getString("ID");
@@ -118,6 +132,7 @@ public class UserDB
 
 	public boolean isAdmin(User u)
 	{
+		return false;
 		//TODO
 	}
 }
