@@ -11,6 +11,13 @@ public class User implements Serializable {
 	private String mLastName;
 	private int mAdmin;
 
+	@Override
+	public String toString() { //for test only
+		return "User [mID=" + mID + ", mPassword=" + mPassword + ", mEmail="
+				+ mEmail + ", mFirstName=" + mFirstName + ", mLastName="
+				+ mLastName + ", mAdmin=" + mAdmin + "]";
+	}
+
 	// Getter of the user id
 	public String ID() {		
 		return mEmail;

@@ -99,6 +99,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private JMenu Usermenu = new JMenu("User");
 	private JMenu Appmenu = new JMenu("Appointment");
 	private JMenu Clockmenu = new JMenu("Clock"); 
+	private int currentUserID;
 	
 
 	private final String[] holidays = {
@@ -123,7 +124,10 @@ public class CalGrid extends JFrame implements ActionListener {
 
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
-
+		
+		currentUserID = con.getDefaultUser().UID();
+		System.out.println(currentUserID);
+		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -706,6 +710,11 @@ public class CalGrid extends JFrame implements ActionListener {
 	public void updateDB()
 	{
 		controller.LoadApptFromXml();
+	}
+	
+	public int getCurrentUserID()
+	{
+		return currentUserID; 
 	}
 	
 }

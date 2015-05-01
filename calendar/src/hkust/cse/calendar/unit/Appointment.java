@@ -40,7 +40,7 @@ public class Appointment implements Comparable<Appointment> {
 	private int createrID;
 
 	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
+	private Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
 		//TODO create unique id for each appointment upon creation
 		//TODO initiate creater
 		title = t;

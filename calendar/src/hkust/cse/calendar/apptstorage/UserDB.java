@@ -161,43 +161,69 @@ public class UserDB
 		    return false;
 		}
 	}
-
-	public boolean isAdmin(User u)
+	
+	public User getUserWithUID(int uid)
 	{
-		//TODO check if a user is admin
+		try
+		{
+			ArrayList<User> userAL = new ArrayList<User>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (UID = '" + uid + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				int a = rs.getInt("UID");
+				String email = rs.getString("ID");
+				String pw = rs.getString("PASSWORD");
+				int admin = rs.getInt("ADMIN");
+				String ln = rs.getString("LASTNAME");
+				String fn = rs.getString("FIRSTNAME");
+				User newUser = new User(a, email, pw, admin, fn, ln);
+				userAL.add(newUser);
+			}
+			if (userAL.size() == 1)
+				return userAL.get(0);
+			else
+				return null;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return null;
+		}
+	}
+	
+	public User getFullUser(User u) //return whole user object with email and password (assume exist)
+	{
 		try
 		{
 			ArrayList<User> userAL = new ArrayList<User>();
 			stmt = c.createStatement();
 			sql = "SELECT * FROM USERTABLE WHERE (" + 
-			"ID = '" + u.ID() + "');";
+			"ID = '" + u.ID() + "' AND " + 
+			"PASSWORD = '" + u.Password() + "');";
 			rs = stmt.executeQuery(sql);
 			while (rs.next())
 			{
-				String id = rs.getString("ID");
+				int id = rs.getInt("UID");
+				String email = rs.getString("ID");
 				String pw = rs.getString("PASSWORD");
 				int admin = rs.getInt("ADMIN");
 				String ln = rs.getString("LASTNAME");
 				String fn = rs.getString("FIRSTNAME");
-				User newUser = new User(id, pw, admin, fn, ln);
+				User newUser = new User(id, email, pw, admin, fn, ln);
 				userAL.add(newUser);
 			}
 			switch (userAL.size())
 			{
-				case 1:
-				{
-					if (userAL.get(0).Admin() == 1)
-						return true;
-					else
-						return false;
-				}
-				default: return false;
+				case 1: return userAL.get(0);
+				default: return null;
 			}	
 		}
 		catch (SQLException e)
 		{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		    return false;
+		    return null;
 		}
 	}
 }
