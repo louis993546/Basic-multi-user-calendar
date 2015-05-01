@@ -105,7 +105,7 @@ public class SignUpDialog extends JFrame implements ActionListener{
 			
 			if (ValidString(usernameS) == true)
 			{
-				if (password1S == password2S) //check if the 2 passwords are the same
+				if (password1S.compareTo(password2S) == 0) //check if the 2 passwords are the same
 				{
 					if (ValidString(password1S) == true)
 					{
@@ -116,31 +116,39 @@ public class SignUpDialog extends JFrame implements ActionListener{
 							if (udb.addUser(newuser) == true)
 							{
 								//messageBox: successful!
+								int n = JOptionPane.showConfirmDialog(null, "Account creation successful!", "Go Back to Login Page", JOptionPane.YES_NO_OPTION);
 								//close this dialog afterwards
+								if (n == JOptionPane.YES_OPTION)
+									dispose();
 							}
 							else
 							{
 								//messagebox: something wrong when inserting. Please try again
+								int n = JOptionPane.showConfirmDialog(null, "Something went wrong. Please try again", "OK", JOptionPane.YES_NO_OPTION);
 							}
 						}
 						else
 						{
 							//messagebox: id already exist
+							int n = JOptionPane.showConfirmDialog(null, "Please use another username", "OK", JOptionPane.YES_NO_OPTION);
 						}
 					}
 					else
 					{
 						//messagebox: password not valid
+						int n = JOptionPane.showConfirmDialog(null, "Password is not valid", "OK", JOptionPane.YES_NO_OPTION);
 					}
 				}
 				else
 				{
 					//MessageBox: password does not match
+					int n = JOptionPane.showConfirmDialog(null, "The 2 passwords does not match!", "OK", JOptionPane.YES_NO_OPTION);
 				}
 			}
 			else
 			{
 				//messageBox: username not valid
+				int n = JOptionPane.showConfirmDialog(null, "Username is invalid", "OK", JOptionPane.YES_NO_OPTION);
 			}
 		}
 		else if (e.getSource() == cancelB) //cancel button

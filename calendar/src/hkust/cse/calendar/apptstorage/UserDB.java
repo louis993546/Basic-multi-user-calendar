@@ -32,8 +32,6 @@ public class UserDB
 				" PASSWORD	TEXT                NOT NULL," + 
 				" ADMIN		INT                 NOT NULL)"; 
 			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();
 		} 
 		catch (SQLException e) 
 		{
@@ -52,12 +50,13 @@ public class UserDB
 			stmt = c.createStatement();
 			sql = "INSERT INTO USERTABLE (ID, PASSWORD, ADMIN) VALUES ('" + 
 					u.ID() + "','" + u.Password() + "'," + u.Admin() + ")";
-//			stmt.executeUpdate();
+			stmt.executeUpdate(sql);
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	public boolean deleteUser(User u)
