@@ -191,30 +191,28 @@ public class SignUpDialog extends JFrame implements ActionListener{
 							}
 							else
 							{
-								
+								JOptionPane.showMessageDialog(null, "Password 2 name cannot be null.");
 							}
 						}
 						else
 						{
-							
+							JOptionPane.showMessageDialog(null, "Password 1 name cannot be null.");
 						}
 					}
 					else
 					{
-						
+						JOptionPane.showMessageDialog(null, "Email name cannot be null.");
 					}
 				}
 				else
 				{
-					
+					JOptionPane.showMessageDialog(null, "First name cannot be null.");
 				}
 			}
 			else
 			{
-				
+				JOptionPane.showMessageDialog(null, "Last name cannot be null.");
 			}
-			
-			
 		}
 		else if (e.getSource() == cancelB) //cancel button
 		{
