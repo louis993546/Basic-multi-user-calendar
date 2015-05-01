@@ -69,6 +69,8 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		password2PF = new JPasswordField(15);
 		pwPanel2.add(password2PF);
 		sud.add(pwPanel2);
+		
+		//TODO add admin selection box type thing
 
 		contentPane.add("North", sud);
 
@@ -91,31 +93,50 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		//define all button clicks
 		if (e.getSource() == signupB) //sign-up button
 		{
-			boolean usernameAvail = false;
-			boolean passwordMatch = false;
 			//get all answers
 			String usernameS = usernameTF.getText();
 			String password1S = new String(password1PF.getPassword());
 			String password2S = new String(password2PF.getPassword());
-			//TODO get Admin or not
-			//TODO use ValidString
-			//check if username is available
-			//check if the 2 passwords are the same
-			if (password1S == password2S) {
-				passwordMatch = true;
-				User newuser = new User(usernameS, password1S);
-				if (udb.checkIfExist(newuser) == false)
+			int admin; //TODO get Admin or not
+			
+			if (ValidString(usernameS) == true)
+			{
+				if (password1S == password2S) //check if the 2 passwords are the same
 				{
-					//continue insert into udb
+					if (ValidString(passwrod1S) == true)
+					{
+						User newuser = new User(usernameS, password1S, 0); //TODO user constructor with admin rights
+						if (udb.checkIfExist(newuser) == false) //check if username is available
+						{
+							//continue insert into udb
+							if (udb.addUser(newuser) == true)
+							{
+								//messageBox: successful!
+								//close this dialog afterwards
+							}
+							else
+							{
+								//messagebox: something wrong when inserting. Please try again
+							}
+						}
+						else
+						{
+							//messagebox: id already exist
+						}
+					}
+					else
+					{
+						//messagebox: password not valid
+					}
 				}
 				else
 				{
-					//messagebox: id already exist
+					//MessageBox: password does not match
 				}
 			}
 			else
 			{
-				//MessageBox: password does not match
+				//messageBox: username not valid
 			}
 		}
 		else if (e.getSource() == cancelB) //cancel button

@@ -3,14 +3,12 @@ package hkust.cse.calendar.gui;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.ApptStorageNullImpl;
 import hkust.cse.calendar.unit.User;
-
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,7 +26,7 @@ public class LoginDialog extends JFrame implements ActionListener
 	private JButton button;
 	private JButton closeButton;
 	private JButton signupButton;
-	//Need to access the user.db in phrase 2
+	private UserDB udb;
 
 	//constructor
 	public LoginDialog()		// Create a dialog to log in
@@ -40,6 +38,7 @@ public class LoginDialog extends JFrame implements ActionListener
 			}
 		});
 
+		udb = new UserDB();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -105,15 +104,17 @@ public class LoginDialog extends JFrame implements ActionListener
 			//login();
 			
 			//Current method: create user "noname" with password "nopass", and simplay display the CalGrid Dialog
-			User user = new User( "noname", "nopass"); 
-			CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
-			setVisible( false );
-			
-			//What needs to be done:
-			//get all text fields
-			//pass it to the storage to see it the user exists
-			//create CalGrid
-			//the constructor of CalGrid should load saved events
+			User user = new User( "noname", "nopass", 0);  //TODO change to user input
+			boolean allow = udb.checkIfExist(user);
+			if (allow)
+			{
+				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
+				setVisible( false );	
+			}
+			else
+			{
+				//output username or password is incorrect. Please try again
+			}
 		}
 		else if(e.getSource() == signupButton) //Sign-up button
 		{
