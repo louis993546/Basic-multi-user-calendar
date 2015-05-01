@@ -67,6 +67,13 @@ public class LoginDialog extends JFrame implements ActionListener
 		JPanel pwPanel = new JPanel();
 		pwPanel.add(new JLabel("Password:"));
 		password = new JPasswordField(15);
+		password.addActionListener(new ActionListener()
+		{
+            public void actionPerformed(ActionEvent e)
+            {
+            	button.doClick();
+            }
+        });
 		pwPanel.add(password);
 		top.add(pwPanel);
 
@@ -108,12 +115,8 @@ public class LoginDialog extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) //Login button
 		{
-			// When the button is clicked, check the user name and password, and try to log the user in
 			String un = userName.getText();
 			String pw = password.getText();
-			System.out.println("username: " + un);
-			System.out.println("password: " + pw);
-			//Current method: create user "noname" with password "nopass", and simplay display the CalGrid Dialog
 			User user = new User(un, pw, 0);  //TODO change to user input
 			boolean allow = udb.checkIfExist(user); //TODO currently this should always return false
 			if (allow)
@@ -123,7 +126,6 @@ public class LoginDialog extends JFrame implements ActionListener
 			}
 			else
 			{
-				//output username or password is incorrect. Please try again
 				JOptionPane.showMessageDialog(null, "Username or password is incorrect.", "Try again.", JOptionPane.YES_NO_OPTION);
 			}
 		}

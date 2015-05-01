@@ -163,7 +163,40 @@ public class UserDB
 
 	public boolean isAdmin(User u)
 	{
-		return false;
 		//TODO check if a user is admin
+		try
+		{
+			ArrayList<User> userAL = new ArrayList<User>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (" + 
+			"ID = '" + u.ID() + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				String id = rs.getString("ID");
+				String pw = rs.getString("PASSWORD");
+				int admin = rs.getInt("ADMIN");
+				String ln = rs.getString("LASTNAME");
+				String fn = rs.getString("FIRSTNAME");
+				User newUser = new User(id, pw, admin, fn, ln);
+				userAL.add(newUser);
+			}
+			switch (userAL.size())
+			{
+				case 1:
+				{
+					if (userAL.get(0).Admin() == 1)
+						return true;
+					else
+						return false;
+				}
+				default: return false;
+			}	
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return false;
+		}
 	}
 }
