@@ -174,12 +174,13 @@ public class UserDB
 			rs = stmt.executeQuery(sql);
 			while (rs.next())
 			{
-				String id = rs.getString("ID");
+				int uid = rs.getInt("UID");
+				String email = rs.getString("ID");
 				String pw = rs.getString("PASSWORD");
 				int admin = rs.getInt("ADMIN");
 				String ln = rs.getString("LASTNAME");
 				String fn = rs.getString("FIRSTNAME");
-				User newUser = new User(id, pw, admin, fn, ln);
+				User newUser = new User(uid, email, pw, admin, fn, ln);
 				userAL.add(newUser);
 			}
 			switch (userAL.size())
@@ -254,6 +255,37 @@ public class UserDB
 		{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		    return "";
+		}
+	}
+	
+	public User getUserWithUID(int uid)
+	{
+		try
+		{
+			ArrayList<User> userAL = new ArrayList<User>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (ID = '" + uid + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				int a = rs.getInt("UID");
+				String email = rs.getString("ID");
+				String pw = rs.getString("PASSWORD");
+				int admin = rs.getInt("ADMIN");
+				String ln = rs.getString("LASTNAME");
+				String fn = rs.getString("FIRSTNAME");
+				User newUser = new User(a, email, pw, admin, fn, ln);
+				userAL.add(newUser);
+			}
+			if (userAL.size() == 1)
+				return userAL.get(0);
+			else
+				return null;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return null;
 		}
 	}
 }
