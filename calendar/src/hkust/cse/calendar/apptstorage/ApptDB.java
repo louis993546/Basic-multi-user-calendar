@@ -3,6 +3,7 @@ package hkust.cse.calendar.apptstorage;
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
+import hkust.cse.calendar.unit.User;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -43,6 +44,7 @@ public class ApptDB {
 	          " REMINDER             INT                NOT NULL," +
 	          " REMINDER_TIME        INT                NOT NULL," +
 	          " REMINDER_UNIT        INT                NOT NULL," +
+	          " USER                 INT                NOT NULL," + 
 	          " ARW                  TEXT               NOT NULL)";
 	      stmt.executeUpdate(sql);
 	    } catch (Exception e ) {
@@ -89,7 +91,7 @@ public class ApptDB {
 				+ "END_TIME_DAY, "
 				+ "REMINDER, "
 				+ "REMINDER_TIME, "
-				+ "REMINDER_UNIT, ARW) " +
+				+ "REMINDER_UNIT, USER, ARW) " +
 					"VALUES ('" 
 				+ a.getTitle() + "','" 
 				+ a.getDescription() + "','" 
@@ -107,6 +109,7 @@ public class ApptDB {
 				+ a.getReminder() + "," 
 				+ a.getReminderTime() + "," 
 				+ a.getReminderUnit() + "," 
+				+ "0," 
 				+ dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
@@ -183,6 +186,7 @@ public class ApptDB {
 	        int REMINDER;
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
+	        int USER;
 	        String ARW = "";
 	        int ID;
 	        ArrayList<String> attend = new ArrayList<String>();
@@ -205,6 +209,7 @@ public class ApptDB {
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
+				USER = rs.getInt("USER");
 				ARW = rs.getString("ARW");
 				ID = rs.getInt("ID");
 				//TODO these 4 lines are just temporary
@@ -227,6 +232,26 @@ public class ApptDB {
 		    System.exit(0);
 		}
 		return null;
+	}
+	
+	public Appt[] getApptByUserTime(User u, TimeSpan d)
+	{
+		//TODO retrieve appts iff both u and d 
+		Appt[] abt = getApptByTime(d);
+		ArrayList<Appt> temp = new ArrayList<Appt>();
+		for (Appt a:abt)
+		{
+			if (a.getAppointment().getCreaterID() == u.UID())
+			{
+				temp.add(a);
+			}
+		}
+		Appt[] temparray = new Appt[temp.size()];
+		for (int i = 0; i<temp.size(); i++)
+		{
+			temparray[i] = temp.get(i);
+		}
+		return temparray;
 	}
 
 	public Appt[] getApptByTime(TimeSpan d)

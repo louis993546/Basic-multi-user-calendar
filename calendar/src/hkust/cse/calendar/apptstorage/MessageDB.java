@@ -33,39 +33,17 @@ public class MessageDB {
 		}
 	}
 
-	public boolean checkIfExists(String l) {
-		try {
-			ArrayList<Integer> idAL = new ArrayList<Integer>();
-			stmt = c.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM MESSAGETABLE WHERE MESSAGE='"
-							+ l + "';");
-			while (rs.next()) {
-				int ans = rs.getInt("ID");
-				idAL.add(ans);
-			}
-			if (idAL.size() > 0)
-				return true;
-			else
-				return false;
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
-					+ e.getMessage());
-			System.exit(0);
-			return false;
-		}
-	}
 
-	public boolean addMessage(String l, int cap) throws SQLException {
-		if (!checkIfExists(l)) {
+	public boolean addMessage(String l, int cap)
+	{
+		try {
 			stmt = c.createStatement();
 			sql = "INSERT INTO MESSAGETABLE (MESSAGE, CAPACITY) "
 					+ "VALUES ( '" + l + "'" + ",'" + cap + "' );";
 			stmt.executeUpdate(sql);
 			return true;
-		} else {
-			JOptionPane.showMessageDialog(null, "Message already exists",
-					"Error", JOptionPane.ERROR_MESSAGE);
+		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
