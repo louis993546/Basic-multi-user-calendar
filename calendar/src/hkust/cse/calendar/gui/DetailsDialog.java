@@ -1,5 +1,6 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
@@ -130,6 +131,9 @@ public class DetailsDialog extends JFrame implements ActionListener {
 
 		area.append("\n\nDescription: \n" + appt.getInfo());
 		area.setEditable(false);
+		UserDB udb=new UserDB();
+		System.out.println("creator id"+appt.getAppointment().getCreaterID());
+		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterID()).LastName());
 	}
 
 	public void Display(Vector[] vs, User[] entities) {

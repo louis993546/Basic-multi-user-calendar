@@ -168,7 +168,7 @@ public class UserDB
 		{
 			ArrayList<User> userAL = new ArrayList<User>();
 			stmt = c.createStatement();
-			sql = "SELECT * FROM USERTABLE WHERE (ID = '" + uid + "');";
+			sql = "SELECT * FROM USERTABLE WHERE (UID = '" + uid + "');";
 			rs = stmt.executeQuery(sql);
 			while (rs.next())
 			{
