@@ -142,8 +142,8 @@ public class SignUpDialog extends JFrame implements ActionListener{
 						{
 							if (password2S != null && !(password2S.isEmpty())) //password 2 cannot be null
 							{
-//								if (ValidString(usernameS) == true) //check if username is valid
-//								{
+								if (ValidEmail(usernameS) == true) //check if email is valid
+								{
 									if (password1S.compareTo(password2S) == 0) //check if the 2 passwords are the same
 									{
 										if (ValidString(password1S) == true) //check if password is valid
@@ -182,12 +182,12 @@ public class SignUpDialog extends JFrame implements ActionListener{
 										//MessageBox: password does not match
 										int n = JOptionPane.showConfirmDialog(null, "The 2 passwords does not match!", "OK", JOptionPane.YES_NO_OPTION);
 									}
-//								}
-//								else
-//								{
-//									//messageBox: username not valid
-//									int n = JOptionPane.showConfirmDialog(null, "Username is invalid", "OK", JOptionPane.YES_NO_OPTION);
-//								}
+								}
+								else
+								{
+									//messageBox: username not valid
+									int n = JOptionPane.showConfirmDialog(null, "Email is invalid", "OK", JOptionPane.YES_NO_OPTION);
+								}
 							}
 							else
 							{
@@ -240,5 +240,16 @@ public class SignUpDialog extends JFrame implements ActionListener{
 				return false;
 		}
 		return true;
+	}
+	
+	public static boolean ValidEmail(String s)
+	{
+		char[] sChar = s.toCharArray();
+		for (int i = 0; i< sChar.length; i++)
+		{
+			if (sChar[i] == '@')
+				return true;
+		}
+		return false;
 	}
 }
