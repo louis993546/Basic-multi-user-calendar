@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,11 +23,14 @@ import javax.swing.JTextField;
 public class SignUpDialog extends JFrame implements ActionListener{
 
 	private JTextField usernameTF;		//TextField for username
+	private JTextField firstnameTF;
+	private JTextField lastnameTF;
 	private JPasswordField password1PF;	//PasswordField for password2
 	private JPasswordField password2PF;	//PasswordField for password2
 	private JTextField emailTF;			//TextField for email
 	private JButton signupB;			//Button for confirm signup
 	private JButton cancelB;			//Button for cancel signup
+	private JCheckBox adminCB;
 	private UserDB udb;
 
 	//constructor: construct the GUI
@@ -53,28 +57,47 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		messPanel.add(new JLabel("Create account to login"));
 		sud.add(messPanel);
 
+		JPanel lnPanel = new JPanel();
+		lnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		lnPanel.add(new JLabel("Last name:"));
+		lastnameTF = new JTextField(15);
+		lnPanel.add(lastnameTF);
+		sud.add(lnPanel);
+		
+		JPanel fnPanel = new JPanel();
+		fnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		fnPanel.add(new JLabel("First name:"));
+		firstnameTF = new JTextField(15);
+		fnPanel.add(firstnameTF);
+		sud.add(fnPanel);
+		
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		namePanel.add(new JLabel("User Name:"));
+		namePanel.add(new JLabel("Email address (username):"));
 		usernameTF = new JTextField(15);
 		namePanel.add(usernameTF);
 		sud.add(namePanel);
 
 		JPanel pwPanel1 = new JPanel();
 		pwPanel1.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		pwPanel1.add(new JLabel("Password:  "));
+		pwPanel1.add(new JLabel("Password:"));
 		password1PF = new JPasswordField(15);
 		pwPanel1.add(password1PF);
 		sud.add(pwPanel1);
 
 		JPanel pwPanel2 = new JPanel();
 		pwPanel2.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		pwPanel2.add(new JLabel("Type password again:  "));
+		pwPanel2.add(new JLabel("Type password again:"));
 		password2PF = new JPasswordField(15);
 		pwPanel2.add(password2PF);
 		sud.add(pwPanel2);
 		
-		//TODO add admin selection box type thing
+		JPanel adminPanel = new JPanel();
+		adminPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		adminPanel.add(new JLabel("Admin:"));
+		adminCB = new JCheckBox();
+		adminPanel.add(adminCB);
+		sud.add(adminPanel);
 
 		contentPane.add("North", sud);
 
@@ -98,57 +121,97 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		if (e.getSource() == signupB) //sign-up button
 		{
 			//get all answers
+			String lastnameS = lastnameTF.getText();
+			String firstnameS = firstnameTF.getText();
 			String usernameS = usernameTF.getText();
 			String password1S = new String(password1PF.getPassword());
 			String password2S = new String(password2PF.getPassword());
-			int admin; //TODO get Admin or not
-			
-			if (ValidString(usernameS) == true)
+			int admin = 0;
+			if (adminCB.isSelected() == true)
 			{
-				if (password1S.compareTo(password2S) == 0) //check if the 2 passwords are the same
+				admin = 1;
+			}
+			
+			if (lastnameS != null && !(lastnameS.isEmpty())) //lastname cannot be null
+			{
+				if (firstnameS != null && !(firstnameS.isEmpty())) //first name cannot be null
 				{
-					if (ValidString(password1S) == true)
+					if (usernameS != null && !(usernameS.isEmpty())) //email cannot be null
 					{
-						User newuser = new User(usernameS, password1S, 0); //TODO user constructor with admin rights
-						if (udb.checkIfExist(newuser) == false) //check if username is available
+						if (password1S != null && !(password1S.isEmpty())) //password1 cannot be null
 						{
-							//continue insert into udb
-							if (udb.addUser(newuser) == true)
+							if (password2S != null && !(password2S.isEmpty())) //password 2 cannot be null
 							{
-								//messageBox: successful!
-								int n = JOptionPane.showConfirmDialog(null, "Account creation successful!", "Go Back to Login Page", JOptionPane.YES_NO_OPTION);
-								//close this dialog afterwards
-								if (n == JOptionPane.YES_OPTION)
-									dispose();
+								if (ValidEmail(usernameS) == true) //check if email is valid
+								{
+									if (password1S.compareTo(password2S) == 0) //check if the 2 passwords are the same
+									{
+										if (ValidString(password1S) == true) //check if password is valid
+										{
+											User newuser = new User(usernameS, password1S, admin, firstnameS, lastnameS);
+											if (udb.checkIfIDExist(usernameS) == false) //check if email is available
+											{
+												//continue insert into udb
+												if (udb.addUser(newuser) == true) //check if addUser is successful
+												{
+													//messageBox: successful!
+													//close this dialog afterwards
+													JOptionPane.showMessageDialog(null, "Account creation successful!");
+													dispose();
+												}
+												else
+												{
+													//messagebox: something wrong when inserting. Please try again
+													int n = JOptionPane.showConfirmDialog(null, "Something went wrong. Please try again", "OK", JOptionPane.YES_NO_OPTION);
+												}
+											}
+											else
+											{
+												//messagebox: id already exist
+												int n = JOptionPane.showConfirmDialog(null, "Please use another username", "OK", JOptionPane.YES_NO_OPTION);
+											}
+										}
+										else
+										{
+											//messagebox: password not valid
+											int n = JOptionPane.showConfirmDialog(null, "Password is not valid", "OK", JOptionPane.YES_NO_OPTION);
+										}
+									}
+									else
+									{
+										//MessageBox: password does not match
+										int n = JOptionPane.showConfirmDialog(null, "The 2 passwords does not match!", "OK", JOptionPane.YES_NO_OPTION);
+									}
+								}
+								else
+								{
+									//messageBox: username not valid
+									int n = JOptionPane.showConfirmDialog(null, "Email is invalid", "OK", JOptionPane.YES_NO_OPTION);
+								}
 							}
 							else
 							{
-								//messagebox: something wrong when inserting. Please try again
-								int n = JOptionPane.showConfirmDialog(null, "Something went wrong. Please try again", "OK", JOptionPane.YES_NO_OPTION);
+								JOptionPane.showMessageDialog(null, "Password 2 name cannot be null.");
 							}
 						}
 						else
 						{
-							//messagebox: id already exist
-							int n = JOptionPane.showConfirmDialog(null, "Please use another username", "OK", JOptionPane.YES_NO_OPTION);
+							JOptionPane.showMessageDialog(null, "Password 1 name cannot be null.");
 						}
 					}
 					else
 					{
-						//messagebox: password not valid
-						int n = JOptionPane.showConfirmDialog(null, "Password is not valid", "OK", JOptionPane.YES_NO_OPTION);
+						JOptionPane.showMessageDialog(null, "Email name cannot be null.");
 					}
 				}
 				else
 				{
-					//MessageBox: password does not match
-					int n = JOptionPane.showConfirmDialog(null, "The 2 passwords does not match!", "OK", JOptionPane.YES_NO_OPTION);
+					JOptionPane.showMessageDialog(null, "First name cannot be null.");
 				}
 			}
 			else
 			{
-				//messageBox: username not valid
-				int n = JOptionPane.showConfirmDialog(null, "Username is invalid", "OK", JOptionPane.YES_NO_OPTION);
+				JOptionPane.showMessageDialog(null, "Last name cannot be null.");
 			}
 		}
 		else if (e.getSource() == cancelB) //cancel button
@@ -177,5 +240,16 @@ public class SignUpDialog extends JFrame implements ActionListener{
 				return false;
 		}
 		return true;
+	}
+	
+	public static boolean ValidEmail(String s)
+	{
+		char[] sChar = s.toCharArray();
+		for (int i = 0; i< sChar.length; i++)
+		{
+			if (sChar[i] == '@')
+				return true;
+		}
+		return false;
 	}
 }

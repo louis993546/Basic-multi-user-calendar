@@ -58,15 +58,22 @@ public class LoginDialog extends JFrame implements ActionListener
 
 		//namePanel contains a JLabel and a JTextField for the username input
 		JPanel namePanel = new JPanel();
-		namePanel.add(new JLabel("User Name:"));
+		namePanel.add(new JLabel("Email:      "));
 		userName = new JTextField(15);
 		namePanel.add(userName);
 		top.add(namePanel);
 
 		//pwPanel contains a JLabel and a JTextField for the password input
 		JPanel pwPanel = new JPanel();
-		pwPanel.add(new JLabel("Password:  "));
+		pwPanel.add(new JLabel("Password:"));
 		password = new JPasswordField(15);
+		password.addActionListener(new ActionListener()
+		{
+            public void actionPerformed(ActionEvent e)
+            {
+            	button.doClick();
+            }
+        });
 		pwPanel.add(password);
 		top.add(pwPanel);
 
@@ -108,11 +115,9 @@ public class LoginDialog extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) //Login button
 		{
-			// When the button is clicked, check the user name and password, and try to log the user in
 			String un = userName.getText();
 			String pw = password.getText();
-			//Current method: create user "noname" with password "nopass", and simplay display the CalGrid Dialog
-			User user = new User( "noname", "nopass", 0);  //TODO change to user input
+			User user = new User(un, pw, 0);  //TODO change to user input
 			boolean allow = udb.checkIfExist(user); //TODO currently this should always return false
 			if (allow)
 			{
@@ -121,7 +126,7 @@ public class LoginDialog extends JFrame implements ActionListener
 			}
 			else
 			{
-				//output username or password is incorrect. Please try again
+				JOptionPane.showMessageDialog(null, "Username or password is incorrect.", "Try again.", JOptionPane.YES_NO_OPTION);
 			}
 		}
 		else if (e.getSource() == noLoginButton)
@@ -132,10 +137,7 @@ public class LoginDialog extends JFrame implements ActionListener
 		}
 		else if(e.getSource() == signupButton) //Sign-up button
 		{
-			// Create a new account
-			// Create a new UI
 			SignUpDialog sud = new SignUpDialog();
-			// Go to constructor of SignUpDialog.java
 		}
 		else if(e.getSource() == closeButton) //close button
 		{

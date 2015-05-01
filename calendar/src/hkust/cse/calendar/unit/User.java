@@ -5,7 +5,9 @@ import java.io.Serializable;
 public class User implements Serializable {
 
 	private String mPassword;				// User password
-	private String mID;						// User id
+	private String mID;						// User email
+	private String mFirstName;
+	private String mLastName;
 	private int mAdmin;
 
 	// Getter of the user id
@@ -21,9 +23,15 @@ public class User implements Serializable {
 
 	// Constructor of class 'User' which set up the user id, password and admin permission
 	public User(String id, String pass, int admin) {
-		mID = id;
-		mPassword = pass;
+		this(id, pass);
 		mAdmin = admin;
+	}
+	
+	public User(String id, String pass, int admin, String fn, String ln)
+	{
+		this(id, pass, admin);
+		mFirstName = fn;
+		mLastName = ln;
 	}
 
 	// Another getter of the user id
@@ -58,5 +66,25 @@ public class User implements Serializable {
 	public int Admin()
 	{
 		return mAdmin;
+	}
+	
+	public void FirstName(String fn)
+	{
+		mFirstName = fn;
+	}
+	
+	public String FirstName()
+	{
+		return mFirstName;
+	}
+	
+	public void LastName(String ln)
+	{
+		mLastName = ln;
+	}
+	
+	public String LastName()
+	{
+		return mLastName;
 	}
 }
