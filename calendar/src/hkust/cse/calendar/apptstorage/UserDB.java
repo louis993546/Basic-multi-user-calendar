@@ -21,7 +21,6 @@ public class UserDB
 
 	public UserDB()
 	{
-		//TODO check if this section works correctly
 		try 
 		{
 			Class.forName("org.sqlite.JDBC");
@@ -45,7 +44,6 @@ public class UserDB
 
 	public boolean addUser(User u)
 	{
-		//TODO
 		try {
 			stmt = c.createStatement();
 			sql = "INSERT INTO USERTABLE (ID, PASSWORD, ADMIN) VALUES ('" + 
@@ -53,7 +51,6 @@ public class UserDB
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -99,14 +96,13 @@ public class UserDB
 
 	public boolean checkIfExist(User u)
 	{
-		//TODO return true if user exist and password is correct
 		try
 		{
 			ArrayList<User> userAL = new ArrayList<User>();
 			stmt = c.createStatement();
-			sql = "SELECT count(*) FROM USERTABLE WHERE (" + 
-			"ID = " + u.ID() + " AND " + 
-			"PASSWORD = " + u.Password() + ");";
+			sql = "SELECT * FROM USERTABLE WHERE (" + 
+			"ID = '" + u.ID() + "' AND " + 
+			"PASSWORD = '" + u.Password() + "');";
 			rs = stmt.executeQuery(sql);
 			while (rs.next())
 			{

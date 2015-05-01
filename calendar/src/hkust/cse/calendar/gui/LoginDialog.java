@@ -111,8 +111,10 @@ public class LoginDialog extends JFrame implements ActionListener
 			// When the button is clicked, check the user name and password, and try to log the user in
 			String un = userName.getText();
 			String pw = password.getText();
+			System.out.println("username: " + un);
+			System.out.println("password: " + pw);
 			//Current method: create user "noname" with password "nopass", and simplay display the CalGrid Dialog
-			User user = new User( "noname", "nopass", 0);  //TODO change to user input
+			User user = new User(un, pw, 0);  //TODO change to user input
 			boolean allow = udb.checkIfExist(user); //TODO currently this should always return false
 			if (allow)
 			{
