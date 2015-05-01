@@ -109,7 +109,6 @@ public class LoginDialog extends JFrame implements ActionListener
 		if(e.getSource() == button) //Login button
 		{
 			// When the button is clicked, check the user name and password, and try to log the user in
-			//login();
 			
 			//Current method: create user "noname" with password "nopass", and simplay display the CalGrid Dialog
 			User user = new User( "noname", "nopass", 0);  //TODO change to user input
