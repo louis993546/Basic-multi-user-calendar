@@ -27,9 +27,11 @@ public class UserDB
 			c = DriverManager.getConnection("jdbc:sqlite:user.db");
 			stmt = c.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS USERTABLE " +
-			"(ID		TEXT PRIMARY KEY    NOT NULL," + 
-				" PASSWORD	TEXT                NOT NULL," + 
-				" ADMIN		INT                 NOT NULL)"; 
+			"(ID		TEXT PRIMARY KEY    NOT NULL," + // ID is actually email address
+			" FIRSTNAME	TEXT                NOT NULL," +
+			" LASTNAME	TEXT                NOT NULL," +
+			" PASSWORD	TEXT                NOT NULL," + 
+			" ADMIN		INT                 NOT NULL)"; 
 			stmt.executeUpdate(sql);
 		} 
 		catch (SQLException e) 
@@ -37,7 +39,6 @@ public class UserDB
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -46,8 +47,8 @@ public class UserDB
 	{
 		try {
 			stmt = c.createStatement();
-			sql = "INSERT INTO USERTABLE (ID, PASSWORD, ADMIN) VALUES ('" + 
-					u.ID() + "','" + u.Password() + "'," + u.Admin() + ")";
+			sql = "INSERT INTO USERTABLE (ID, FIRSTNAME, LASTNAME, PASSWORD, ADMIN) VALUES ('" + 
+					u.ID() + "','" + u.FirstName() + "','" + u.LastName() + "','" + u.Password() + "'," + u.Admin() + ")";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -82,6 +83,7 @@ public class UserDB
 			sql = "UPDATE USERTABLE set " + 
 			"ID = "       + unew.ID()       + ", " +
 			"PASSWORD = " + unew.Password() + ", " +
+			//TODO update ln and fn
 			"ADMIN = "	  + unew.Admin()    + "WHERE " + 
 			"ID = " + uold.ID() + ";" ;
 			stmt.executeUpdate(sql);
@@ -94,7 +96,39 @@ public class UserDB
 		}
 	}
 
-	public boolean checkIfExist(User u)
+	public boolean checkIfIDExist(String i) //only checks id (i.e. email/username)
+	{
+		try
+		{
+			ArrayList<User> userAL = new ArrayList<User>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (" + 
+			"ID = '" + i + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				String id = rs.getString("ID");
+				String pw = rs.getString("PASSWORD");
+				int admin = rs.getInt("ADMIN");
+				String ln = rs.getString("LASTNAME");
+				String fn = rs.getString("FIRSTNAME");
+				User newUser = new User(id, pw, admin, fn, ln);
+				userAL.add(newUser);
+			}
+			switch (userAL.size())
+			{
+				case 1: return true;
+				default: return false;
+			}	
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return false;
+		}
+	}
+	
+	public boolean checkIfExist(User u) //Only checks email and password
 	{
 		try
 		{
@@ -109,7 +143,9 @@ public class UserDB
 				String id = rs.getString("ID");
 				String pw = rs.getString("PASSWORD");
 				int admin = rs.getInt("ADMIN");
-				User newUser = new User(id, pw, admin);
+				String ln = rs.getString("LASTNAME");
+				String fn = rs.getString("FIRSTNAME");
+				User newUser = new User(id, pw, admin, fn, ln);
 				userAL.add(newUser);
 			}
 			switch (userAL.size())
@@ -128,6 +164,6 @@ public class UserDB
 	public boolean isAdmin(User u)
 	{
 		return false;
-		//TODO
+		//TODO check if a user is admin
 	}
 }
