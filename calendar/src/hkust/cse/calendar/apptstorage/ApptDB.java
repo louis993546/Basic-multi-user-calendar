@@ -43,6 +43,7 @@ public class ApptDB {
 	          " REMINDER             INT                NOT NULL," +
 	          " REMINDER_TIME        INT                NOT NULL," +
 	          " REMINDER_UNIT        INT                NOT NULL," +
+	          " USER                 INT                NOT NULL," + 
 	          " ARW                  TEXT               NOT NULL)";
 	      stmt.executeUpdate(sql);
 	    } catch (Exception e ) {
@@ -89,7 +90,7 @@ public class ApptDB {
 				+ "END_TIME_DAY, "
 				+ "REMINDER, "
 				+ "REMINDER_TIME, "
-				+ "REMINDER_UNIT, ARW) " +
+				+ "REMINDER_UNIT, USER, ARW) " +
 					"VALUES ('" 
 				+ a.getTitle() + "','" 
 				+ a.getDescription() + "','" 
@@ -107,6 +108,7 @@ public class ApptDB {
 				+ a.getReminder() + "," 
 				+ a.getReminderTime() + "," 
 				+ a.getReminderUnit() + "," 
+				+ "0," 
 				+ dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
@@ -183,6 +185,7 @@ public class ApptDB {
 	        int REMINDER;
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
+	        int USER;
 	        String ARW = "";
 	        int ID;
 	        ArrayList<String> attend = new ArrayList<String>();
@@ -205,6 +208,7 @@ public class ApptDB {
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
+				USER = rs.getInt("USER");
 				ARW = rs.getString("ARW");
 				ID = rs.getInt("ID");
 				//TODO these 4 lines are just temporary

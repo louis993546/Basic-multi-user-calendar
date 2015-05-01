@@ -4,46 +4,42 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-	private int uID;						// Unique user ID
+	private int mID;						// Unique user ID
 	private String mPassword;				// User password
-	private String mID;						// User email
+	private String mEmail;						// User email
 	private String mFirstName;
 	private String mLastName;
 	private int mAdmin;
 
 	// Getter of the user id
 	public String ID() {		
-		return mID;
+		return mEmail;
 	}
 
 	// Constructor of class 'User' which set up the user id and password
-	public User(String id, String pass) {
-		mID = id;
+	public User(String email, String pass) {
+		mEmail = email;
 		mPassword = pass;
 	}
 
 	// Constructor of class 'User' which set up the user id, password and admin permission
-	public User(String id, String pass, int admin) {
-		this(id, pass);
+	public User(String email, String pass, int admin) {
+		this(email, pass);
 		mAdmin = admin;
 	}
 	
-	public User(String id, String pass, int admin, String fn, String ln)
+	public User(String email, String pass, int admin, String fn, String ln)
 	{
-		this(id, pass, admin);
+		this(email, pass, admin);
 		mFirstName = fn;
 		mLastName = ln;
+		
 	}
 	
-	public User(int u, String id, String pass, int admin, String fn, String ln)
+	public User(int id, String email, String pass, int admin, String fn, String ln)
 	{
-		this(id, pass, admin, fn, ln);
-		uID = u;
-	}
-
-	// Another getter of the user id
-	public String toString() {
-		return ID();
+		this(email, pass, admin, fn, ln);
+		mID = id;
 	}
 
 	// Getter of the user password
@@ -58,9 +54,9 @@ public class User implements Serializable {
 
 	// Setter of user id
 
-	public void ID(String id)
+	public void Email(String email)
 	{
-		mID = id;
+		mEmail = email;
 	}
 
 	// Setter of user admin permission
@@ -97,6 +93,6 @@ public class User implements Serializable {
 	
 	public int UID()
 	{
-		return uID;
+		return mID;
 	}
 }

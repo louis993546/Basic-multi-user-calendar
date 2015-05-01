@@ -37,7 +37,7 @@ public class Appointment implements Comparable<Appointment> {
 	private int id;
 	private int jid;
 	private boolean isJoint;
-	private User creater;
+	private int createrID;
 
 	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
 	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
@@ -65,6 +65,12 @@ public class Appointment implements Comparable<Appointment> {
 		id = i;
 	}
 
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i, int uid) 
+	{
+		this(t,d,l,shr,smin,syr,smon,sday,ehr,emin,eyr,emon,eday,r,rt,ru,aal,ral,wal,i);
+		createrID = uid;
+	}
+	
 	public Appointment() {
 		title = "Untitled";
 		description = "";
