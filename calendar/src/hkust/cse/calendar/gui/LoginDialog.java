@@ -112,15 +112,18 @@ public class LoginDialog extends JFrame implements ActionListener
 	}
 
 	//This is where you code for each button click
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		if(e.getSource() == button) //Login button
 		{
 			String un = userName.getText();
 			String pw = password.getText();
 			User user = new User(un, pw, 0);  //TODO change to user input
-			boolean allow = udb.checkIfExist(user); //TODO currently this should always return false
+			boolean allow = udb.checkIfExist(user);
 			if (allow)
 			{
+				//TODO change user to the complete version of user (uid, email, password, ln, fn)
+				user = udb.getFullUser(user);
 				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
 				setVisible( false );	
 			}

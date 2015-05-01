@@ -575,6 +575,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, temp, temp, 12);
+		//TODO need to provide a createrID
 		
 		TimeSpan wholeDay=new TimeSpan(startDate[0], startDate[1],	startDate[2], 0, 0, 23, 59);
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);

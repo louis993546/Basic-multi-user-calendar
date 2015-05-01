@@ -15,6 +15,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 	
 	private User defaultUser = null;
 	private ApptDB adb = new ApptDB();
+	private UserDB udb = new UserDB();
 	
 	public ApptStorageNullImpl( User user )
 	{
@@ -119,6 +120,13 @@ public class ApptStorageNullImpl extends ApptStorage {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void updateDefaultUser() 
+	{
+		//TODO go to udb to get the user info again
+		defaultUser = udb.getUserWithUID(defaultUser.UID());
 	}
 
 }

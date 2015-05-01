@@ -124,7 +124,9 @@ public class CalGrid extends JFrame implements ActionListener {
 
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
-
+		
+		currentUserID = con.getDefaultUser().UID();
+		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
