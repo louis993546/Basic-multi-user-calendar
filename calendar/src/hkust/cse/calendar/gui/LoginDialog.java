@@ -27,6 +27,7 @@ public class LoginDialog extends JFrame implements ActionListener
 	private JTextField userName;
 	private JPasswordField password;
 	private JButton button;
+	private JButton noLoginButton;
 	private JButton closeButton;
 	private JButton signupButton;
 	private UserDB udb;
@@ -83,7 +84,11 @@ public class LoginDialog extends JFrame implements ActionListener
 		JPanel butPanel = new JPanel();
 		butPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-		button = new JButton("Log in (No user name and password required)");
+		noLoginButton = new JButton("Log in (No user name and password required)");
+		noLoginButton.addActionListener(this);
+		butPanel.add(noLoginButton);
+		
+		button = new JButton("Log in");
 		button.addActionListener(this);
 		butPanel.add(button);
 
@@ -118,6 +123,12 @@ public class LoginDialog extends JFrame implements ActionListener
 			{
 				//output username or password is incorrect. Please try again
 			}
+		}
+		else if (e.getSource() == noLoginButton)
+		{
+			User user = new User( "noname", "nopass");
+			CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
+			setVisible( false );	
 		}
 		else if(e.getSource() == signupButton) //Sign-up button
 		{
