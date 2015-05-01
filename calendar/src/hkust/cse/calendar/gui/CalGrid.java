@@ -391,10 +391,12 @@ public class CalGrid extends JFrame implements ActionListener {
 					TimeMachineDialog tmd = new TimeMachineDialog(CalGrid.this);
 				
 				}
+				else if (e.getActionCommand().equals("Modify User")){
+					ModifyUserDialog mld = new ModifyUserDialog(udb);
+				}	
 				else if (e.getActionCommand().equals("New User")){
 					SignUpDialog sud = new SignUpDialog();
-				
-				}
+				}		
 				else
 				{
 					System.out.println("Somethings wrong");
@@ -455,6 +457,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		int admin = this.controller.getDefaultUser().Admin();
 		if(admin == 1){
 
+
 			//modify location
 			menuBar.add(Locationmenu);
 			Locationmenu.setEnabled(false);
@@ -487,10 +490,7 @@ public class CalGrid extends JFrame implements ActionListener {
 			JMenuItem mc = new JMenuItem("Modify Clock");
 			mc.addActionListener(listener);
 			Clockmenu.add(mc);
-
-			return menuBar;
 		}
-
 		return menuBar;
 	}
 

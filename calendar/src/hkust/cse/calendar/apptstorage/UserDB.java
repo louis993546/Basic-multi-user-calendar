@@ -226,4 +226,36 @@ public class UserDB
 		    return null;
 		}
 	}
+
+	public int getUserID(String string) {
+		try
+		{
+			ArrayList<User> userAL = new ArrayList<User>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (" + 
+			"ID = '" + string + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				int uid= rs.getInt("UID");
+				String id = rs.getString("ID");
+				String pw = rs.getString("PASSWORD");
+				int admin = rs.getInt("ADMIN");
+				String ln = rs.getString("LASTNAME");
+				String fn = rs.getString("FIRSTNAME");
+				User newUser = new User(uid, id, pw, admin, fn, ln);
+				userAL.add(newUser);
+			}
+			switch (userAL.size())
+			{
+				case 1: return userAL.get(0).UID();
+				default: return -1;
+			}	
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return -1;
+		}
+	}
 }
