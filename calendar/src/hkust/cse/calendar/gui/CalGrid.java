@@ -99,6 +99,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	private JMenu Usermenu = new JMenu("User");
 	private JMenu Appmenu = new JMenu("Appointment");
 	private JMenu Clockmenu = new JMenu("Clock"); 
+	private int currentUserID;
 	
 
 	private final String[] holidays = {
