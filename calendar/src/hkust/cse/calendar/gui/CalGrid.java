@@ -392,9 +392,9 @@ public class CalGrid extends JFrame implements ActionListener {
 				
 				}
 				else if (e.getActionCommand().equals("New User")){
-					System.out.println(timeMachine);
+					SignUpDialog sud = new SignUpDialog();
 				
-				}		
+				}
 				else
 				{
 					System.out.println("Somethings wrong");
@@ -452,38 +452,44 @@ public class CalGrid extends JFrame implements ActionListener {
 		Appmenu.add(mi);
 		Appmenu.add(ald);
 		
-		//modify location
-		menuBar.add(Locationmenu);
-		Locationmenu.setEnabled(false);
-		Locationmenu.setMnemonic('p');
-		Appmenu.getAccessibleContext().setAccessibleDescription("Location Management:");
-		JMenuItem ml = new JMenuItem("Modify Location");
-		ml.addActionListener(listener);
-		JMenuItem nl = new JMenuItem("New Location");
-		nl.addActionListener(listener);
-		Locationmenu.add(ml);
-		Locationmenu.add(nl);
-		
-		//modify user
-		menuBar.add(Usermenu);
-		Usermenu.setEnabled(false);
-		Usermenu.setMnemonic('p');
-		Appmenu.getAccessibleContext().setAccessibleDescription("User Management:");
-		JMenuItem mu = new JMenuItem("Modify User");
-		JMenuItem nu = new JMenuItem("New User");
-		mu.addActionListener(listener);
-		nu.addActionListener(listener);
-		Usermenu.add(mu);
-		Usermenu.add(nu);
-		
-		 //modify clock
-		menuBar.add(Clockmenu);
-		Clockmenu.setEnabled(false);
-		Clockmenu.setMnemonic('c');
-		Appmenu.getAccessibleContext().setAccessibleDescription("Clock Management:");
-		JMenuItem mc = new JMenuItem("Modify Clock");
-		mc.addActionListener(listener);
-		Clockmenu.add(mc);
+		int admin = this.controller.getDefaultUser().Admin();
+		if(admin == 1){
+
+			//modify location
+			menuBar.add(Locationmenu);
+			Locationmenu.setEnabled(false);
+			Locationmenu.setMnemonic('p');
+			Appmenu.getAccessibleContext().setAccessibleDescription("Location Management:");
+			JMenuItem ml = new JMenuItem("Modify Location");
+			ml.addActionListener(listener);
+			JMenuItem nl = new JMenuItem("New Location");
+			nl.addActionListener(listener);
+			Locationmenu.add(ml);
+			Locationmenu.add(nl);
+
+			//modify user
+			menuBar.add(Usermenu);
+			Usermenu.setEnabled(false);
+			Usermenu.setMnemonic('p');
+			Appmenu.getAccessibleContext().setAccessibleDescription("User Management:");
+			JMenuItem mu = new JMenuItem("Modify User");
+			JMenuItem nu = new JMenuItem("New User");
+			mu.addActionListener(listener);
+			nu.addActionListener(listener);
+			Usermenu.add(mu);
+			Usermenu.add(nu);
+
+			//modify clock
+			menuBar.add(Clockmenu);
+			Clockmenu.setEnabled(false);
+			Clockmenu.setMnemonic('c');
+			Appmenu.getAccessibleContext().setAccessibleDescription("Clock Management:");
+			JMenuItem mc = new JMenuItem("Modify Clock");
+			mc.addActionListener(listener);
+			Clockmenu.add(mc);
+
+			return menuBar;
+		}
 
 		return menuBar;
 	}
