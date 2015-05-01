@@ -200,4 +200,60 @@ public class UserDB
 		    return false;
 		}
 	}
+	
+	public String getLastname(int uid)
+	{
+		try
+		{
+			ArrayList<String> userAL = new ArrayList<String>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (" + 
+			"UID = '" + uid + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				String ln = rs.getString("LASTNAME");
+				userAL.add(ln);
+			}
+			if (userAL.size() == 1)
+			{
+				return userAL.get(0);
+			}
+			else
+				return null;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return "";
+		}
+	}
+	
+	public String getFirsttname(int uid)
+	{
+		try
+		{
+			ArrayList<String> userAL = new ArrayList<String>();
+			stmt = c.createStatement();
+			sql = "SELECT * FROM USERTABLE WHERE (" + 
+			"UID = '" + uid + "');";
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				String ln = rs.getString("FIRSTNAME");
+				userAL.add(ln);
+			}
+			if (userAL.size() == 1)
+			{
+				return userAL.get(0);
+			}
+			else
+				return null;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    return "";
+		}
+	}
 }
