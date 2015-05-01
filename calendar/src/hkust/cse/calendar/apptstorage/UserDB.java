@@ -27,7 +27,8 @@ public class UserDB
 			c = DriverManager.getConnection("jdbc:sqlite:user.db");
 			stmt = c.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS USERTABLE " +
-			"(ID		TEXT PRIMARY KEY    NOT NULL," + // ID is actually email address
+			"(UID		INTEGER            NOT NULL        PRIMARY KEY AUTOINCREMENT," + 
+			" ID		TEXT                NOT NULL," + // ID is actually email address
 			" FIRSTNAME	TEXT                NOT NULL," +
 			" LASTNAME	TEXT                NOT NULL," +
 			" PASSWORD	TEXT                NOT NULL," + 
@@ -57,13 +58,13 @@ public class UserDB
 		}
 	}
 
-	public boolean deleteUser(User u)
+	public boolean deleteUser(int uid)
 	{
 		//TODO check if this method works correctly
 		try
 		{
 			stmt = c.createStatement();
-		    String sql = "DELETE from USERTABLE WHERE ID=" + u.ID() + ";";
+		    String sql = "DELETE from USERTABLE WHERE UID=" +uid + ";";
 		    stmt.executeUpdate(sql);
 			return true;
 		}
@@ -74,7 +75,7 @@ public class UserDB
 		}
 	}
 
-	public boolean modifyUser(User uold, User unew)
+	public boolean modifyUser(int uid, User unew)
 	{
 		//TODO check if this method works correctly
 		try
@@ -85,7 +86,7 @@ public class UserDB
 			"PASSWORD = " + unew.Password() + ", " +
 			//TODO update ln and fn
 			"ADMIN = "	  + unew.Admin()    + "WHERE " + 
-			"ID = " + uold.ID() + ";" ;
+			"UID = " + uid + ";" ;
 			stmt.executeUpdate(sql);
 			return true;	
 		}

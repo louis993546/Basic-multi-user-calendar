@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+	private int uID;						// Unique user ID
 	private String mPassword;				// User password
 	private String mID;						// User email
 	private String mFirstName;
@@ -32,6 +33,12 @@ public class User implements Serializable {
 		this(id, pass, admin);
 		mFirstName = fn;
 		mLastName = ln;
+	}
+	
+	public User(int u, String id, String pass, int admin, String fn, String ln)
+	{
+		this(id, pass, admin, fn, ln);
+		uID = u;
 	}
 
 	// Another getter of the user id
@@ -86,5 +93,10 @@ public class User implements Serializable {
 	public String LastName()
 	{
 		return mLastName;
+	}
+	
+	public int UID()
+	{
+		return uID;
 	}
 }
