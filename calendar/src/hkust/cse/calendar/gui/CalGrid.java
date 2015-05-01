@@ -126,6 +126,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		super();
 		
 		currentUserID = con.getDefaultUser().UID();
+		System.out.println(currentUserID);
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -709,6 +710,11 @@ public class CalGrid extends JFrame implements ActionListener {
 	public void updateDB()
 	{
 		controller.LoadApptFromXml();
+	}
+	
+	public int getCurrentUserID()
+	{
+		return currentUserID; 
 	}
 	
 }
