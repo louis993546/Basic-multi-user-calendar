@@ -412,8 +412,16 @@ public class Appointment implements Comparable<Appointment> {
 			setStartEndMonth(month);
 			setStartEndDay(day);
 			
-		}
-		
+		}	
 	}
-
+	
+	public int getCreaterID()
+	{
+		return createrID;
+	}
+	
+	public void setCreaterID(int id)
+	{
+		createrID = id;
+	}
 }

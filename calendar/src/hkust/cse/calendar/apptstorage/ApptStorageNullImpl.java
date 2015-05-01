@@ -37,7 +37,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 	public Appt[] RetrieveAppts(User entity, TimeSpan time) {
 		// TODO this only check time because phrase 1
 		//retrieve an appointment record by a given user object and timespan
-		return adb.getApptByTime(time);
+		return adb.getApptByUserTime(entity, time);
 	}
 
 	@Override

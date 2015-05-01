@@ -3,6 +3,7 @@ package hkust.cse.calendar.apptstorage;
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
+import hkust.cse.calendar.unit.User;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -231,6 +232,26 @@ public class ApptDB {
 		    System.exit(0);
 		}
 		return null;
+	}
+	
+	public Appt[] getApptByUserTime(User u, TimeSpan d)
+	{
+		//TODO retrieve appts iff both u and d 
+		Appt[] abt = getApptByTime(d);
+		ArrayList<Appt> temp = new ArrayList<Appt>();
+		for (Appt a:abt)
+		{
+			if (a.getAppointment().getCreaterID() == u.UID())
+			{
+				temp.add(a);
+			}
+		}
+		Appt[] temparray = new Appt[temp.size()];
+		for (int i = 0; i<temp.size(); i++)
+		{
+			temparray[i] = temp.get(i);
+		}
+		return temparray;
 	}
 
 	public Appt[] getApptByTime(TimeSpan d)
