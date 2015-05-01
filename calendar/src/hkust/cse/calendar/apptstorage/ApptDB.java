@@ -110,7 +110,6 @@ public class ApptDB {
 				+ dt + ");";
 			stmt.executeUpdate(sql);
 			//create 1 new table with 3 columns
-			//TODO try to switch to  seriable/hibernate
 			
 //			java.sql.SQLException: near "1967676291": syntax error
 //			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)

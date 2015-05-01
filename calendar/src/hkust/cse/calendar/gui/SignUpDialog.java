@@ -1,11 +1,15 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.UserDB;
+import hkust.cse.calendar.unit.User;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -103,7 +107,7 @@ public class SignUpDialog extends JFrame implements ActionListener{
 			{
 				if (password1S == password2S) //check if the 2 passwords are the same
 				{
-					if (ValidString(passwrod1S) == true)
+					if (ValidString(password1S) == true)
 					{
 						User newuser = new User(usernameS, password1S, 0); //TODO user constructor with admin rights
 						if (udb.checkIfExist(newuser) == false) //check if username is available

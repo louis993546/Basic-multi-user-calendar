@@ -39,6 +39,7 @@ public class Appointment implements Comparable<Appointment> {
 	private boolean isJoint;
 	private User creater;
 
+	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
 	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
 		//TODO create unique id for each appointment upon creation
 		//TODO initiate creater
@@ -121,27 +122,6 @@ public class Appointment implements Comparable<Appointment> {
 		//Warning: this does not do any checking
 		startDay = d;
 		endDay = d;
-	}
-	
-	public boolean setStartDateTime(int shr, int smin, int syr, int smon, int sday) {
-		//TODO check if start date is valid
-		//Not sure if this is actually necessary
-		//check getValidDate from AppScheduler
-		return false;
-		//check if date is valid
-		//leap year
-		//if day exist in that month
-		//larger than 0
-		//check if time is valid
-	}
-
-	public boolean setEndDateTime(int ehr, int emin, int eyr, int emon, int eday) {
-		//TODO check if end date is valid
-		//Not sure if this is actually necessary
-		//check getValidDate from AppScheduler
-		return false;
-		//check if date is valid
-		//check if time is valid
 	}
 
 	@SuppressWarnings("deprecation")
@@ -379,6 +359,7 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public boolean isDateValid(int yr, int mon, int day) {
+		//TODO Check if date is valid
 		return false;
 	}
 
@@ -402,4 +383,31 @@ public class Appointment implements Comparable<Appointment> {
 		//TODO comparing appointments
 		return 0;
 	}
+
+	public void setEndDateTime(int hours, int minutes, int year, int month, int day) {
+		// TODO Auto-generated method stub
+		if (isTimeValid(hours, minutes) == true)
+		{
+			endHour = hours;
+			endMin = minutes;
+			setStartEndYear(year);
+			setStartEndMonth(month);
+			setStartEndDay(day);
+			
+		}
+	}
+
+	public void setStartDateTime(int hours, int minutes, int year, int month, int day) {
+		if (isTimeValid(hours, minutes) == true)
+		{
+			startHour = hours;
+			startMin = minutes;
+			setStartEndYear(year);
+			setStartEndMonth(month);
+			setStartEndDay(day);
+			
+		}
+		
+	}
+
 }

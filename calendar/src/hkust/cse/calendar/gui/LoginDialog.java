@@ -2,13 +2,16 @@ package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.ApptStorageNullImpl;
+import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.User;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -105,7 +108,7 @@ public class LoginDialog extends JFrame implements ActionListener
 			
 			//Current method: create user "noname" with password "nopass", and simplay display the CalGrid Dialog
 			User user = new User( "noname", "nopass", 0);  //TODO change to user input
-			boolean allow = udb.checkIfExist(user);
+			boolean allow = udb.checkIfExist(user); //TODO currently this should always return false
 			if (allow)
 			{
 				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
