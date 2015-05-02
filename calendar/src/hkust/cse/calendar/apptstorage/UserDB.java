@@ -258,4 +258,26 @@ public class UserDB
 		    return -1;
 		}
 	}
+
+	public ArrayList<String> getUserList() {
+		ArrayList<String> temp = new ArrayList<String>();
+		try {
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USERTABLE;");
+			while (rs.next()) {
+				String name = rs.getString("ID");//email
+				temp.add(name);
+			}
+			return temp;
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
+					+ e.getMessage());
+			System.exit(0);
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
+					+ e.getMessage());
+			System.exit(0);
+		}
+		return null;
+	}
 }

@@ -39,7 +39,7 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 		udb = new UserDB();
 		Container contentPane;
 		contentPane = getContentPane();
-		//UserStringAL = udb.getUserList();
+		UserStringAL = udb.getUserList();
 
 		// create a new JPanel to hold everything
 		JPanel all = new JPanel();
@@ -72,7 +72,7 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 
 		contentPane.add("North", all);
 		pack();
-		//setLocationRelativeTo(null);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
