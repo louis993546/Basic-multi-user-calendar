@@ -60,6 +60,7 @@ public class LoginDialog extends JFrame implements ActionListener
 		JPanel namePanel = new JPanel();
 		namePanel.add(new JLabel("Email:      "));
 		userName = new JTextField(15);
+		userName.setText("a@");
 		namePanel.add(userName);
 		top.add(namePanel);
 
@@ -67,6 +68,7 @@ public class LoginDialog extends JFrame implements ActionListener
 		JPanel pwPanel = new JPanel();
 		pwPanel.add(new JLabel("Password:"));
 		password = new JPasswordField(15);
+		password.setText("a");
 		password.addActionListener(new ActionListener()
 		{
             public void actionPerformed(ActionEvent e)

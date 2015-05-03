@@ -2,6 +2,7 @@
 package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.UserDB;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,6 +98,15 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 			// load string into that GUI
 			// call update method in UserDB
 			// TODO User needs ID field
+			
+			int uid = udb.getUserID(UserList.getSelectedValue()
+					.toString());
+			if ((uid != 0) || (uid != -1)) {
+				//udb.deleteUser(uid);
+				UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(uid);
+				dispose();
+			}
+
 		} else if (e.getSource() == exitButton) {
 			dispose();
 		} else {

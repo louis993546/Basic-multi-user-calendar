@@ -396,7 +396,10 @@ public class CalGrid extends JFrame implements ActionListener {
 				}	
 				else if (e.getActionCommand().equals("New User")){
 					SignUpDialog sud = new SignUpDialog();
-				}		
+				}	
+				else if(e.getActionCommand().equals("Update Account for normal user")){
+					UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(currentUserID);
+				}
 				else
 				{
 					System.out.println("Somethings wrong");
@@ -415,6 +418,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		mi = (JMenuItem) Access.add(new JMenuItem("Logout"));	//adding a Logout menu button for user to logout
 		mi.setMnemonic('L');
 		mi.getAccessibleContext().setAccessibleDescription("For user logout");
+
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int n = JOptionPane.showConfirmDialog(null, "Logout?",
@@ -428,6 +432,9 @@ public class CalGrid extends JFrame implements ActionListener {
 				}
 			}
 		});
+
+		mi = (JMenuItem) Access.add(new JMenuItem("Update Account for normal user"));
+		mi.addActionListener(listener);
 		
 		mi = (JMenuItem) Access.add(new JMenuItem("Exit"));
 		mi.setMnemonic('E');

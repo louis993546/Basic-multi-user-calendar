@@ -81,12 +81,14 @@ public class UserDB
 		try
 		{
 			stmt = c.createStatement();
-			sql = "UPDATE USERTABLE set " + 
-			"ID = "       + unew.ID()       + ", " +
-			"PASSWORD = " + unew.Password() + ", " +
-			//TODO update ln and fn
-			"ADMIN = "	  + unew.Admin()    + "WHERE " + 
-			"UID = " + uid + ";" ;
+			sql = 
+					"UPDATE USERTABLE set ID = '" +unew.ID() 
+					+ "', PASSWORD = '"           +unew.Password()  
+					+ "', ADMIN = '"              +unew.Admin()  
+					+ "', FIRSTNAME = '"          +unew.FirstName()  
+					+ "', LASTNAME = '"           +unew.LastName()  
+					+ "' WHERE UID = '"           +uid  
+					+ "';" ;                        
 			stmt.executeUpdate(sql);
 			return true;	
 		}
