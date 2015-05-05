@@ -63,14 +63,14 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		lastnameTF = new JTextField(15);
 		lnPanel.add(lastnameTF);
 		sud.add(lnPanel);
-		
+
 		JPanel fnPanel = new JPanel();
 		fnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		fnPanel.add(new JLabel("First name:"));
 		firstnameTF = new JTextField(15);
 		fnPanel.add(firstnameTF);
 		sud.add(fnPanel);
-		
+
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		namePanel.add(new JLabel("Email address (username):"));
@@ -91,7 +91,7 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		password2PF = new JPasswordField(15);
 		pwPanel2.add(password2PF);
 		sud.add(pwPanel2);
-		
+
 		JPanel adminPanel = new JPanel();
 		adminPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		adminPanel.add(new JLabel("Admin:"));
@@ -131,7 +131,7 @@ public class SignUpDialog extends JFrame implements ActionListener{
 			{
 				admin = 1;
 			}
-			
+
 			if (lastnameS != null && !(lastnameS.isEmpty())) //lastname cannot be null
 			{
 				if (firstnameS != null && !(firstnameS.isEmpty())) //first name cannot be null
@@ -241,7 +241,7 @@ public class SignUpDialog extends JFrame implements ActionListener{
 		}
 		return true;
 	}
-	
+
 	public static boolean ValidEmail(String s)
 	{
 		char[] sChar = s.toCharArray();
