@@ -391,8 +391,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		}
 		else if (e.getSource() == inviteBut)
 		{
-			//TODO 
-			InviteDialog id = new InviteDialog();
+			InviteDialog id = new InviteDialog(this);
 		}
 		parent.getAppList().clear();
 		parent.getAppList().setTodayAppt(parent.GetTodayAppt());

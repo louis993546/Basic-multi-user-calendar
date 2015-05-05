@@ -17,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -49,14 +50,24 @@ public class InviteDialog extends JFrame implements ActionListener
 	private UserDB udb;
 	private ArrayList<String> UserStringAL = new ArrayList<String>();
 	private DefaultListModel<String> UserListModel = new DefaultListModel<String>();
+	private DefaultListModel<String> InvitingListModel = new DefaultListModel<String>();
 	private JList<String> UserList;
-	private JButton exitButton;
-	private AbstractButton cancelButton;
-	private Component InvitingList;
+	private JList<String> InvitingList;
+	private JButton confirmButton;
+	private JButton cancelButton;
 	private JButton addButton;
+	private AppScheduler parent;
+	
+	public InviteDialog(AppScheduler p)
+	{
+		this();
+		this.parent = p;
+	}
 	
 	public InviteDialog()
 	{
+		this.setSize(600, 300);
+		
 		setTitle("Invite other people");
 		addWindowListener(new WindowAdapter() 
 		{
@@ -93,7 +104,7 @@ public class InviteDialog extends JFrame implements ActionListener
 		JPanel listPanel2 = new JPanel();
 		Border lbp2 = new TitledBorder(null, "Inviting:");
 		listPanel2.setBorder(lbp2);
-		InvitingList = new JList<String>();
+		InvitingList = new JList<String>(InvitingListModel);
 		listPanel2.add(InvitingList);
 		Box right = Box.createVerticalBox();
 		right.add(listPanel2);
@@ -106,10 +117,10 @@ public class InviteDialog extends JFrame implements ActionListener
 		Box bottom = Box.createHorizontalBox();
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
-		exitButton = new JButton("Confirm");
-		exitButton.addActionListener(this);
+		confirmButton = new JButton("Confirm");
+		confirmButton.addActionListener(this);
 		bottom.add(cancelButton);
-		bottom.add(exitButton);
+		bottom.add(confirmButton);
 		
 		all.add(top);
 		all.add(bottom);
@@ -122,7 +133,25 @@ public class InviteDialog extends JFrame implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == confirmButton)
+		{
+			//TODO store the list to parent.(some where)
+		}
+		else if (e.getSource() == cancelButton)
+		{
+			if (JOptionPane.showConfirmDialog(this, "Dispost all data?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0)
+			{
+				setVisible(false);
+				dispose();
+			}
+		}
+		else if (e.getSource() == addButton)
+		{
+			//TODO move things from UserList to InvitingList
+			InvitingListModel.addElement(UserList.getSelectedValue().toString());
+			UserListModel.removeElementAt(UserList.getSelectedIndex());
+			this.pack();
+		}
 		
 	}
 	
