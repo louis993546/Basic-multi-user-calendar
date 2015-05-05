@@ -122,7 +122,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		parent = cal;
-		this.setAlwaysOnTop(true);
+		this.setAlwaysOnTop(false);
 		setTitle(title);
 		setModal(false);
 		ldb = new LocationDB();
@@ -362,10 +362,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	public void actionPerformed(ActionEvent e) {
 		// distinguish which button is clicked and continue with require function
-		if (e.getSource() == CancelBut) {
+		if (e.getSource() == CancelBut) 
+		{
 			setVisible(false);
 			dispose();
-		} else if (e.getSource() == saveBut) {
+		} else if (e.getSource() == saveBut) 
+		{
 			try {
 				if(saveButtonResponse()==true){ //mean data of new appointment is valid
 					setVisible(false);
@@ -376,14 +378,21 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				e1.printStackTrace();
 			}
 
-		} else if (e.getSource() == rejectBut){
-			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0){
+		} else if (e.getSource() == rejectBut)
+		{
+			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0)
+			{
 				NewAppt.addReject(getCurrentUser());
 				NewAppt.getAttendList().remove(getCurrentUser());
 				NewAppt.getWaitingList().remove(getCurrentUser());
 				this.setVisible(false);
 				dispose();
 			}
+		}
+		else if (e.getSource() == inviteBut)
+		{
+			//TODO 
+			InviteDialog id = new InviteDialog();
 		}
 		parent.getAppList().clear();
 		parent.getAppList().setTodayAppt(parent.GetTodayAppt());
