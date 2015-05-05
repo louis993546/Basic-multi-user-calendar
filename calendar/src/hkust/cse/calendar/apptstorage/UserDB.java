@@ -229,7 +229,7 @@ public class UserDB
 		}
 	}
 
-	public int getUserID(String string) {
+	public int getUserUID(String string) {
 		try
 		{
 			ArrayList<User> userAL = new ArrayList<User>();

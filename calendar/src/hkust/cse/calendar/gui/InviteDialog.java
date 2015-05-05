@@ -136,6 +136,16 @@ public class InviteDialog extends JFrame implements ActionListener
 		if (e.getSource() == confirmButton)
 		{
 			//TODO store the list to parent.(some where)
+			//turn InvitingList into an array of uids
+			ArrayList<Integer> InvitingListUID = new ArrayList<Integer>();
+			int ilmSize = InvitingListModel.getSize();
+			for (int i = 0; i<ilmSize; i++)
+			{
+				parent.addToInvitingList(udb.getUserUID(InvitingListModel.get(i).toString()));
+			}
+			JOptionPane.showMessageDialog(this, "Please continue creating appointment.");
+			setVisible(false);
+			dispose();
 		}
 		else if (e.getSource() == cancelButton)
 		{

@@ -119,6 +119,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private LocationDB ldb;
 	private ApptDB adb;
+	
+	private ArrayList<Integer> GoingUIDAL;
+	private ArrayList<Integer> InvitingUIDAL;
 
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		parent = cal;
@@ -127,6 +130,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		setModal(false);
 		ldb = new LocationDB();
 		locationAL = ldb.getLocationList();
+		GoingUIDAL = new ArrayList<Integer>();
+		InvitingUIDAL = new ArrayList<Integer>();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -861,6 +866,18 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO invitation and stuff like that in phrase 2
 	}
 
+	public boolean addToGoingList(Integer u)
+	{
+		GoingUIDAL.add(u);
+		return true;
+	}
+	
+	public boolean addToInvitingList(Integer u)
+	{
+		InvitingUIDAL.add(u);
+		return true;
+	}
+	
 	public void componentHidden(ComponentEvent e) {
 		// TODO I have no idea
 	}
