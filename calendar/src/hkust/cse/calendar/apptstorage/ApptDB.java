@@ -46,6 +46,8 @@ public class ApptDB {
 	          " REMINDER_UNIT        INT                NOT NULL," +
 	          " USER                 INT                NOT NULL," + 
 	          " ARW                  TEXT               NOT NULL)";
+	    		//GOING TEXT (can be null)
+	    		//WAITING TEXT (can be null)
 	      stmt.executeUpdate(sql);
 	    } catch (Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -53,22 +55,8 @@ public class ApptDB {
 	    }
 	  }
     
-    public boolean addARW(Appointment a)
-    {
-    	try {
-			stmt = c.createStatement();
-			sql = "INSERT INTO ";
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-    	
-    }
-    
     public boolean addAppt(Appointment a)
 	{
-    	//TODO add iff no time conflict
-    	
 		try {
 			stmt = c.createStatement();
 			SimpleDateFormat dtSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -92,6 +80,7 @@ public class ApptDB {
 				+ "REMINDER, "
 				+ "REMINDER_TIME, "
 				+ "REMINDER_UNIT, USER, ARW) " +
+				//"REMINDER_UNIT, USER, GOING, WAITING) " +
 					"VALUES ('" 
 				+ a.getTitle() + "','" 
 				+ a.getDescription() + "','" 
@@ -110,22 +99,11 @@ public class ApptDB {
 				+ a.getReminderTime() + "," 
 				+ a.getReminderUnit() + "," 
 				+ a.getCreaterID() + "," 
-				+ dt + ");";
+				//+a.getGoingString() + ","
+				//+a.getWaitingString() + ","
+				+ dt //TODO remove this once Going and Waiting list are done 
+				+ ");";
 			stmt.executeUpdate(sql);
-			//create 1 new table with 3 columns
-			
-//			java.sql.SQLException: near "1967676291": syntax error
-//			CREATE TABLE IF NOT EXISTS 1967676291 (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  ATTEND TEXT,  REJECT TEXT,  WAITING TEXT)
-//			java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (near "1967676291": syntax error)
-
-//			System.out.println(dt);
-//			sql = "CREATE TABLE IF NOT EXISTS " + dt + 
-//					" (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-//					"  ATTEND TEXT," +
-//					"  REJECT TEXT," +
-//					"  WAITING TEXT)";
-//			System.out.println(sql);
-//			stmt.executeUpdate(sql);
 			return true;
 		}
 		catch (SQLException sqle) {
@@ -133,37 +111,6 @@ public class ApptDB {
 		}
 		return false;
 	}
-    
-    public LinkedList<LinkedList<String>> getARWList(String name)
-    {
-    	LinkedList<String> aal = new LinkedList<String>();
-    	LinkedList<String> ral = new LinkedList<String>();
-    	LinkedList<String> wal = new LinkedList<String>();
-    	try
-    	{
-    		stmt = c.createStatement();
-    		rs = stmt.executeQuery("SELECT * FROM " + name + ";");
-    		while (rs.next())
-    		{
-    			String attend = rs.getString("ATTEND");
-    			String reject = rs.getString("REJECT");
-    			String waiting = rs.getString("WAITING");
-				aal.add(attend);
-				ral.add(reject);
-				wal.add(waiting);
-    		}
-    		LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
-    		arwList.add(aal);
-    		arwList.add(ral);
-    		arwList.add(wal);
-    		return arwList;
-    	}
-    	catch (SQLException e)
-    	{
-    		System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-    		return null;
-    	}
-    }
     
 	public ArrayList<Appointment> getAppointmentList() {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
@@ -188,6 +135,8 @@ public class ApptDB {
 	        int REMINDER_UNIT;
 	        int USER;
 	        String ARW = "";
+	        String GOING;
+	        String WAITING;
 	        int ID;
 	        ArrayList<String> attend = new ArrayList<String>();
 	        ArrayList<String> reject = new ArrayList<String>();
@@ -272,6 +221,8 @@ public class ApptDB {
 		    int REMINDER_TIME;
 		    int REMINDER_UNIT;
 		    String ARW = "";
+		    String GOING = "";
+		    String WAITING = "";
 		    int createrID;
 		    int ID;
 		    ArrayList<String> attend = new ArrayList<String>();
@@ -311,12 +262,13 @@ public class ApptDB {
 				//remove these codes once bug in addAppt has been fixed
 				//How-to: serialize the 3 lists
 				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
+				LinkedList<String> goingList = StringToLinkedList(GOING);
+				LinkedList<String> waitingList = StringToLinkedList(WAITING);
 				arwList.add(new LinkedList<String>());
 				arwList.add(new LinkedList<String>());
 				arwList.add(new LinkedList<String>());
-//				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
 				
-				//TODO [Phrase 2] extract the 3 lists from arwList
+				//TODO [Phrase 2] extract the 2 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID, createrID);
 				temp.add(tempAppointment);
 		    }
@@ -339,11 +291,20 @@ public class ApptDB {
 	
 	public String LinkedListToString(LinkedList<String> list)
 	{
-		return null;
+		//Syntax: each UID will be deperated with a "/" symbol
+		//e.g. String listS = "/1/3/7/9/12";
+		String op = "/";
+		for (String a:list)
+		{
+			op = op + a + "/";
+		}
+		return op;
 	}
 	
 	public LinkedList<String> StringToLinkedList(String listS)
 	{
+		//Syntax: each UID will be deperated with a "/" symbol
+		//e.g. String listS = "/1/3/7/9/12";
 		return null;
 	}
 	
@@ -422,9 +383,6 @@ public class ApptDB {
 					+ "END_TIME_YEAR='" + a.getEndYear()
 					+ "END_TIME_MONTH='" + a.getEndMonth()
 					+ "END_TIME_DAY='" + a.getEndDay()
-					+ "REMINDER='" + a.getReminder()
-					+ "REMINDER_TIME='" + a.getReminderTime()
-					+ "REMINDER_UNIT='" + a.getReminderUnit()
 					+ "';");
 			while (rs.next()) {
 				int ans = rs.getInt("ID");
@@ -467,8 +425,6 @@ public class ApptDB {
 		    return -2;
 		}
 	}
-	
-	
 	
 	public boolean deleteAppt(int id)
 	{
