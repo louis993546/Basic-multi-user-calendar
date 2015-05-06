@@ -1,5 +1,3 @@
-# I just reset gitignore. I will add things back bit by bit asap
-
 # Things will NOT be be ignore
 !eclipse/
 !Sources/
@@ -14,6 +12,8 @@ $RECYCLE.BIN/
 *.jar
 calendar/appt.db
 calendar/location.db
+calendar/user.db
+*.class
 
 # From online sources
 *.pydevproject
