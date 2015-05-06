@@ -527,7 +527,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	@SuppressWarnings("deprecation")
 	private boolean saveButtonResponse() throws SQLException {
-		// TODO unfinished save button
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
 		int[] endDate = null;
 		if (startDate != null)
@@ -588,8 +587,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		//The id is 12 because the id cannot be known until sql give it a proper id number
-//		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, temp, temp, 12);
-		//TODO need to provide a createrID
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, temp, temp, 12, parent.getCurrentUserID());
 		TimeSpan wholeDay=new TimeSpan(startDate[0], startDate[1],	startDate[2], 0, 0, 23, 59);
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
@@ -832,7 +829,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void updateSetApp(Appt appt) {
-		// TODO set TF/CB/etc of this AppScheduler
 		sTimeH.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getStartHour()));
 		sTimeM.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getStartMin()));
 		
@@ -849,11 +845,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		monthSF.setSelectedItem("" + appt.getAppointment().getStartMonth());
 		daySF.setText(""+appt.getAppointment().getStartDay());
 		
-//		yearEF.setText("" + appt.getAppointment().getEndYear());
-//		monthEF.setSelectedItem("" + appt.getAppointment().getEndMonth());
-//		dayEF.setText(""+appt.getAppointment().getEndDay());
-		
-		//TODO not all have been implemented
 		reminderCB.setSelectedItem("" + appt.getAppointment().getReminderUnit());
 		reminderTF.setText(""+appt.getAppointment().getReminderTime());
 		boolean apptR;

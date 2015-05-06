@@ -74,8 +74,8 @@ public class ApptListDialog extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == delete)
 		{
-			Appointment tempAppt = new Appointment(); //not done
-//			int id = adb.getApptID(tempAppt);
+			//TODO this is not safe!!!
+			//multiple appointments can have the same name!!
 			int id = adb.getApptIDByTitle(apptList.getSelectedValue().toString());
 			if ((id != 0) || (id != -1)) {
 				adb.deleteAppt(id);

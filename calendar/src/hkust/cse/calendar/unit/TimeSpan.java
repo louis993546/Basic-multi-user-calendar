@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /* This class represents the time span between two points of time */
-public class TimeSpan implements Serializable {
+public class TimeSpan{
 	/* The starting time of the time span */
 	private Timestamp mStartTime;
 	/* The ending time of the time span */

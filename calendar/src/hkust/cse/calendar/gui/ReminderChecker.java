@@ -2,13 +2,10 @@ package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.unit.Reminder;
 import hkust.cse.calendar.unit.TimeMachine;
-
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JOptionPane;
 
 public class ReminderChecker {

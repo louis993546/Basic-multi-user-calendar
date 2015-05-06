@@ -1,7 +1,5 @@
 package hkust.cse.calendar.unit;
 
-import java.io.Serializable;
-
 public class User{
 
 	private int mID;						// Unique user ID

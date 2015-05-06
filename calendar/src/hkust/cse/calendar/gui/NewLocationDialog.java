@@ -1,6 +1,5 @@
 package hkust.cse.calendar.gui;
 
-import hkust.cse.calendar.gui.Utility;
 import hkust.cse.calendar.apptstorage.LocationDB;
 
 import java.awt.Container;
