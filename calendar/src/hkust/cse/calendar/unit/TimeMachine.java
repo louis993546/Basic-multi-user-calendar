@@ -1,27 +1,7 @@
 package hkust.cse.calendar.unit;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import javax.swing.Timer;
-
-
-
-
-
-
-import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
-import hkust.cse.calendar.apptstorage.ApptStorageNullImpl;
 import hkust.cse.calendar.gui.CalGrid;
-import hkust.cse.calendar.unit.TimeSpan;
-
-import java.sql.Timestamp;
-import java.util.Date;
-
-
 
 public class TimeMachine {
 	//private GregorianCalendar mToday;
@@ -64,15 +44,14 @@ public class TimeMachine {
 		
 		//date() -> gettime
 		java.util.Date date= new java.util.Date();
-		long now=date.getTime();
+		long now = date.getTime();
 		
-		offset=endtime-now;
+		offset = endtime - now;
 		
 		this.cg.today.setTime(this.getTMTimestamp());
-		this.cg.UpdateCal();
-
-		
+		this.cg.UpdateCal();		
 	}
+
 //	public String toString(){
 //		return "Time of TM : " + this.getTMTimestamp().getYear()+ "/"+
 //				(this.getTMTimestamp().getMonth()+1) +"/"+

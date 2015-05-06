@@ -15,6 +15,7 @@ public class LocationDB {
 	Statement stmt = null;
 	String sql = null;
 
+	//TODO can change to singleton
 	public LocationDB() {
 		try {
 			Class.forName("org.sqlite.JDBC");

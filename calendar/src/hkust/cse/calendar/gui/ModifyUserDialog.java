@@ -83,33 +83,32 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == deleteButton) {
-			int id = udb.getUserID(UserList.getSelectedValue()
-					.toString());
-			if ((id != 0) || (id != -1)) {
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (e.getSource() == deleteButton) 
+		{
+			int id = udb.getUserUID(UserList.getSelectedValue().toString());
+			if ((id != 0) || (id != -1))
+			{
 				udb.deleteUser(id);
-				UserListModel.removeElementAt(UserList
-						.getSelectedIndex());
+				UserListModel.removeElementAt(UserList.getSelectedIndex());
 			}
-		} else if (e.getSource() == modifyButton) {
-			// TODO modify button
-			// new GUI
-			// load string into that GUI
-			// call update method in UserDB
-			// TODO User needs ID field
-			
-			int uid = udb.getUserID(UserList.getSelectedValue()
+		} else if (e.getSource() == modifyButton) 
+		{
+			int uid = udb.getUserUID(UserList.getSelectedValue()
 					.toString());
-			if ((uid != 0) || (uid != -1)) {
+			if ((uid != 0) || (uid != -1))
+			{
 				//udb.deleteUser(uid);
 				UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(uid);
 				dispose();
 			}
 
-		} else if (e.getSource() == exitButton) {
+		} else if (e.getSource() == exitButton) 
+		{
 			dispose();
-		} else {
+		} else 
+		{
 			System.out.println("Something's wrong");
 		}
 	}

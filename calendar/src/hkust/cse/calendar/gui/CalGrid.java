@@ -579,8 +579,12 @@ public class CalGrid extends JFrame implements ActionListener {
 			GetMonthAppts();
 
 			for (int i = 0; i < 6; i++)
+			{
 				for (int j = 0; j < 7; j++)
+				{
 					apptMarker[i][j] = new Vector(10, 1);
+				}
+			}
 
 			TableModel t = prepareTableModel();
 			this.tableView.setModel(t);

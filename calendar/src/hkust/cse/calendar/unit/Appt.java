@@ -11,7 +11,8 @@ package hkust.cse.calendar.unit;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Appt implements Serializable {
+public class Appt
+{
 
 	private Appointment a;
 

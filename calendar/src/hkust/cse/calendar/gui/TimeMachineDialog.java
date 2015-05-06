@@ -1,7 +1,5 @@
 package hkust.cse.calendar.gui;
 
-import hkust.cse.calendar.unit.TimeMachine;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -47,13 +45,6 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	public TimeMachineDialog(CalGrid grid){
 		cal = grid;
 		
-		//today = TimeMachine.getInstance().getMToday(); 
-		//date[0] = today.get(Calendar.YEAR);
-		//date[1] = today.get(today.MONTH) + 1;
-		//date[2] = today.get(today.DAY_OF_MONTH);
-		//time[0] = 0;
-		//time[1] = 0;
-		//time[2] = 0;
 		today=cal.timeMachine.getTMTimestamp();//??
 		date[0] = today.getYear()+ 1900;
 		date[1] = today.getMonth() + 1 - 1;

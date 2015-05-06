@@ -14,10 +14,10 @@ import javax.swing.JOptionPane;
 public class UserDB 
 {
 	
-	Connection c = null;
-    Statement stmt = null;
-    String sql = null;
-    ResultSet rs = null;
+	private Connection c = null;
+	private Statement stmt = null;
+	private String sql = null;
+	private ResultSet rs = null;
 
 	public UserDB()
 	{
@@ -229,7 +229,7 @@ public class UserDB
 		}
 	}
 
-	public int getUserID(String string) {
+	public int getUserUID(String string) {
 		try
 		{
 			ArrayList<User> userAL = new ArrayList<User>();

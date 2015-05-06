@@ -306,13 +306,16 @@ public class ApptDB {
 				ARW = rs.getString("ARW");
 				createrID = rs.getInt("USER");
 				ID = rs.getInt("ID");
-				//TODO these 4 lines are just temporary
+				
+				//TODO these codes are temporary
 				//remove these codes once bug in addAppt has been fixed
+				//How-to: serialize the 3 lists
 				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
 				arwList.add(new LinkedList<String>());
 				arwList.add(new LinkedList<String>());
 				arwList.add(new LinkedList<String>());
-//						LinkedList<LinkedList<String>> arwList = getARWList(ARW);
+//				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
+				
 				//TODO [Phrase 2] extract the 3 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID, createrID);
 				temp.add(tempAppointment);
@@ -330,6 +333,50 @@ public class ApptDB {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
 		return null;
+	}
+	
+	//TODO we will need a lot of methods for the 2 lists
+	
+	public String LinkedListToString(LinkedList<String> list)
+	{
+		return null;
+	}
+	
+	public LinkedList<String> StringToLinkedList(String listS)
+	{
+		return null;
+	}
+	
+	public boolean IsHeInWaitingList(int apptID, int uid)
+	{
+		//TODO check if someone(uid) exists in an specific appointment(apptID)'s waiting list
+		return false;
+	}
+	
+	public boolean AddToWaitingList(int apptID, int uid)
+	{
+		return false;
+	}
+	
+	public boolean RemoveFromWaitingList(int apptID, int uid)
+	{
+		return false;
+	}
+	
+	public boolean IsHeInGoingList(int apptID, int uid)
+	{
+		//TODO check if someone(uid) exists in an specific appointment(apptID)'s going list
+		return false;
+	}
+	
+	public boolean AddToGoingList(int apptID, int uid)
+	{
+		return false;
+	}
+	
+	public boolean RemoveFromGoingList(int apptID, int uid)
+	{
+		return false;
 	}
 	
 	public Appt getApptByJID(int j)

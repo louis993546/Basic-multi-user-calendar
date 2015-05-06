@@ -119,14 +119,19 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	private LocationDB ldb;
 	private ApptDB adb;
+	
+	private ArrayList<Integer> GoingUIDAL;
+	private ArrayList<Integer> InvitingUIDAL;
 
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		parent = cal;
-		this.setAlwaysOnTop(true);
+		this.setAlwaysOnTop(false);
 		setTitle(title);
 		setModal(false);
 		ldb = new LocationDB();
 		locationAL = ldb.getLocationList();
+		GoingUIDAL = new ArrayList<Integer>();
+		InvitingUIDAL = new ArrayList<Integer>();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -362,10 +367,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	public void actionPerformed(ActionEvent e) {
 		// distinguish which button is clicked and continue with require function
-		if (e.getSource() == CancelBut) {
+		if (e.getSource() == CancelBut) 
+		{
 			setVisible(false);
 			dispose();
-		} else if (e.getSource() == saveBut) {
+		} else if (e.getSource() == saveBut) 
+		{
 			try {
 				if(saveButtonResponse()==true){ //mean data of new appointment is valid
 					setVisible(false);
@@ -376,14 +383,20 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				e1.printStackTrace();
 			}
 
-		} else if (e.getSource() == rejectBut){
-			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0){
+		} else if (e.getSource() == rejectBut)
+		{
+			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0)
+			{
 				NewAppt.addReject(getCurrentUser());
 				NewAppt.getAttendList().remove(getCurrentUser());
 				NewAppt.getWaitingList().remove(getCurrentUser());
 				this.setVisible(false);
 				dispose();
 			}
+		}
+		else if (e.getSource() == inviteBut)
+		{
+			InviteDialog id = new InviteDialog(this);
 		}
 		parent.getAppList().clear();
 		parent.getAppList().setTodayAppt(parent.GetTodayAppt());
@@ -514,7 +527,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	@SuppressWarnings("deprecation")
 	private boolean saveButtonResponse() throws SQLException {
-		// TODO unfinished save button
 		int[] startDate = getValidDate(yearSF, monthSF, daySF);
 		int[] endDate = null;
 		if (startDate != null)
@@ -575,8 +587,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO currently it provide 3 empty linkedlist
 		LinkedList<String> temp = new LinkedList<String>();
 		//The id is 12 because the id cannot be known until sql give it a proper id number
-//		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, temp, temp, 12);
-		//TODO need to provide a createrID
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, temp, temp, 12, parent.getCurrentUserID());
 		TimeSpan wholeDay=new TimeSpan(startDate[0], startDate[1],	startDate[2], 0, 0, 23, 59);
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
@@ -819,7 +829,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	}
 
 	public void updateSetApp(Appt appt) {
-		// TODO set TF/CB/etc of this AppScheduler
 		sTimeH.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getStartHour()));
 		sTimeM.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getStartMin()));
 		
@@ -836,11 +845,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		monthSF.setSelectedItem("" + appt.getAppointment().getStartMonth());
 		daySF.setText(""+appt.getAppointment().getStartDay());
 		
-//		yearEF.setText("" + appt.getAppointment().getEndYear());
-//		monthEF.setSelectedItem("" + appt.getAppointment().getEndMonth());
-//		dayEF.setText(""+appt.getAppointment().getEndDay());
-		
-		//TODO not all have been implemented
 		reminderCB.setSelectedItem("" + appt.getAppointment().getReminderUnit());
 		reminderTF.setText(""+appt.getAppointment().getReminderTime());
 		boolean apptR;
@@ -853,6 +857,18 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO invitation and stuff like that in phrase 2
 	}
 
+	public boolean addToGoingList(Integer u)
+	{
+		GoingUIDAL.add(u);
+		return true;
+	}
+	
+	public boolean addToInvitingList(Integer u)
+	{
+		InvitingUIDAL.add(u);
+		return true;
+	}
+	
 	public void componentHidden(ComponentEvent e) {
 		// TODO I have no idea
 	}
