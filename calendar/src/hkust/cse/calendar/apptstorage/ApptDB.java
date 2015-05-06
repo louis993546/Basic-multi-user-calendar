@@ -337,16 +337,46 @@ public class ApptDB {
 	
 	//TODO we will need a lot of methods for the 2 lists
 	
-	public ArrayList<Integer> IsHeInWaitingList(int apptID, int uid)
+	public String LinkedListToString(LinkedList<String> list)
 	{
-		//TODO check if someone(uid) exists in an specific appointment(apptID)'s waiting list
 		return null;
 	}
 	
-	public ArrayList<Integer> IsHeInGoingList(int apptID, int uid)
+	public LinkedList<String> StringToLinkedList(String listS)
+	{
+		return null;
+	}
+	
+	public boolean IsHeInWaitingList(int apptID, int uid)
+	{
+		//TODO check if someone(uid) exists in an specific appointment(apptID)'s waiting list
+		return false;
+	}
+	
+	public boolean AddToWaitingList(int apptID, int uid)
+	{
+		return false;
+	}
+	
+	public boolean RemoveFromWaitingList(int apptID, int uid)
+	{
+		return false;
+	}
+	
+	public boolean IsHeInGoingList(int apptID, int uid)
 	{
 		//TODO check if someone(uid) exists in an specific appointment(apptID)'s going list
-		return null;
+		return false;
+	}
+	
+	public boolean AddToGoingList(int apptID, int uid)
+	{
+		return false;
+	}
+	
+	public boolean RemoveFromGoingList(int apptID, int uid)
+	{
+		return false;
 	}
 	
 	public Appt getApptByJID(int j)
