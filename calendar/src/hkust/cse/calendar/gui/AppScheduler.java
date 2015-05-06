@@ -387,7 +387,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		{
 			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0)
 			{
-				NewAppt.addReject(getCurrentUser());
+//				NewAppt.addReject(getCurrentUser());
 				NewAppt.getAttendList().remove(getCurrentUser());
 				NewAppt.getWaitingList().remove(getCurrentUser());
 				this.setVisible(false);

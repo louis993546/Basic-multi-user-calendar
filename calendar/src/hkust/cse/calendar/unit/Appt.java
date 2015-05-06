@@ -61,41 +61,41 @@ public class Appt
 
 	// Getter of the attend LinkedList<String>
 	public LinkedList<String> getAttendList(){
-		return a.getAttend();
+		return a.getGoingList();
 	}
 
 	// Getter of the reject LinkedList<String>
-	public LinkedList<String> getRejectList(){
-		return a.getReject();
-	}
+//	public LinkedList<String> getRejectList(){
+//		return a.getReject();
+//	}
 
 	// Getter of the waiting LinkedList<String>
 	public LinkedList<String> getWaitingList(){
-		return a.getWaiting();
+		return a.getWaitingList();
 	}
 
 	public LinkedList<String> getAllPeople(){
 		LinkedList<String> allList = new LinkedList<String>();
 		allList.addAll(getAttendList());
-		allList.addAll(getRejectList());
+//		allList.addAll(getRejectList());
 		allList.addAll(getWaitingList());
 		return allList;
 	}
 
 	public void addAttendant(String addID){
-		if (a.getAttend() == null)
+		if (a.getGoingList() == null)
 			a.initiateAttend();
 		a.addToAttend(addID);
 	}
 
-	public void addReject(String addID){
-		if (a.getReject() == null)
-			a.initiateReject();
-		a.addToReject(addID);
-	}
+//	public void addReject(String addID){
+//		if (a.getReject() == null)
+//			a.initiateReject();
+//		a.addToReject(addID);
+//	}
 
 	public void addWaiting(String addID){
-		if (a.getWaiting() == null)
+		if (a.getWaitingList() == null)
 			a.initiateWaiting();
 		a.addWaiting(addID);
 	}
@@ -114,19 +114,19 @@ public class Appt
 		a.setWaiting(tempLinkedList);
 	}
 
-	public void setRejectList(LinkedList<String> rejectLinkedList) {
-		a.setReject(rejectLinkedList);
-	}
+//	public void setRejectList(LinkedList<String> rejectLinkedList) {
+//		a.setReject(rejectLinkedList);
+//	}
 
-	public void setRejectList(String[] rejectList){
-		LinkedList<String> tempLinkedList = new LinkedList<String>();
-		if (rejectList !=null){
-			for (int a=0; a<rejectList.length; a++){
-				tempLinkedList.add(rejectList[a].trim());
-			}
-		}
-		a.setReject(tempLinkedList);
-	}
+//	public void setRejectList(String[] rejectList){
+//		LinkedList<String> tempLinkedList = new LinkedList<String>();
+//		if (rejectList !=null){
+//			for (int a=0; a<rejectList.length; a++){
+//				tempLinkedList.add(rejectList[a].trim());
+//			}
+//		}
+//		a.setReject(tempLinkedList);
+//	}
 
 	public void setAttendList(LinkedList<String> attendLinkedList) {
 		a.setAttend(attendLinkedList);

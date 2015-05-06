@@ -31,8 +31,8 @@ public class Appointment implements Comparable<Appointment> {
 	private int reminder;
 	private int reminderTime;
 	private int reminderUnit;
-	private LinkedList<String> attend;
-	private LinkedList<String> reject;
+	private LinkedList<String> going;
+//	private LinkedList<String> reject;
 	private LinkedList<String> waiting;
 	private int id;
 	private int jid;
@@ -59,8 +59,8 @@ public class Appointment implements Comparable<Appointment> {
 		reminder = r;
 		reminderTime = rt;
 		reminderUnit = ru;
-		attend = aal;
-		reject = ral;
+		going = aal;
+//		reject = ral;
 		waiting = wal;
 		id = i;
 	}
@@ -77,8 +77,8 @@ public class Appointment implements Comparable<Appointment> {
 		location = "";
 		id = 0;
 		jid = -1;
-		attend = new LinkedList<String>();
-		reject = new LinkedList<String>();
+		going = new LinkedList<String>();
+//		reject = new LinkedList<String>();
 		waiting = new LinkedList<String>();
 		//TODO not sure if time needs to be initiate
 	}
@@ -159,7 +159,7 @@ public class Appointment implements Comparable<Appointment> {
 
 	public boolean deleteFromAttend(String name)
 	{
-		if (attend.remove(name) == true)
+		if (going.remove(name) == true)
 		{
 			return true;
 		}
@@ -169,17 +169,17 @@ public class Appointment implements Comparable<Appointment> {
 		}
 	}
 
-	public boolean deleteFromReject(String name)
-	{
-		if (reject.remove(name) == true)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+//	public boolean deleteFromReject(String name)
+//	{
+//		if (reject.remove(name) == true)
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
 
 	public boolean deleteFromWaiting(String name)
 	{
@@ -197,7 +197,7 @@ public class Appointment implements Comparable<Appointment> {
 	{
 		if (waiting.remove(name) == true)
 		{
-			attend.add(name);
+			going.add(name);
 			return true;
 		}
 		else
@@ -206,30 +206,30 @@ public class Appointment implements Comparable<Appointment> {
 		}
 	}
 
-	public boolean waitingToReject(String name)
-	{
-		if (waiting.remove(name) == true)
-		{
-			reject.add(name);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+//	public boolean waitingToReject(String name)
+//	{
+//		if (waiting.remove(name) == true)
+//		{
+//			reject.add(name);
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
 
 	public boolean addToAttend(String name)
 	{
-		attend.add(name);
+		going.add(name);
 		return true;
 	}
 
-	public boolean addToReject(String name)
-	{
-		reject.add(name);
-		return true;
-	}
+//	public boolean addToReject(String name)
+//	{
+//		reject.add(name);
+//		return true;
+//	}
 
 	public boolean addWaiting(String name)
 	{
@@ -245,13 +245,13 @@ public class Appointment implements Comparable<Appointment> {
 
 	public void initiateAttend()
 	{
-		attend = new LinkedList<String>();
+		going = new LinkedList<String>();
 	}
 
-	public void initiateReject()
-	{
-		reject = new LinkedList<String>();
-	}
+//	public void initiateReject()
+//	{
+//		reject = new LinkedList<String>();
+//	}
 
 	public void initiateWaiting()
 	{
@@ -260,13 +260,13 @@ public class Appointment implements Comparable<Appointment> {
 
 	public void setAttend(LinkedList<String> a)
 	{
-		attend = a;
+		going = a;
 	}
 
-	public void setReject(LinkedList<String> r)
-	{
-		reject = r;
-	}
+//	public void setReject(LinkedList<String> r)
+//	{
+//		reject = r;
+//	}
 
 	public void setWaiting(LinkedList<String> w)
 	{
@@ -339,15 +339,15 @@ public class Appointment implements Comparable<Appointment> {
 		return reminderUnit;
 	}
 
-	public LinkedList<String> getAttend() {
-		return attend;
+	public LinkedList<String> getGoingList() {
+		return going;
 	}
 
-	public LinkedList<String> getReject() {
-		return reject;
-	}
+//	public LinkedList<String> getReject() {
+//		return reject;
+//	}
 
-	public LinkedList<String> getWaiting() {
+	public LinkedList<String> getWaitingList() {
 		return waiting;
 	}
 

@@ -292,8 +292,8 @@ public class ApptDB {
 	public String LinkedListToString(LinkedList<String> list)
 	{
 		//Syntax: each UID will be deperated with a "/" symbol
-		//e.g. String listS = "/1/3/7/9/12";
-		String op = "/";
+		//e.g. String listS = "1/3/7/9/12";
+		String op = "";
 		for (String a:list)
 		{
 			op = op + a + "/";
@@ -305,7 +305,16 @@ public class ApptDB {
 	{
 		//Syntax: each UID will be deperated with a "/" symbol
 		//e.g. String listS = "/1/3/7/9/12";
-		return null;
+		LinkedList<String> op = new LinkedList<String>();
+		int id;
+		int dash = listS.indexOf("/");
+		while (dash >= 0 )
+		{
+			id = Integer.parseInt(listS.substring(0, dash-1));
+			listS = listS.substring(dash+1);
+			dash = listS.indexOf("/");
+		}
+		return op;
 	}
 	
 	public boolean IsHeInWaitingList(int apptID, int uid)
@@ -314,29 +323,9 @@ public class ApptDB {
 		return false;
 	}
 	
-	public boolean AddToWaitingList(int apptID, int uid)
-	{
-		return false;
-	}
-	
-	public boolean RemoveFromWaitingList(int apptID, int uid)
-	{
-		return false;
-	}
-	
 	public boolean IsHeInGoingList(int apptID, int uid)
 	{
 		//TODO check if someone(uid) exists in an specific appointment(apptID)'s going list
-		return false;
-	}
-	
-	public boolean AddToGoingList(int apptID, int uid)
-	{
-		return false;
-	}
-	
-	public boolean RemoveFromGoingList(int apptID, int uid)
-	{
 		return false;
 	}
 	
@@ -464,7 +453,9 @@ public class ApptDB {
 	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
 	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
 	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
-	    		  + "  WHERE ID="                 + id
+	    		  + "  ,   GOING = "            + newAppt.getGoingList()
+	    		  + "  ,   WAITING = "          + newAppt.getWaitingList()
+	    		  + "  WHERE ID="               + id
 	    		  + ";";
 			stmt.executeUpdate(sql);
 
