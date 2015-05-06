@@ -42,12 +42,13 @@ public class ApptDB {
 	          " END_TIME_MONTH       INT                NOT NULL," +
 	          " END_TIME_DAY         INT                NOT NULL," +
 	          " REMINDER             INT                NOT NULL," +
-	          " REMINDER_TIME        INT                NOT NULL," +
-	          " REMINDER_UNIT        INT                NOT NULL," +
-	          " USER                 INT                NOT NULL," + 
+	          " REMINDER_TIME        INT                		," +
+	          " REMINDER_UNIT        INT                		," +
+	          " USER                 INT                NOT NULL," +
+	          " GOING				 TEXT						," +
+	          " WAITING				 TEXT						," +
 	          " ARW                  TEXT               NOT NULL)";
-	    		//GOING TEXT (can be null)
-	    		//WAITING TEXT (can be null)
+
 	      stmt.executeUpdate(sql);
 	    } catch (Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -466,5 +467,16 @@ public class ApptDB {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			return false;
 		}
+	}
+
+	//TODO not sure if these 2 functions will be useful
+	public ArrayList<Integer> getApptIDListFromGoing(int uid)
+	{
+		return null;
+	}
+	
+	public ArrayList<Integer> getApptIDListFromWaiting(int uid)
+	{
+		return null;
 	}
 }

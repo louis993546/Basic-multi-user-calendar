@@ -14,4 +14,5 @@
 	* Appointment will not be added unless all participants reply "Yes"
 		* i.e. Appointment will not exist if any invited user says no
 	* Only event creator can delete it
+* Intellengence
 * TBC
