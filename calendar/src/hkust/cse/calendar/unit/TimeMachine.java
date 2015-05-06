@@ -26,11 +26,18 @@ import java.util.Date;
 public class TimeMachine {
 	//private GregorianCalendar mToday;
 	//private Date timeAndDate;
-	private long offset; // unit ms
+	private static TimeMachine uniqueTimeMachine=new TimeMachine(); 
+	private long offset=0; // unit ms
 	private CalGrid cg;// 
-	public TimeMachine(CalGrid cg) {
-		offset=0;
-		this.cg=cg;
+	
+	private TimeMachine() {
+		//offset=0;
+		//this.cg=cg;
+	}
+	
+	public static TimeMachine getInstance(){
+		return uniqueTimeMachine;
+		
 	}
 	
 	public Timestamp getTMTimestamp() {
@@ -75,5 +82,13 @@ public class TimeMachine {
 //				this.getTMTimestamp().getSeconds();
 //	}
 //		System.out.println(month);
+
+	public CalGrid getCg() {
+		return cg;
+	}
+
+	public void setCg(CalGrid cg) {
+		this.cg = cg;
+	}
 	
 }

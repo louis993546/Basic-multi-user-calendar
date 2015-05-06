@@ -148,7 +148,8 @@ public class CalGrid extends JFrame implements ActionListener {
 		setJMenuBar(createMenuBar());
 
 		//today = new GregorianCalendar();
-		timeMachine = new TimeMachine(this);
+		timeMachine = TimeMachine.getInstance();//new TimeMachine(this);
+		timeMachine.setCg(this);
 		today = new GregorianCalendar();
 		today.setTime(timeMachine.getTMTimestamp());
 		currentY = today.get(Calendar.YEAR);

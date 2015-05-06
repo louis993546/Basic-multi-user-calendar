@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="false" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="hkust.cse.calendar.unit.Appointment" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/Appointment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2703" y="608"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="hkust.cse.calendar.unit.CheckReminder" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/CheckReminder.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2997" y="488"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="hkust.cse.calendar.gui.ModifyUserDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/ModifyUserDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3604" y="603"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="hkust.cse.calendar.gui.UpdateAccountInfoDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/UpdateAccountInfoDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3801" y="539"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="hkust.cse.calendar.gui.Utility" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/Utility.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2311" y="423"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="hkust.cse.calendar.gui.AppScheduler" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/AppScheduler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2790" y="386"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="hkust.cse.calendar.gui.NewLocationDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/NewLocationDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3708" y="396"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="hkust.cse.calendar.gui.CalGrid" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/CalGrid.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="95" x="3361" y="304"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="hkust.cse.calendar.unit.TimeMachine" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/TimeMachine.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3407" y="215"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="hkust.cse.calendar.apptstorage.MessageDB" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/MessageDB.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2460" y="423"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="hkust.cse.calendar.unit.Reminder" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/Reminder.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4247" y="655"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="hkust.cse.calendar.gui.ReminderChecker" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/ReminderChecker.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="211" x="3564" y="133"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="hkust.cse.calendar.unit.Message" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/Message.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2328" y="238"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="hkust.cse.calendar.apptstorage.UserDB" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/UserDB.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3555" y="770"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="hkust.cse.calendar.gui.NewUserDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/NewUserDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2178" y="318"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="hkust.cse.calendar.unit.Appt" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/Appt.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2501" y="789"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="hkust.cse.calendar.gui.ApptListDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/ApptListDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="180" x="2761" y="532"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="hkust.cse.calendar.unit.TimeInterval" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/TimeInterval.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2168" y="373"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="hkust.cse.calendar.apptstorage.ApptStorageNullImpl" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/ApptStorageNullImpl.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3152" y="687"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="hkust.cse.calendar.gui.TimeMachineDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/TimeMachineDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3111" y="250"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="hkust.cse.calendar.gui.AppCellRenderer" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/AppList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2457" y="474"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="hkust.cse.calendar.apptstorage.ApptDB" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/ApptDB.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2947" y="764"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="hkust.cse.calendar.gui.SignUpDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/SignUpDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="167" x="3971" y="532"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="hkust.cse.calendar.unit.TimeSpan" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/TimeSpan.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2587" y="373"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="hkust.cse.calendar.gui.DetailsDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/DetailsDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2565" y="243"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="hkust.cse.calendar.gui.ReminderChecker.ReminderAction" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/ReminderChecker.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4217" y="311"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="hkust.cse.calendar.apptstorage.ApptStorageControllerImpl" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/ApptStorageControllerImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="36" width="317" x="3023" y="380"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="hkust.cse.calendar.apptstorage.ApptStorage" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/ApptStorage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="35" width="149" x="3172" y="456"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="hkust.cse.calendar.gui.InviteDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/InviteDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="145" x="2940" y="133"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="hkust.cse.calendar.gui.LoginDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/LoginDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3927" y="628"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="hkust.cse.calendar.Main.CalendarMain" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/Main/CalendarMain.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="166" x="3125" y="133"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="hkust.cse.calendar.gui.CalCellRenderer" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/CalCellRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="193" x="3331" y="133"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="hkust.cse.calendar.gui.ModifyLocationDialog" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/ModifyLocationDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3827" y="470"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="hkust.cse.calendar.gui.AppList" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/gui/AppList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2721" y="254"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="hkust.cse.calendar.unit.User" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/unit/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3408" y="639"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="hkust.cse.calendar.apptstorage.LocationDB" project="calendar" 
+    file="/calendar/src/hkust/cse/calendar/apptstorage/LocationDB.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="36" width="143" x="3382" y="456"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <association id="37">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="38" name="udb"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <nesting id="40">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="26"/>  
+  </nesting>  
+  <association id="41">    
+    <bendpoint x="3573" y="228"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="42" name="rc"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="44">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="45" name="udb"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="47">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="48" name="Apptlist"/>      
+      <multiplicity id="49" minimum="0" maximum="2147483647">        
+        <position height="26" width="37" x="2432" y="717"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="50">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="51" name="mApptStorage"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="53">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="54" name="setAppDial"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="56">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="57" name="controller"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="59">    
+    <bendpoint x="2658" y="304"/>    
+    <bendpoint x="2658" y="380"/>    
+    <bendpoint x="2658" y="456"/>    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="60" name="selectedAppt"/>      
+      <multiplicity id="61" minimum="0" maximum="1">        
+        <position height="26" width="41" x="2641" y="788"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="62">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="63" name="applist"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="65">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="66" name="parent"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <bendpoint x="2700" y="456"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="69" name="tempAppt"/>      
+      <multiplicity id="70" minimum="0" maximum="1">        
+        <position height="26" width="41" x="2568" y="751"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="72" name="udb"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <bendpoint x="2742" y="456"/>    
+    <bendpoint x="2971" y="532"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="75" name="adb"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="78" name="parent"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <bendpoint x="2679" y="304"/>    
+    <bendpoint x="2679" y="380"/>    
+    <bendpoint x="2679" y="456"/>    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="81" name="todaylist"/>      
+      <multiplicity id="82" minimum="0" maximum="2147483647">        
+        <position height="26" width="37" x="2589" y="644"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="84" name="udb"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="87" name="adb"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="90" name="ldb"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <bendpoint x="3322" y="532"/>    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="93" name="defaultUser"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="96" name="defaultUser"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="99" name="reminderAL"/>      
+      <multiplicity id="100" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <bendpoint x="3370" y="380"/>    
+    <bendpoint x="3351" y="456"/>    
+    <bendpoint x="3343" y="532"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="102" name="mCurrUser"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <bendpoint x="3391" y="380"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="105" name="ldb"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="107">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="108" name="ldb"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="110">    
+    <bendpoint x="4378" y="228"/>    
+    <bendpoint x="4378" y="304"/>    
+    <bendpoint x="4378" y="380"/>    
+    <bendpoint x="4378" y="456"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="111" name="ral"/>      
+      <multiplicity id="112" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="114" name="udb"/>      
+      <multiplicity id="115" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="117" name="a"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="119">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="120" name="aal"/>      
+      <multiplicity id="121" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="122">    
+    <bendpoint x="3552" y="228"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="123" name="cg"/>      
+      <multiplicity id="124" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="125">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="126" name="cg"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="128">    
+    <bendpoint x="2992" y="380"/>    
+    <bendpoint x="2992" y="456"/>    
+    <bendpoint x="2992" y="532"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="129" name="adb"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="131">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="132" name="adb"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="134">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="135" name="ldb"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="137">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <association id="138">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="139" name="timeM"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <bendpoint x="4357" y="380"/>    
+    <bendpoint x="4357" y="456"/>    
+    <bendpoint x="4357" y="532"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="142" name="udb"/>      
+      <multiplicity id="143" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="144">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="145" name="cal"/>      
+      <multiplicity id="146" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="147">    
+    <bendpoint x="2721" y="456"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="148" name="NewAppt"/>      
+      <multiplicity id="149" minimum="0" maximum="1">        
+        <position height="26" width="41" x="2591" y="706"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="150">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="151" name="timeMachine"/>      
+      <multiplicity id="152" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="153">    
+    <bendpoint x="3013" y="532"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="154" name="mCurrUser"/>      
+      <multiplicity id="155" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="156">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="157" name="mAppts"/>      
+      <multiplicity id="158" minimum="0" maximum="2147483647">        
+        <position height="26" width="37" x="2509" y="682"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="false" package="false" initial-value="true" signature="false" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="true"/>
+</class-diagram>
