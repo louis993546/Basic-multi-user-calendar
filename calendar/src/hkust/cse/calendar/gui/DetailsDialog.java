@@ -110,7 +110,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 				area.append("  " + attendList.get(i));
 			}
 		}
-		area.append("\n\n  Reject:");
+//		area.append("\n\n  Reject:");
 //		LinkedList<String> rejectList = appt.getRejectList();
 //		if(rejectList != null)
 //		{

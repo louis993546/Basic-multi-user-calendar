@@ -39,10 +39,34 @@ public class Appointment implements Comparable<Appointment> {
 	private boolean isJoint;
 	private int createrID;
 
-	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
-	private Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal, LinkedList<Integer> wal, int i) {
-		//TODO create unique id for each appointment upon creation
-		//TODO initiate creater
+//	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
+//	private Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal, LinkedList<Integer> wal, int i) {
+//		//TODO create unique id for each appointment upon creation
+//		//TODO initiate creater
+//		title = t;
+//		description = d;
+//		location = l;
+//		startHour = shr;
+//		startMin = smin;
+//		startYear = syr;
+//		startMonth = smon;
+//		startDay = sday;
+//		endHour = ehr;
+//		endMin = emin;
+//		endYear = eyr;
+//		endMonth = emon;
+//		endDay = eday;
+//		reminder = r;
+//		reminderTime = rt;
+//		reminderUnit = ru;
+//		going = aal;
+////		reject = ral;
+//		waiting = wal;
+//		id = i;
+//	}
+
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal,  LinkedList<Integer> wal, int i, int uid) 
+	{
 		title = t;
 		description = d;
 		location = l;
@@ -60,14 +84,8 @@ public class Appointment implements Comparable<Appointment> {
 		reminderTime = rt;
 		reminderUnit = ru;
 		going = aal;
-//		reject = ral;
 		waiting = wal;
 		id = i;
-	}
-
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal,  LinkedList<Integer> wal, int i, int uid) 
-	{
-		this(t,d,l,shr,smin,syr,smon,sday,ehr,emin,eyr,emon,eday,r,rt,ru,aal,wal,i);
 		createrID = uid;
 	}
 	
@@ -341,7 +359,7 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public LinkedList<Integer> getGoingList() {
-		
+		System.out.println("going");
 		return going;
 	}
 

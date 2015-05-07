@@ -46,8 +46,7 @@ public class ApptDB {
 	          " REMINDER_UNIT        INT                		," +
 	          " USER                 INT                NOT NULL," +
 	          " GOING				 TEXT						," +
-	          " WAITING				 TEXT						," +
-	          " ARW                  TEXT               NOT NULL)";
+	          " WAITING                  TEXT               )";
 	      stmt.executeUpdate(sql);
 	    } catch (Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -59,10 +58,9 @@ public class ApptDB {
 	{
 		try {
 			stmt = c.createStatement();
-			SimpleDateFormat dtSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-			String dt = dtSDF.toString();
-			dt = dt + a.getTitle();
-			dt = "" + dt.hashCode();
+			System.out.println(LinkedListToString(a.getGoingList()));
+			System.out.println(LinkedListToString(a.getWaitingList()));
+			
 			sql = "INSERT INTO APPOINTMENT ("
 				+ "TITLE, "
 				+ "DESCRIPTION, "
@@ -79,7 +77,10 @@ public class ApptDB {
 				+ "END_TIME_DAY, "
 				+ "REMINDER, "
 				+ "REMINDER_TIME, "
-				+ "REMINDER_UNIT, USER, GOING, WAITING) " +
+				+ "REMINDER_UNIT, "
+				+ "USER, "
+				+ "GOING, " 
+				+ "WAITING) " +
 					"VALUES ('" 
 				+ a.getTitle() + "','" 
 				+ a.getDescription() + "','" 
@@ -97,10 +98,10 @@ public class ApptDB {
 				+ a.getReminder() + "," 
 				+ a.getReminderTime() + "," 
 				+ a.getReminderUnit() + "," 
-				+ a.getCreaterID() + "," 
-				+ LinkedListToString(a.getGoingList()) + ","
-				+ LinkedListToString(a.getWaitingList()) + ","
-				+ ");";
+				+ a.getCreaterID() + ",'" 
+				+ LinkedListToString(a.getGoingList()) + "','"
+				+ LinkedListToString(a.getWaitingList()) + "');";
+			System.out.println(sql);
 			stmt.executeUpdate(sql);
 			return true;
 		}
@@ -221,7 +222,6 @@ public class ApptDB {
 		    int REMINDER;
 		    int REMINDER_TIME;
 		    int REMINDER_UNIT;
-		    String ARW = "";
 		    String GOING = "";
 		    String WAITING = "";
 		    int createrID;
@@ -255,7 +255,6 @@ public class ApptDB {
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
-				ARW = rs.getString("ARW");
 				createrID = rs.getInt("USER");
 				ID = rs.getInt("ID");
 				
@@ -293,30 +292,51 @@ public class ApptDB {
 	public String LinkedListToString(LinkedList<Integer> list)
 	{
 		//Syntax: each UID will be deperated with a "/" symbol
-		//e.g. String listS = "1/3/7/9/12";
-		String op = "";
-		for (Integer a:list)
+		//e.g. String listS = "1/3/7/9/12/";
+		if (list.size()>0)
 		{
-			op = op + a + "/";
+			String op = "";
+			System.out.println("The whole list: " + list);
+			for (Integer a:list)
+			{
+				System.out.println("Each one: " + a);
+				op = op + a + "/";
+			}
+			System.out.println("this one:" + op);
+			op = op.substring(0, op.length()-1);
+			System.out.println("that one:" + op);
+			return op;
 		}
-		return op;
+		else
+			return "";
+		
 	}
 	
 	public LinkedList<Integer> StringToLinkedList(String listS)
 	{
-		//Syntax: each UID will be deperated with a "/" symbol
-		//e.g. String listS = "/1/3/7/9/12";
 		LinkedList<Integer> op = new LinkedList<Integer>();
-		int id;
-		int dash = listS.indexOf("/");
-		while (dash >= 0 )
+		if (listS.length()>0)
 		{
-			id = Integer.parseInt(listS.substring(0, dash-1));
-			op.add(id);
-			listS = listS.substring(dash+1);
-			dash = listS.indexOf("/");
+			String[] listA = listS.split("/");
+			for (String a:listA)
+			{
+				op.add(Integer.parseInt(a));
+			}
 		}
 		return op;
+		
+		//Syntax: each UID will be deperat ed with a "/" symbol
+		//e.g. String listS = "/1/3/7/9/12";
+//		
+//		int id;
+//		int dash = listS.indexOf("/");
+//		while (dash >= 0 )
+//		{
+//			id = Integer.parseInt(listS.substring(0, dash-1));
+//			op.add(id);
+//			listS = listS.substring(dash+1);
+//			dash = listS.indexOf("/");
+//		}
 	}
 	
 	public boolean IsHeInWaitingList(int apptID, int uid)

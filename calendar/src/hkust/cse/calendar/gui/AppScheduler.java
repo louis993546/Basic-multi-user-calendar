@@ -120,8 +120,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private LocationDB ldb;
 	private ApptDB adb;
 	
-	private ArrayList<Integer> GoingUIDAL;
-	private ArrayList<Integer> InvitingUIDAL;
+	private LinkedList<Integer> GoingUIDAL;
+	private LinkedList<Integer> InvitingUIDAL;
 
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		parent = cal;
@@ -130,8 +130,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		setModal(false);
 		ldb = new LocationDB();
 		locationAL = ldb.getLocationList();
-		GoingUIDAL = new ArrayList<Integer>();
-		InvitingUIDAL = new ArrayList<Integer>();
+		GoingUIDAL = new LinkedList<Integer>();
+		InvitingUIDAL = new LinkedList<Integer>();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -587,7 +587,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		//TODO currently it provide 3 empty linkedlist
 		LinkedList<Integer> temp = new LinkedList<Integer>();
 		//The id is 12 because the id cannot be known until sql give it a proper id number
-		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, temp, 12, parent.getCurrentUserID());
+		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, InvitingUIDAL, 12, parent.getCurrentUserID());
 		TimeSpan wholeDay=new TimeSpan(startDate[0], startDate[1],	startDate[2], 0, 0, 23, 59);
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
 		for (Appt tempAppt : listAppt) {
