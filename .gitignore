@@ -1,3 +1,5 @@
+*.class
+
 # Things will NOT be be ignore
 !eclipse/
 !Sources/
@@ -13,7 +15,7 @@ $RECYCLE.BIN/
 calendar/appt.db
 calendar/location.db
 calendar/user.db
-*.class
+
 
 # From online sources
 *.pydevproject
