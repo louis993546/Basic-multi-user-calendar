@@ -704,6 +704,8 @@ public class CalGrid extends JFrame implements ActionListener {
 		end.setSeconds(59);
 		
 		TimeSpan period = new TimeSpan(start, end);
+		Appt[] allAppt = controller.RetrieveAppts(mCurrUser, period);
+		
 		return controller.RetrieveAppts(mCurrUser, period);
 	}
 

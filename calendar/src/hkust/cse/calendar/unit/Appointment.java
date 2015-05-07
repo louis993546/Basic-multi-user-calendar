@@ -39,32 +39,6 @@ public class Appointment implements Comparable<Appointment> {
 	private boolean isJoint;
 	private int createrID;
 
-//	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
-//	private Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal, LinkedList<Integer> wal, int i) {
-//		//TODO create unique id for each appointment upon creation
-//		//TODO initiate creater
-//		title = t;
-//		description = d;
-//		location = l;
-//		startHour = shr;
-//		startMin = smin;
-//		startYear = syr;
-//		startMonth = smon;
-//		startDay = sday;
-//		endHour = ehr;
-//		endMin = emin;
-//		endYear = eyr;
-//		endMonth = emon;
-//		endDay = eday;
-//		reminder = r;
-//		reminderTime = rt;
-//		reminderUnit = ru;
-//		going = aal;
-////		reject = ral;
-//		waiting = wal;
-//		id = i;
-//	}
-
 	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal,  LinkedList<Integer> wal, int i, int uid) 
 	{
 		title = t;
@@ -431,11 +405,10 @@ public class Appointment implements Comparable<Appointment> {
 			setStartEndYear(year);
 			setStartEndMonth(month);
 			setStartEndDay(day);
-			
 		}	
 	}
 	
-	public int getCreaterID()
+	public int getCreaterUID()
 	{
 		return createrID;
 	}
@@ -443,5 +416,15 @@ public class Appointment implements Comparable<Appointment> {
 	public void setCreaterID(int id)
 	{
 		createrID = id;
+	}
+	
+	public boolean isThisUIDInGoing(int uid)
+	{
+		return going.contains(uid);
+	}
+	
+	public boolean isThisUIDInWaiting(int uid)
+	{
+		return waiting.contains(uid);
 	}
 }

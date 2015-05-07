@@ -98,7 +98,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		area.append("Title: " + appt.getTitle() + "\n");
 		area.append("Time: " + time + "\n");
 		area.append("Location: " + appt.getAppointment().getLocation() + "\n");
-		area.append("createrID: " + appt.getAppointment().getCreaterID() + "\n");
+		area.append("createrID: " + appt.getAppointment().getCreaterUID() + "\n");
 		area.append("description: " + appt.getAppointment().getDescription()+ "\n");
 		area.append("\nParticipants:\n");
 		area.append("  Attend:");
@@ -132,8 +132,8 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		area.append("\n\nDescription: \n" + appt.getInfo());
 		area.setEditable(false);
 		UserDB udb=new UserDB();
-		System.out.println("creator id"+appt.getAppointment().getCreaterID());
-		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterID()).LastName());
+		System.out.println("creator id"+appt.getAppointment().getCreaterUID());
+		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterUID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterUID()).LastName());
 	}
 
 	public void Display(Vector[] vs, User[] entities) {

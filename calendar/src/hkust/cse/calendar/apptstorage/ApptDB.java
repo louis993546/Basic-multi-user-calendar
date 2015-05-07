@@ -98,7 +98,7 @@ public class ApptDB {
 				+ a.getReminder() + "," 
 				+ a.getReminderTime() + "," 
 				+ a.getReminderUnit() + "," 
-				+ a.getCreaterID() + ",'" 
+				+ a.getCreaterUID() + ",'" 
 				+ LinkedListToString(a.getGoingList()) + "','"
 				+ LinkedListToString(a.getWaitingList()) + "');";
 			System.out.println(sql);
@@ -192,7 +192,7 @@ public class ApptDB {
 		ArrayList<Appt> temp = new ArrayList<Appt>();
 		for (Appt a:abt)
 		{
-			if (a.getAppointment().getCreaterID() == u.UID())
+			if (a.getAppointment().getCreaterUID() == u.UID())
 			{
 				temp.add(a);
 			}
@@ -203,6 +203,20 @@ public class ApptDB {
 			temparray[i] = temp.get(i);
 		}
 		//TODO Also check going and waiting list
+		ArrayList<Appointment> allGoingApptID = getApptIDListFromGoing(u.UID());
+		for (int i = temparray.length; i<allGoingApptID.size(); i++)
+		{
+			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
+			Appt temp2 = new Appt(allGoingApptID.get(i));
+			temparray[i] = temp2;
+		}
+		ArrayList<Appointment> allWaitingApptID =  getApptIDListFromWaiting(u.UID());
+		for (int i = temparray.length; i<allGoingApptID.size(); i++)
+		{
+			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
+			Appt temp2 = new Appt(allWaitingApptID.get(i));
+			temparray[i] = temp2;
+		}
 		return temparray;
 	}
 
@@ -491,23 +505,31 @@ public class ApptDB {
 		}
 	}
 
-	public ArrayList<Integer> getApptIDListFromGoing(int uid)
+	public ArrayList<Appointment> getApptIDListFromGoing(int uid)
 	{
-		ArrayList<Integer> apptIDAL = new ArrayList<Integer>();
-		//get each appt
-		//decode going list
-		//check if uid is in there
-		//if yes add to apptIDAL
-		return null;
+		ArrayList<Appointment> apptIDAL = new ArrayList<Appointment>();
+		ArrayList<Appointment> allAppointments = getAppointmentList();
+		for (Appointment a:allAppointments)
+		{
+			if (a.isThisUIDInGoing(uid) == true)
+			{
+				apptIDAL.add(a);
+			}
+		}
+		return apptIDAL;
 	}
 	
-	public ArrayList<Integer> getApptIDListFromWaiting(int uid)
+	public ArrayList<Appointment> getApptIDListFromWaiting(int uid)
 	{
-		ArrayList<Integer> apptIDAL = new ArrayList<Integer>();
-		//get each appt
-		//decode waiting list
-		//check if uid is in there
-		//if yes add to apptIDAL
-		return null;
+		ArrayList<Appointment> apptIDAL = new ArrayList<Appointment>();
+		ArrayList<Appointment> allAppointments = getAppointmentList();
+		for (Appointment a:allAppointments)
+		{
+			if (a.isThisUIDInGoing(uid) == true)
+			{
+				apptIDAL.add(a);
+			}
+		}
+		return apptIDAL;
 	}
 }
