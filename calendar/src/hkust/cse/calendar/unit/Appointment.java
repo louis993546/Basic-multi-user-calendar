@@ -425,6 +425,16 @@ public class Appointment implements Comparable<Appointment> {
 	
 	public boolean isThisUIDInWaiting(int uid)
 	{
-		return waiting.contains(uid);
+//		return waiting.contains(uid);
+		System.out.println("The whole waiting list of this appointment: " + waiting);
+		for (int a:waiting)
+		{
+			if (a == uid)
+			{
+				System.out.println("The following should be added: " + uid);
+				return true;
+			}
+		}
+		return false;
 	}
 }

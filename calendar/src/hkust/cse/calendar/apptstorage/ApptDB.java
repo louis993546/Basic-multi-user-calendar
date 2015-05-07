@@ -197,26 +197,40 @@ public class ApptDB {
 				temp.add(a);
 			}
 		}
+		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.UID());
+		for (Appointment a:allGoingAppt)
+		{
+			Appt temp2 = new Appt(a);
+			temp.add(temp2);
+		}
+		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.UID());
+		for (Appointment a:allWaitingAppt)
+		{
+			Appt temp2 = new Appt(a);
+			temp.add(temp2);
+		}
 		Appt[] temparray = new Appt[temp.size()];
 		for (int i = 0; i<temp.size(); i++)
 		{
 			temparray[i] = temp.get(i);
 		}
-		//TODO Also check going and waiting list
-		ArrayList<Appointment> allGoingApptID = getApptIDListFromGoing(u.UID());
-		for (int i = temparray.length; i<allGoingApptID.size(); i++)
-		{
-			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
-			Appt temp2 = new Appt(allGoingApptID.get(i));
-			temparray[i] = temp2;
-		}
-		ArrayList<Appointment> allWaitingApptID =  getApptIDListFromWaiting(u.UID());
-		for (int i = temparray.length; i<allGoingApptID.size(); i++)
-		{
-			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
-			Appt temp2 = new Appt(allWaitingApptID.get(i));
-			temparray[i] = temp2;
-		}
+//		//TODO Also check going and waiting list
+//		
+//		System.out.println(allGoingAppt);
+//		for (int i = temparray.length; i<allGoingAppt.size(); i++)
+//		{
+//			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
+//			Appt temp2 = new Appt(allGoingAppt.get(i));
+//			temparray[i] = temp2;
+//		}
+//		ArrayList<Appointment> allWaitingAppt =  getApptIDListFromWaiting(u.UID());
+//		System.out.println(allWaitingAppt);
+//		for (int i = temparray.length; i<allWaitingAppt.size(); i++)
+//		{
+//			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
+//			Appt temp3 = new Appt(allWaitingAppt.get(i));
+//			temparray[i] = temp3;
+//		}
 		return temparray;
 	}
 
@@ -525,7 +539,7 @@ public class ApptDB {
 		ArrayList<Appointment> allAppointments = getAppointmentList();
 		for (Appointment a:allAppointments)
 		{
-			if (a.isThisUIDInGoing(uid) == true)
+			if (a.isThisUIDInWaiting(uid) == true)
 			{
 				apptIDAL.add(a);
 			}
