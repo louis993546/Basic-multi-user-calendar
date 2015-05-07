@@ -193,19 +193,19 @@ public class Appointment implements Comparable<Appointment> {
 		}
 	}
 
-	public boolean waitingToAttend(String name)
-	{
-		//TODO get UID first
-		if (waiting.remove(name) == true)
-		{
-			going.add(name);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+//	public boolean waitingToAttend(int uid)
+//	{
+//		//TODO get UID first
+//		if (waiting.remove(uid) == true)
+//		{
+//			going.add(uid);
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
 
 //	public boolean waitingToReject(String name)
 //	{
@@ -220,9 +220,9 @@ public class Appointment implements Comparable<Appointment> {
 //		}
 //	}
 
-	public boolean addToAttend(String name)
+	public boolean addToAttend(int uid)
 	{
-		going.add(name);
+		going.add(uid);
 		return true;
 	}
 
@@ -232,9 +232,9 @@ public class Appointment implements Comparable<Appointment> {
 //		return true;
 //	}
 
-	public boolean addWaiting(String name)
+	public boolean addWaiting(int uid)
 	{
-		waiting.add(name);
+		waiting.add(uid);
 		return false;
 	}
 
@@ -341,6 +341,7 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public LinkedList<Integer> getGoingList() {
+		
 		return going;
 	}
 

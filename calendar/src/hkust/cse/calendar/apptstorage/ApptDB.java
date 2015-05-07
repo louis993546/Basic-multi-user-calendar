@@ -161,6 +161,7 @@ public class ApptDB {
 				ID = rs.getInt("ID");
 				
 				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
+				LinkedList<Integer> waitingUIDLL = StringToLinkedList(WAITING);
 				//TODO these 4 lines are just temporary
 				//remove these codes once bug in addAppt has been fixed
 //				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
@@ -169,7 +170,7 @@ public class ApptDB {
 //				arwList.add(new LinkedList<String>());
 //				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
 				//TODO [Phrase 2] extract the 3 lists from arwList
-				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID, USER);
+				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, goingUIDLL,waitingUIDLL, ID, USER);
 				temp.add(tempAppointment);
 	        }
 			return temp;
@@ -262,14 +263,14 @@ public class ApptDB {
 				//remove these codes once bug in addAppt has been fixed
 				//How-to: serialize the 3 lists
 //				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
-				LinkedList<Integer> goingList = StringToLinkedList(GOING);
-				LinkedList<Integer> waitingList = StringToLinkedList(WAITING);
+				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
+				LinkedList<Integer> waitingUIDLL = StringToLinkedList(WAITING);
 //				arwList.add(new LinkedList<String>());
 //				arwList.add(new LinkedList<String>());
 //				arwList.add(new LinkedList<String>());
 				
 				//TODO [Phrase 2] extract the 2 lists from arwList
-				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID, createrID);
+				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, goingUIDLL, waitingUIDLL, ID, createrID);
 				temp.add(tempAppointment);
 		    }
 			Appt[] temparray = new Appt[temp.size()];

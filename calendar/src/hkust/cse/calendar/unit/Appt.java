@@ -82,11 +82,11 @@ public class Appt
 		return allList;
 	}
 
-	public void addAttendant(String addID){
-		if (a.getGoingList() == null)
-			a.initiateAttend();
-		a.addToAttend(addID);
-	}
+//	public void addAttendant(String addID){
+//		if (a.getGoingList() == null)
+//			a.initiateAttend();
+//		a.addToAttend(addID);
+//	}
 
 //	public void addReject(String addID){
 //		if (a.getReject() == null)
@@ -94,25 +94,25 @@ public class Appt
 //		a.addToReject(addID);
 //	}
 
-	public void addWaiting(String addID){
-		if (a.getWaitingList() == null)
-			a.initiateWaiting();
-		a.addWaiting(addID);
-	}
+//	public void addWaiting(String addID){
+//		if (a.getWaitingList() == null)
+//			a.initiateWaiting();
+//		a.addWaiting(addID);
+//	}
 
-	public void setWaitingList(LinkedList<String> waitingList){
-		a.setWaiting(waitingList);
-	}
+//	public void setWaitingList(LinkedList<String> waitingList){
+//		a.setWaiting(waitingList);
+//	}
 
-	public void setWaitingList(String[] waitingList){
-		LinkedList<String> tempLinkedList = new LinkedList<String>();
-		if (waitingList !=null){
-			for (int a=0; a<waitingList.length; a++){
-				tempLinkedList.add(waitingList[a].trim());
-			}
-		}
-		a.setWaiting(tempLinkedList);
-	}
+//	public void setWaitingList(String[] waitingList){
+//		LinkedList<String> tempLinkedList = new LinkedList<String>();
+//		if (waitingList !=null){
+//			for (int a=0; a<waitingList.length; a++){
+//				tempLinkedList.add(waitingList[a].trim());
+//			}
+//		}
+//		a.setWaiting(tempLinkedList);
+//	}
 
 //	public void setRejectList(LinkedList<String> rejectLinkedList) {
 //		a.setReject(rejectLinkedList);
@@ -132,16 +132,17 @@ public class Appt
 		a.setAttend(attendLinkedList);
 	}
 
-	public void setAttendList(String[] attendList){
-		LinkedList<Integer> tempLinkedList = new LinkedList<Integer>();
-		if (attendList !=null){
-			for (int a=0; a<attendList.length; a++){
-				//TODO turn string into integer
-				tempLinkedList.add(attendList[a].trim());
-			}
-		}
-		a.setAttend(tempLinkedList);
-	}
+//	public void setAttendList(String[] attendList){
+//		LinkedList<Integer> tempLinkedList = new LinkedList<Integer>();
+//		if (attendList !=null){
+//			for (int a=0; a<attendList.length; a++){
+//				//TODO turn string into integer
+//				tempLinkedList.add(attendList[a].trim());
+//			}
+//		}
+//		a.setAttend(tempLinkedList);
+//	}
+	
 	// Getter of the appointment title
 	public String toString() {
 		return a.getTitle();
