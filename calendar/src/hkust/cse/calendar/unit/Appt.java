@@ -60,7 +60,7 @@ public class Appt
 	}
 
 	// Getter of the attend LinkedList<String>
-	public LinkedList<String> getAttendList(){
+	public LinkedList<Integer> getAttendList(){
 		return a.getGoingList();
 	}
 
@@ -70,12 +70,12 @@ public class Appt
 //	}
 
 	// Getter of the waiting LinkedList<String>
-	public LinkedList<String> getWaitingList(){
+	public LinkedList<Integer> getWaitingList(){
 		return a.getWaitingList();
 	}
 
-	public LinkedList<String> getAllPeople(){
-		LinkedList<String> allList = new LinkedList<String>();
+	public LinkedList<Integer> getAllPeople(){
+		LinkedList<Integer> allList = new LinkedList<Integer>();
 		allList.addAll(getAttendList());
 //		allList.addAll(getRejectList());
 		allList.addAll(getWaitingList());
@@ -128,14 +128,15 @@ public class Appt
 //		a.setReject(tempLinkedList);
 //	}
 
-	public void setAttendList(LinkedList<String> attendLinkedList) {
+	public void setAttendList(LinkedList<Integer> attendLinkedList) {
 		a.setAttend(attendLinkedList);
 	}
 
 	public void setAttendList(String[] attendList){
-		LinkedList<String> tempLinkedList = new LinkedList<String>();
+		LinkedList<Integer> tempLinkedList = new LinkedList<Integer>();
 		if (attendList !=null){
 			for (int a=0; a<attendList.length; a++){
+				//TODO turn string into integer
 				tempLinkedList.add(attendList[a].trim());
 			}
 		}

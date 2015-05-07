@@ -48,7 +48,6 @@ public class ApptDB {
 	          " GOING				 TEXT						," +
 	          " WAITING				 TEXT						," +
 	          " ARW                  TEXT               NOT NULL)";
-
 	      stmt.executeUpdate(sql);
 	    } catch (Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -80,8 +79,7 @@ public class ApptDB {
 				+ "END_TIME_DAY, "
 				+ "REMINDER, "
 				+ "REMINDER_TIME, "
-				+ "REMINDER_UNIT, USER, ARW) " +
-				//"REMINDER_UNIT, USER, GOING, WAITING) " +
+				+ "REMINDER_UNIT, USER, GOING, WAITING) " +
 					"VALUES ('" 
 				+ a.getTitle() + "','" 
 				+ a.getDescription() + "','" 
@@ -100,9 +98,8 @@ public class ApptDB {
 				+ a.getReminderTime() + "," 
 				+ a.getReminderUnit() + "," 
 				+ a.getCreaterID() + "," 
-				//+a.getGoingString() + ","
-				//+a.getWaitingString() + ","
-				+ dt //TODO remove this once Going and Waiting list are done 
+				+ LinkedListToString(a.getGoingList()) + ","
+				+ LinkedListToString(a.getWaitingList()) + ","
 				+ ");";
 			stmt.executeUpdate(sql);
 			return true;
@@ -135,13 +132,12 @@ public class ApptDB {
 	        int REMINDER_TIME;
 	        int REMINDER_UNIT;
 	        int USER;
-	        String ARW = "";
 	        String GOING;
 	        String WAITING;
 	        int ID;
-	        ArrayList<String> attend = new ArrayList<String>();
-	        ArrayList<String> reject = new ArrayList<String>();
-	        ArrayList<String> waiting = new ArrayList<String>();
+//	        ArrayList<String> attend = new ArrayList<String>();
+//	        ArrayList<String> reject = new ArrayList<String>();
+//	        ArrayList<String> waiting = new ArrayList<String>();
 	        while ( rs.next() ) {
 				TITLE = rs.getString("TITLE");
 				DESCRIPTION = rs.getString("DESCRIPTION");
@@ -159,15 +155,18 @@ public class ApptDB {
 				REMINDER_TIME =rs.getInt("REMINDER_TIME");
 				LOCATION = rs.getString("LOCATION");
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
+				GOING = rs.getString("GOING");
+				WAITING = rs.getString("WAITING");
 				USER = rs.getInt("USER");
-				ARW = rs.getString("ARW");
 				ID = rs.getInt("ID");
+				
+				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
 				//TODO these 4 lines are just temporary
 				//remove these codes once bug in addAppt has been fixed
-				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
-				arwList.add(new LinkedList<String>());
-				arwList.add(new LinkedList<String>());
-				arwList.add(new LinkedList<String>());
+//				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
+//				arwList.add(new LinkedList<String>());
+//				arwList.add(new LinkedList<String>());
+//				arwList.add(new LinkedList<String>());
 //				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
 				//TODO [Phrase 2] extract the 3 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID, USER);
@@ -262,12 +261,12 @@ public class ApptDB {
 				//TODO these codes are temporary
 				//remove these codes once bug in addAppt has been fixed
 				//How-to: serialize the 3 lists
-				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
-				LinkedList<String> goingList = StringToLinkedList(GOING);
-				LinkedList<String> waitingList = StringToLinkedList(WAITING);
-				arwList.add(new LinkedList<String>());
-				arwList.add(new LinkedList<String>());
-				arwList.add(new LinkedList<String>());
+//				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
+				LinkedList<Integer> goingList = StringToLinkedList(GOING);
+				LinkedList<Integer> waitingList = StringToLinkedList(WAITING);
+//				arwList.add(new LinkedList<String>());
+//				arwList.add(new LinkedList<String>());
+//				arwList.add(new LinkedList<String>());
 				
 				//TODO [Phrase 2] extract the 2 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, arwList.get(0), arwList.get(1), arwList.get(2), ID, createrID);
@@ -290,28 +289,29 @@ public class ApptDB {
 	
 	//TODO we will need a lot of methods for the 2 lists
 	
-	public String LinkedListToString(LinkedList<String> list)
+	public String LinkedListToString(LinkedList<Integer> list)
 	{
 		//Syntax: each UID will be deperated with a "/" symbol
 		//e.g. String listS = "1/3/7/9/12";
 		String op = "";
-		for (String a:list)
+		for (Integer a:list)
 		{
 			op = op + a + "/";
 		}
 		return op;
 	}
 	
-	public LinkedList<String> StringToLinkedList(String listS)
+	public LinkedList<Integer> StringToLinkedList(String listS)
 	{
 		//Syntax: each UID will be deperated with a "/" symbol
 		//e.g. String listS = "/1/3/7/9/12";
-		LinkedList<String> op = new LinkedList<String>();
+		LinkedList<Integer> op = new LinkedList<Integer>();
 		int id;
 		int dash = listS.indexOf("/");
 		while (dash >= 0 )
 		{
 			id = Integer.parseInt(listS.substring(0, dash-1));
+			op.add(id);
 			listS = listS.substring(dash+1);
 			dash = listS.indexOf("/");
 		}

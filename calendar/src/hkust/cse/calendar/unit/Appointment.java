@@ -31,16 +31,16 @@ public class Appointment implements Comparable<Appointment> {
 	private int reminder;
 	private int reminderTime;
 	private int reminderUnit;
-	private LinkedList<String> going;
+	private LinkedList<Integer> going;
 //	private LinkedList<String> reject;
-	private LinkedList<String> waiting;
+	private LinkedList<Integer> waiting;
 	private int id;
 	private int jid;
 	private boolean isJoint;
 	private int createrID;
 
 	//TODO Add 3 more parameter to this constructor: jid, isJoint and creater
-	private Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i) {
+	private Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal, LinkedList<Integer> wal, int i) {
 		//TODO create unique id for each appointment upon creation
 		//TODO initiate creater
 		title = t;
@@ -65,9 +65,9 @@ public class Appointment implements Comparable<Appointment> {
 		id = i;
 	}
 
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<String> aal, LinkedList<String> ral, LinkedList<String> wal, int i, int uid) 
+	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal,  LinkedList<Integer> wal, int i, int uid) 
 	{
-		this(t,d,l,shr,smin,syr,smon,sday,ehr,emin,eyr,emon,eday,r,rt,ru,aal,ral,wal,i);
+		this(t,d,l,shr,smin,syr,smon,sday,ehr,emin,eyr,emon,eday,r,rt,ru,aal,wal,i);
 		createrID = uid;
 	}
 	
@@ -77,9 +77,9 @@ public class Appointment implements Comparable<Appointment> {
 		location = "";
 		id = 0;
 		jid = -1;
-		going = new LinkedList<String>();
+		going = new LinkedList<Integer>();
 //		reject = new LinkedList<String>();
-		waiting = new LinkedList<String>();
+		waiting = new LinkedList<Integer>();
 		//TODO not sure if time needs to be initiate
 	}
 
@@ -195,6 +195,7 @@ public class Appointment implements Comparable<Appointment> {
 
 	public boolean waitingToAttend(String name)
 	{
+		//TODO get UID first
 		if (waiting.remove(name) == true)
 		{
 			going.add(name);
@@ -245,7 +246,7 @@ public class Appointment implements Comparable<Appointment> {
 
 	public void initiateAttend()
 	{
-		going = new LinkedList<String>();
+		going = new LinkedList<Integer>();
 	}
 
 //	public void initiateReject()
@@ -255,10 +256,10 @@ public class Appointment implements Comparable<Appointment> {
 
 	public void initiateWaiting()
 	{
-		waiting = new LinkedList<String>();
+		waiting = new LinkedList<Integer>();
 	}
 
-	public void setAttend(LinkedList<String> a)
+	public void setAttend(LinkedList<Integer> a)
 	{
 		going = a;
 	}
@@ -268,7 +269,7 @@ public class Appointment implements Comparable<Appointment> {
 //		reject = r;
 //	}
 
-	public void setWaiting(LinkedList<String> w)
+	public void setWaiting(LinkedList<Integer> w)
 	{
 		waiting = w;
 	}
@@ -339,7 +340,7 @@ public class Appointment implements Comparable<Appointment> {
 		return reminderUnit;
 	}
 
-	public LinkedList<String> getGoingList() {
+	public LinkedList<Integer> getGoingList() {
 		return going;
 	}
 
@@ -347,7 +348,7 @@ public class Appointment implements Comparable<Appointment> {
 //		return reject;
 //	}
 
-	public LinkedList<String> getWaitingList() {
+	public LinkedList<Integer> getWaitingList() {
 		return waiting;
 	}
 

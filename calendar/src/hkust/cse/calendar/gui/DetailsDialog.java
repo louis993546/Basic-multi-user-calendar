@@ -120,7 +120,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 //			}
 //		}
 		area.append("\n\n  Waiting:");
-		LinkedList<String> waitingList = appt.getWaitingList();
+		LinkedList<Integer> waitingList = appt.getWaitingList();
 		if(waitingList != null)
 		{
 			for(int i = 0; i < waitingList.size(); i++)
