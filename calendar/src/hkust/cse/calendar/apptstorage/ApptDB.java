@@ -202,6 +202,7 @@ public class ApptDB {
 		{
 			temparray[i] = temp.get(i);
 		}
+		//TODO Also check going and waiting list
 		return temparray;
 	}
 
@@ -490,14 +491,23 @@ public class ApptDB {
 		}
 	}
 
-	//TODO not sure if these 2 functions will be useful
 	public ArrayList<Integer> getApptIDListFromGoing(int uid)
 	{
+		ArrayList<Integer> apptIDAL = new ArrayList<Integer>();
+		//get each appt
+		//decode going list
+		//check if uid is in there
+		//if yes add to apptIDAL
 		return null;
 	}
 	
 	public ArrayList<Integer> getApptIDListFromWaiting(int uid)
 	{
+		ArrayList<Integer> apptIDAL = new ArrayList<Integer>();
+		//get each appt
+		//decode waiting list
+		//check if uid is in there
+		//if yes add to apptIDAL
 		return null;
 	}
 }
