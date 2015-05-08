@@ -163,14 +163,7 @@ public class ApptDB {
 				
 				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
 				LinkedList<Integer> waitingUIDLL = StringToLinkedList(WAITING);
-				//TODO these 4 lines are just temporary
-				//remove these codes once bug in addAppt has been fixed
-//				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
-//				arwList.add(new LinkedList<String>());
-//				arwList.add(new LinkedList<String>());
-//				arwList.add(new LinkedList<String>());
-//				LinkedList<LinkedList<String>> arwList = getARWList(ARW);
-				//TODO [Phrase 2] extract the 3 lists from arwList
+				
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, goingUIDLL,waitingUIDLL, ID, USER);
 				temp.add(tempAppointment);
 	        }
@@ -198,7 +191,7 @@ public class ApptDB {
 				temp.add(a);
 			}
 		}
-		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.UID());
+		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.UID(), abt);
 		for (Appointment a:allGoingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -207,7 +200,7 @@ public class ApptDB {
 				temp.add(temp2);
 			}
 		}
-		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.UID());
+		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.UID(), abt);
 		for (Appointment a:allWaitingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -487,10 +480,14 @@ public class ApptDB {
 		}
 	}
 
-	public ArrayList<Appointment> getApptIDListFromGoing(int uid)
+	public ArrayList<Appointment> getApptIDListFromGoing(int uid, Appt[] abt)
 	{
 		ArrayList<Appointment> apptIDAL = new ArrayList<Appointment>();
-		ArrayList<Appointment> allAppointments = getAppointmentList();
+		ArrayList<Appointment> allAppointments = new ArrayList<Appointment>();
+		for (Appt a:abt)
+		{
+			allAppointments.add(a.getAppointment());
+		}
 		for (Appointment a:allAppointments)
 		{
 			if (a.isThisUIDInGoing(uid) == true)
@@ -501,10 +498,14 @@ public class ApptDB {
 		return apptIDAL;
 	}
 	
-	public ArrayList<Appointment> getApptIDListFromWaiting(int uid)
+	public ArrayList<Appointment> getApptIDListFromWaiting(int uid, Appt[] abt)
 	{
 		ArrayList<Appointment> apptIDAL = new ArrayList<Appointment>();
-		ArrayList<Appointment> allAppointments = getAppointmentList();
+		ArrayList<Appointment> allAppointments = new ArrayList<Appointment>();
+		for (Appt a:abt)
+		{
+			allAppointments.add(a.getAppointment());
+		}
 		for (Appointment a:allAppointments)
 		{
 			if (a.isThisUIDInWaiting(uid) == true)
