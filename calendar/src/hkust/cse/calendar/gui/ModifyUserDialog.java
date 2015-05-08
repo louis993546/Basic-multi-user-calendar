@@ -92,31 +92,39 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 		if (e.getSource() == deleteButton) {
 			int id = udb.getUserUID(UserList.getSelectedValue().toString());
 			if ((id != 0) || (id != -1)) {
+				//if user is not lock
+				//	lock it.
 				SortedMap<Integer, MessageBody> tmpmap = MessageStorage
 						.getDeleteUser();
 
-				MessageBody tmpmsgbody = new MessageBody(id, -1, -1,
+				/*MessageBody tmpmsgbody = new MessageBody(id, -1, -1,
 						MessageBody.UserResponse.NotYet, LocalDateTime.now(),
-						id);// get all creator of all event involved the user
+						
+						id);*/
+
+				// get all creator of all event involved the user
 				// get creator 's last event involed that user 's end time
-				System.out
-						.println("MessageBody tmpmsgbody=new MessageBody(id,-1,-1,MessageBody.UserResponse.NotYet,LocalDateTime.now());");
-				// endtimeOfLastEventInvolvedThisUser(id));
 				int insertKey = -1;
 				if (tmpmap.isEmpty()) {
-					insertKey = 1;
-					System.out.println("Insert msg at key1 for this empty map");
+					MessageBody tmpmbody = new MessageBody(-1,-1,-1,MessageBody.UserResponse.NotYet,LocalDateTime.now(), -1);
+					tmpmap.put(-1, tmpmbody);
+					//dummy
+//					insertKey = 1;
+//					System.out.println("Insert msg at key1 for this empty map");
 				} else {
-					int lastkey = tmpmap.lastKey();
-					insertKey = lastkey + 1;
-					System.out.println("Insert msg after last key" + lastkey);
+//					int lastkey = tmpmap.lastKey();
+//					insertKey = lastkey + 1;
+//					System.out.println("Insert msg after last key" + lastkey);
 				}
-
-				for(key:amap){
-					MessageBody tmpmsgbody2 = new MessageBody(id, -1, -1, MessageBody.UserResponse.NotYet, map.get(key), keyofmap);
+				
+				SortedMap<Integer, LocalDateTime> amap = MessageStorage.getCreatorToLastRelatedEventMap_notfinish(id);
+				
+				for(int key:amap.keySet()){
+					MessageBody tmpmsgbody2 = new MessageBody(id, -1, -1, MessageBody.UserResponse.NotYet, amap.get(key), key);
 					tmpmap.put(tmpmap.lastKey()+1, tmpmsgbody2);
 				}
 				
+				System.out.println("tmpmap is"+tmpmap);
 				// after last id
 				// udb.deleteUser(id);
 				// UserListModel.removeElementAt(UserList.getSelectedIndex());
