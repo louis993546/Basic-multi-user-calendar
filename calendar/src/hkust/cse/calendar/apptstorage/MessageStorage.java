@@ -52,6 +52,7 @@ public class MessageStorage {
 		SortedMap<Integer, LocalDateTime> tmpmap = new TreeMap<Integer, LocalDateTime>();
 
 		// appt[] apptlist=getApptListInvolveUserInFuture(uid);
+		Appt[] apptlist =null;// getApptListInvolveUserInFuture(IDofUserToBeDeleted);
 
 		Map<Integer, List<LocalDateTime>> CreatorToEndTimesMap = new HashMap<Integer, List<LocalDateTime>>();
 		for (Appt tmpappt : apptlist) {
@@ -70,6 +71,7 @@ public class MessageStorage {
 		// now CreatorToEndTimesMap is group by creator
 		// try get max endtime for diff creator
 
+		SortedMap<Integer, LocalDateTime> CreatorToMaxEndTimeMap = new TreeMap<Integer, LocalDateTime>();
 		for (int i : CreatorToEndTimesMap.keySet()) {
 			List<LocalDateTime> listOfDateTime = CreatorToEndTimesMap.get(i);
 			LocalDateTime tmpmax = Collections.max(listOfDateTime, new Comparator<LocalDateTime>() {
