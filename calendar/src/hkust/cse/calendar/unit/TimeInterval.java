@@ -20,34 +20,39 @@ public class TimeInterval {
 		timeIntervalMap = new TreeMap<LocalDate, BitSet>();
 	}
 
-	public TimeInterval(TimeSpan timeSpan) {
-		if (timeSpan.StartTime().toLocalDateTime().toLocalDate()
-				.isEqual(timeSpan.EndTime().toLocalDateTime().toLocalDate())) {
-			LocalTime startTime = timeSpan.StartTime().toLocalDateTime()
-					.toLocalTime();
-			LocalTime endTime = timeSpan.StartTime().toLocalDateTime()
-					.toLocalTime();
+	public TimeInterval(TimeSpan timeSpan) 
+	{
+		if (timeSpan.StartTime().toLocalDateTime().toLocalDate().isEqual(timeSpan.EndTime().toLocalDateTime().toLocalDate())) 
+		{
+			System.out.println("afadslfasdfasdf");
+			LocalTime startTime = timeSpan.StartTime().toLocalDateTime().toLocalTime();
+			LocalTime endTime = timeSpan.EndTime().toLocalDateTime().toLocalTime();
 
 			BitSet tmpBitset = new BitSet(40);
 			LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
-			for (int i = 0; i < 40; i++) {
-				if (startTime.isBefore(tmpTime) && tmpTime.isBefore(endTime)) {
+			for (int i = 0; i < 40; i++) 
+			{
+				System.out.println("afadslfasdfasdf2");
+				System.out.println("tmpTime: " + tmpTime);
+				System.out.println("startTime: " + startTime);
+				System.out.println("endTime: " + endTime);
+				if (startTime.isBefore(tmpTime) && tmpTime.isBefore(endTime)) 
+				{
+					System.out.println("afadslfasdfasdf3");
 					// start <tmp< end, 8:00:1
 					tmpBitset.set(i);
 				}
 				tmpTime = tmpTime.plusMinutes(15);
-
 			}
 			this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
-			timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime()
-					.toLocalDate(), tmpBitset);// only one date!!
+			timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime().toLocalDate(), tmpBitset);// only one date!!
 
-		}else{
+		}
+		else
+		{
 			this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
-			
 			{
-				LocalTime startTime = timeSpan.StartTime().toLocalDateTime()
-						.toLocalTime();
+				LocalTime startTime = timeSpan.StartTime().toLocalDateTime().toLocalTime();
 				BitSet tmpBitset = new BitSet(40);
 				LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
 				for (int i = 0; i < 40; i++) {
@@ -125,9 +130,12 @@ public class TimeInterval {
 	
 	public TimeInterval setTimeInterval(Appt[] abu)
 	{
+		System.out.println(abu[0].TimeSpan().toString());
 		TimeInterval ti = new TimeInterval(abu[0].TimeSpan());
+		System.out.println(ti.toString());
 		for (int i = 0; i<abu.length; i++)
 		{
+			System.out.println(abu[i].TimeSpan());
 			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
 		}
 		System.out.println(ti.toString());
@@ -241,7 +249,7 @@ public class TimeInterval {
 				+ "]\n";
 		for (LocalDate tmpdate : timeIntervalMap.keySet()) {
 			result += ("\t" + tmpdate + ": ");
-			for (int i = 0; i < timeIntervalMap.get(tmpdate).length(); i++) {
+			for (int i = 0; i < 40; i++) {
 				if (timeIntervalMap.get(tmpdate).get(i) == true) {
 					result += "O";
 				} else {
