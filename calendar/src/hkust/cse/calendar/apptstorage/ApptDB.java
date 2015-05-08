@@ -238,9 +238,6 @@ public class ApptDB {
 		    String WAITING = "";
 		    int createrID;
 		    int ID;
-		    ArrayList<String> attend = new ArrayList<String>();
-		    ArrayList<String> reject = new ArrayList<String>();
-		    ArrayList<String> waiting = new ArrayList<String>();
 		    String sql = "SELECT * FROM APPOINTMENT WHERE ("
 			    	+ " START_TIME_YEAR=" + START_TIME_YEAR
 			    	+ " AND START_TIME_MONTH=" + START_TIME_MONTH
@@ -269,13 +266,18 @@ public class ApptDB {
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
 				createrID = rs.getInt("USER");
 				ID = rs.getInt("ID");
+				GOING = rs.getString("GOING");
+				WAITING = rs.getString("WAITING");
+				System.out.println("GOING: " + GOING);
+				System.out.println("WAITING: " + WAITING);
 				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
 				LinkedList<Integer> waitingUIDLL = StringToLinkedList(WAITING);
+				System.out.println("goingUIDLL.size(): " + goingUIDLL.size());
+				System.out.println("waitingUIDLL.size(): " + waitingUIDLL.size());
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, goingUIDLL, waitingUIDLL, ID, createrID);
 				temp.add(tempAppointment);
 		    }
 			Appt[] temparray = new Appt[temp.size()];
-			System.out.println("Size of temp:" + temp.size());
 			for (int i = 0; i<temp.size(); i++)
 			{
 				Appt tempappt = new Appt(temp.get(i));
@@ -290,29 +292,21 @@ public class ApptDB {
 		return null;
 	}
 	
-	//TODO we will need a lot of methods for the 2 lists
-	
 	public String LinkedListToString(LinkedList<Integer> list)
 	{
-		//Syntax: each UID will be deperated with a "/" symbol
 		//e.g. String listS = "1/3/7/9/12/";
 		if (list.size()>0)
 		{
 			String op = "";
-//			System.out.println("The whole list: " + list);
 			for (Integer a:list)
 			{
-//				System.out.println("Each one: " + a);
 				op = op + a + "/";
 			}
-//			System.out.println("this one:" + op);
 			op = op.substring(0, op.length()-1);
-//			System.out.println("that one:" + op);
 			return op;
 		}
 		else
-			return "";
-		
+			return "";	
 	}
 	
 	public LinkedList<Integer> StringToLinkedList(String listS)
@@ -508,6 +502,8 @@ public class ApptDB {
 		}
 		for (Appointment a:allAppointments)
 		{
+			System.out.println("a.isThisUIDInWaiting(uid): " + a.isThisUIDInWaiting(uid));
+			System.out.println("uid: " + uid);
 			if (a.isThisUIDInWaiting(uid) == true)
 			{
 				apptIDAL.add(a);
