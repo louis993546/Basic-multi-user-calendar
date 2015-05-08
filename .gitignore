@@ -12,9 +12,9 @@ Desktop.ini
 .DS_Store
 $RECYCLE.BIN/
 *.jar
-calendar/appt.db
-calendar/location.db
-calendar/user.db
+#calendar/appt.db
+#calendar/location.db
+#calendar/user.db
 
 
 # From online sources
