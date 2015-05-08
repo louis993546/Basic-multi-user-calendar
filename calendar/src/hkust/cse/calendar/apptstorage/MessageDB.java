@@ -21,10 +21,13 @@ public class MessageDB {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:message.db");
 			stmt = c.createStatement();
-			sql = "CREATE TABLE IF NOT EXISTS MESSAGETABLE "
-					+ "(ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-					+ " MESSAGE       TEXT                NOT NULL,"
-					+ "CAPACITY INTEGER NOT NULL)";
+			sql = "CREATE TABLE IF NOT EXISTS MessageTable "
+					+ "(MessageID          INTEGER             NOT NULL               PRIMARY KEY AUTOINCREMENT,"
+					+ " Type       		   INTEGER             NOT NULL,"
+					+ " UserUIDList        INTEGER             NOT NULL,"
+					+ " LocationID         INTEGER             ,"
+					+ " AppointmentID      INTEGER             ,"
+					+ " UserUID            INTEGER             )";
 			stmt.executeUpdate(sql);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "

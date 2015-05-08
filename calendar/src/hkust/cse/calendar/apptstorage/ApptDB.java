@@ -268,12 +268,12 @@ public class ApptDB {
 				ID = rs.getInt("ID");
 				GOING = rs.getString("GOING");
 				WAITING = rs.getString("WAITING");
-				System.out.println("GOING: " + GOING);
-				System.out.println("WAITING: " + WAITING);
+//				System.out.println("GOING: " + GOING);
+//				System.out.println("WAITING: " + WAITING);
 				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
 				LinkedList<Integer> waitingUIDLL = StringToLinkedList(WAITING);
-				System.out.println("goingUIDLL.size(): " + goingUIDLL.size());
-				System.out.println("waitingUIDLL.size(): " + waitingUIDLL.size());
+//				System.out.println("goingUIDLL.size(): " + goingUIDLL.size());
+//				System.out.println("waitingUIDLL.size(): " + waitingUIDLL.size());
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, goingUIDLL, waitingUIDLL, ID, createrID);
 				temp.add(tempAppointment);
 		    }
@@ -502,8 +502,8 @@ public class ApptDB {
 		}
 		for (Appointment a:allAppointments)
 		{
-			System.out.println("a.isThisUIDInWaiting(uid): " + a.isThisUIDInWaiting(uid));
-			System.out.println("uid: " + uid);
+//			System.out.println("a.isThisUIDInWaiting(uid): " + a.isThisUIDInWaiting(uid));
+//			System.out.println("uid: " + uid);
 			if (a.isThisUIDInWaiting(uid) == true)
 			{
 				apptIDAL.add(a);
