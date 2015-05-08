@@ -2,7 +2,9 @@ package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.ApptStorageNullImpl;
+import hkust.cse.calendar.apptstorage.MessageDB;
 import hkust.cse.calendar.apptstorage.UserDB;
+import hkust.cse.calendar.unit.Message;
 import hkust.cse.calendar.unit.User;
 
 import java.awt.Container;
@@ -11,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -31,6 +34,7 @@ public class LoginDialog extends JFrame implements ActionListener
 	private JButton closeButton;
 	private JButton signupButton;
 	private UserDB udb;
+	private MessageDB mdb;
 
 	//constructor
 	public LoginDialog()		// Create a dialog to log in
@@ -43,6 +47,7 @@ public class LoginDialog extends JFrame implements ActionListener
 		});
 
 		udb = new UserDB();
+		mdb = new MessageDB();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -120,12 +125,45 @@ public class LoginDialog extends JFrame implements ActionListener
 		{
 			String un = userName.getText();
 			String pw = password.getText();
-			User user = new User(un, pw, 0);  //TODO change to user input
+			User user = new User(un, pw, 0); 
 			boolean allow = udb.checkIfExist(user);
 			if (allow)
 			{
-				//TODO change user to the complete version of user (uid, email, password, ln, fn)
 				user = udb.getFullUser(user);
+				ArrayList<Message> allMessages = mdb.getAllMessageForUser(user.getUID());
+				for (int i = 0; i<allMessages.size(); i++)
+				{
+					switch (allMessages.get(i).getType())
+					{
+					case 1: //Location deletion confirmation
+						int n1 = JOptionPane.showConfirmDialog(null, "Can I delete locatoin X?", "Confirm Location Deletion", JOptionPane.YES_NO_OPTION);
+						if (n1 == JOptionPane.YES_OPTION)
+						{
+							//remove user from list
+							//check if list is empty
+							//if yes, remove location
+						}
+						break;
+					case 2: //User deletion confirmation
+						int n2 = JOptionPane.showConfirmDialog(null, "Can I delete user X?", "Confirm User Deletion", JOptionPane.YES_NO_OPTION);
+						if (n2 == JOptionPane.YES_OPTION)
+						{
+							//remove user from list
+							//check if list is empty
+							//if yes, remove user
+						}
+						break;
+					case 3: //Appointment deletion confirmation
+						int n3 = JOptionPane.showConfirmDialog(null, "Can I delete appointment X?", "Confirm Appointment Deletion", JOptionPane.YES_NO_OPTION);
+						if (n3 == JOptionPane.YES_OPTION)
+						{
+							//remove user from list
+							//check if list is empty
+							//if yes, remove appointment
+						}
+						break;
+					}
+				}
 				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
 				setVisible( false );	
 			}

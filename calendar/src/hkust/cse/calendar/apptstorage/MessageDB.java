@@ -144,5 +144,19 @@ public class MessageDB {
 			return false;
 		}
 	}
+	
+	public ArrayList<Message> getAllMessageForUser(int uid)
+	{
+		ArrayList<Message> allMessage= getMessageList();
+		ArrayList<Message> messageForYou = new ArrayList<Message>();
+		for (Message m:allMessage)
+		{
+			if (m.getUserUIDList().contains(uid) == true)
+			{
+				messageForYou.add(m);
+			}
+		}
+		return messageForYou;
+	}
 
 }
