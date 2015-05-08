@@ -178,6 +178,25 @@ public class ApptDB {
 		return null;
 	}
 	
+	public Appt[] getApptByLocationName(String l)
+	{
+		ArrayList<Appointment> aal = getAppointmentList();
+		for (Appointment a:aal)
+		{
+			if (a.getLocation() != l)
+			{
+				aal.remove(a);
+			}
+		}
+		Appt[] temparray = new Appt[aal.size()];
+		for (int i = 0; i<aal.size(); i++)
+		{
+			Appt tempappt = new Appt(aal.get(i));
+			temparray[i] = tempappt;
+		}
+		return temparray;
+	}
+	
 	public Appt[] getApptByUserTime(User u, TimeSpan d)
 	{
 		Appt[] abt = getApptByTime(d);
