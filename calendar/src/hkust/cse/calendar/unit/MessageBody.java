@@ -14,6 +14,11 @@ public class MessageBody {
 		return userToBeDeletedID;
 	}
 
+	public int getLocationToBeDeletedID() {
+		// TODO Auto-generated method stub
+		return locationID;
+	}
+
 	public int getLocationID() {
 		return locationID;
 	}
@@ -32,6 +37,14 @@ public class MessageBody {
 
 	public int getReceiverID() {
 		return receiverID;
+	}
+
+	@Override
+	public String toString() {
+		return "\nMessageBody [userToBeDeletedID=" + userToBeDeletedID
+				+ ", \nlocationID=" + locationID + ", \napptID=" + apptID
+				+ ", \nresponse=" + response + ", \nexpireDateTime="
+				+ expireDateTime + ", \nreceiverID=" + receiverID + "]";
 	}
 
 	public enum UserResponse {

@@ -61,6 +61,8 @@ public class UserDB
 	public boolean deleteUser(int uid)
 	{
 		//TODO check if this method works correctly
+		// delete his appointment
+		
 		try
 		{
 			stmt = c.createStatement();

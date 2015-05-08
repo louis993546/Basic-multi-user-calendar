@@ -54,17 +54,16 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-
 public class CalGrid extends JFrame implements ActionListener {
 
-	public TimeMachine timeMachine=null; 
+	public TimeMachine timeMachine = null;
 	public GregorianCalendar today;
 	// private User mNewUser;
 	private static final long serialVersionUID = 1L;
 	public ApptStorageControllerImpl controller;
 	public User mCurrUser;
 	private String mCurrTitle = "Desktop Calendar - No User - ";
-	
+
 	public int currentD;
 	public int currentM;
 	public int currentY;
@@ -100,9 +99,8 @@ public class CalGrid extends JFrame implements ActionListener {
 	private JMenu Locationmenu = new JMenu("Location");
 	private JMenu Usermenu = new JMenu("User");
 	private JMenu Appmenu = new JMenu("Appointment");
-	private JMenu Clockmenu = new JMenu("Clock"); 
+	private JMenu Clockmenu = new JMenu("Clock");
 	private int currentUserID;
-	
 
 	private final String[] holidays = {
 			"New Years Day\nSpring Festival\n",
@@ -118,35 +116,71 @@ public class CalGrid extends JFrame implements ActionListener {
 			"Veterans Day(US)\nThanksgiving Day(US)\n", "Christmas\n" };
 
 	private AppScheduler setAppDial;
-	
-	//database
+
+	// database
 	ApptDB adb = new ApptDB();
 	UserDB udb = new UserDB();
 	LocationDB ldb;
 
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
+
+		timeMachine = TimeMachine.getInstance();// new TimeMachine(this);
+		timeMachine.setCg(this);
 		
 		ldb = LocationDB.getInstance();
-		
+
 		currentUserID = con.getDefaultUser().getUID();
-		System.out.println("currentUserID is "+currentUserID);
-		
+		System.out.println("currentUserID is " + currentUserID);
+
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
-		
-		//msg store
-		SortedMap<Integer, MessageBody> delUserMap = MessageStorage.getDeleteUser();
-		for(int i:delUserMap.keySet()){//MessageBody mb: delUserMap.values()){
+
+		// msg store
+		SortedMap<Integer, MessageBody> delUserMap = MessageStorage
+				.getDeleteUser();
+		for (int i : delUserMap.keySet()) {// MessageBody mb:
+											// delUserMap.values()){
 			MessageBody mb = delUserMap.get(i);
-			if(mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet){
-				MessageStorage.popupMsgAndSave(i,"user");//??
+			System.out
+					.println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
+							+ (mb.getReceiverID() == currentUserID)
+							+ " && "
+							+ (mb.getResponse() == MessageBody.UserResponse.NotYet));
+			if (mb.getExpireDateTime().isBefore(
+					timeMachine.getTMTimestamp().toLocalDateTime())) {
+				// del expired msg and check status
+				int userToBeDeletedID = mb.getUserToBeDeletedID();
+				delUserMap.remove(i);
+				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
+					// really delete the user
+					// since user is the last one to confirm and msg is expired
+
+				}
+			} else if (mb.getReceiverID() == currentUserID
+					&& mb.getResponse() == MessageBody.UserResponse.NotYet) {
+				MessageStorage.popupMsgAndSave(i, "user");// ??
 			}
 		}
-		
+
+		SortedMap<Integer, MessageBody> delLocationMap = MessageStorage
+				.getDeleteLocation();
+		for (int i : delLocationMap.keySet()) {// MessageBody mb:
+												// delLocationMap.values()){
+			MessageBody mb = delLocationMap.get(i);
+			System.out
+					.println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.LocationResponse.NotYet"
+							+ (mb.getReceiverID() == currentUserID)
+							+ " && "
+							+ (mb.getResponse() == MessageBody.UserResponse.NotYet));
+			if (mb.getReceiverID() == currentUserID
+					&& mb.getResponse() == MessageBody.UserResponse.NotYet) {
+				MessageStorage.popupMsgAndSave(i, "location");// ??
+			}
+		}
 
 		controller = con;
 		mCurrUser = null;
@@ -161,16 +195,12 @@ public class CalGrid extends JFrame implements ActionListener {
 
 		setJMenuBar(createMenuBar());
 
-		//today = new GregorianCalendar();
-		timeMachine = TimeMachine.getInstance();//new TimeMachine(this);
-		timeMachine.setCg(this);
 		today = new GregorianCalendar();
 		today.setTime(timeMachine.getTMTimestamp());
 		currentY = today.get(Calendar.YEAR);
 		currentD = today.get(Calendar.DAY_OF_MONTH);
 		int temp = today.get(Calendar.MONTH) + 1;
 		currentM = 12;
-		
 
 		getDateArray(data);
 
@@ -222,26 +252,31 @@ public class CalGrid extends JFrame implements ActionListener {
 		leftP.add(yearGroup, BorderLayout.NORTH);
 
 		TableModel dataModel = prepareTableModel();
-		
+
 		tableView = new JTable(dataModel) {
 			public TableCellRenderer getCellRenderer(int row, int col) {
 				String tem = (String) data[row][col];
-				
-				
+
 				if (tem.equals("") == false) {
-					Timestamp currentDateStart = Timestamp.valueOf(String.format("%04d-%02d-%02d 00:00:00.0", currentY, currentM, Integer.parseInt(tem)));
-					Timestamp currentDateEnd = Timestamp.valueOf(String.format("%04d-%02d-%02d 23:59:59.0", currentY, currentM, Integer.parseInt(tem)));
-					TimeSpan currentDateSpan = new TimeSpan(currentDateStart, currentDateEnd);
-					boolean hasAppointment=controller.RetrieveAppts(mCurrUser, currentDateSpan).length>0;
+					Timestamp currentDateStart = Timestamp.valueOf(String
+							.format("%04d-%02d-%02d 00:00:00.0", currentY,
+									currentM, Integer.parseInt(tem)));
+					Timestamp currentDateEnd = Timestamp.valueOf(String.format(
+							"%04d-%02d-%02d 23:59:59.0", currentY, currentM,
+							Integer.parseInt(tem)));
+					TimeSpan currentDateSpan = new TimeSpan(currentDateStart,
+							currentDateEnd);
+					boolean hasAppointment = controller.RetrieveAppts(
+							mCurrUser, currentDateSpan).length > 0;
 
 					try {
 						if (today.get(Calendar.YEAR) == currentY
 								&& today.get(Calendar.MONTH) + 1 == currentM
 								&& today.get(Calendar.DAY_OF_MONTH) == Integer
 										.parseInt(tem)) {
-							return new CalCellRenderer(today,hasAppointment);
-						}else{
-							return new CalCellRenderer(null,hasAppointment);
+							return new CalCellRenderer(today, hasAppointment);
+						} else {
+							return new CalCellRenderer(null, hasAppointment);
 						}
 					} catch (Throwable e) {
 						System.exit(1);
@@ -279,19 +314,18 @@ public class CalGrid extends JFrame implements ActionListener {
 		whole = new JSplitPane(JSplitPane.VERTICAL_SPLIT, upper, applist);
 		getContentPane().add(whole);
 
-		
 		initializeSystem(); // for you to add.
-		//mCurrUser = getCurrUser(); // totally meaningless code
+		// mCurrUser = getCurrUser(); // totally meaningless code
 		Appmenu.setEnabled(true);
 		Locationmenu.setEnabled(true);
-		Usermenu.setEnabled(true); //iff the current user is admin
+		Usermenu.setEnabled(true); // iff the current user is admin
 		Clockmenu.setEnabled(true);
 
 		rc = new ReminderChecker(this, timeMachine);
-		
+
 		UpdateCal();
-		pack();				// sized the window to a preferred size
-		setVisible(true);	//set the window to be visible
+		pack(); // sized the window to a preferred size
+		setVisible(true); // set the window to be visible
 	}
 
 	public TableModel prepareTableModel() {
@@ -380,40 +414,30 @@ public class CalGrid extends JFrame implements ActionListener {
 					tableView.setModel(t);
 					tableView.repaint();
 					controller.LoadApptFromXml();
-					
-				}
-				else if (e.getActionCommand().equals("Modify Location")) {
+
+				} else if (e.getActionCommand().equals("Modify Location")) {
 					new ModifyLocationDialog(ldb);
-				}
-				else if (e.getActionCommand().equals("New Location")) {
+				} else if (e.getActionCommand().equals("New Location")) {
 					new NewLocationDialog(ldb);
-				}
-				else if (e.getActionCommand().equals("Appointment List"))
-				{
-					try
-					{
+				} else if (e.getActionCommand().equals("Appointment List")) {
+					try {
 						ApptListDialog a = new ApptListDialog();
+					} catch (Exception ex) {
+						System.err.println(ex.getClass().getName() + ": "
+								+ ex.getMessage());
 					}
-					catch (Exception ex)
-					{
-						System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
-					}
-				}
-				else if (e.getActionCommand().equals("Modify Clock")){
+				} else if (e.getActionCommand().equals("Modify Clock")) {
 					TimeMachineDialog tmd = new TimeMachineDialog(CalGrid.this);
-				
-				}
-				else if (e.getActionCommand().equals("Modify User")){
+
+				} else if (e.getActionCommand().equals("Modify User")) {
 					ModifyUserDialog mld = new ModifyUserDialog(udb);
-				}	
-				else if (e.getActionCommand().equals("New User")){
+				} else if (e.getActionCommand().equals("New User")) {
 					SignUpDialog sud = new SignUpDialog();
-				}	
-				else if(e.getActionCommand().equals("Update Account for normal user")){
-					UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(currentUserID);
-				}
-				else
-				{
+				} else if (e.getActionCommand().equals(
+						"Update Account for normal user")) {
+					UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(
+							currentUserID);
+				} else {
 					System.out.println("Somethings wrong");
 				}
 			}
@@ -427,7 +451,10 @@ public class CalGrid extends JFrame implements ActionListener {
 		Access.getAccessibleContext().setAccessibleDescription(
 				"Account Access Management");
 
-		mi = (JMenuItem) Access.add(new JMenuItem("Logout"));	//adding a Logout menu button for user to logout
+		mi = (JMenuItem) Access.add(new JMenuItem("Logout")); // adding a Logout
+																// menu button
+																// for user to
+																// logout
 		mi.setMnemonic('L');
 		mi.getAccessibleContext().setAccessibleDescription("For user logout");
 
@@ -435,19 +462,20 @@ public class CalGrid extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				int n = JOptionPane.showConfirmDialog(null, "Logout?",
 						"Comfirm", JOptionPane.YES_NO_OPTION);
-				if (n == JOptionPane.YES_OPTION){
-					//controller.dumpStorageToFile();
-					//System.out.println("closed");
+				if (n == JOptionPane.YES_OPTION) {
+					// controller.dumpStorageToFile();
+					// System.out.println("closed");
 					dispose();
 					CalendarMain.logOut = true;
-					return;	//return to CalendarMain()
+					return; // return to CalendarMain()
 				}
 			}
 		});
 
-		mi = (JMenuItem) Access.add(new JMenuItem("Update Account for normal user"));
+		mi = (JMenuItem) Access.add(new JMenuItem(
+				"Update Account for normal user"));
 		mi.addActionListener(listener);
-		
+
 		mi = (JMenuItem) Access.add(new JMenuItem("Exit"));
 		mi.setMnemonic('E');
 		mi.getAccessibleContext().setAccessibleDescription("Exit Program");
@@ -472,16 +500,16 @@ public class CalGrid extends JFrame implements ActionListener {
 		ald.addActionListener(listener);
 		Appmenu.add(mi);
 		Appmenu.add(ald);
-		
+
 		int admin = this.controller.getDefaultUser().Admin();
-		if(admin == 1){
+		if (admin == 1) {
 
-
-			//modify location
+			// modify location
 			menuBar.add(Locationmenu);
 			Locationmenu.setEnabled(false);
 			Locationmenu.setMnemonic('p');
-			Appmenu.getAccessibleContext().setAccessibleDescription("Location Management:");
+			Appmenu.getAccessibleContext().setAccessibleDescription(
+					"Location Management:");
 			JMenuItem ml = new JMenuItem("Modify Location");
 			ml.addActionListener(listener);
 			JMenuItem nl = new JMenuItem("New Location");
@@ -489,11 +517,12 @@ public class CalGrid extends JFrame implements ActionListener {
 			Locationmenu.add(ml);
 			Locationmenu.add(nl);
 
-			//modify user
+			// modify user
 			menuBar.add(Usermenu);
 			Usermenu.setEnabled(false);
 			Usermenu.setMnemonic('p');
-			Appmenu.getAccessibleContext().setAccessibleDescription("User Management:");
+			Appmenu.getAccessibleContext().setAccessibleDescription(
+					"User Management:");
 			JMenuItem mu = new JMenuItem("Modify User");
 			JMenuItem nu = new JMenuItem("New User");
 			mu.addActionListener(listener);
@@ -501,11 +530,12 @@ public class CalGrid extends JFrame implements ActionListener {
 			Usermenu.add(mu);
 			Usermenu.add(nu);
 
-			//modify clock
+			// modify clock
 			menuBar.add(Clockmenu);
 			Clockmenu.setEnabled(false);
 			Clockmenu.setMnemonic('c');
-			Appmenu.getAccessibleContext().setAccessibleDescription("Clock Management:");
+			Appmenu.getAccessibleContext().setAccessibleDescription(
+					"Clock Management:");
 			JMenuItem mc = new JMenuItem("Modify Clock");
 			mc.addActionListener(listener);
 			Clockmenu.add(mc);
@@ -514,7 +544,8 @@ public class CalGrid extends JFrame implements ActionListener {
 	}
 
 	private void initializeSystem() {
-		mCurrUser = this.controller.getDefaultUser();	//get User from controller
+		mCurrUser = this.controller.getDefaultUser(); // get User from
+														// controller
 		controller.LoadApptFromXml();
 		checkUpdateJoinAppt();
 	}
@@ -589,10 +620,8 @@ public class CalGrid extends JFrame implements ActionListener {
 			Appt[] monthAppts = null;
 			GetMonthAppts();
 
-			for (int i = 0; i < 6; i++)
-			{
-				for (int j = 0; j < 7; j++)
-				{
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 7; j++) {
 					apptMarker[i][j] = new Vector<Object>(10, 1);
 				}
 			}
@@ -635,27 +664,27 @@ public class CalGrid extends JFrame implements ActionListener {
 		previousRow = tableView.getSelectedRow();
 		previousCol = tableView.getSelectedColumn();
 	}
-	
+
 	private void mouseResponse() {
 		int[] selectedRows = tableView.getSelectedRows();
 		int[] selectedCols = tableView.getSelectedColumns();
-		if(tableView.getSelectedRow() == previousRow && tableView.getSelectedColumn() == previousCol){
+		if (tableView.getSelectedRow() == previousRow
+				&& tableView.getSelectedColumn() == previousCol) {
 			currentRow = selectedRows[selectedRows.length - 1];
 			currentCol = selectedCols[selectedCols.length - 1];
-		}
-		else if(tableView.getSelectedRow() != previousRow && tableView.getSelectedColumn() == previousCol){
+		} else if (tableView.getSelectedRow() != previousRow
+				&& tableView.getSelectedColumn() == previousCol) {
 			currentRow = tableView.getSelectedRow();
 			currentCol = selectedCols[selectedCols.length - 1];
-		}
-		else if(tableView.getSelectedRow() == previousRow && tableView.getSelectedColumn() != previousCol){
+		} else if (tableView.getSelectedRow() == previousRow
+				&& tableView.getSelectedColumn() != previousCol) {
 			currentRow = selectedRows[selectedRows.length - 1];
 			currentCol = tableView.getSelectedColumn();
-		}
-		else{
+		} else {
 			currentRow = tableView.getSelectedRow();
 			currentCol = tableView.getSelectedColumn();
 		}
-		
+
 		if (currentRow > 5 || currentRow < 0 || currentCol < 0
 				|| currentCol > 6)
 			return;
@@ -700,23 +729,23 @@ public class CalGrid extends JFrame implements ActionListener {
 		temp = new Integer(currentD);
 		Timestamp start = new Timestamp(0);
 		start.setYear(currentY);
-		start.setMonth(currentM-1);
+		start.setMonth(currentM - 1);
 		start.setDate(currentD);
 		start.setHours(0);
 		start.setMinutes(0);
 		start.setSeconds(0);
-		
+
 		Timestamp end = new Timestamp(0);
 		end.setYear(currentY);
-		end.setMonth(currentM-1);
+		end.setMonth(currentM - 1);
 		end.setDate(currentD);
 		end.setHours(23);
 		end.setMinutes(59);
 		end.setSeconds(59);
-		
+
 		TimeSpan period = new TimeSpan(start, end);
 		Appt[] allAppt = controller.RetrieveAppts(mCurrUser, period);
-		
+
 		return controller.RetrieveAppts(mCurrUser, period);
 	}
 
@@ -727,25 +756,22 @@ public class CalGrid extends JFrame implements ActionListener {
 	public User getCurrUser() {
 		return mCurrUser;
 	}
-	
+
 	// check for any invite or update from join appointment
-	public void checkUpdateJoinAppt(){
+	public void checkUpdateJoinAppt() {
 		// Fix Me!
 	}
-	
-	public void updateReminderCheckerApptlist()
-	{
+
+	public void updateReminderCheckerApptlist() {
 		rc.updateRal();
 	}
-	
-	public void updateDB()
-	{
+
+	public void updateDB() {
 		controller.LoadApptFromXml();
 	}
-	
-	public int getCurrentUserID()
-	{
-		return currentUserID; 
+
+	public int getCurrentUserID() {
+		return currentUserID;
 	}
-	
+
 }

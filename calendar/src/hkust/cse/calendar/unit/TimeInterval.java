@@ -116,6 +116,7 @@ public class TimeInterval {
 		for (LocalDate datetmp : tmpKeySet) {
 			BitSet tmpBitSet = timeIntervalMap.get(datetmp);
 			tmpBitSet.or(anotherTimeInterval.timeIntervalMap.get(datetmp));
+			timeIntervalMap.put(datetmp,tmpBitSet);
 		}
 		
 		System.out.println(this);
