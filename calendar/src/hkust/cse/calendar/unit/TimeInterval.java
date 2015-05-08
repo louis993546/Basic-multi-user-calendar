@@ -132,13 +132,24 @@ public class TimeInterval {
 	{
 		System.out.println(abu[0].TimeSpan().toString());
 		TimeInterval ti = new TimeInterval(abu[0].TimeSpan());
-		System.out.println(ti.toString());
+		System.out.println("a1: " + ti.toString());
 		for (int i = 0; i<abu.length; i++)
 		{
-			System.out.println(abu[i].TimeSpan());
+			System.out.println("a2: " + abu[i].TimeSpan());
 			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
 		}
-		System.out.println(ti.toString());
+		System.out.println("a3: " + ti.toString());
+		return ti;
+	}
+	
+	public TimeInterval addTimeInterval(TimeInterval ti, Appt[]abu)
+	{
+		for (int i = 0; i<abu.length; i++)
+		{
+			System.out.println("a4: " + abu[i].TimeSpan());
+			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
+		}
+		System.out.println("a5: " + ti.toString());
 		return ti;
 	}
 	
