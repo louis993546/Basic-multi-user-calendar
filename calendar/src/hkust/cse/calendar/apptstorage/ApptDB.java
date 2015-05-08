@@ -462,7 +462,7 @@ public class ApptDB {
 		{	
 			stmt = c.createStatement();
 	        sql = "UPDATE APPOINTMENT SET"
-	    		  + "        TITLE = '"           + newAppt.getTitle()
+	    		  + "      TITLE = '"           + newAppt.getTitle()
 	    		  + "' ,   DESCRIPTION = '"     + newAppt.getDescription()
 	    		  + "' ,   LOCATION = '"        + newAppt.getLocation()
 	    		  + "' ,   START_TIME_HOUR="    + newAppt.getStartHour()
@@ -478,9 +478,9 @@ public class ApptDB {
 	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
 	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
 	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
-	    		  + "  ,   GOING = "            + newAppt.getGoingList()
-	    		  + "  ,   WAITING = "          + newAppt.getWaitingList()
-	    		  + "  WHERE ID="               + id
+	    		  + "  ,   GOING = '"            + newAppt.getGoingList()
+	    		  + "' ,   WAITING = '"          + newAppt.getWaitingList()
+	    		  + "'  WHERE ID="               + id
 	    		  + ";";
 			stmt.executeUpdate(sql);
 

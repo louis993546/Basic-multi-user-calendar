@@ -32,7 +32,6 @@ public class Appointment implements Comparable<Appointment> {
 	private int reminderTime;
 	private int reminderUnit;
 	private LinkedList<Integer> going;
-//	private LinkedList<String> reject;
 	private LinkedList<Integer> waiting;
 	private int id;
 	private int jid;

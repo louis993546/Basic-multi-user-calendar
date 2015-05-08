@@ -332,7 +332,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	
 	AppScheduler(String title, CalGrid cal, Appt appt)
 	{
-		//TODO need to get all info to their box/field but it is not working perfectly
 		tempAppt = appt;
 		saveOrModify=1;
 		commonConstructor(title, cal, 480);
@@ -835,6 +834,19 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		reminderChB.setSelected(apptR);
 		
 		//TODO invitation and stuff like that in phrase 2
+		for (int a:appt.getWaitingList())
+		{
+			if (InvitingUIDAL.contains(a) == false)
+			{
+				InvitingUIDAL.add(a);
+			}
+		}
+	}
+	
+	public boolean resetInvitingList()
+	{
+		InvitingUIDAL = new LinkedList<Integer>();
+		return true;
 	}
 
 	public boolean addToGoingList(Integer u)

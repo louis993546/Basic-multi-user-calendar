@@ -81,6 +81,11 @@ public class InviteDialog extends JFrame implements ActionListener
 		UserStringAL.remove(parent.getCurrentUserEmail());
 		
 		InvitingStringAL = parent.getInvitingAL();
+		
+		for (String s:InvitingStringAL)
+		{
+			UserStringAL.remove(s);
+		}
 
 		// create a new JPanel to hold everything
 		JPanel all = new JPanel();
@@ -148,6 +153,7 @@ public class InviteDialog extends JFrame implements ActionListener
 			//turn InvitingList into an array of uids
 			ArrayList<Integer> InvitingListUID = new ArrayList<Integer>();
 			int ilmSize = InvitingListModel.getSize();
+			parent.resetInvitingList();
 			for (int i = 0; i<ilmSize; i++)
 			{
 				System.out.println("Checking: " + InvitingListModel.get(i).toString());
