@@ -86,18 +86,19 @@ public class User{
 		return mFirstName;
 	}
 	
-	public void LastName(String ln)
+	public void setLastName(String ln)
 	{
 		mLastName = ln;
 	}
 	
-	public String LastName()
+	public String getLastName()
 	{
 		return mLastName;
 	}
 	
-	public int UID()
+	public int getUID()
 	{
 		return mID;
 	}
+
 }

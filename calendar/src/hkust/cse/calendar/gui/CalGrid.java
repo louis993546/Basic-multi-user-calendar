@@ -129,7 +129,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		
 		ldb = LocationDB.getInstance();
 		
-		currentUserID = con.getDefaultUser().UID();
+		currentUserID = con.getDefaultUser().getUID();
 		System.out.println("currentUserID is "+currentUserID);
 		
 		addWindowListener(new WindowAdapter() {

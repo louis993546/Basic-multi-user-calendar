@@ -5,6 +5,7 @@ import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 
 import java.awt.BorderLayout;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -90,7 +92,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JComboBox rCB;
 	private JTextArea detailArea;
 	private JSplitPane pDes;
-	JPanel detailPanel;
+	private JPanel detailPanel;
 	private Appt tempAppt;
 	private int saveOrModify = 0;
 	private int idofappt=0;
@@ -100,8 +102,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private UserDB udb;
 	private LinkedList<Integer> GoingUIDAL;
 	private LinkedList<Integer> InvitingUIDAL;
-
-	
 	
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		udb = new UserDB();
@@ -534,14 +534,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-		location = location.substring(0, location.indexOf("("));
-		System.out.println("location: " + location);
-		System.out.println("ldb.getCapacityByName(location)" + ldb.getCapacityByName(location));
-		if (ldb.getCapacityByName(location) < (InvitingUIDAL.size() + 1))
+		if (location != "N/A")
 		{
-			JOptionPane.showMessageDialog(this, "Please invite less people or select a larger location",
-					"Error", JOptionPane.ERROR_MESSAGE);
-			return false;
+			location = location.substring(0, location.indexOf("("));
+			System.out.println("location: " + location);
+			System.out.println("ldb.getCapacityByName(location)" + ldb.getCapacityByName(location));
+			if (ldb.getCapacityByName(location) < (InvitingUIDAL.size() + 1))
+			{
+				JOptionPane.showMessageDialog(this, "Please invite less people or select a larger location",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
 		}
 		
 		//get reminders
@@ -918,6 +921,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	{
 		return this.parent.mCurrUser.getEmail();
 	}
+	
+	public int getCurrentUserUID()
+	{
+		return this.parent.mCurrUser.getUID();
+	}
 
 	private void allDisableEdit(){
 		yearSF.setEditable(false);
@@ -932,5 +940,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		eTimeM.setEditable(false);
 		titleField.setEditable(false);
 		detailArea.setEditable(false);
+	}
+	
+	public Timestamp getCurrentTime()
+	{
+		return TimeMachine.getInstance().getTMTimestamp();
 	}
 }
