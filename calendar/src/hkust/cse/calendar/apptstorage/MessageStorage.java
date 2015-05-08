@@ -1,10 +1,16 @@
 package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.gui.AcceptOrNotDialog;
+import hkust.cse.calendar.gui.AppList;
+import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.MessageBody;
 import hkust.cse.calendar.unit.TimeMachine;
+import hkust.cse.calendar.unit.TimeSpan;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -42,6 +48,26 @@ public class MessageStorage {
 		
 		
 		//appt[] apptlist=getApptListInvolveUserInFuture(uid);
+//		Appt[] apptlist=getApptListInvolveUserInFuture(IDofUserToBeDeleted);
+//		
+//		Map<Integer, List<LocalDateTime>> CreatorToEndTimesMap=new HashMap<Integer, List<LocalDateTime>>();
+//		for(Appt tmpappt: apptlist){
+//			tmpappt.getAppointment().getCreaterUID();
+//			TimeSpan tmpTimeSpan = tmpappt.getAppointment().getTimeSpan();
+//			
+//			
+//		}
+//		
+//		
+//        if(!hashMap.containsKey(locationId)){
+//            List<Location> list= new ArrayList<Location>();
+//            list.add(student);
+//        hashMap.put(locationId,list);
+//        }
+//        else
+//            hashMap.get(locationId).add(student);
+//		
+//		
 		LocalDateTime tmptime = TimeMachine.getInstance().getTMTimestamp().toLocalDateTime().plusHours(6);
 		tmpmap.put(IDofUserToBeDeleted, tmptime);
 		return tmpmap;
