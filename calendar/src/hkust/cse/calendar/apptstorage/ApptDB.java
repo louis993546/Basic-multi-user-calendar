@@ -240,25 +240,27 @@ public class ApptDB {
 	public Appt[] getFutureApptWithUser(int u)
 	{
 		ArrayList<Appointment> result = getAppointmentList();
-		ArrayList<Appointment> result2 = result;
 		System.out.println("Result: "+ result.size());
-		for (Appointment a:result2)
+		for (int i = 0; i<result.size(); i++)
 		{
-			if (a.getCreaterUID() != u)
+			if (result.get(i).getCreaterUID() != u)
 			{
-				if (a.getTimeSpan().EndTime().after(TimeMachine.getInstance().getTMTimestamp()) == false)
+				if (result.get(i).getTimeSpan().EndTime().after(TimeMachine.getInstance().getTMTimestamp()) == false)
 				{
-					result.remove(a);
+					result.remove(i);
 				}
-				if (a.getGoingList().contains(u) == false)
+				else
 				{
-					if (a.getWaitingList().contains(u) == false)
+					if (result.get(i).getGoingList().contains(result.get(i)) == false)
 					{
-						result.remove(a);
+						if (result.get(i).getWaitingList().contains(result.get(i)) == false)
+						{
+							result.remove(i);
+						}
 					}
 				}
+
 			}
-			
 		}
 		Appt[] tempA = new Appt[result.size()];
 		for (int i = 0; i<result.size(); i++)
