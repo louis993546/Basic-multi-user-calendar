@@ -36,11 +36,11 @@ public class MessageStorage {
 		return deleteLocation;
 	}
 
-	public static void popupMsgAndSave(int i, String userOrLocation) {
-		MessageBody tmpMB = deleteUser.get(i);
+	public static void popupMsgAndSave(int msgid, String userOrLocation) {
+		MessageBody tmpMB = deleteUser.get(msgid);
 		System.out.println("user with id " + tmpMB.getUserToBeDeletedID()
 				+ "will be deleted. Do you accept?");
-		AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog();
+		AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(msgid,"user");
 		// if yes, if no
 
 	}
@@ -52,7 +52,8 @@ public class MessageStorage {
 		SortedMap<Integer, LocalDateTime> tmpmap = new TreeMap<Integer, LocalDateTime>();
 
 		// appt[] apptlist=getApptListInvolveUserInFuture(uid);
-		Appt[] apptlist =null;// getApptListInvolveUserInFuture(IDofUserToBeDeleted);
+		ApptDB adb=new ApptDB();
+		Appt[] apptlist =adb.getFutureApptWithUser(IDofUserToBeDeleted);// getApptListInvolveUserInFuture(IDofUserToBeDeleted);
 
 		Map<Integer, List<LocalDateTime>> CreatorToEndTimesMap = new HashMap<Integer, List<LocalDateTime>>();
 		for (Appt tmpappt : apptlist) {
@@ -85,6 +86,20 @@ public class MessageStorage {
 		//now we got max time
 
 		return CreatorToMaxEndTimeMap;
+	}
+	
+	// find id (user, location)
+	public static boolean isExistID(int id ,String userOrLoc){
+		if(userOrLoc.equals("user")){
+			for (MessageBody tmpmb: deleteUser.values()) {
+				if(tmpmb.getUserToBeDeletedID()==id){
+					return true;
+				}
+			}
+		}else if(userOrLoc.equals("location")){
+			
+		}
+		return false;
 	}
 
 }

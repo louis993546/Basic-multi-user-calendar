@@ -116,7 +116,7 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 //					insertKey = lastkey + 1;
 //					System.out.println("Insert msg after last key" + lastkey);
 				}
-				
+				System.out.println("id is "+id);
 				SortedMap<Integer, LocalDateTime> amap = MessageStorage.getCreatorToLastRelatedEventMap_notfinish(id);
 				
 				for(int key:amap.keySet()){

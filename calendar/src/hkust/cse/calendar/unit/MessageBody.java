@@ -34,6 +34,14 @@ public class MessageBody {
 		return receiverID;
 	}
 
+	@Override
+	public String toString() {
+		return "\nMessageBody [userToBeDeletedID=" + userToBeDeletedID
+				+ ", \nlocationID=" + locationID + ", \napptID=" + apptID
+				+ ", \nresponse=" + response + ", \nexpireDateTime="
+				+ expireDateTime + ", \nreceiverID=" + receiverID + "]";
+	}
+
 	public enum UserResponse {
 		Yes, No, NotYet
 	}
