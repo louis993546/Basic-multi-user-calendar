@@ -127,7 +127,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 	public void updateDefaultUser() 
 	{
 		//TODO go to udb to get the user info again
-		defaultUser = udb.getUserWithUID(defaultUser.UID());
+		defaultUser = udb.getUserWithUID(defaultUser.getUID());
 	}
 
 }

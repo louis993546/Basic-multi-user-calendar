@@ -37,6 +37,10 @@ public class TimeInterval {
 
 	}
 
+	public TimeInterval(Appt[] apptByUser2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void intersectWith(TimeInterval anotherTimeInterval) {
 		Set<LocalDate> tmpKeySet = timeIntervalMap.keySet();
 		tmpKeySet.removeAll(anotherTimeInterval.timeIntervalMap.keySet());

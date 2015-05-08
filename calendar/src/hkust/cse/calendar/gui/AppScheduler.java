@@ -5,6 +5,7 @@ import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 
 import java.awt.BorderLayout;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -90,7 +92,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JComboBox rCB;
 	private JTextArea detailArea;
 	private JSplitPane pDes;
-	JPanel detailPanel;
+	private JPanel detailPanel;
 	private Appt tempAppt;
 	private int saveOrModify = 0;
 	private int idofappt=0;
@@ -100,8 +102,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private UserDB udb;
 	private LinkedList<Integer> GoingUIDAL;
 	private LinkedList<Integer> InvitingUIDAL;
-
-	
 	
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		udb = new UserDB();
@@ -918,6 +918,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	{
 		return this.parent.mCurrUser.getEmail();
 	}
+	
+	public int getCurrentUserUID()
+	{
+		return this.parent.mCurrUser.getUID();
+	}
 
 	private void allDisableEdit(){
 		yearSF.setEditable(false);
@@ -932,5 +937,10 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		eTimeM.setEditable(false);
 		titleField.setEditable(false);
 		detailArea.setEditable(false);
+	}
+	
+	public Timestamp getCurrentTime()
+	{
+		return TimeMachine.getInstance().getTMTimestamp();
 	}
 }

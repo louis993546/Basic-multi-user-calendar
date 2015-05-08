@@ -204,13 +204,13 @@ public class ApptDB {
 		ArrayList<Integer> addedApptID = new ArrayList<Integer>();
 		for (Appt a:abt)
 		{
-			if (a.getAppointment().getCreaterUID() == u.UID())
+			if (a.getAppointment().getCreaterUID() == u.getUID())
 			{
 				addedApptID.add(a.getID());
 				temp.add(a);
 			}
 		}
-		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.UID(), abt);
+		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.getUID(), abt);
 		for (Appointment a:allGoingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -219,7 +219,7 @@ public class ApptDB {
 				temp.add(temp2);
 			}
 		}
-		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.UID(), abt);
+		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.getUID(), abt);
 		for (Appointment a:allWaitingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -234,6 +234,37 @@ public class ApptDB {
 			temparray[i] = temp.get(i);
 		}
 		return temparray;
+	}
+	
+	public ArrayList<Appointment> getApptByUser(int u)
+	{
+		ArrayList<Appointment> result = getAppointmentList();
+		for (Appointment a:result)
+		{
+			if (a.getCreaterUID() != u)
+			{
+				if (a.getGoingList().contains(u) == false)
+				{
+					if (a.getWaitingList().contains(u) == false)
+					{
+						result.remove(a);
+					}
+				}
+			}
+			
+		}
+		return result;
+	}
+	
+	public Appt[] getApptByUser2(int u)
+	{
+		ArrayList<Appointment> a = getApptByUser(u);
+		Appt[] tempA = new Appt[a.size()];
+		for (int i = 0; i<a.size(); i++)
+		{
+			tempA[i] = new Appt(a.get(i));
+		}
+		return tempA;
 	}
 
 	public Appt[] getApptByTime(TimeSpan d)
