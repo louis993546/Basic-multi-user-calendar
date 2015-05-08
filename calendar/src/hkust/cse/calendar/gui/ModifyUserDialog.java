@@ -1,6 +1,7 @@
-
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.unit.MessageBody;
+import hkust.cse.calendar.apptstorage.MessageStorage;
 import hkust.cse.calendar.apptstorage.UserDB;
 
 import java.awt.Container;
@@ -8,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.SortedMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,6 +22,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
+import hkust.cse.calendar.apptstorage.MessageStorage;
 
 public class ModifyUserDialog extends JFrame implements ActionListener {
 	private JList<String> UserList;
@@ -83,31 +88,60 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
-	{
-		if (e.getSource() == deleteButton) 
-		{
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == deleteButton) {
 			int id = udb.getUserUID(UserList.getSelectedValue().toString());
-			if ((id != 0) || (id != -1))
-			{
-				udb.deleteUser(id);
-				UserListModel.removeElementAt(UserList.getSelectedIndex());
+			if ((id != 0) || (id != -1)) {
+				//if user is not lock
+				//	lock it.
+				SortedMap<Integer, MessageBody> tmpmap = MessageStorage
+						.getDeleteUser();
+
+				/*MessageBody tmpmsgbody = new MessageBody(id, -1, -1,
+						MessageBody.UserResponse.NotYet, LocalDateTime.now(),
+						
+						id);*/
+
+				// get all creator of all event involved the user
+				// get creator 's last event involed that user 's end time
+				int insertKey = -1;
+				if (tmpmap.isEmpty()) {
+					MessageBody tmpmbody = new MessageBody(-1,-1,-1,MessageBody.UserResponse.NotYet,LocalDateTime.now(), -1);
+					tmpmap.put(-1, tmpmbody);
+					//dummy
+//					insertKey = 1;
+//					System.out.println("Insert msg at key1 for this empty map");
+				} else {
+//					int lastkey = tmpmap.lastKey();
+//					insertKey = lastkey + 1;
+//					System.out.println("Insert msg after last key" + lastkey);
+				}
+				
+				SortedMap<Integer, LocalDateTime> amap = MessageStorage.getCreatorToLastRelatedEventMap_notfinish(id);
+				
+				for(int key:amap.keySet()){
+					MessageBody tmpmsgbody2 = new MessageBody(id, -1, -1, MessageBody.UserResponse.NotYet, amap.get(key), key);
+					tmpmap.put(tmpmap.lastKey()+1, tmpmsgbody2);
+				}
+				
+				System.out.println("tmpmap is"+tmpmap);
+				// after last id
+				// udb.deleteUser(id);
+				// UserListModel.removeElementAt(UserList.getSelectedIndex());
 			}
-		} else if (e.getSource() == modifyButton) 
-		{
-			int uid = udb.getUserUID(UserList.getSelectedValue()
-					.toString());
-			if ((uid != 0) || (uid != -1))
-			{
-				new UpdateAccountInfoDialog(uid);
+
+		} else if (e.getSource() == modifyButton) {
+			int uid = udb.getUserUID(UserList.getSelectedValue().toString());
+			if ((uid != 0) || (uid != -1)) {
+				UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(uid);
+
+
 				dispose();
 			}
 
-		} else if (e.getSource() == exitButton) 
-		{
+		} else if (e.getSource() == exitButton) {
 			dispose();
-		} else 
-		{
+		} else {
 			System.out.println("Something's wrong");
 		}
 	}

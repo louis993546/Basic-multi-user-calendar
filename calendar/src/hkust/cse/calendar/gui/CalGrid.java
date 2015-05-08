@@ -4,8 +4,10 @@ import hkust.cse.calendar.Main.CalendarMain;
 import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.apptstorage.MessageStorage;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.MessageBody;
 import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
@@ -24,6 +26,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.SortedMap;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
@@ -127,13 +130,23 @@ public class CalGrid extends JFrame implements ActionListener {
 		ldb = LocationDB.getInstance();
 		
 		currentUserID = con.getDefaultUser().UID();
-		System.out.println(currentUserID);
+		System.out.println("currentUserID is "+currentUserID);
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
+		
+		//msg store
+		SortedMap<Integer, MessageBody> delUserMap = MessageStorage.getDeleteUser();
+		for(int i:delUserMap.keySet()){//MessageBody mb: delUserMap.values()){
+			MessageBody mb = delUserMap.get(i);
+			if(mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet){
+				MessageStorage.popupMsgAndSave(i,"user");//??
+			}
+		}
+		
 
 		controller = con;
 		mCurrUser = null;
