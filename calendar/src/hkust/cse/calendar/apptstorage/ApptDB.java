@@ -2,6 +2,7 @@ package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
@@ -204,13 +205,13 @@ public class ApptDB {
 		ArrayList<Integer> addedApptID = new ArrayList<Integer>();
 		for (Appt a:abt)
 		{
-			if (a.getAppointment().getCreaterUID() == u.UID())
+			if (a.getAppointment().getCreaterUID() == u.getUID())
 			{
 				addedApptID.add(a.getID());
 				temp.add(a);
 			}
 		}
-		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.UID(), abt);
+		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.getUID(), abt);
 		for (Appointment a:allGoingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -219,7 +220,7 @@ public class ApptDB {
 				temp.add(temp2);
 			}
 		}
-		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.UID(), abt);
+		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.getUID(), abt);
 		for (Appointment a:allWaitingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -234,6 +235,38 @@ public class ApptDB {
 			temparray[i] = temp.get(i);
 		}
 		return temparray;
+	}
+	
+	public Appt[] getFutureApptWithUser(int u)
+	{
+		ArrayList<Appointment> result = getAppointmentList();
+		ArrayList<Appointment> result2 = result;
+		System.out.println("Result: "+ result.size());
+		for (Appointment a:result2)
+		{
+			if (a.getCreaterUID() != u)
+			{
+				if (a.getTimeSpan().EndTime().after(TimeMachine.getInstance().getTMTimestamp()) == false)
+				{
+					result.remove(a);
+				}
+				if (a.getGoingList().contains(u) == false)
+				{
+					if (a.getWaitingList().contains(u) == false)
+					{
+						result.remove(a);
+					}
+				}
+			}
+			
+		}
+		Appt[] tempA = new Appt[result.size()];
+		for (int i = 0; i<result.size(); i++)
+		{
+			tempA[i] = new Appt(result.get(i));
+		}
+		System.out.println("tempA: " + tempA.length);
+		return tempA;
 	}
 
 	public Appt[] getApptByTime(TimeSpan d)

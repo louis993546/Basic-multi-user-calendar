@@ -49,7 +49,7 @@ public class UserDB
 		try {
 			stmt = c.createStatement();
 			sql = "INSERT INTO USERTABLE (ID, FIRSTNAME, LASTNAME, PASSWORD, ADMIN) VALUES ('" + 
-					u.getEmail() + "','" + u.FirstName() + "','" + u.LastName() + "','" + u.Password() + "'," + u.Admin() + ")";
+					u.getEmail() + "','" + u.FirstName() + "','" + u.getLastName() + "','" + u.Password() + "'," + u.Admin() + ")";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -86,7 +86,7 @@ public class UserDB
 					+ "', PASSWORD = '"           +unew.Password()  
 					+ "', ADMIN = '"              +unew.Admin()  
 					+ "', FIRSTNAME = '"          +unew.FirstName()  
-					+ "', LASTNAME = '"           +unew.LastName()  
+					+ "', LASTNAME = '"           +unew.getLastName()  
 					+ "' WHERE UID = '"           +uid  
 					+ "';" ;                        
 			stmt.executeUpdate(sql);
@@ -250,7 +250,7 @@ public class UserDB
 			}
 			switch (userAL.size())
 			{
-				case 1: return userAL.get(0).UID();
+				case 1: return userAL.get(0).getUID();
 				default: return -1;
 			}	
 		}

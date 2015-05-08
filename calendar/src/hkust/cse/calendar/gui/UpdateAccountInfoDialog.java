@@ -63,7 +63,7 @@ public class UpdateAccountInfoDialog extends JFrame implements ActionListener{
 		lnPanel.add(new JLabel("Last name:"));
 		lastnameTF = new JTextField(15);
 		;
-		lastnameTF.setText(udb.getUserWithUID(uid).LastName());
+		lastnameTF.setText(udb.getUserWithUID(uid).getLastName());
 		lnPanel.add(lastnameTF);
 		sud.add(lnPanel);
 		

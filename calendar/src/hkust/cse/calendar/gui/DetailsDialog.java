@@ -124,7 +124,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		area.append("\n\nDescription: \n" + appt.getInfo());
 		area.setEditable(false);
 		UserDB udb=new UserDB();
-		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterUID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterUID()).LastName());
+		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterUID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterUID()).getLastName());
 	}
 
 	public void Display(Vector[] vs, User[] entities) {
