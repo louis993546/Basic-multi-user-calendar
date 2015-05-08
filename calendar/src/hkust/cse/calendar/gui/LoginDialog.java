@@ -1,7 +1,9 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.ApptStorageNullImpl;
+import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.MessageDB;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Message;
@@ -35,6 +37,8 @@ public class LoginDialog extends JFrame implements ActionListener
 	private JButton signupButton;
 	private UserDB udb;
 	private MessageDB mdb;
+	private ApptDB adb;
+	private LocationDB ldb;
 
 	//constructor
 	public LoginDialog()		// Create a dialog to log in
@@ -48,6 +52,8 @@ public class LoginDialog extends JFrame implements ActionListener
 
 		udb = new UserDB();
 		mdb = new MessageDB();
+		adb = new ApptDB();
+		ldb = LocationDB.getInstance();
 
 		Container contentPane;
 		contentPane = getContentPane();
@@ -139,27 +145,66 @@ public class LoginDialog extends JFrame implements ActionListener
 						int n1 = JOptionPane.showConfirmDialog(null, "Can I delete locatoin X?", "Confirm Location Deletion", JOptionPane.YES_NO_OPTION);
 						if (n1 == JOptionPane.YES_OPTION)
 						{
-							//remove user from list
-							//check if list is empty
-							//if yes, remove location
+							if (allMessages.get(i).getUserUIDList().size() == 1)
+							{
+								LocationDB.getInstance().deleteLocation(allMessages.get(i).getEditID());	//remove location
+								mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
+							}
+							else
+							{	//remove user from list
+								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
+								newUIDList.remove(user.getUID());
+								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
+								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
+							}
+						}
+						else
+						{
+							mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
 						}
 						break;
 					case 2: //User deletion confirmation
 						int n2 = JOptionPane.showConfirmDialog(null, "Can I delete user X?", "Confirm User Deletion", JOptionPane.YES_NO_OPTION);
 						if (n2 == JOptionPane.YES_OPTION)
 						{
-							//remove user from list
-							//check if list is empty
-							//if yes, remove user
+							if (allMessages.get(i).getUserUIDList().size() == 1)
+							{
+								udb.deleteUser(allMessages.get(i).getEditID());		//remove user
+								mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
+							}
+							else
+							{	//remove user from list
+								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
+								newUIDList.remove(user.getUID());
+								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
+								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
+							}
+						}
+						else
+						{
+							mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
 						}
 						break;
 					case 3: //Appointment deletion confirmation
 						int n3 = JOptionPane.showConfirmDialog(null, "Can I delete appointment X?", "Confirm Appointment Deletion", JOptionPane.YES_NO_OPTION);
 						if (n3 == JOptionPane.YES_OPTION)
 						{
-							//remove user from list
-							//check if list is empty
-							//if yes, remove appointment
+							if (allMessages.get(i).getUserUIDList().size() == 1)
+							{
+								adb.deleteAppt(allMessages.get(i).getEditID());		//remove user
+								mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
+							}
+							else
+							{	//remove user from list
+								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
+								newUIDList.remove(user.getUID());
+								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
+								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
+							}
+						}
+						else
+						{
+							mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
 						}
 						break;
 					}
