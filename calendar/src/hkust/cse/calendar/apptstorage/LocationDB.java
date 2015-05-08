@@ -11,12 +11,20 @@ import javax.swing.JOptionPane;
 
 public class LocationDB {
 
-	Connection c = null;
-	Statement stmt = null;
-	String sql = null;
+	private Connection c = null;
+	private Statement stmt = null;
+	private String sql = null;
+	private static LocationDB instance;
 
+	public static LocationDB getInstance() {
+	      if(instance == null) {
+	         instance = new LocationDB();
+	      }
+	      return instance;
+	   }
+	
 	//TODO can change to singleton
-	public LocationDB() {
+	private LocationDB() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:location.db");

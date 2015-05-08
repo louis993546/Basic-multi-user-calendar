@@ -35,7 +35,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 				dispose();
 			}
 		});
-		ldb = new LocationDB();
+		ldb = ldb.getInstance();
 		Container contentPane;
 		contentPane = getContentPane();
 		locationStringAL = ldb.getLocationList();

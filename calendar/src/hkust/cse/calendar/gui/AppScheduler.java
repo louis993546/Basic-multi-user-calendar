@@ -128,7 +128,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		this.setAlwaysOnTop(false);
 		setTitle(title);
 		setModal(false);
-		ldb = new LocationDB();
+		ldb = ldb.getInstance();
 		locationAL = ldb.getLocationList();
 		GoingUIDAL = new LinkedList<Integer>();
 		InvitingUIDAL = new LinkedList<Integer>();
@@ -583,8 +583,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				System.out.println("Something's wrong");
 			}
 		}
-		
-		//TODO currently it provide 3 empty linkedlist
 		LinkedList<Integer> temp = new LinkedList<Integer>();
 		//The id is 12 because the id cannot be known until sql give it a proper id number
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, InvitingUIDAL, 12, parent.getCurrentUserID());

@@ -120,10 +120,12 @@ public class CalGrid extends JFrame implements ActionListener {
 	//database
 	ApptDB adb = new ApptDB();
 	UserDB udb = new UserDB();
-	LocationDB ldb = new LocationDB();
+	LocationDB ldb;
 
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
+		
+		ldb = ldb.getInstance();
 		
 		currentUserID = con.getDefaultUser().UID();
 		System.out.println(currentUserID);
