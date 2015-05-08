@@ -207,6 +207,30 @@ public class LoginDialog extends JFrame implements ActionListener
 							mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
 						}
 						break;
+					case 4: //confirm appointment invitation
+						int n4 = JOptionPane.showConfirmDialog(null, "Will to attent event X?", "Cofirm Appointment Invitation", JOptionPane.YES_NO_CANCEL_OPTION);
+						if (n4 == JOptionPane.YES_NO_OPTION)
+						{
+							if (allMessages.get(i).getUserUIDList().size() == 1)
+							{
+								mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
+							}
+							else
+							{	//remove user from list
+								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
+								newUIDList.remove(user.getUID());
+								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
+								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
+							}
+							//TODO remove user from waiting list
+							
+//							adb.modifyAppt(allMessages.get(i).getEditID(), )
+						}
+						else
+						{
+							//remove appointment
+						}
+						break;
 					}
 				}
 				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
