@@ -17,7 +17,7 @@ public class User{
 	}
 
 	// Getter of the user id
-	public String ID() {		
+	public String getEmail() {		
 		return mEmail;
 	}
 

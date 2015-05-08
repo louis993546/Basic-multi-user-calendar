@@ -6,11 +6,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 class CalCellRenderer extends DefaultTableCellRenderer
-
 {
-
 	private int r;
-
 	private int c;
 
 	public CalCellRenderer(Object value, boolean hasAppointment ) {

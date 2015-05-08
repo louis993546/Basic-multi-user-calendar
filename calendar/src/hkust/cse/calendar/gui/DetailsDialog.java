@@ -146,7 +146,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		String temp2 = null;
 
 		for (int i = 0; i < entities.length; i++) {
-			area.append((i + 1) + ". " + entities[i].ID() + " :\n\n");
+			area.append((i + 1) + ". " + entities[i].getEmail() + " :\n\n");
 			for (int j = 0; j < vs[i].size(); j++) {
 				temp1 = ((TimeSpan) vs[i].elementAt(j)).StartTime().toString();
 				temp2 = ((TimeSpan) vs[i].elementAt(j)).EndTime().toString();

@@ -60,12 +60,7 @@ public class InviteDialog extends JFrame implements ActionListener
 	
 	public InviteDialog(AppScheduler p)
 	{
-		this();
 		this.parent = p;
-	}
-	
-	public InviteDialog()
-	{
 		this.setSize(600, 300);
 		
 		setTitle("Invite other people");
@@ -80,6 +75,7 @@ public class InviteDialog extends JFrame implements ActionListener
 		Container contentPane;
 		contentPane = getContentPane();
 		UserStringAL = udb.getUserList();
+		UserStringAL.remove(parent.getCurrentUserEmail());
 
 		// create a new JPanel to hold everything
 		JPanel all = new JPanel();
@@ -128,7 +124,7 @@ public class InviteDialog extends JFrame implements ActionListener
 		contentPane.add("North", all);
 		pack();
 		setLocationRelativeTo(null);
-		setVisible(true);
+		setVisible(true);	
 	}
 
 	@Override

@@ -221,13 +221,11 @@ public class CalGrid extends JFrame implements ActionListener {
 					TimeSpan currentDateSpan = new TimeSpan(currentDateStart, currentDateEnd);
 					boolean hasAppointment=controller.RetrieveAppts(mCurrUser, currentDateSpan).length>0;
 
-					
 					try {
 						if (today.get(Calendar.YEAR) == currentY
 								&& today.get(Calendar.MONTH) + 1 == currentM
 								&& today.get(Calendar.DAY_OF_MONTH) == Integer
 										.parseInt(tem)) {
-							//System.out.println(today.get(today.MONTH) + 1);
 							return new CalCellRenderer(today,hasAppointment);
 						}else{
 							return new CalCellRenderer(null,hasAppointment);
@@ -572,7 +570,7 @@ public class CalGrid extends JFrame implements ActionListener {
 
 	public void UpdateCal() {
 		if (mCurrUser != null) {
-			mCurrTitle = "Desktop Calendar - " + mCurrUser.ID() + " - ";
+			mCurrTitle = "Desktop Calendar - " + mCurrUser.getEmail() + " - ";
 			this.setTitle(mCurrTitle + "(" + currentY + "-" + currentM + "-"
 					+ currentD + ")");
 			Appt[] monthAppts = null;

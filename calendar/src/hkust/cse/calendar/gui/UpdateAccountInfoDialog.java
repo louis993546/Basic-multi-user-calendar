@@ -79,7 +79,7 @@ public class UpdateAccountInfoDialog extends JFrame implements ActionListener{
 		namePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		namePanel.add(new JLabel("Email address (username):"));
 		usernameTF = new JTextField(15);
-		usernameTF.setText(udb.getUserWithUID(uid).ID());
+		usernameTF.setText(udb.getUserWithUID(uid).getEmail());
 		namePanel.add(usernameTF);
 		sud.add(namePanel);
 

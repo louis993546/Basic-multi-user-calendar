@@ -187,50 +187,40 @@ public class ApptDB {
 	
 	public Appt[] getApptByUserTime(User u, TimeSpan d)
 	{
-		//TODO retrieve appts iff both u and d 
 		Appt[] abt = getApptByTime(d);
 		ArrayList<Appt> temp = new ArrayList<Appt>();
+		ArrayList<Integer> addedApptID = new ArrayList<Integer>();
 		for (Appt a:abt)
 		{
 			if (a.getAppointment().getCreaterUID() == u.UID())
 			{
+				addedApptID.add(a.getID());
 				temp.add(a);
 			}
 		}
 		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.UID());
 		for (Appointment a:allGoingAppt)
 		{
-			Appt temp2 = new Appt(a);
-			temp.add(temp2);
+			if (addedApptID.contains(a.getID()) == false)
+			{
+				Appt temp2 = new Appt(a);
+				temp.add(temp2);
+			}
 		}
 		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.UID());
 		for (Appointment a:allWaitingAppt)
 		{
-			Appt temp2 = new Appt(a);
-			temp.add(temp2);
+			if (addedApptID.contains(a.getID()) == false)
+			{
+				Appt temp2 = new Appt(a);
+				temp.add(temp2);
+			}
 		}
 		Appt[] temparray = new Appt[temp.size()];
 		for (int i = 0; i<temp.size(); i++)
 		{
 			temparray[i] = temp.get(i);
 		}
-//		//TODO Also check going and waiting list
-//		
-//		System.out.println(allGoingAppt);
-//		for (int i = temparray.length; i<allGoingAppt.size(); i++)
-//		{
-//			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
-//			Appt temp2 = new Appt(allGoingAppt.get(i));
-//			temparray[i] = temp2;
-//		}
-//		ArrayList<Appointment> allWaitingAppt =  getApptIDListFromWaiting(u.UID());
-//		System.out.println(allWaitingAppt);
-//		for (int i = temparray.length; i<allWaitingAppt.size(); i++)
-//		{
-//			//IF THE APPOINTMENT DOES NOT EXIST ALREADY
-//			Appt temp3 = new Appt(allWaitingAppt.get(i));
-//			temparray[i] = temp3;
-//		}
 		return temparray;
 	}
 

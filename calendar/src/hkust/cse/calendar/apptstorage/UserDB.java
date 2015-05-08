@@ -49,7 +49,7 @@ public class UserDB
 		try {
 			stmt = c.createStatement();
 			sql = "INSERT INTO USERTABLE (ID, FIRSTNAME, LASTNAME, PASSWORD, ADMIN) VALUES ('" + 
-					u.ID() + "','" + u.FirstName() + "','" + u.LastName() + "','" + u.Password() + "'," + u.Admin() + ")";
+					u.getEmail() + "','" + u.FirstName() + "','" + u.LastName() + "','" + u.Password() + "'," + u.Admin() + ")";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -82,7 +82,7 @@ public class UserDB
 		{
 			stmt = c.createStatement();
 			sql = 
-					"UPDATE USERTABLE set ID = '" +unew.ID() 
+					"UPDATE USERTABLE set ID = '" +unew.getEmail() 
 					+ "', PASSWORD = '"           +unew.Password()  
 					+ "', ADMIN = '"              +unew.Admin()  
 					+ "', FIRSTNAME = '"          +unew.FirstName()  
@@ -138,7 +138,7 @@ public class UserDB
 			ArrayList<User> userAL = new ArrayList<User>();
 			stmt = c.createStatement();
 			sql = "SELECT * FROM USERTABLE WHERE (" + 
-			"ID = '" + u.ID() + "' AND " + 
+			"ID = '" + u.getEmail() + "' AND " + 
 			"PASSWORD = '" + u.Password() + "');";
 			rs = stmt.executeQuery(sql);
 			while (rs.next())
@@ -202,7 +202,7 @@ public class UserDB
 			ArrayList<User> userAL = new ArrayList<User>();
 			stmt = c.createStatement();
 			sql = "SELECT * FROM USERTABLE WHERE (" + 
-			"ID = '" + u.ID() + "' AND " + 
+			"ID = '" + u.getEmail() + "' AND " + 
 			"PASSWORD = '" + u.Password() + "');";
 			rs = stmt.executeQuery(sql);
 			while (rs.next())

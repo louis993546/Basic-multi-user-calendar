@@ -59,7 +59,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JLabel sTimeML;
 	private JLabel eTimeHL;
 	private JLabel eTimeML;
-
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 	private String[] timeHS = {"08", "09", "10", "11",
 			"12", "13", "14", "15", "16", "17", "18"};//8am~6pm
@@ -67,7 +66,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)"};
 	private ArrayList<String> locationAL;
 	private String[] repeatS = {"Daily", "Weekly", "Monthly", "Yearly", "Decennially", "Centennially", "Millennially"};
-
 	private JTextField yearSF;
 	private JComboBox<String> monthSF;
 	private JTextField daySF;
@@ -81,48 +79,35 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JTextField reminderTF;
 	private JComboBox<String> reminderCB;
 	private JCheckBox reminderChB;
-	
 	private JComboBox<String> lCB;
-
 	private DefaultListModel model;
 	private JTextField titleField;
-
 	private JButton saveBut;
 	private JButton CancelBut;
 	private JButton inviteBut;
 	private JButton rejectBut;
-
 	private Appt NewAppt;
 	private CalGrid parent;
 	private boolean isNew = true;
 	private boolean isChanged = true;
 	private boolean isJoint = false;
-
 	private JCheckBox rChB;
 	private JTextField rTF;
 	private JComboBox rCB;
-	
 	private JTextArea detailArea;
-
 	private JSplitPane pDes;
 	JPanel detailPanel;
-	
 	private Appt tempAppt;
 	private int saveOrModify = 0;
-	
 	private int idofappt=0;
-
-//	private JTextField attendField;
-//	private JTextField rejectField;
-//	private JTextField waitingField;
 	private int selectedApptId = -1;
-
 	private LocationDB ldb;
 	private ApptDB adb;
-	
 	private LinkedList<Integer> GoingUIDAL;
 	private LinkedList<Integer> InvitingUIDAL;
 
+	
+	
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		parent = cal;
 		this.setAlwaysOnTop(false);
@@ -388,8 +373,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			if (JOptionPane.showConfirmDialog(this, "Reject this joint appointment?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0)
 			{
 //				NewAppt.addReject(getCurrentUser());
-				NewAppt.getAttendList().remove(getCurrentUser());
-				NewAppt.getWaitingList().remove(getCurrentUser());
+				NewAppt.getAttendList().remove(getCurrentUserEmail());
+				NewAppt.getWaitingList().remove(getCurrentUserEmail());
 				this.setVisible(false);
 				dispose();
 			}
@@ -888,9 +873,9 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	}
 
-	public String getCurrentUser()		// get the id of the current user
+	public String getCurrentUserEmail()		// get the id(email) of the current user
 	{
-		return this.parent.mCurrUser.ID();
+		return this.parent.mCurrUser.getEmail();
 	}
 
 	private void allDisableEdit(){

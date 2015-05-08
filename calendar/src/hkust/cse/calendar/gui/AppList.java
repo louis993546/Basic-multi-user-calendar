@@ -38,14 +38,6 @@ class AppCellRenderer extends DefaultTableCellRenderer {
 	private int r;
 	private int c;
 
-	// public final static int EARLIEST_TIME = 480;
-	//
-	// public final static int LATEST_TIME = 1050;
-	//
-	// public final static int[] monthDays = { 31, 28, 31, 30, 31, 30, 31, 31,
-	// 30,
-	// 31, 30, 31 };
-
 	public AppCellRenderer(Object value, boolean override, int row, int col,
 			int colorCMD, Color currColor) {
 
@@ -112,8 +104,6 @@ public class AppList extends JPanel implements ActionListener {
 	private int[][] cellCMD = new int[20][2];
 	private Color[][] cellColor = new Color[20][2];
 	public Appt selectedAppt=null;
-	private MouseEvent tempe;
-	
 	public AppList() {
 		setLayout(new BorderLayout());
 		currentRow = 0;
@@ -186,7 +176,7 @@ public class AppList extends JPanel implements ActionListener {
 			}
 		};
 
-		tableView.setAutoResizeMode(tableView.AUTO_RESIZE_ALL_COLUMNS);
+		tableView.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tableView.setRowHeight(20);
 		tableView.setRowSelectionAllowed(false);
 		TableColumn c = null;
@@ -533,7 +523,6 @@ public class AppList extends JPanel implements ActionListener {
 	}
 
 	private void pressResponse(MouseEvent e) {
-		tempe = e;
 		pressRow = tableView.getSelectedRow();
 		pressCol = tableView.getSelectedColumn();
 		if ((e.getModifiers() & InputEvent.BUTTON3_MASK) != 0)
