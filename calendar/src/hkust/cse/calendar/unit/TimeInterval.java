@@ -14,6 +14,11 @@ public class TimeInterval {
 	public TimeInterval(SortedMap<LocalDate, BitSet> timeInterval) {
 		this.timeIntervalMap = timeInterval;
 	}
+	
+	public TimeInterval()
+	{
+		timeIntervalMap = new TreeMap<LocalDate, BitSet>();
+	}
 
 	public TimeInterval(TimeSpan timeSpan) {
 		if (timeSpan.StartTime().toLocalDateTime().toLocalDate()
@@ -117,10 +122,36 @@ public class TimeInterval {
 		;
 
 	}
-
-	public TimeInterval(Appt[] apptByUser2) {
-		// TODO Auto-generated constructor stub
+	
+	public TimeInterval setTimeInterval(Appt[] abu)
+	{
+		TimeInterval ti = new TimeInterval(abu[0].TimeSpan());
+		for (int i = 0; i<abu.length; i++)
+		{
+			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
+		}
+		System.out.println(ti.toString());
+		return ti;
 	}
+	
+//
+//	public TimeInterval(Appt[] apptByUser)
+//	{
+//		//TODO
+//		TimeInterval tempTI = new TimeInterval();
+//		for (Appt a:apptByUser)
+//		{
+//			TimeInterval tempTI2 = new TimeInterval(a.TimeSpan());
+//			tempTI.unionwith(tempTI2);
+//		}		
+//	}
+//	
+//	public TimeInterval(TimeInterval ti, Appt[] apptByUser) {
+//		//TODO
+//		TimeInterval ti2 = new TimeInterval(apptByUser);
+//		ti.unionwith(ti2);
+//	}
+
 
 	public void intersectWith(TimeInterval anotherTimeInterval) {
 		Set<LocalDate> tmpKeySet = timeIntervalMap.keySet();

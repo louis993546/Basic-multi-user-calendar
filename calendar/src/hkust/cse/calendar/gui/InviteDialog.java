@@ -2,6 +2,7 @@ package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.UserDB;
+import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeInterval;
 import hkust.cse.calendar.unit.TimeSpan;
 
@@ -188,7 +189,6 @@ public class InviteDialog extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == confirmButton)
 		{
-			ArrayList<Integer> InvitingListUID = new ArrayList<Integer>();
 			int ilmSize = InvitingListModel.getSize();
 			parent.resetInvitingList();
 			for (int i = 0; i<ilmSize; i++)
@@ -238,9 +238,30 @@ public class InviteDialog extends JFrame implements ActionListener
 			TimeSpan newTS = new TimeSpan(startTS, endTS);
 			
 			//get TimeInterval of creator
-			TimeInterval result = new TimeInterval(adb.getApptByUser2(parent.getCurrentUserUID()));
 			
-			//get TimeInterval each user
+			Appt[] cretorAA = adb.getFutureApptWithUser(parent.getCurrentUserUID());
+			System.out.println("parent.getCurrentUserUID(): " + parent.getCurrentUserUID());
+//			System.out.println("adb.getFutureApptWithUser(parent.getCurrentUserUID()): " + adb.getFutureApptWithUser(parent.getCurrentUserUID()));
+			
+			TimeInterval ti = new TimeInterval();
+			
+			System.out.println("cretorAA.length: " + cretorAA.length);
+			if (cretorAA.length > 0)
+			{
+				ti.setTimeInterval(cretorAA);
+			}
+				
+			int ilmSize = InvitingListModel.getSize();
+			System.out.println("ilmSize: " + ilmSize);
+			for (int i = 0; i < ilmSize; i++)
+			{
+				if (adb.getFutureApptWithUser(udb.getUserUID(InvitingListModel.get(i).toString())).length > 0)
+				{
+					Appt[] userAA = adb.getFutureApptWithUser(udb.getUserUID(InvitingListModel.get(i).toString()));
+					ti.setTimeInterval(userAA);
+				}
+			}
+			System.out.println(ti);
 		}
 		else if (e.getSource() == cofirmWithSelectedTimeButton)
 		{

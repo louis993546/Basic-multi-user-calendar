@@ -2,6 +2,7 @@ package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
@@ -236,13 +237,19 @@ public class ApptDB {
 		return temparray;
 	}
 	
-	public ArrayList<Appointment> getApptByUser(int u)
+	public Appt[] getFutureApptWithUser(int u)
 	{
 		ArrayList<Appointment> result = getAppointmentList();
-		for (Appointment a:result)
+		ArrayList<Appointment> result2 = result;
+		System.out.println("Result: "+ result.size());
+		for (Appointment a:result2)
 		{
 			if (a.getCreaterUID() != u)
 			{
+				if (a.getTimeSpan().EndTime().after(TimeMachine.getInstance().getTMTimestamp()) == false)
+				{
+					result.remove(a);
+				}
 				if (a.getGoingList().contains(u) == false)
 				{
 					if (a.getWaitingList().contains(u) == false)
@@ -253,17 +260,12 @@ public class ApptDB {
 			}
 			
 		}
-		return result;
-	}
-	
-	public Appt[] getApptByUser2(int u)
-	{
-		ArrayList<Appointment> a = getApptByUser(u);
-		Appt[] tempA = new Appt[a.size()];
-		for (int i = 0; i<a.size(); i++)
+		Appt[] tempA = new Appt[result.size()];
+		for (int i = 0; i<result.size(); i++)
 		{
-			tempA[i] = new Appt(a.get(i));
+			tempA[i] = new Appt(result.get(i));
 		}
+		System.out.println("tempA: " + tempA.length);
 		return tempA;
 	}
 

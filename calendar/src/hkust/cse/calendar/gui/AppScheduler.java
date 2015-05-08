@@ -534,14 +534,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
-		location = location.substring(0, location.indexOf("("));
-		System.out.println("location: " + location);
-		System.out.println("ldb.getCapacityByName(location)" + ldb.getCapacityByName(location));
-		if (ldb.getCapacityByName(location) < (InvitingUIDAL.size() + 1))
+		if (location != "N/A")
 		{
-			JOptionPane.showMessageDialog(this, "Please invite less people or select a larger location",
-					"Error", JOptionPane.ERROR_MESSAGE);
-			return false;
+			location = location.substring(0, location.indexOf("("));
+			System.out.println("location: " + location);
+			System.out.println("ldb.getCapacityByName(location)" + ldb.getCapacityByName(location));
+			if (ldb.getCapacityByName(location) < (InvitingUIDAL.size() + 1))
+			{
+				JOptionPane.showMessageDialog(this, "Please invite less people or select a larger location",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
 		}
 		
 		//get reminders
