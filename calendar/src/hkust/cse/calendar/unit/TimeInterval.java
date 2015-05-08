@@ -24,7 +24,7 @@ public class TimeInterval {
 	{
 		if (timeSpan.StartTime().toLocalDateTime().toLocalDate().isEqual(timeSpan.EndTime().toLocalDateTime().toLocalDate())) 
 		{
-			System.out.println("afadslfasdfasdf");
+//			System.out.println("afadslfasdfasdf");
 			LocalTime startTime = timeSpan.StartTime().toLocalDateTime().toLocalTime();
 			LocalTime endTime = timeSpan.EndTime().toLocalDateTime().toLocalTime();
 
@@ -32,13 +32,13 @@ public class TimeInterval {
 			LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
 			for (int i = 0; i < 40; i++) 
 			{
-				System.out.println("afadslfasdfasdf2");
-				System.out.println("tmpTime: " + tmpTime);
-				System.out.println("startTime: " + startTime);
-				System.out.println("endTime: " + endTime);
+//				System.out.println("afadslfasdfasdf2");
+//				System.out.println("tmpTime: " + tmpTime);
+//				System.out.println("startTime: " + startTime);
+//				System.out.println("endTime: " + endTime);
 				if (startTime.isBefore(tmpTime) && tmpTime.isBefore(endTime)) 
 				{
-					System.out.println("afadslfasdfasdf3");
+//					System.out.println("afadslfasdfasdf3");
 					// start <tmp< end, 8:00:1
 					tmpBitset.set(i);
 				}
@@ -109,36 +109,50 @@ public class TimeInterval {
 		// map.get(datetmp) or anothermap.get(datetmp)
 		// for(datetobeadd: anothermap.keyset.removeALL(map.keyset));
 		// {map.put(datetobeadd,anothermap.get(datetobeadd));
+		System.out.println(this);
+		System.out.println(anotherTimeInterval);
 		Set<LocalDate> tmpKeySet = anotherTimeInterval.timeIntervalMap.keySet();
 		tmpKeySet.retainAll(timeIntervalMap.keySet());// find common date
 		for (LocalDate datetmp : tmpKeySet) {
 			BitSet tmpBitSet = timeIntervalMap.get(datetmp);
 			tmpBitSet.or(anotherTimeInterval.timeIntervalMap.get(datetmp));
 		}
-
+		
+		System.out.println(this);
+		
 		Set<LocalDate> tmpKeySet2 = anotherTimeInterval.timeIntervalMap
 				.keySet();
 		tmpKeySet2.removeAll(timeIntervalMap.keySet());// find unique/new date
 														// in another
-		for (LocalDate datetobeadd : tmpKeySet2) {
-			timeIntervalMap.put(datetobeadd,
-					anotherTimeInterval.timeIntervalMap.get(datetobeadd));
+		for (LocalDate datetobeadd : tmpKeySet2) 
+		{
+			timeIntervalMap.put(datetobeadd, anotherTimeInterval.timeIntervalMap.get(datetobeadd));
 		}
-		;
 
 	}
 	
 	public TimeInterval setTimeInterval(Appt[] abu)
 	{
-		System.out.println(abu[0].TimeSpan().toString());
+//		System.out.println(abu[0].TimeSpan().toString());
 		TimeInterval ti = new TimeInterval(abu[0].TimeSpan());
-		System.out.println(ti.toString());
+//		System.out.println("a1: " + ti.toString());
 		for (int i = 0; i<abu.length; i++)
 		{
-			System.out.println(abu[i].TimeSpan());
+//			System.out.println("a2: " + abu[i].TimeSpan());
 			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
 		}
-		System.out.println(ti.toString());
+//		System.out.println("a3: " + ti.toString());
+		return ti;
+	}
+	
+	public TimeInterval addTimeInterval(TimeInterval ti, Appt[]abu)
+	{
+		for (int i = 0; i<abu.length; i++)
+		{
+			System.out.println("a4: " + abu[i].TimeSpan());
+			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
+		}
+		System.out.println("a5: " + ti.toString());
 		return ti;
 	}
 	

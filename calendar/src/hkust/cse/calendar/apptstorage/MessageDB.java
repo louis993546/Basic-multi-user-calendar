@@ -1,12 +1,14 @@
 package hkust.cse.calendar.apptstorage;
 
+import hkust.cse.calendar.unit.Message;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
@@ -33,13 +35,52 @@ public class MessageDB {
 			System.exit(0);
 		}
 	}
+	
+	public String ArrayListToString(ArrayList<Integer> list)
+	{
+		//e.g. String listS = "1/3/7/9/12/";
+		if (list.size()>0)
+		{
+			String op = "";
+			for (Integer a:list)
+			{
+				op = op + a + "/";
+			}
+			op = op.substring(0, op.length()-1);
+			return op;
+		}
+		else
+			return "";	
+	}
+	
+	public ArrayList<Integer> StringToArrayList(String listS)
+	{
+		if (listS.startsWith("[") == true)
+		{
+			listS = listS.substring(1, listS.length());
+		}
+		if (listS.endsWith("]") == true)
+		{
+			listS = listS.substring(0, listS.length()-1);
+		}
+		ArrayList<Integer> op = new ArrayList<Integer>();
+		if (listS.length()>0)
+		{
+			String[] listA = listS.split("/");
+			for (String a:listA)
+			{
+				op.add(Integer.parseInt(a));
+			}
+		}
+		return op;
+	}
 
-	public boolean addMessage(int t, String l, int ei)
+	public boolean addMessage(Message m)
 	{
 		try {
 			stmt = c.createStatement();
 			sql = "INSERT INTO MessageTable (Type, UserUIDList, editID) "
-					+ "VALUES ( " + t + ",'" + l + "'," + ei + " );";
+					+ "VALUES ( " + m.getType() + ",'" + ArrayListToString(m.getUserUIDList()) + "'," + m.getEditID() + " );";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -50,14 +91,18 @@ public class MessageDB {
 
 	// a function to load message into some kind of map
 	// return an array list of string
-	public ArrayList<String> getMessageList() {
-		ArrayList<String> temp = new ArrayList<String>();
+	public ArrayList<Message> getMessageList() {
+		ArrayList<Message> temp = new ArrayList<Message>();
 		try {
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MESSAGETABLE;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MessageTable;");
 			while (rs.next()) {
-				String name = rs.getString("MESSAGE");
-				temp.add(name);
+				int messageID = rs.getInt("MessageID");
+				int type = rs.getInt("Type");
+				String userUidList = rs.getString("UserUIDList");
+				int editID = rs.getInt("editID");
+				Message newMessage = new Message(messageID, type, StringToArrayList(userUidList), editID);
+				temp.add(newMessage);
 			}
 			return temp;
 		} catch (SQLException e) {
@@ -72,37 +117,10 @@ public class MessageDB {
 		return null;
 	}
 
-	public int getMessageID(String l) {
-		try {
-			ArrayList<Integer> idAL = new ArrayList<Integer>();
-			stmt = c.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM MESSAGETABLE WHERE MESSAGE='"
-							+ l + "';");
-			while (rs.next()) {
-				int ans = rs.getInt("ID");
-				idAL.add(ans);
-			}
-			switch (idAL.size()) {
-			case 0:
-				return 0; // does not exist
-			case 1:
-				return idAL.get(0); // only 1 exist (ideal scenario)
-			default:
-				return -1; // exist multiple times (should never occur)
-			}
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
-					+ e.getMessage());
-			System.exit(0);
-			return -2;
-		}
-	}
-
 	public boolean deleteMessage(int id) {
 		try {
 			stmt = c.createStatement();
-			String sql = "DELETE from MESSAGETABLE WHERE ID=" + id + ";";
+			String sql = "DELETE from MessageTable WHERE ID=" + id + ";";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -111,10 +129,13 @@ public class MessageDB {
 		}
 	}
 
-	public boolean modifyMessage(int id, String what) {
+	public boolean modifyMessage(int id, Message m) {
 		try {
 			stmt = c.createStatement();
-			String sql = "UPDATE MESSAGETABLE set MESSAGE = " + what
+			String sql = "UPDATE MessageTable set " 
+					+ " Type = " + m.getType()
+					+ " UserUIDList = " + ArrayListToString(m.getUserUIDList())
+					+ " editID = " + m.getEditID()
 					+ " where ID=" + id + ";";
 			stmt.executeUpdate(sql);
 			return true;
@@ -123,32 +144,19 @@ public class MessageDB {
 			return false;
 		}
 	}
-
-	public int getCapacityByName(String locname) {
-		try {
-			ArrayList<Integer> idAL = new ArrayList<Integer>();
-			stmt = c.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM MESSAGETABLE WHERE MESSAGE='"
-							+ locname + "';");
-			while (rs.next()) {
-				int ans = rs.getInt("CAPACITY");
-				idAL.add(ans);
+	
+	public ArrayList<Message> getAllMessageForUser(int uid)
+	{
+		ArrayList<Message> allMessage= getMessageList();
+		ArrayList<Message> messageForYou = new ArrayList<Message>();
+		for (Message m:allMessage)
+		{
+			if (m.getUserUIDList().contains(uid) == true)
+			{
+				messageForYou.add(m);
 			}
-			switch (idAL.size()) {
-			case 0:
-				return 0; // does not exist
-			case 1:
-				return idAL.get(0); // only 1 exist (ideal scenario)
-			default:
-				return -1; // exist multiple times (should never occur)
-			}
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
-					+ e.getMessage());
-			System.exit(0);
-			return -2;
 		}
-
+		return messageForYou;
 	}
+
 }

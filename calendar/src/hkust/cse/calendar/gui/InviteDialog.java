@@ -248,17 +248,19 @@ public class InviteDialog extends JFrame implements ActionListener
 			System.out.println("cretorAA.length: " + cretorAA.length);
 			if (cretorAA.length > 0)
 			{
-				ti.setTimeInterval(cretorAA);
+				ti = ti.setTimeInterval(cretorAA);
 			}
 				
 			int ilmSize = InvitingListModel.getSize();
 			System.out.println("ilmSize: " + ilmSize);
 			for (int i = 0; i < ilmSize; i++)
 			{
-				if (adb.getFutureApptWithUser(udb.getUserUID(InvitingListModel.get(i).toString())).length > 0)
+				Appt[] userAA = adb.getFutureApptWithUser(udb.getUserUID(InvitingListModel.get(i).toString()));
+				if (userAA.length > 0)
 				{
-					Appt[] userAA = adb.getFutureApptWithUser(udb.getUserUID(InvitingListModel.get(i).toString()));
-					ti.setTimeInterval(userAA);
+					System.out.println("userAA.length: " + userAA.length);
+					System.out.println("Adding some appointments for " + InvitingListModel.get(i).toString());
+					ti.addTimeInterval(ti, userAA);
 				}
 			}
 			System.out.println(ti);
