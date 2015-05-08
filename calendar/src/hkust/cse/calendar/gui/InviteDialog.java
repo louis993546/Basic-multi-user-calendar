@@ -30,12 +30,13 @@ public class InviteDialog extends JFrame implements ActionListener
 	 * | |------------|       |-------------| |
 	 * | |            |   	  |			    | |
 	 * | |            |   	  |			    | |
-	 * | |            |   	  |			    | |
-	 * | |            |   	  |			    | |
 	 * | |            | |---| |			    | |
 	 * | |            | | > | |			    | |
 	 * | |            | |---| |			    | |
-	 * | |            |       |			    | |
+	 * |    								  |
+	 * | |            | |---| |			    | |
+	 * | |            | | < | |			    | |
+	 * | |            | |---| |			    | |
 	 * | |            |       |			    | |
 	 * | |            |   	  |			    | |
 	 * | |            |   	  |			    | |
@@ -49,6 +50,7 @@ public class InviteDialog extends JFrame implements ActionListener
 	
 	private UserDB udb;
 	private ArrayList<String> UserStringAL = new ArrayList<String>();
+	private ArrayList<String> InvitingStringAL = new ArrayList<String>();
 	private DefaultListModel<String> UserListModel = new DefaultListModel<String>();
 	private DefaultListModel<String> InvitingListModel = new DefaultListModel<String>();
 	private JList<String> UserList;
@@ -56,6 +58,7 @@ public class InviteDialog extends JFrame implements ActionListener
 	private JButton confirmButton;
 	private JButton cancelButton;
 	private JButton addButton;
+	private JButton removeButton;
 	private AppScheduler parent;
 	
 	public InviteDialog(AppScheduler p)
@@ -76,6 +79,13 @@ public class InviteDialog extends JFrame implements ActionListener
 		contentPane = getContentPane();
 		UserStringAL = udb.getUserList();
 		UserStringAL.remove(parent.getCurrentUserEmail());
+		
+		InvitingStringAL = parent.getInvitingAL();
+		
+		for (String s:InvitingStringAL)
+		{
+			UserStringAL.remove(s);
+		}
 
 		// create a new JPanel to hold everything
 		JPanel all = new JPanel();
@@ -97,9 +107,17 @@ public class InviteDialog extends JFrame implements ActionListener
 		addButton.addActionListener(this);
 		middle.add(addButton);
 		
+		removeButton = new JButton("<");
+		removeButton.addActionListener(this);
+		middle.add(removeButton);
+		
 		JPanel listPanel2 = new JPanel();
 		Border lbp2 = new TitledBorder(null, "Inviting:");
 		listPanel2.setBorder(lbp2);
+		for (String a:InvitingStringAL)
+		{
+			InvitingListModel.addElement(a);
+		}
 		InvitingList = new JList<String>(InvitingListModel);
 		listPanel2.add(InvitingList);
 		Box right = Box.createVerticalBox();
@@ -135,9 +153,15 @@ public class InviteDialog extends JFrame implements ActionListener
 			//turn InvitingList into an array of uids
 			ArrayList<Integer> InvitingListUID = new ArrayList<Integer>();
 			int ilmSize = InvitingListModel.getSize();
+			parent.resetInvitingList();
 			for (int i = 0; i<ilmSize; i++)
 			{
-				parent.addToInvitingList(udb.getUserUID(InvitingListModel.get(i).toString()));
+				System.out.println("Checking: " + InvitingListModel.get(i).toString());
+				boolean success = parent.addToInvitingList(udb.getUserUID(InvitingListModel.get(i).toString()));
+				if (success == false)
+				{
+					JOptionPane.showMessageDialog(this, "You have already add this user.");
+				}
 			}
 			JOptionPane.showMessageDialog(this, "Please continue creating appointment.");
 			setVisible(false);
@@ -153,12 +177,21 @@ public class InviteDialog extends JFrame implements ActionListener
 		}
 		else if (e.getSource() == addButton)
 		{
-			//TODO move things from UserList to InvitingList
 			InvitingListModel.addElement(UserList.getSelectedValue().toString());
 			UserListModel.removeElementAt(UserList.getSelectedIndex());
 			this.pack();
 		}
-		
+		else if (e.getSource() == removeButton)
+		{
+			System.out.println(InvitingList.getSelectedValue().toString());
+			UserListModel.addElement(InvitingList.getSelectedValue().toString());
+			InvitingListModel.removeElementAt(InvitingList.getSelectedIndex());
+			this.pack();
+		}
+		else
+		{
+			System.out.println("Something wrong in actionPerformed of InviteDialog.");
+		}
 	}
 	
 }

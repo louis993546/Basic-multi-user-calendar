@@ -178,6 +178,25 @@ public class ApptDB {
 		return null;
 	}
 	
+	public Appt[] getApptByLocationName(String l)
+	{
+		ArrayList<Appointment> aal = getAppointmentList();
+		for (Appointment a:aal)
+		{
+			if (a.getLocation() != l)
+			{
+				aal.remove(a);
+			}
+		}
+		Appt[] temparray = new Appt[aal.size()];
+		for (int i = 0; i<aal.size(); i++)
+		{
+			Appt tempappt = new Appt(aal.get(i));
+			temparray[i] = tempappt;
+		}
+		return temparray;
+	}
+	
 	public Appt[] getApptByUserTime(User u, TimeSpan d)
 	{
 		Appt[] abt = getApptByTime(d);
@@ -311,6 +330,14 @@ public class ApptDB {
 	
 	public LinkedList<Integer> StringToLinkedList(String listS)
 	{
+		if (listS.startsWith("[") == true)
+		{
+			listS = listS.substring(1, listS.length());
+		}
+		if (listS.endsWith("]") == true)
+		{
+			listS = listS.substring(0, listS.length()-1);
+		}
 		LinkedList<Integer> op = new LinkedList<Integer>();
 		if (listS.length()>0)
 		{
@@ -443,7 +470,7 @@ public class ApptDB {
 		{	
 			stmt = c.createStatement();
 	        sql = "UPDATE APPOINTMENT SET"
-	    		  + "        TITLE = '"           + newAppt.getTitle()
+	    		  + "      TITLE = '"           + newAppt.getTitle()
 	    		  + "' ,   DESCRIPTION = '"     + newAppt.getDescription()
 	    		  + "' ,   LOCATION = '"        + newAppt.getLocation()
 	    		  + "' ,   START_TIME_HOUR="    + newAppt.getStartHour()
@@ -459,9 +486,9 @@ public class ApptDB {
 	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
 	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
 	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
-	    		  + "  ,   GOING = "            + newAppt.getGoingList()
-	    		  + "  ,   WAITING = "          + newAppt.getWaitingList()
-	    		  + "  WHERE ID="               + id
+	    		  + "  ,   GOING = '"            + newAppt.getGoingList()
+	    		  + "' ,   WAITING = '"          + newAppt.getWaitingList()
+	    		  + "'  WHERE ID="               + id
 	    		  + ";";
 			stmt.executeUpdate(sql);
 

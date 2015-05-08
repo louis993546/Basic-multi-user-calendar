@@ -1,0 +1,2 @@
+non-admin user should not see appointment list (top menu bar), because it allows them to delete appointments
+capacity does not get display
