@@ -3,6 +3,7 @@ package hkust.cse.calendar.gui;
 import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeSpan;
@@ -103,12 +104,14 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private int selectedApptId = -1;
 	private LocationDB ldb;
 	private ApptDB adb;
+	private UserDB udb;
 	private LinkedList<Integer> GoingUIDAL;
 	private LinkedList<Integer> InvitingUIDAL;
 
 	
 	
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
+		udb = new UserDB();
 		parent = cal;
 		this.setAlwaysOnTop(false);
 		setTitle(title);
@@ -180,19 +183,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		JPanel pEnd = new JPanel();
 		Border endBorder = new TitledBorder(null, "END TIME");
 		pEnd.setBorder(endBorder);
-//		yearL = new JLabel("YEAR: ");
-//		pEnd.add(yearL);
-//		yearEF = new JTextField(6);
-//		pEnd.add(yearEF);
-//		monthL = new JLabel("MONTH: ");
-//		pEnd.add(monthL);
-//		monthEF = new JComboBox<String>(monthS);
-//		pEnd.add(monthEF);
-//		dayL = new JLabel("DAY: ");
-//		pEnd.add(dayL);
-//		dayEF = new JTextField(4);
-//		pEnd.add(dayEF);
-		//end date == start date
 		
 		eTimeHL = new JLabel("Hour");
 		pEnd.add(eTimeHL);
@@ -535,6 +525,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		String title = titleField.getText().trim();
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
+		if (ldb.getCapacityByName(location) < (InvitingUIDAL.size() + 1))
+		{
+			JOptionPane.showMessageDialog(this, "Please invite less people or select a larger location",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		
 		//get reminders
 		boolean reminderOnOff = reminderChB.isSelected(); 
@@ -849,8 +845,27 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	
 	public boolean addToInvitingList(Integer u)
 	{
-		InvitingUIDAL.add(u);
-		return true;
+		if (InvitingUIDAL.contains(u) == false)
+		{
+			InvitingUIDAL.add(u);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
+	public ArrayList<String> getInvitingAL()
+	{
+		ArrayList<String> InvitedStringList = new ArrayList<String>();
+		for (Integer i:InvitingUIDAL)
+		{
+			InvitedStringList.add(udb.getUserWithUID(i).getEmail());
+		}
+		return InvitedStringList;
+		
 	}
 	
 	public void componentHidden(ComponentEvent e) {
