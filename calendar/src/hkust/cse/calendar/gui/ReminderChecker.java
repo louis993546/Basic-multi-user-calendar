@@ -45,7 +45,6 @@ public class ReminderChecker {
 					{
 						//TODO compare time with the fake clock
 						System.out.println(r.getTitle() + " : " + r.getTime());
-						java.util.Date date= new java.util.Date();
 						System.out.println("Fake system time: " +timeM.getTMTimestamp()); 
 						if (r.getTime().getYear() == timeM.getTMTimestamp().getYear())
 						{

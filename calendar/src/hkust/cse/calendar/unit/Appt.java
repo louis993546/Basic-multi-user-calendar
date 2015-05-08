@@ -8,7 +8,6 @@
 
 package hkust.cse.calendar.unit;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Appt

@@ -99,8 +99,7 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 					.toString());
 			if ((uid != 0) || (uid != -1))
 			{
-				//udb.deleteUser(uid);
-				UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(uid);
+				new UpdateAccountInfoDialog(uid);
 				dispose();
 			}
 

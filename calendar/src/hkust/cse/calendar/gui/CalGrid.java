@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.management.loading.MLet;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -125,7 +124,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
 		
-		ldb = ldb.getInstance();
+		ldb = LocationDB.getInstance();
 		
 		currentUserID = con.getDefaultUser().UID();
 		System.out.println(currentUserID);
@@ -155,8 +154,8 @@ public class CalGrid extends JFrame implements ActionListener {
 		today = new GregorianCalendar();
 		today.setTime(timeMachine.getTMTimestamp());
 		currentY = today.get(Calendar.YEAR);
-		currentD = today.get(today.DAY_OF_MONTH);
-		int temp = today.get(today.MONTH) + 1;
+		currentD = today.get(Calendar.DAY_OF_MONTH);
+		int temp = today.get(Calendar.MONTH) + 1;
 		currentM = 12;
 		
 
@@ -192,7 +191,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		wButton.addActionListener(this);
 
 		year = new JLabel(new Integer(currentY).toString());
-		month = new JComboBox();
+		month = new JComboBox<String>();
 		month.addActionListener(this);
 		month.setPreferredSize(new Dimension(200, 30));
 		for (int cnt = 0; cnt < 12; cnt++)
@@ -225,8 +224,8 @@ public class CalGrid extends JFrame implements ActionListener {
 					
 					try {
 						if (today.get(Calendar.YEAR) == currentY
-								&& today.get(today.MONTH) + 1 == currentM
-								&& today.get(today.DAY_OF_MONTH) == Integer
+								&& today.get(Calendar.MONTH) + 1 == currentM
+								&& today.get(Calendar.DAY_OF_MONTH) == Integer
 										.parseInt(tem)) {
 							//System.out.println(today.get(today.MONTH) + 1);
 							return new CalCellRenderer(today,hasAppointment);
@@ -304,8 +303,7 @@ public class CalGrid extends JFrame implements ActionListener {
 				return names[column];
 			}
 
-			@SuppressWarnings("unchecked")
-			public Class getColumnClass(int c) {
+			public Class<? extends Object> getColumnClass(int c) {
 				return getValueAt(0, c).getClass();
 			}
 
@@ -374,10 +372,10 @@ public class CalGrid extends JFrame implements ActionListener {
 					
 				}
 				else if (e.getActionCommand().equals("Modify Location")) {
-					ModifyLocationDialog mld = new ModifyLocationDialog(ldb);
+					new ModifyLocationDialog(ldb);
 				}
 				else if (e.getActionCommand().equals("New Location")) {
-					NewLocationDialog nld = new NewLocationDialog(ldb);
+					new NewLocationDialog(ldb);
 				}
 				else if (e.getActionCommand().equals("Appointment List"))
 				{
@@ -584,7 +582,7 @@ public class CalGrid extends JFrame implements ActionListener {
 			{
 				for (int j = 0; j < 7; j++)
 				{
-					apptMarker[i][j] = new Vector(10, 1);
+					apptMarker[i][j] = new Vector<Object>(10, 1);
 				}
 			}
 
@@ -598,7 +596,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	public void clear() {
 		for (int i = 0; i < 6; i++)
 			for (int j = 0; j < 7; j++)
-				apptMarker[i][j] = new Vector(10, 1);
+				apptMarker[i][j] = new Vector<Object>(10, 1);
 		TableModel t = prepareTableModel();
 		tableView.setModel(t);
 		tableView.repaint();

@@ -94,8 +94,6 @@ public class AppList extends JPanel implements ActionListener {
 	public Appt[] todaylist;
 	private final String[] names = { "Time", "Appointments", "Status", "Time",
 			"Appointments", "Status" };
-	private final int[] monthDays = { 31, 28, 31, 30, 31, 30, 31, 30, 31, 30,
-			31, 30, 31 };
 	private JTable tableView;
 	private final Object[][] data = new Object[20][6];
 	private JPopupMenu pop;

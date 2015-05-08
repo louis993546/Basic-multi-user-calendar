@@ -27,7 +27,7 @@ public class TimeMachineDialog extends JFrame implements ActionListener{
 	private JLabel timeSL;
 	
 	private JTextField yearF;
-	private JComboBox monthF;
+	private JComboBox<String> monthF;
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 	private JTextField dayF;
 	private JTextField timeHF;

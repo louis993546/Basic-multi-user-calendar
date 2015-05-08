@@ -27,7 +27,6 @@ public class UpdateAccountInfoDialog extends JFrame implements ActionListener{
 	private JTextField lastnameTF;
 	private JPasswordField password1PF;	//PasswordField for password2
 	private JPasswordField password2PF;	//PasswordField for password2
-	private JTextField emailTF;			//TextField for email
 	private JButton updateB;			//Button for confirm signup
 	private JButton cancelB;			//Button for cancel signup
 	private JCheckBox adminCB;
@@ -158,44 +157,32 @@ public class UpdateAccountInfoDialog extends JFrame implements ActionListener{
 										if (ValidString(password1S) == true) //check if password is valid
 										{
 											User newuser = new User(usernameS, password1S, admin, firstnameS, lastnameS);
-											if (true/* udb.checkIfIDExist(usernameS) == false */) //check if email is available
+											//continue insert into udb
+											if (udb.modifyUser(uid,newuser) == true) //check if addUser is successful
 											{
-												//continue insert into udb
-												if (udb.modifyUser(uid,newuser) == true) //check if addUser is successful
-												{
-													//messageBox: successful!
-													//close this dialog afterwards
-													JOptionPane.showMessageDialog(null, "Account update successful!");
-													dispose();
-												}
-												else
-												{
-													//messagebox: something wrong when inserting. Please try again
-													int n = JOptionPane.showConfirmDialog(null, "Something went wrong. Please try again", "OK", JOptionPane.YES_NO_OPTION);
-												}
+												//messageBox: successful!
+												//close this dialog afterwards
+												JOptionPane.showMessageDialog(null, "Account update successful!");
+												dispose();
 											}
 											else
 											{
-												//messagebox: id already exist
-												int n = JOptionPane.showConfirmDialog(null, "Please use another username", "OK", JOptionPane.YES_NO_OPTION);
+												JOptionPane.showConfirmDialog(null, "Something went wrong. Please try again", "OK", JOptionPane.YES_NO_OPTION);
 											}
 										}
 										else
 										{
-											//messagebox: password not valid
-											int n = JOptionPane.showConfirmDialog(null, "Password is not valid", "OK", JOptionPane.YES_NO_OPTION);
+											JOptionPane.showConfirmDialog(null, "Password is not valid", "OK", JOptionPane.YES_NO_OPTION);
 										}
 									}
 									else
 									{
-										//MessageBox: password does not match
-										int n = JOptionPane.showConfirmDialog(null, "The 2 passwords does not match!", "OK", JOptionPane.YES_NO_OPTION);
+										JOptionPane.showConfirmDialog(null, "The 2 passwords does not match!", "OK", JOptionPane.YES_NO_OPTION);
 									}
 								}
 								else
 								{
-									//messageBox: username not valid
-									int n = JOptionPane.showConfirmDialog(null, "Email is invalid", "OK", JOptionPane.YES_NO_OPTION);
+									JOptionPane.showConfirmDialog(null, "Email is invalid", "OK", JOptionPane.YES_NO_OPTION);
 								}
 							}
 							else
