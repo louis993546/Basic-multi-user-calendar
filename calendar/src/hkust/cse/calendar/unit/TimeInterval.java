@@ -16,24 +16,105 @@ public class TimeInterval {
 	}
 
 	public TimeInterval(TimeSpan timeSpan) {
-		LocalTime startTime = timeSpan.StartTime().toLocalDateTime()
-				.toLocalTime();
-		LocalTime endTime = timeSpan.StartTime().toLocalDateTime()
-				.toLocalTime();
+		if (timeSpan.StartTime().toLocalDateTime().toLocalDate()
+				.isEqual(timeSpan.EndTime().toLocalDateTime().toLocalDate())) {
+			LocalTime startTime = timeSpan.StartTime().toLocalDateTime()
+					.toLocalTime();
+			LocalTime endTime = timeSpan.StartTime().toLocalDateTime()
+					.toLocalTime();
 
-		BitSet tmpBitset = new BitSet(40);
-		LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
-		for (int i = 0; i < 40; i++) {
-			if (startTime.isBefore(tmpTime) && tmpTime.isBefore(endTime)) {
-				// start <tmp< end, 8:00:1
-				tmpBitset.set(i);
+			BitSet tmpBitset = new BitSet(40);
+			LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
+			for (int i = 0; i < 40; i++) {
+				if (startTime.isBefore(tmpTime) && tmpTime.isBefore(endTime)) {
+					// start <tmp< end, 8:00:1
+					tmpBitset.set(i);
+				}
+				tmpTime = tmpTime.plusMinutes(15);
+
 			}
-			tmpTime = tmpTime.plusMinutes(15);
+			this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
+			timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime()
+					.toLocalDate(), tmpBitset);// only one date!!
+
+		}else{
+			this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
+			
+			{
+				LocalTime startTime = timeSpan.StartTime().toLocalDateTime()
+						.toLocalTime();
+				BitSet tmpBitset = new BitSet(40);
+				LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
+				for (int i = 0; i < 40; i++) {
+					if (startTime.isBefore(tmpTime)) {
+						// start <tmp< end, 8:00:1
+						tmpBitset.set(i);
+					}
+					tmpTime = tmpTime.plusMinutes(15);
+
+				}
+				timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime()
+						.toLocalDate(), tmpBitset);// start date
+				
+			}
+			{
+				LocalTime endTime = timeSpan.StartTime().toLocalDateTime()
+						.toLocalTime();
+				
+				BitSet tmpBitset = new BitSet(40);
+				LocalTime tmpTime = LocalTime.of(8, 0, 0, 1);
+				for (int i = 0; i < 40; i++) {
+					if (tmpTime.isBefore(endTime)) {
+						// start <tmp< end, 8:00:1
+						tmpBitset.set(i);
+					}
+					tmpTime = tmpTime.plusMinutes(15);
+
+				}
+				timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime()
+						.toLocalDate(), tmpBitset);// end date
+
+			}
+			{
+				BitSet tmpBitset = new BitSet(40);
+				tmpBitset.flip(0,40);//[T,T,T...T,T,T]
+				//timeSpan.StartTime().toLocalDateTime().toLocalDate()
+				//.isEqual(timeSpan.EndTime().toLocalDateTime().toLocalDate())
+				LocalDate startDate = timeSpan.StartTime().toLocalDateTime().toLocalDate();
+				LocalDate endDate = timeSpan.EndTime().toLocalDateTime().toLocalDate();
+				for (LocalDate tmpdate=startDate.plusDays(1);tmpdate.isBefore(endDate);tmpdate=tmpdate.plusDays(1)){
+					timeIntervalMap.put(tmpdate, tmpBitset);
+				}
+
+			}
+			
 
 		}
-		this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
-		timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime()
-				.toLocalDate(), tmpBitset);
+
+	}
+
+	public void unionwith(TimeInterval anotherTimeInterval) {
+		// union ??
+		// for(datetmp: anothermap.keyset.retainALL(map.keyset));
+		// map.get(datetmp) or anothermap.get(datetmp)
+		// for(datetobeadd: anothermap.keyset.removeALL(map.keyset));
+		// {map.put(datetobeadd,anothermap.get(datetobeadd));
+		Set<LocalDate> tmpKeySet = anotherTimeInterval.timeIntervalMap.keySet();
+		tmpKeySet.retainAll(timeIntervalMap.keySet());// find common date
+		for (LocalDate datetmp : tmpKeySet) {
+			BitSet tmpBitSet = timeIntervalMap.get(datetmp);
+			tmpBitSet.or(anotherTimeInterval.timeIntervalMap.get(datetmp));
+		}
+
+		Set<LocalDate> tmpKeySet2 = anotherTimeInterval.timeIntervalMap
+				.keySet();
+		tmpKeySet2.removeAll(timeIntervalMap.keySet());// find unique/new date
+														// in another
+		for (LocalDate datetobeadd : tmpKeySet2) {
+			timeIntervalMap.put(datetobeadd,
+					anotherTimeInterval.timeIntervalMap.get(datetobeadd));
+		}
+		;
 
 	}
 
@@ -43,7 +124,11 @@ public class TimeInterval {
 
 	public void intersectWith(TimeInterval anotherTimeInterval) {
 		Set<LocalDate> tmpKeySet = timeIntervalMap.keySet();
-		tmpKeySet.removeAll(anotherTimeInterval.timeIntervalMap.keySet());
+		tmpKeySet.removeAll(anotherTimeInterval.timeIntervalMap.keySet());// find
+																			// unique/new
+																			// date
+																			// in
+																			// another
 		for (LocalDate datetoberemove : tmpKeySet) {
 			timeIntervalMap.remove(datetoberemove);
 		}
@@ -51,7 +136,7 @@ public class TimeInterval {
 		for (LocalDate tmpdate : timeIntervalMap.keySet()) {
 			BitSet tmpBitSet = timeIntervalMap.get(tmpdate);
 			tmpBitSet.and(anotherTimeInterval.timeIntervalMap.get(tmpdate));
-			if (tmpBitSet.cardinality() == 0) {
+			if (tmpBitSet.cardinality() == 0) {// if num of true ==0, remove
 				timeIntervalMap.remove(tmpdate);
 			} else {
 				timeIntervalMap.put(tmpdate, tmpBitSet);
@@ -121,10 +206,24 @@ public class TimeInterval {
 
 	@Override
 	public String toString() {
-		return "TimeInterval [timeIntervalMap=" + timeIntervalMap + "]";
+		String result = "TimeInterval [timeIntervalMap=" + timeIntervalMap
+				+ "]\n";
+		for (LocalDate tmpdate : timeIntervalMap.keySet()) {
+			result += ("\t" + tmpdate + ": ");
+			for (int i = 0; i < timeIntervalMap.get(tmpdate).length(); i++) {
+				if (timeIntervalMap.get(tmpdate).get(i) == true) {
+					result += "O";
+				} else {
+					result += "X";
+				}
+			}
+			result += "\n";
+
+		}
+
+		return result;
 	}
 
-	
 	// intersect
 	// for(datetoberemove: map.keyset.removeALL(anothermap.keyset));
 	// {map.remove(datetoberemove);
@@ -151,6 +250,5 @@ public class TimeInterval {
 	// construct by timespan??
 
 	// minus past
-	
-	
+
 }
