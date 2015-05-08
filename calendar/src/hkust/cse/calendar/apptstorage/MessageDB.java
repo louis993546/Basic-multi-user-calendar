@@ -25,7 +25,7 @@ public class MessageDB {
 					+ "(MessageID          INTEGER             NOT NULL               PRIMARY KEY AUTOINCREMENT,"
 					+ " Type       		   INTEGER             NOT NULL,"
 					+ " UserUIDList        TEXT                NOT NULL,"
-					+ " editID            INTEGER             )";
+					+ " editID             INTEGER             NOT NULL)";
 			stmt.executeUpdate(sql);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
@@ -34,13 +34,12 @@ public class MessageDB {
 		}
 	}
 
-
-	public boolean addMessage(String l, int cap)
+	public boolean addMessage(int t, String l, int ei)
 	{
 		try {
 			stmt = c.createStatement();
-			sql = "INSERT INTO MESSAGETABLE (MESSAGE, CAPACITY) "
-					+ "VALUES ( '" + l + "'" + ",'" + cap + "' );";
+			sql = "INSERT INTO MessageTable (Type, UserUIDList, editID) "
+					+ "VALUES ( " + t + ",'" + l + "'," + ei + " );";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
