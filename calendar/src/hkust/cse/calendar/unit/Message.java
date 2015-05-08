@@ -1,20 +1,34 @@
 package hkust.cse.calendar.unit;
 
 public class Message {
-	private String id;
-	private String mes;
+	private int messageID;
+	private int type;
+	private String userUIDList;
+	private int editID;
 	
-	public String getId() {
-		return id;
+	public int getMessageID() {
+		return messageID;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setMessageID(int messageID) {
+		this.messageID = messageID;
 	}
-	public String getMes() {
-		return mes;
+	public int getType() {
+		return type;
 	}
-	public void setMes(String mes) {
-		this.mes = mes;
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getUserUIDList() {
+		return userUIDList;
+	}
+	public void setUserUIDList(String userUIDList) {
+		this.userUIDList = userUIDList;
+	}
+	public int getEditID() {
+		return editID;
+	}
+	public void setEditID(int editID) {
+		this.editID = editID;
 	}
 	
 }

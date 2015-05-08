@@ -24,10 +24,8 @@ public class MessageDB {
 			sql = "CREATE TABLE IF NOT EXISTS MessageTable "
 					+ "(MessageID          INTEGER             NOT NULL               PRIMARY KEY AUTOINCREMENT,"
 					+ " Type       		   INTEGER             NOT NULL,"
-					+ " UserUIDList        INTEGER             NOT NULL,"
-					+ " LocationID         INTEGER             ,"
-					+ " AppointmentID      INTEGER             ,"
-					+ " UserUID            INTEGER             )";
+					+ " UserUIDList        TEXT                NOT NULL,"
+					+ " editID            INTEGER             )";
 			stmt.executeUpdate(sql);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
