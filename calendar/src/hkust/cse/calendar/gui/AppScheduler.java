@@ -1,7 +1,6 @@
 package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptDB;
-import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appointment;
@@ -17,20 +16,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Scanner;
-
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -201,6 +194,23 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		JPanel lPanel = new JPanel();
 		Border lBorder = new TitledBorder(null, "Location");
 		lPanel.setBorder(lBorder);
+		ArrayList<String> tempLocationAL = new ArrayList<String>();
+		if (locationAL.size()>0)
+		{
+			for (String l:locationAL)
+			{
+				tempLocationAL.add(l);
+			}
+		}
+		locationAL = new ArrayList<String>();
+		if (tempLocationAL.size()>0)
+		{
+			for (String l:tempLocationAL)
+			{
+				int capa = ldb.getCapacityByName(l);
+				locationAL.add(l + "(" + capa + ")");
+			}
+		}
 		locationAL.add("N/A");
 		lCB = new JComboBox(locationAL.toArray());
 		lCB.setSelectedItem("N/A");

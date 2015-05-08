@@ -330,6 +330,14 @@ public class ApptDB {
 	
 	public LinkedList<Integer> StringToLinkedList(String listS)
 	{
+		if (listS.startsWith("[") == true)
+		{
+			listS = listS.substring(1, listS.length());
+		}
+		if (listS.endsWith("]") == true)
+		{
+			listS = listS.substring(0, listS.length()-1);
+		}
 		LinkedList<Integer> op = new LinkedList<Integer>();
 		if (listS.length()>0)
 		{
