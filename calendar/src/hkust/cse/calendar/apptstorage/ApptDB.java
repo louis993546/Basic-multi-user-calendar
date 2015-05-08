@@ -276,22 +276,13 @@ public class ApptDB {
 				REMINDER_UNIT = rs.getInt("REMINDER_UNIT");
 				createrID = rs.getInt("USER");
 				ID = rs.getInt("ID");
-				
-				//TODO these codes are temporary
-				//remove these codes once bug in addAppt has been fixed
-				//How-to: serialize the 3 lists
-//				LinkedList<LinkedList<String>> arwList = new LinkedList<LinkedList<String>>();
 				LinkedList<Integer> goingUIDLL = StringToLinkedList(GOING);
 				LinkedList<Integer> waitingUIDLL = StringToLinkedList(WAITING);
-//				arwList.add(new LinkedList<String>());
-//				arwList.add(new LinkedList<String>());
-//				arwList.add(new LinkedList<String>());
-				
-				//TODO [Phrase 2] extract the 2 lists from arwList
 				Appointment tempAppointment = new Appointment(TITLE, DESCRIPTION, LOCATION, START_TIME_HOUR, START_TIME_MINUTE, START_TIME_YEAR, START_TIME_MONTH, START_TIME_DAY, END_TIME_HOUR, END_TIME_MINUTE, END_TIME_YEAR, END_TIME_MONTH, END_TIME_DAY, REMINDER, REMINDER_TIME, REMINDER_UNIT, goingUIDLL, waitingUIDLL, ID, createrID);
 				temp.add(tempAppointment);
 		    }
 			Appt[] temparray = new Appt[temp.size()];
+			System.out.println("Size of temp:" + temp.size());
 			for (int i = 0; i<temp.size(); i++)
 			{
 				Appt tempappt = new Appt(temp.get(i));
@@ -315,15 +306,15 @@ public class ApptDB {
 		if (list.size()>0)
 		{
 			String op = "";
-			System.out.println("The whole list: " + list);
+//			System.out.println("The whole list: " + list);
 			for (Integer a:list)
 			{
-				System.out.println("Each one: " + a);
+//				System.out.println("Each one: " + a);
 				op = op + a + "/";
 			}
-			System.out.println("this one:" + op);
+//			System.out.println("this one:" + op);
 			op = op.substring(0, op.length()-1);
-			System.out.println("that one:" + op);
+//			System.out.println("that one:" + op);
 			return op;
 		}
 		else
@@ -343,19 +334,6 @@ public class ApptDB {
 			}
 		}
 		return op;
-		
-		//Syntax: each UID will be deperat ed with a "/" symbol
-		//e.g. String listS = "/1/3/7/9/12";
-//		
-//		int id;
-//		int dash = listS.indexOf("/");
-//		while (dash >= 0 )
-//		{
-//			id = Integer.parseInt(listS.substring(0, dash-1));
-//			op.add(id);
-//			listS = listS.substring(dash+1);
-//			dash = listS.indexOf("/");
-//		}
 	}
 	
 	public boolean IsHeInWaitingList(int apptID, int uid)

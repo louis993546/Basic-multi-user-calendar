@@ -96,6 +96,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 
 		area.setText("Appointment Information \n");
 		area.append("Title: " + appt.getTitle() + "\n");
+		area.append("Date: " + appt.TimeSpan().toString() + "\n");
 		area.append("Time: " + time + "\n");
 		area.append("Location: " + appt.getAppointment().getLocation() + "\n");
 		area.append("createrID: " + appt.getAppointment().getCreaterUID() + "\n");
@@ -110,15 +111,6 @@ public class DetailsDialog extends JFrame implements ActionListener {
 				area.append("  " + attendList.get(i));
 			}
 		}
-//		area.append("\n\n  Reject:");
-//		LinkedList<String> rejectList = appt.getRejectList();
-//		if(rejectList != null)
-//		{
-//			for(int i = 0; i < rejectList.size(); i++)
-//			{
-//				area.append("  " + rejectList.get(i));
-//			}
-//		}
 		area.append("\n\n  Waiting:");
 		LinkedList<Integer> waitingList = appt.getWaitingList();
 		if(waitingList != null)
@@ -132,7 +124,6 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		area.append("\n\nDescription: \n" + appt.getInfo());
 		area.setEditable(false);
 		UserDB udb=new UserDB();
-		System.out.println("creator id"+appt.getAppointment().getCreaterUID());
 		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterUID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterUID()).LastName());
 	}
 
