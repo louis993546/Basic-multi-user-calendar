@@ -37,7 +37,11 @@ public class MessageStorage {
 	public static SortedMap<Integer, LocalDateTime> getCreatorToLastRelatedEventMap_notfinish(
 			int IDofUserToBeDeleted) {
 		// TODO Auto-generated method stub
+		// locked the user
 		SortedMap<Integer, LocalDateTime> tmpmap=new TreeMap<Integer, LocalDateTime>();
+		
+		
+		//appt[] apptlist=getApptListInvolveUserInFuture(uid);
 		LocalDateTime tmptime = TimeMachine.getInstance().getTMTimestamp().toLocalDateTime().plusHours(6);
 		tmpmap.put(IDofUserToBeDeleted, tmptime);
 		return tmpmap;

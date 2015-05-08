@@ -36,10 +36,32 @@ public class TimeInterval {
 				.toLocalDate(), tmpBitset);
 
 	}
-
+	
+	public void unionwith(TimeInterval anotherTimeInterval){
+		// union ??
+		// for(datetmp: anothermap.keyset.retainALL(map.keyset));
+		// map.get(datetmp) or anothermap.get(datetmp)
+		// for(datetobeadd: anothermap.keyset.removeALL(map.keyset));
+		// {map.put(datetobeadd,anothermap.get(datetobeadd));
+		Set<LocalDate> tmpKeySet = anotherTimeInterval.timeIntervalMap.keySet();
+		tmpKeySet.retainAll(timeIntervalMap.keySet());//find common date
+		for(LocalDate datetmp: tmpKeySet){
+			BitSet tmpBitSet = timeIntervalMap.get(datetmp);
+			tmpBitSet.or(anotherTimeInterval.timeIntervalMap.get(datetmp));			
+		}
+		
+		Set<LocalDate> tmpKeySet2=anotherTimeInterval.timeIntervalMap.keySet();
+		tmpKeySet2.removeAll(timeIntervalMap.keySet());//find unique/new date in another
+		for(LocalDate datetobeadd: tmpKeySet2){
+			timeIntervalMap.put(datetobeadd,anotherTimeInterval.timeIntervalMap.get(datetobeadd));
+		};
+		
+		
+	}
+	
 	public void intersectWith(TimeInterval anotherTimeInterval) {
 		Set<LocalDate> tmpKeySet = timeIntervalMap.keySet();
-		tmpKeySet.removeAll(anotherTimeInterval.timeIntervalMap.keySet());
+		tmpKeySet.removeAll(anotherTimeInterval.timeIntervalMap.keySet());//find unique/new date in another
 		for (LocalDate datetoberemove : tmpKeySet) {
 			timeIntervalMap.remove(datetoberemove);
 		}
@@ -47,7 +69,7 @@ public class TimeInterval {
 		for (LocalDate tmpdate : timeIntervalMap.keySet()) {
 			BitSet tmpBitSet = timeIntervalMap.get(tmpdate);
 			tmpBitSet.and(anotherTimeInterval.timeIntervalMap.get(tmpdate));
-			if (tmpBitSet.cardinality() == 0) {
+			if (tmpBitSet.cardinality() == 0) {// if num of true ==0, remove
 				timeIntervalMap.remove(tmpdate);
 			} else {
 				timeIntervalMap.put(tmpdate, tmpBitSet);
@@ -117,7 +139,22 @@ public class TimeInterval {
 
 	@Override
 	public String toString() {
-		return "TimeInterval [timeIntervalMap=" + timeIntervalMap + "]";
+		String result="TimeInterval [timeIntervalMap=" + timeIntervalMap + "]\n";
+		for (LocalDate tmpdate : timeIntervalMap.keySet()) {
+			result+=("\t"+tmpdate+": ");
+			for (int i = 0; i < timeIntervalMap.get(tmpdate).length(); i++){
+				if(timeIntervalMap.get(tmpdate).get(i)==true){
+					result+="O";
+				}else{
+					result+="X";
+				}
+			}
+			result+="\n";
+			
+		}
+		
+		
+		return result;
 	}
 
 	
