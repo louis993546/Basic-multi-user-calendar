@@ -14,6 +14,11 @@ public class MessageBody {
 		return userToBeDeletedID;
 	}
 
+	public int getLocationToBeDeletedID() {
+		// TODO Auto-generated method stub
+		return locationID;
+	}
+
 	public int getLocationID() {
 		return locationID;
 	}

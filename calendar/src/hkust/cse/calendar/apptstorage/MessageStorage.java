@@ -22,7 +22,7 @@ public class MessageStorage {
 	static SortedMap<Integer, MessageBody> deleteUser = new TreeMap<Integer, MessageBody>();
 	// deleteUser.put(-1, new
 	// MessageBody(-1,-1,-1,MessageBody.UserResponse.NotYet,LocalDateTime.now());
-	SortedMap<Integer, MessageBody> deleteLocation = new TreeMap<Integer, MessageBody>();
+	static SortedMap<Integer, MessageBody> deleteLocation = new TreeMap<Integer, MessageBody>();
 
 	private MessageStorage() {
 
@@ -32,16 +32,22 @@ public class MessageStorage {
 		return deleteUser;
 	}
 
-	public SortedMap<Integer, MessageBody> getDeleteLocation() {
+	public static SortedMap<Integer, MessageBody> getDeleteLocation() {
+		// TODO Auto-generated method stub
 		return deleteLocation;
 	}
 
 	public static void popupMsgAndSave(int msgid, String userOrLocation) {
-		MessageBody tmpMB = deleteUser.get(msgid);
-		System.out.println("user with id " + tmpMB.getUserToBeDeletedID()
-				+ "will be deleted. Do you accept?");
-		AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(msgid,"user");
-		// if yes, if no
+		if(userOrLocation.equals("user")){
+			//MessageBody tmpMB = deleteUser.get(msgid);
+			//System.out.println("user with id " + tmpMB.getUserToBeDeletedID()
+					//+ "will be deleted. Do you accept?");
+			AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(msgid,"user");
+			
+			// if yes, if no
+		} else if (userOrLocation.equals("location")){
+			AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(msgid,"location");
+		}
 
 	}
 
@@ -101,5 +107,7 @@ public class MessageStorage {
 		}
 		return false;
 	}
+
+
 
 }

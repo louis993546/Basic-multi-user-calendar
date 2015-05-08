@@ -75,19 +75,37 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 				MessageBody tmpMessageBody = deleteUser.get(msgid);
 				int userToBeDeletedID = tmpMessageBody.getUserToBeDeletedID();
 				deleteUser.remove(msgid);
-				//find if userToBeDel exist
-				if(MessageStorage.isExistID(userToBeDeletedID, "user")){
-					
-				};
+				// find if userToBeDeleted exist
 				
-			} else if (userOrLoc.equals("location")) {
+				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
+					// really delete the user
+					// since user is the last one to confirm
 
+				}
+				;
+
+			} else if (userOrLoc.equals("location")) {
+				SortedMap<Integer, MessageBody> deleteLocation = MessageStorage
+						.getDeleteLocation();
+				MessageBody tmpMessageBody = deleteLocation.get(msgid);
+				int locationToBeDeletedID = tmpMessageBody
+						.getLocationToBeDeletedID();
+				deleteLocation.remove(msgid);
+				// find if locationToBeDel exist
+				if (!MessageStorage
+						.isExistID(locationToBeDeletedID, "location")) {
+					// really delete the location
+					// since user is the last one to confirm
+					
+				}//else need more confirm
+				;
 			} else {
 
 			}
 
 			this.dispose();
 		} else if (e.getSource() == bRejectGroupInv) {
+			// remove all msg related to this user or location
 			this.dispose();
 		}
 

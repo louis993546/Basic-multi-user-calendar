@@ -125,6 +125,9 @@ public class CalGrid extends JFrame implements ActionListener {
 	public CalGrid(ApptStorageControllerImpl con) {
 		super();
 
+		timeMachine = TimeMachine.getInstance();// new TimeMachine(this);
+		timeMachine.setCg(this);
+		
 		ldb = LocationDB.getInstance();
 
 		currentUserID = con.getDefaultUser().getUID();
@@ -144,11 +147,38 @@ public class CalGrid extends JFrame implements ActionListener {
 			MessageBody mb = delUserMap.get(i);
 			System.out
 					.println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
-							+ (mb.getReceiverID() == currentUserID) + " && "
+							+ (mb.getReceiverID() == currentUserID)
+							+ " && "
+							+ (mb.getResponse() == MessageBody.UserResponse.NotYet));
+			if (mb.getExpireDateTime().isBefore(
+					timeMachine.getTMTimestamp().toLocalDateTime())) {
+				// del expired msg and check status
+				int userToBeDeletedID = mb.getUserToBeDeletedID();
+				delUserMap.remove(i);
+				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
+					// really delete the user
+					// since user is the last one to confirm and msg is expired
+
+				}
+			} else if (mb.getReceiverID() == currentUserID
+					&& mb.getResponse() == MessageBody.UserResponse.NotYet) {
+				MessageStorage.popupMsgAndSave(i, "user");// ??
+			}
+		}
+
+		SortedMap<Integer, MessageBody> delLocationMap = MessageStorage
+				.getDeleteLocation();
+		for (int i : delLocationMap.keySet()) {// MessageBody mb:
+												// delLocationMap.values()){
+			MessageBody mb = delLocationMap.get(i);
+			System.out
+					.println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.LocationResponse.NotYet"
+							+ (mb.getReceiverID() == currentUserID)
+							+ " && "
 							+ (mb.getResponse() == MessageBody.UserResponse.NotYet));
 			if (mb.getReceiverID() == currentUserID
 					&& mb.getResponse() == MessageBody.UserResponse.NotYet) {
-				MessageStorage.popupMsgAndSave(i, "user");// ??
+				MessageStorage.popupMsgAndSave(i, "location");// ??
 			}
 		}
 
@@ -165,9 +195,6 @@ public class CalGrid extends JFrame implements ActionListener {
 
 		setJMenuBar(createMenuBar());
 
-		// today = new GregorianCalendar();
-		timeMachine = TimeMachine.getInstance();// new TimeMachine(this);
-		timeMachine.setCg(this);
 		today = new GregorianCalendar();
 		today.setTime(timeMachine.getTMTimestamp());
 		currentY = today.get(Calendar.YEAR);
