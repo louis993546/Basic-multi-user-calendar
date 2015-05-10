@@ -2,6 +2,7 @@ package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.Message;
 import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
@@ -18,12 +19,15 @@ public class ApptDB {
     private Statement stmt = null;
     private String sql = null;
     private ResultSet rs = null;
+    private MessageDB mdb;
 
     public ApptDB()
 	{
 	c = null;
 	stmt = null;
-    try {
+    mdb = new MessageDB();
+	try 
+    {
 	    Class.forName("org.sqlite.JDBC");
 	    c = DriverManager.getConnection("jdbc:sqlite:appt.db");
 	    stmt = c.createStatement();
@@ -55,7 +59,8 @@ public class ApptDB {
 	    }
 	  }
     
-    public ArrayList<Appointment> getAppointmentList() {
+    public ArrayList<Appointment> getAppointmentList()
+    {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
 		try {
 			stmt = c.createStatement();
@@ -171,6 +176,20 @@ public class ApptDB {
 				+ LinkedListToString(a.getWaitingList()) + "');";
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
+			
+			//create messages if needed
+			if (a.getWaitingList().size() > 0)
+			{
+				ArrayList<Integer> UIDAL = new ArrayList<Integer>();
+				for (Integer i:a.getWaitingList())
+				{
+					UIDAL.add(i);
+				}
+				Message m = new Message(4, UIDAL, getApptID(a));
+				mdb.addMessage(m);
+			}
+			
+			
 			return true;
 		}
 		catch (SQLException sqle) {
@@ -444,40 +463,63 @@ public class ApptDB {
 	
 	public int getApptID(Appointment a)
 	{
-		//return id iff every details match
-		try {
-			ArrayList<Integer> idAL = new ArrayList<Integer>();
-			stmt = c.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
-					+ "TITLE='" + a.getTitle()
-					+ "DESCIRPTION='" + a.getDescription()
-					+ "LOCATION='" + a.getLocation()
-					+ "START_TIME_HOUR='" + a.getStartHour()
-					+ "START_TIME_MINUTE='" + a.getStartMin()
-					+ "START_TIME_YEAR='" + a.getStartYear()
-					+ "START_TIME_MONTH='" + a.getStartMonth()
-					+ "START_TIME_DAY='" + a.getStartDay()
-					+ "END_TIME_HOUR='" + a.getEndHour()
-					+ "END_TIME_MINUTE='" + a.getEndMin()
-					+ "END_TIME_YEAR='" + a.getEndYear()
-					+ "END_TIME_MONTH='" + a.getEndMonth()
-					+ "END_TIME_DAY='" + a.getEndDay()
-					+ "';");
-			while (rs.next()) {
-				int ans = rs.getInt("ID");
-				idAL.add(ans);
-			}
-			switch (idAL.size()) {
-				case 0: return 0;			//does not exist
-				case 1:
-					return idAL.get(0);	//only 1 exist (ideal scenario)
-				default: return -1;			//exist multiple times (should never occur)
+		ArrayList<Appointment> aal = getAppointmentList();
+		System.out.println("aal.size(): " + aal.size());
+		for (Appointment b:aal)
+		{
+			System.out.println("b: " + b.getTitle());
+			System.out.println("a: " + a.getTitle());
+			if (b.getTitle().compareTo(a.getTitle()) == 0)
+			{
+				System.out.println("Title matched");
+				if (b.getDescription().compareTo(a.getDescription()) == 0)
+				{
+					System.out.println("Description matched");
+					if (b.getLocation().compareTo(a.getLocation()) == 0)
+					{
+						System.out.println("Location matched");
+							System.out.println("b.getID(): " + b.getID());
+							return b.getID();
+					}
+				}
 			}
 		}
-		catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
-		    return -2;
-		}
+		return -1;
+		
+//		//return id iff every details match
+//		try {
+//			ArrayList<Integer> idAL = new ArrayList<Integer>();
+//			stmt = c.createStatement();
+//			rs = stmt.executeQuery("SELECT * FROM APPOINTMENT WHERE "
+//					+ "TITLE='" + a.getTitle() + "'"
+//					+ " ,DESCIRPTION='" + a.getDescription() + "' "
+//					+ " ,LOCATION='" + a.getLocation() + "' "
+//					+ " ,START_TIME_HOUR=" + a.getStartHour()
+//					+ " ,START_TIME_MINUTE=" + a.getStartMin()
+//					+ " ,START_TIME_YEAR=" + a.getStartYear()
+//					+ " ,START_TIME_MONTH=" + a.getStartMonth()
+//					+ " ,START_TIME_DAY=" + a.getStartDay()
+//					+ " ,END_TIME_HOUR=" + a.getEndHour()
+//					+ " ,END_TIME_MINUTE=" + a.getEndMin()
+//					+ " ,END_TIME_YEAR=" + a.getEndYear()
+//					+ " ,END_TIME_MONTH=" + a.getEndMonth()
+//					+ " ,END_TIME_DAY=" + a.getEndDay()
+//					+ " ;");
+//			while (rs.next()) {
+//				int ans = rs.getInt("ID");
+//				idAL.add(ans);
+//			}
+//			switch (idAL.size()) {
+//				case 0: return 0;			//does not exist
+//				case 1:
+//					return idAL.get(0);	//only 1 exist (ideal scenario)
+//				default: return -1;			//exist multiple times (should never occur)
+//			}
+//		}
+//		catch (SQLException e) {
+//			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+//		    return -2;
+//		}
 	}
 	
 	public int getApptIDByTitle(String title)

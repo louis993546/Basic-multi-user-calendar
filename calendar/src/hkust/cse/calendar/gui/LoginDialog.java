@@ -136,6 +136,7 @@ public class LoginDialog extends JFrame implements ActionListener
 			if (allow)
 			{
 				user = udb.getFullUser(user);
+				System.out.println("User ID: " + user.getUID());
 				ArrayList<Message> allMessages = mdb.getAllMessageForUser(user.getUID());
 				System.out.println("allMessages.size(): " + allMessages.size());
 				for (int i = 0; i<allMessages.size(); i++)
@@ -218,10 +219,11 @@ public class LoginDialog extends JFrame implements ActionListener
 							}
 							else
 							{	//remove user from list
-								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
-								newUIDList.remove(user.getUID());
-								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
-								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
+								mdb.removeUIDFromUIDList(user.getUID(), allMessages.get(i).getMessageID());
+//								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
+//								newUIDList.remove(user.getUID());
+//								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
+//								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
 							}
 							//TODO remove user from waiting list
 //							adb.modifyAppt(allMessages.get(i).getEditID(), )
