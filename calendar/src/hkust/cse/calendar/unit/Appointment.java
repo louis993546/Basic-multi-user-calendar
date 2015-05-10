@@ -148,10 +148,12 @@ public class Appointment implements Comparable<Appointment> {
 		return true;
 	}
 
-	public boolean deleteFromAttend(String name)
+	public boolean deleteFromGoing(int uid)
 	{
-		if (going.remove(name) == true)
+		if (going.contains(uid) == true)
 		{
+			Integer i = uid;
+			going.remove(i);
 			return true;
 		}
 		else
@@ -160,22 +162,12 @@ public class Appointment implements Comparable<Appointment> {
 		}
 	}
 
-//	public boolean deleteFromReject(String name)
-//	{
-//		if (reject.remove(name) == true)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-
-	public boolean deleteFromWaiting(String name)
+	public boolean deleteFromWaiting(int uid)
 	{
-		if (waiting.remove(name) == true)
+		if (waiting.contains(uid) == true)
 		{
+			Integer i = uid;
+			waiting.remove(i);
 			return true;
 		}
 		else
@@ -183,45 +175,12 @@ public class Appointment implements Comparable<Appointment> {
 			return false;
 		}
 	}
-
-//	public boolean waitingToAttend(int uid)
-//	{
-//		//TODO get UID first
-//		if (waiting.remove(uid) == true)
-//		{
-//			going.add(uid);
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-
-//	public boolean waitingToReject(String name)
-//	{
-//		if (waiting.remove(name) == true)
-//		{
-//			reject.add(name);
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
 
 	public boolean addToAttend(int uid)
 	{
 		going.add(uid);
 		return true;
 	}
-
-//	public boolean addToReject(String name)
-//	{
-//		reject.add(name);
-//		return true;
-//	}
 
 	public boolean addWaiting(int uid)
 	{
@@ -240,11 +199,6 @@ public class Appointment implements Comparable<Appointment> {
 		going = new LinkedList<Integer>();
 	}
 
-//	public void initiateReject()
-//	{
-//		reject = new LinkedList<String>();
-//	}
-
 	public void initiateWaiting()
 	{
 		waiting = new LinkedList<Integer>();
@@ -254,11 +208,6 @@ public class Appointment implements Comparable<Appointment> {
 	{
 		going = a;
 	}
-
-//	public void setReject(LinkedList<String> r)
-//	{
-//		reject = r;
-//	}
 
 	public void setWaiting(LinkedList<Integer> w)
 	{

@@ -14,10 +14,10 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 public class ApptDB {
-	Connection c = null;
-    Statement stmt = null;
-    String sql = null;
-    ResultSet rs = null;
+	private Connection c = null;
+    private Statement stmt = null;
+    private String sql = null;
+    private ResultSet rs = null;
 
     public ApptDB()
 	{
@@ -55,64 +55,7 @@ public class ApptDB {
 	    }
 	  }
     
-    public boolean addAppt(Appointment a)
-	{
-		try {
-			stmt = c.createStatement();
-			System.out.println(LinkedListToString(a.getGoingList()));
-			System.out.println(LinkedListToString(a.getWaitingList()));
-			
-			sql = "INSERT INTO APPOINTMENT ("
-				+ "TITLE, "
-				+ "DESCRIPTION, "
-				+ "LOCATION, "
-				+ "START_TIME_HOUR, "
-				+ "START_TIME_MINUTE, "
-				+ "START_TIME_YEAR, "
-				+ "START_TIME_MONTH, "
-				+ "START_TIME_DAY, "
-				+ "END_TIME_HOUR, "
-				+ "END_TIME_MINUTE, "
-				+ "END_TIME_YEAR, "
-				+ "END_TIME_MONTH, "
-				+ "END_TIME_DAY, "
-				+ "REMINDER, "
-				+ "REMINDER_TIME, "
-				+ "REMINDER_UNIT, "
-				+ "USER, "
-				+ "GOING, " 
-				+ "WAITING) " +
-					"VALUES ('" 
-				+ a.getTitle() + "','" 
-				+ a.getDescription() + "','" 
-				+ a.getLocation() + "',"
-				+ a.getStartHour() + "," 
-				+ a.getStartMin() + "," 
-				+ a.getStartYear() + "," 
-				+ a.getStartMonth() + "," 
-				+ a.getStartDay() + "," 
-				+ a.getEndHour() + "," 
-				+ a.getEndMin() + "," 
-				+ a.getEndYear() + "," 
-				+ a.getEndMonth() + "," 
-				+ a.getEndDay() + "," 
-				+ a.getReminder() + "," 
-				+ a.getReminderTime() + "," 
-				+ a.getReminderUnit() + "," 
-				+ a.getCreaterUID() + ",'" 
-				+ LinkedListToString(a.getGoingList()) + "','"
-				+ LinkedListToString(a.getWaitingList()) + "');";
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
-			return true;
-		}
-		catch (SQLException sqle) {
-			System.err.println( sqle.getClass().getName() + ": " + sqle.getMessage() );
-		}
-		return false;
-	}
-    
-	public ArrayList<Appointment> getAppointmentList() {
+    public ArrayList<Appointment> getAppointmentList() {
 		ArrayList<Appointment> temp = new ArrayList<Appointment>();
 		try {
 			stmt = c.createStatement();
@@ -178,6 +121,116 @@ public class ApptDB {
 		}
 		return null;
 	}
+    
+    public boolean addAppt(Appointment a)
+	{
+		try {
+			stmt = c.createStatement();
+			System.out.println(LinkedListToString(a.getGoingList()));
+			System.out.println(LinkedListToString(a.getWaitingList()));
+			
+			sql = "INSERT INTO APPOINTMENT ("
+				+ "TITLE, "
+				+ "DESCRIPTION, "
+				+ "LOCATION, "
+				+ "START_TIME_HOUR, "
+				+ "START_TIME_MINUTE, "
+				+ "START_TIME_YEAR, "
+				+ "START_TIME_MONTH, "
+				+ "START_TIME_DAY, "
+				+ "END_TIME_HOUR, "
+				+ "END_TIME_MINUTE, "
+				+ "END_TIME_YEAR, "
+				+ "END_TIME_MONTH, "
+				+ "END_TIME_DAY, "
+				+ "REMINDER, "
+				+ "REMINDER_TIME, "
+				+ "REMINDER_UNIT, "
+				+ "USER, "
+				+ "GOING, " 
+				+ "WAITING) " +
+					"VALUES ('" 
+				+ a.getTitle() + "','" 
+				+ a.getDescription() + "','" 
+				+ a.getLocation() + "',"
+				+ a.getStartHour() + "," 
+				+ a.getStartMin() + "," 
+				+ a.getStartYear() + "," 
+				+ a.getStartMonth() + "," 
+				+ a.getStartDay() + "," 
+				+ a.getEndHour() + "," 
+				+ a.getEndMin() + "," 
+				+ a.getEndYear() + "," 
+				+ a.getEndMonth() + "," 
+				+ a.getEndDay() + "," 
+				+ a.getReminder() + "," 
+				+ a.getReminderTime() + "," 
+				+ a.getReminderUnit() + "," 
+				+ a.getCreaterUID() + ",'" 
+				+ LinkedListToString(a.getGoingList()) + "','"
+				+ LinkedListToString(a.getWaitingList()) + "');";
+			System.out.println(sql);
+			stmt.executeUpdate(sql);
+			return true;
+		}
+		catch (SQLException sqle) {
+			System.err.println( sqle.getClass().getName() + ": " + sqle.getMessage() );
+		}
+		return false;
+	}
+    
+	public boolean deleteAppt(int id)
+	{
+		try
+		{
+			stmt = c.createStatement();
+		    String sql = "DELETE from APPOINTMENT WHERE ID=" + id + ";";
+		    stmt.executeUpdate(sql);
+			return true;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			return false;
+		}
+	}
+	
+	public boolean modifyAppt(int id, Appointment newAppt)
+	{
+		try
+		{	
+			stmt = c.createStatement();
+	        sql = "UPDATE APPOINTMENT SET"
+	    		  + "      TITLE = '"           + newAppt.getTitle()
+	    		  + "' ,   DESCRIPTION = '"     + newAppt.getDescription()
+	    		  + "' ,   LOCATION = '"        + newAppt.getLocation()
+	    		  + "' ,   START_TIME_HOUR="    + newAppt.getStartHour()
+	    		  + "  ,   START_TIME_MINUTE= " + newAppt.getStartMin()
+	    		  + "  ,   START_TIME_YEAR= "   + newAppt.getStartYear()
+	    		  + "  ,   START_TIME_MONTH= "  + newAppt.getStartMonth()
+	    		  + "  ,   START_TIME_DAY= "    + newAppt.getStartDay()
+	    		  + "  ,   END_TIME_HOUR= "     + newAppt.getEndHour()
+	    		  + "  ,   END_TIME_MINUTE= "   + newAppt.getEndMin()
+	    		  + "  ,   END_TIME_YEAR= "     + newAppt.getEndYear()
+	    		  + "  ,   END_TIME_MONTH= "    + newAppt.getEndMonth()
+	    		  + "  ,   END_TIME_DAY= "      + newAppt.getEndDay()
+	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
+	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
+	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
+	    		  + "  ,   GOING = '"            + newAppt.getGoingList()
+	    		  + "' ,   WAITING = '"          + newAppt.getWaitingList()
+	    		  + "'  WHERE ID="               + id
+	    		  + ";";
+			stmt.executeUpdate(sql);
+
+			return true;
+		}
+		catch (SQLException e)
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			return false;
+		}
+	}
 	
 	public Appt[] getApptByLocationName(String l)
 	{
@@ -211,7 +264,7 @@ public class ApptDB {
 				temp.add(a);
 			}
 		}
-		ArrayList<Appointment> allGoingAppt = getApptIDListFromGoing(u.getUID(), abt);
+		ArrayList<Appointment> allGoingAppt = getAppointmentListFromGoing(u.getUID(), abt);
 		for (Appointment a:allGoingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -220,7 +273,7 @@ public class ApptDB {
 				temp.add(temp2);
 			}
 		}
-		ArrayList<Appointment> allWaitingAppt = getApptIDListFromWaiting(u.getUID(), abt);
+		ArrayList<Appointment> allWaitingAppt = getAppointmentListFromWaiting(u.getUID(), abt);
 		for (Appointment a:allWaitingAppt)
 		{
 			if (addedApptID.contains(a.getID()) == false)
@@ -345,58 +398,7 @@ public class ApptDB {
 		}
 		return null;
 	}
-	
-	public String LinkedListToString(LinkedList<Integer> list)
-	{
-		//e.g. String listS = "1/3/7/9/12/";
-		if (list.size()>0)
-		{
-			String op = "";
-			for (Integer a:list)
-			{
-				op = op + a + "/";
-			}
-			op = op.substring(0, op.length()-1);
-			return op;
-		}
-		else
-			return "";	
-	}
-	
-	public LinkedList<Integer> StringToLinkedList(String listS)
-	{
-		if (listS.startsWith("[") == true)
-		{
-			listS = listS.substring(1, listS.length());
-		}
-		if (listS.endsWith("]") == true)
-		{
-			listS = listS.substring(0, listS.length()-1);
-		}
-		LinkedList<Integer> op = new LinkedList<Integer>();
-		if (listS.length()>0)
-		{
-			String[] listA = listS.split("/");
-			for (String a:listA)
-			{
-				op.add(Integer.parseInt(a));
-			}
-		}
-		return op;
-	}
-	
-	public boolean IsHeInWaitingList(int apptID, int uid)
-	{
-		//TODO check if someone(uid) exists in an specific appointment(apptID)'s waiting list
-		return false;
-	}
-	
-	public boolean IsHeInGoingList(int apptID, int uid)
-	{
-		//TODO check if someone(uid) exists in an specific appointment(apptID)'s going list
-		return false;
-	}
-	
+
 	public Appt getApptByJID(int j)
 	{
 		//TODO [Phrase 2?] get Appt by JID
@@ -419,7 +421,27 @@ public class ApptDB {
 		}
 		return null;
 	}
-
+	
+	public Appt getApptByID(int i)
+	{
+		ArrayList<Appointment> ApptAL = getAppointmentList();
+		if (ApptAL.size() > 0)
+		{
+			for (Appointment a: ApptAL)
+			{
+				if(a.getID() == i)
+				{
+					return new Appt(a);
+				}
+			}
+			return null;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	public int getApptID(Appointment a)
 	{
 		//return id iff every details match
@@ -482,61 +504,47 @@ public class ApptDB {
 		    return -2;
 		}
 	}
-	
-	public boolean deleteAppt(int id)
+
+	public String LinkedListToString(LinkedList<Integer> list)
 	{
-		try
+		//e.g. String listS = "1/3/7/9/12/";
+		if (list.size()>0)
 		{
-			stmt = c.createStatement();
-		    String sql = "DELETE from APPOINTMENT WHERE ID=" + id + ";";
-		    stmt.executeUpdate(sql);
-			return true;
+			String op = "";
+			for (Integer a:list)
+			{
+				op = op + a + "/";
+			}
+			op = op.substring(0, op.length()-1);
+			return op;
 		}
-		catch (SQLException e)
-		{
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-			return false;
-		}
+		else
+			return "";	
 	}
 	
-	public boolean modifyAppt(int id, Appointment newAppt)
+	public LinkedList<Integer> StringToLinkedList(String listS)
 	{
-		try
-		{	
-			stmt = c.createStatement();
-	        sql = "UPDATE APPOINTMENT SET"
-	    		  + "      TITLE = '"           + newAppt.getTitle()
-	    		  + "' ,   DESCRIPTION = '"     + newAppt.getDescription()
-	    		  + "' ,   LOCATION = '"        + newAppt.getLocation()
-	    		  + "' ,   START_TIME_HOUR="    + newAppt.getStartHour()
-	    		  + "  ,   START_TIME_MINUTE= " + newAppt.getStartMin()
-	    		  + "  ,   START_TIME_YEAR= "   + newAppt.getStartYear()
-	    		  + "  ,   START_TIME_MONTH= "  + newAppt.getStartMonth()
-	    		  + "  ,   START_TIME_DAY= "    + newAppt.getStartDay()
-	    		  + "  ,   END_TIME_HOUR= "     + newAppt.getEndHour()
-	    		  + "  ,   END_TIME_MINUTE= "   + newAppt.getEndMin()
-	    		  + "  ,   END_TIME_YEAR= "     + newAppt.getEndYear()
-	    		  + "  ,   END_TIME_MONTH= "    + newAppt.getEndMonth()
-	    		  + "  ,   END_TIME_DAY= "      + newAppt.getEndDay()
-	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
-	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
-	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
-	    		  + "  ,   GOING = '"            + newAppt.getGoingList()
-	    		  + "' ,   WAITING = '"          + newAppt.getWaitingList()
-	    		  + "'  WHERE ID="               + id
-	    		  + ";";
-			stmt.executeUpdate(sql);
-
-			return true;
-		}
-		catch (SQLException e)
+		if (listS.startsWith("[") == true)
 		{
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-			return false;
+			listS = listS.substring(1, listS.length());
 		}
+		if (listS.endsWith("]") == true)
+		{
+			listS = listS.substring(0, listS.length()-1);
+		}
+		LinkedList<Integer> op = new LinkedList<Integer>();
+		if (listS.length()>0)
+		{
+			String[] listA = listS.split("/");
+			for (String a:listA)
+			{
+				op.add(Integer.parseInt(a));
+			}
+		}
+		return op;
 	}
-
-	public ArrayList<Appointment> getApptIDListFromGoing(int uid, Appt[] abt)
+	
+	public ArrayList<Appointment> getAppointmentListFromGoing(int uid, Appt[] abt)
 	{
 		ArrayList<Appointment> apptIDAL = new ArrayList<Appointment>();
 		ArrayList<Appointment> allAppointments = new ArrayList<Appointment>();
@@ -554,7 +562,7 @@ public class ApptDB {
 		return apptIDAL;
 	}
 	
-	public ArrayList<Appointment> getApptIDListFromWaiting(int uid, Appt[] abt)
+	public ArrayList<Appointment> getAppointmentListFromWaiting(int uid, Appt[] abt)
 	{
 		ArrayList<Appointment> apptIDAL = new ArrayList<Appointment>();
 		ArrayList<Appointment> allAppointments = new ArrayList<Appointment>();
@@ -572,5 +580,61 @@ public class ApptDB {
 			}
 		}
 		return apptIDAL;
+	}
+	
+	public int isThisUIDInCreateGoingWaiting(int uid, int id)
+	{
+		Appt thatAppt = getApptByID(id);
+		if (thatAppt != null)
+		{
+			if (thatAppt.getAppointment().getCreaterUID() == uid)		//creator
+			{
+				return 1;
+			}
+			else if (thatAppt.getAppointment().getGoingList().contains(uid) == true)		//in going list
+			{
+				return 3;
+			}
+			else if (thatAppt.getAppointment().getWaitingList().contains(uid) == true)		//in waiting list
+			{
+				return 2;
+			}
+			else		//does not exist
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public boolean removeUIDFromGoingList(int uid, int id)
+	{
+		if (isThisUIDInCreateGoingWaiting(uid, id) == 3)
+		{
+			Appt toBeEdit = getApptByID(id);
+			toBeEdit.getAppointment().deleteFromGoing(uid);
+			return true;
+		}
+		else	
+		{
+			return false;
+		}
+	}
+	
+	public boolean removeUIDFromWaitingList(int uid, int id)
+	{
+		if (isThisUIDInCreateGoingWaiting(uid, id) == 2)
+		{
+			Appt toBeEdit = getApptByID(id);
+			toBeEdit.getAppointment().deleteFromWaiting(uid);
+			return true;
+		}
+		else	
+		{
+			return false;
+		}
 	}
 }
