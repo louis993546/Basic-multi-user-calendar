@@ -1,12 +1,17 @@
 package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.apptstorage.MessageStorage;
+import hkust.cse.calendar.unit.MessageBody;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.SortedMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -83,10 +88,15 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == deleteButton) {
-			int id = ldb.getLocationID(locationList.getSelectedValue()
+			int locationID = ldb.getLocationID(locationList.getSelectedValue()
 					.toString());
-			if ((id != 0) || (id != -1)) {
-				ldb.deleteLocation(id);
+			if ((locationID != 0) || (locationID != -1)) {
+				SortedMap<Integer, MessageBody> tmpmap = MessageStorage
+						.getDeleteLocation();
+				System.out.println("location id is "+locationID);
+				//SortedMap<Integer, LocalDateTime> creatorToLastRelatedEventMap = MessageStorage.getCreatorToLastRelatedEventMap(locationID);
+
+				ldb.deleteLocation(locationID);
 				locationListModel.removeElementAt(locationList
 						.getSelectedIndex());
 			}

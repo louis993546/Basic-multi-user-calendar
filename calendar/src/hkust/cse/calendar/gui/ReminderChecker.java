@@ -59,7 +59,7 @@ public class ReminderChecker {
 											System.out.println("The is the reminder for " + r.getTitle());
 											JOptionPane.showMessageDialog(null, "This is the reminder for " + r.getTitle() );
 											//TODO delete printed reminder
-											ral.remove(r);//?
+											ral.remove(r);//? remove in for loop?
 										}
 									}
 								}

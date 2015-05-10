@@ -1,5 +1,7 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.ApptDB;
+import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.MessageStorage;
 import hkust.cse.calendar.unit.MessageBody;
 
@@ -14,20 +16,20 @@ import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 
 public class AcceptOrNotDialog extends JFrame implements ActionListener {
-	private JPanel groupApptFramePanel;
+	private JPanel panel;
 	private JLabel comment1;
 	private JLabel comment2;
-	private JButton bAcceptGroupInv;
-	private JButton bRejectGroupInv;
+	private JButton bAccept;
+	private JButton bReject;
 	private MessageBody.UserResponse response = MessageBody.UserResponse.NotYet;
 	private String userOrLoc;
 	private int msgid;
 
 	public AcceptOrNotDialog(int msgid, String userOrLoc) {
-		// "user with id "+tmpMB.getUserToBeDeletedID()etedID()+
-		// "will be deleted. Do you accept?");
 		this.userOrLoc = userOrLoc;
 		this.msgid = msgid;
+
+		// choose type
 		if (userOrLoc.equals("user")) {
 			this.setTitle("User with id " + " will be deleted. Do you accept?");
 			comment1 = new JLabel(
@@ -40,27 +42,27 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 			comment1 = new JLabel(
 					"This location is used by some event created by you in the future");
 
-		} else {
+		} else {// maybe invite
 
 		}
 		this.setSize(400, 100);
 		this.setAlwaysOnTop(true);
 
-		groupApptFramePanel = new JPanel();
+		panel = new JPanel();
 		// System.out.println("trying to make group invitation dialogue");
 
-		bAcceptGroupInv = new JButton("Accept");
-		bAcceptGroupInv.addActionListener(this);
+		bAccept = new JButton("Accept");
+		bAccept.addActionListener(this);
 
-		bRejectGroupInv = new JButton("Reject");
-		bRejectGroupInv.addActionListener(this);
+		bReject = new JButton("Reject");
+		bReject.addActionListener(this);
 
-		groupApptFramePanel.add(comment1);
+		panel.add(comment1);
 		// groupApptFramePanel.add(comment2);
-		groupApptFramePanel.add(bAcceptGroupInv);
-		groupApptFramePanel.add(bRejectGroupInv);
+		panel.add(bAccept);
+		panel.add(bReject);
 
-		this.add(groupApptFramePanel);
+		this.add(panel);
 		pack();
 		this.setVisible(true);
 
@@ -68,20 +70,27 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == bAcceptGroupInv) {
+		if (e.getSource() == bAccept) {
+			// choose type for accept
 			if (userOrLoc.equals("user")) {
 				SortedMap<Integer, MessageBody> deleteUser = MessageStorage
 						.getDeleteUser();
+
 				MessageBody tmpMessageBody = deleteUser.get(msgid);
+
 				int userToBeDeletedID = tmpMessageBody.getUserToBeDeletedID();
+				// save id before del for check if last confirm
 				deleteUser.remove(msgid);
 				// find if userToBeDeleted exist
-				
+
 				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
-					// really delete the user
+					// this really delete the user and related events
+					ApptDB adb = new ApptDB();
+					adb.delEventsWithUser(userToBeDeletedID);
+					// TODO udb.deleteUser(userToBeDeletedID);
 					// since user is the last one to confirm
 
-				}
+				}// else need more people confirm so do nothing
 				;
 
 			} else if (userOrLoc.equals("location")) {
@@ -94,18 +103,45 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 				// find if locationToBeDel exist
 				if (!MessageStorage
 						.isExistID(locationToBeDeletedID, "location")) {
-					// really delete the location
-					// since user is the last one to confirm
-					
-				}//else need more confirm
+					ApptDB adb = new ApptDB();
+					adb.delEventsWithLocation(locationToBeDeletedID);
+					LocationDB ldb = LocationDB.getInstance();
+					ldb.deleteLocation(locationToBeDeletedID);
+
+				}// else need more confirm
 				;
-			} else {
+			} else { // invite?
 
 			}
 
 			this.dispose();
-		} else if (e.getSource() == bRejectGroupInv) {
+		} else if (e.getSource() == bReject) {
+			// choose type for reject
 			// remove all msg related to this user or location
+			if (userOrLoc.equals("user")) {
+				SortedMap<Integer, MessageBody> deleteUser = MessageStorage
+						.getDeleteUser();
+
+				MessageBody tmpMessageBody = deleteUser.get(msgid);
+
+				int userToBeDeletedID = tmpMessageBody.getUserToBeDeletedID();
+
+				MessageStorage.deleteAllMsgWithUserOrLocationToBeDeleted(
+						userToBeDeletedID, "user");
+			} else if (userOrLoc.equals("location")) {
+				SortedMap<Integer, MessageBody> deleteLocation = MessageStorage
+						.getDeleteLocation();
+
+				MessageBody tmpMessageBody = deleteLocation.get(msgid);
+
+				int locationToBeDeletedID = tmpMessageBody.getLocationToBeDeletedID();
+
+				MessageStorage.deleteAllMsgWithUserOrLocationToBeDeleted(
+						locationToBeDeletedID, "location");
+			} else {// invite?
+
+			}
+
 			this.dispose();
 		}
 

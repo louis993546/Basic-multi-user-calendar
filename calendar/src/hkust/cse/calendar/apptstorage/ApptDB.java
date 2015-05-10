@@ -8,6 +8,7 @@ import hkust.cse.calendar.unit.User;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -179,16 +180,18 @@ public class ApptDB {
 		return null;
 	}
 	
-	public Appt[] getApptByLocationName(String l)
+	public Appt[] getApptByLocationName(String locName)
 	{
 		ArrayList<Appointment> aal = getAppointmentList();
-		for (Appointment a:aal)
-		{
-			if (a.getLocation() != l)
-			{
-				aal.remove(a);
-			}
-		}
+		
+		aal.removeIf((Appointment tmpappt) -> tmpappt.getLocation() != locName);
+//		for (Appointment a:aal)
+//		{
+//			if (a.getLocation() != l)
+//			{
+//				aal.remove(a);
+//			}
+//		}
 		Appt[] temparray = new Appt[aal.size()];
 		for (int i = 0; i<aal.size(); i++)
 		{
@@ -237,31 +240,41 @@ public class ApptDB {
 		return temparray;
 	}
 	
-	public Appt[] getFutureApptWithUser(int u)
+	public Appt[] getFutureApptWithUser(int userid)
 	{
 		ArrayList<Appointment> result = getAppointmentList();
 		System.out.println("Result: "+ result.size());
-		for (int i = 0; i<result.size(); i++)
-		{
-			if (result.get(i).getCreaterUID() != u)
-			{
-				if (result.get(i).getTimeSpan().EndTime().after(TimeMachine.getInstance().getTMTimestamp()) == false)
-				{
-					result.remove(i);
-				}
-				else
-				{
-					if (result.get(i).getGoingList().contains(result.get(i)) == false)
-					{
-						if (result.get(i).getWaitingList().contains(result.get(i)) == false)
-						{
-							result.remove(i);
-						}
-					}
-				}
-
-			}
-		}
+		result.removeIf((Appointment tmpappt) ->  
+				!(
+						(tmpappt.getGoingList().contains(userid))
+						|| (tmpappt.getWaitingList().contains(userid))
+						|| (tmpappt.getCreaterUID()==userid)
+				)
+				|| tmpappt.getTimeSpan().EndTime().toLocalDateTime().isBefore(TimeMachine.getInstance().getTMTimestamp().toLocalDateTime())
+				);
+//		for (int i = 0; i<result.size(); i++)//decrease when removed element so not out of bound and hence decrease num of checking
+//		{
+//			if (result.get(i).getCreaterUID() != u)
+//			{
+//				if (result.get(i).getTimeSpan().EndTime().after(TimeMachine.getInstance().getTMTimestamp()) == false)
+//				{
+//					result.remove(i);
+//					System.out.println("remove from arraylist");
+//				}
+//				else
+//				{
+//					if (result.get(i).getGoingList().contains(result.get(i)) == false)
+//					{
+//						if (result.get(i).getWaitingList().contains(result.get(i)) == false)
+//						{
+//							result.remove(i);
+//							System.out.println("remove from arraylist");
+//						}
+//					}
+//				}
+//
+//			}
+//		}
 		Appt[] tempA = new Appt[result.size()];
 		for (int i = 0; i<result.size(); i++)
 		{
@@ -572,5 +585,29 @@ public class ApptDB {
 			}
 		}
 		return apptIDAL;
+	}
+	
+	public void delEventsWithUser(int userid){
+		Appt[] futureApptWithUser = getFutureApptWithUser(userid);
+		for(Appt tmpappt:futureApptWithUser){
+			LocalDateTime currTime = TimeMachine.getInstance().getTMTimestamp().toLocalDateTime();
+			LocalDateTime startTime = tmpappt.getAppointment().getTimeSpan().StartTime().toLocalDateTime();
+			if (currTime.isBefore(startTime)){ //event have not happen
+				deleteAppt(tmpappt.getID());
+			}
+		}
+		
+	}
+	
+	public void delEventsWithLocation(int locationid){
+		Appt[] apptWithLocation = getApptByLocationName(LocationDB.getInstance().getLocationName(locationid)); 
+		for(Appt tmpappt:apptWithLocation){
+			LocalDateTime currTime = TimeMachine.getInstance().getTMTimestamp().toLocalDateTime();
+			LocalDateTime startTime = tmpappt.getAppointment().getTimeSpan().StartTime().toLocalDateTime();
+			if (currTime.isBefore(startTime)){ //event have not happen
+				deleteAppt(tmpappt.getID());
+			}
+		}
+		
 	}
 }

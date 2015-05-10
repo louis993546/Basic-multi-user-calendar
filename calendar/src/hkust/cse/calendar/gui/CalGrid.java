@@ -127,7 +127,7 @@ public class CalGrid extends JFrame implements ActionListener {
 
 		timeMachine = TimeMachine.getInstance();// new TimeMachine(this);
 		timeMachine.setCg(this);
-		
+
 		ldb = LocationDB.getInstance();
 
 		currentUserID = con.getDefaultUser().getUID();
@@ -142,46 +142,78 @@ public class CalGrid extends JFrame implements ActionListener {
 		// msg store
 		SortedMap<Integer, MessageBody> delUserMap = MessageStorage
 				.getDeleteUser();
-		for (int i : delUserMap.keySet()) {// MessageBody mb:
-											// delUserMap.values()){
-			MessageBody mb = delUserMap.get(i);
-			System.out
-					.println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
-							+ (mb.getReceiverID() == currentUserID)
-							+ " && "
-							+ (mb.getResponse() == MessageBody.UserResponse.NotYet));
-			if (mb.getExpireDateTime().isBefore(
+		for (int currMsgID : delUserMap.keySet()) {
+			// System.out
+			// .println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
+			// + (mb.getReceiverID() == currentUserID)
+			// + " && "
+			// + (mb.getResponse() == MessageBody.UserResponse.NotYet));
+			MessageBody currMsg = delUserMap.get(currMsgID);
+			if (currMsg.getExpireDateTime().isBefore(
 					timeMachine.getTMTimestamp().toLocalDateTime())) {
 				// del expired msg and check status
-				int userToBeDeletedID = mb.getUserToBeDeletedID();
-				delUserMap.remove(i);
+				int userToBeDeletedID = currMsg.getUserToBeDeletedID();
+				// save user id to be deleted before delete msg to check if it
+				// is the last one
+				delUserMap.remove(currMsgID);
 				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
-					// really delete the user
-					// since user is the last one to confirm and msg is expired
+					// this really delete the user and related events
+					adb.delEventsWithUser(userToBeDeletedID);
+					// TODO udb.deleteUser(userToBeDeletedID);
+
+					// because user is the last one to confirm and msg is
+					// expired
 
 				}
-			} else if (mb.getReceiverID() == currentUserID
-					&& mb.getResponse() == MessageBody.UserResponse.NotYet) {
-				MessageStorage.popupMsgAndSave(i, "user");// ??
+			} else if (currMsg.getReceiverID() == currentUserID
+			/* && currMsg.getResponse() == MessageBody.UserResponse.NotYet */) {
+				// MessageStorage.popupMsgAndSave(currMsgID, "user");
+				// ask for response
+				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(currMsgID,
+						"user");
 			}
 		}
 
+		// Similarly for location
+		// msg store
 		SortedMap<Integer, MessageBody> delLocationMap = MessageStorage
 				.getDeleteLocation();
-		for (int i : delLocationMap.keySet()) {// MessageBody mb:
-												// delLocationMap.values()){
-			MessageBody mb = delLocationMap.get(i);
-			System.out
-					.println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.LocationResponse.NotYet"
-							+ (mb.getReceiverID() == currentUserID)
-							+ " && "
-							+ (mb.getResponse() == MessageBody.UserResponse.NotYet));
-			if (mb.getReceiverID() == currentUserID
-					&& mb.getResponse() == MessageBody.UserResponse.NotYet) {
-				MessageStorage.popupMsgAndSave(i, "location");// ??
-			}
-		}
+		for (int currMsgID : delLocationMap.keySet()) {
+			// System.out
+			// .println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
+			// + (mb.getReceiverID() == currentUserID)
+			// + " && "
+			// + (mb.getResponse() == MessageBody.UserResponse.NotYet));
+			MessageBody currMsg = delLocationMap.get(currMsgID);
+			if (currMsg.getExpireDateTime().isBefore(
+					timeMachine.getTMTimestamp().toLocalDateTime())) {
+				// del expired msg and check status
+				int locationToBeDeletedID = currMsg.getLocationID();
+				// save user id to be deleted before delete msg to check if it
+				// is the last one
+				delLocationMap.remove(currMsgID);
+				if (!MessageStorage.isExistID(locationToBeDeletedID, "location")) {
+					// this really delete the user and related events
+					adb.delEventsWithLocation(locationToBeDeletedID);
+					LocationDB ldb = LocationDB.getInstance();
+					ldb.deleteLocation(locationToBeDeletedID);					
+					
+					// TODO udb.deleteUser(userToBeDeletedID);
 
+					// because user is the last one to confirm and msg is
+					// expired
+
+				}
+			} else if (currMsg.getReceiverID() == currentUserID
+			/* && currMsg.getResponse() == MessageBody.UserResponse.NotYet */) {
+				// MessageStorage.popupMsgAndSave(currMsgID, "user");
+				// ask for response
+				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(currMsgID,
+						"location");
+			}
+			
+		}
+			
 		controller = con;
 		mCurrUser = null;
 
