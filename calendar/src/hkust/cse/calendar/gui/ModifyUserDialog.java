@@ -90,55 +90,41 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == deleteButton) {
-			int userToBeDeletedID = udb.getUserUID(UserList.getSelectedValue().toString());
-			System.out.println("userToBeDeletedID="+userToBeDeletedID);
-			if ((userToBeDeletedID != 0) || (userToBeDeletedID != -1)) {
-				//if user is not lock
-				//	lock it.
+			int userToBeDeletedID = udb.getUserUID(UserList.getSelectedValue()
+					.toString());
+			System.out.println("userToBeDeletedID is " + userToBeDeletedID);
+			
+			if ((userToBeDeletedID != 0) && (userToBeDeletedID != -1)) {
 				SortedMap<Integer, MessageBody> tmpmap = MessageStorage
 						.getDeleteUser();
 
-				/*MessageBody tmpmsgbody = new MessageBody(id, -1, -1,
-						MessageBody.UserResponse.NotYet, LocalDateTime.now(),
-						
-						id);*/
-
-				// get all creator of all event involved the user
-				// get creator 's last event involed that user 's end time
-//				if (tmpmap.isEmpty()) {
-					//MessageBody tmpmbody = new MessageBody(-1,-1,-1,MessageBody.UserResponse.NotYet,LocalDateTime.now(), -1);
-					//tmpmap.put(-1, tmpmbody);
-					//dummy
-//					insertKey = 1;
-//					System.out.println("Insert msg at key1 for this empty map");
-//				} else {
-//					int lastkey = tmpmap.lastKey();
-//					insertKey = lastkey + 1;
-//					System.out.println("Insert msg after last key" + lastkey);
-//				}
-				System.out.println("user id is "+userToBeDeletedID);
-				SortedMap<Integer, LocalDateTime> creatorToLastRelatedEventMap = MessageStorage.getCreatorToLastRelatedEventMap(userToBeDeletedID);
-				//if empty?
 				
-				for(int key:creatorToLastRelatedEventMap.keySet()){
-					MessageBody tmpmsgbody2 = new MessageBody(userToBeDeletedID, -1, -1, MessageBody.UserResponse.NotYet, creatorToLastRelatedEventMap.get(key), key);
+				SortedMap<Integer, LocalDateTime> creatorToLastRelatedEventMap = MessageStorage
+						.getCreatorToLastRelatedEventMap(userToBeDeletedID,"user");
+
+				for (int key : creatorToLastRelatedEventMap.keySet()) {
+					MessageBody tmpmsgbody2 = new MessageBody(
+							userToBeDeletedID, -1, -1,
+							MessageBody.UserResponse.NotYet,
+							creatorToLastRelatedEventMap.get(key), key);
 					int insertKey;
-					if ( !(tmpmap.isEmpty()) ) {
-						insertKey=tmpmap.lastKey()+1;
-					}else{
-						insertKey=1;//start from msgid 1
+					if (!(tmpmap.isEmpty())) {
+						insertKey = tmpmap.lastKey() + 1;
+					} else {
+						insertKey = 1;// start from msgid 1
 					}
-					
+
 					tmpmap.put(insertKey, tmpmsgbody2);//
 				}
-				
-				System.out.println("tmpmap is"+tmpmap);
-				
-				if(creatorToLastRelatedEventMap.isEmpty()){
-//					 udb.deleteUser(userToBeDeletedID);
-					 UserListModel.removeElementAt(UserList.getSelectedIndex());
-					 // for delete it from gui
-					
+
+				System.out.println("tmpmap is" + tmpmap);
+
+				if (creatorToLastRelatedEventMap.isEmpty()) {
+					// TODO! del user (just uncomment)
+					udb.deleteUser(userToBeDeletedID);
+					UserListModel.removeElementAt(UserList.getSelectedIndex());
+					// for delete it from gui
+
 				}
 			}
 
@@ -146,7 +132,6 @@ public class ModifyUserDialog extends JFrame implements ActionListener {
 			int uid = udb.getUserUID(UserList.getSelectedValue().toString());
 			if ((uid != 0) || (uid != -1)) {
 				UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(uid);
-
 
 				dispose();
 			}

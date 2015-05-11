@@ -10,6 +10,7 @@ import hkust.cse.calendar.unit.TimeSpan;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -52,15 +53,24 @@ public class MessageStorage {
 	// }
 
 	public static SortedMap<Integer, LocalDateTime> getCreatorToLastRelatedEventMap(
-			int IDofUserToBeDeleted) {
-		// TODO Auto-generated method stub
+			int IDofUserOrLocToBeDeleted, String userOrLoc) {
 		// locked the user
 		System.out.println("MessageStorage.getCreatorToLastRelatedEventMap()");
 		SortedMap<Integer, LocalDateTime> tmpmap = new ConcurrentSkipListMap<Integer, LocalDateTime>();
 
 		// appt[] apptlist=getApptListInvolveUserInFuture(uid);
 		ApptDB adb = new ApptDB();
-		Appt[] apptlist = adb.getFutureApptWithUser(IDofUserToBeDeleted);// getApptListInvolveUserInFuture(IDofUserToBeDeleted);
+		Appt[] apptlist=null;
+		if(userOrLoc.equals("user")){
+			apptlist= adb.getFutureApptWithUser(IDofUserOrLocToBeDeleted);
+			// getApptListInvolveUserInFuture(IDofUserToBeDeleted);
+		}else if (userOrLoc.equals("location")){
+			apptlist= adb.getApptByLocationName(LocationDB.getInstance().getLocationName(IDofUserOrLocToBeDeleted));
+		}else{
+			System.err
+					.println("MessageStorage.getCreatorToLastRelatedEventMap()");
+		}
+		System.out.println(Arrays.deepToString(apptlist));
 		// this may work
 		
 		Map<Integer, List<LocalDateTime>> CreatorToEndTimesMap = new HashMap<Integer, List<LocalDateTime>>();

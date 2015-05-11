@@ -89,16 +89,36 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == deleteButton) {
 			int locationID = ldb.getLocationID(locationList.getSelectedValue()
-					.toString());
-			if ((locationID != 0) || (locationID != -1)) {
+					.toString().split(": ")[0]);
+			System.out.println("location id is " + locationID);
+			if ((locationID != 0) && (locationID != -1)) {
 				SortedMap<Integer, MessageBody> tmpmap = MessageStorage
 						.getDeleteLocation();
-				System.out.println("location id is "+locationID);
-				//SortedMap<Integer, LocalDateTime> creatorToLastRelatedEventMap = MessageStorage.getCreatorToLastRelatedEventMap(locationID);
+				
+				SortedMap<Integer, LocalDateTime> creatorToLastRelatedEventMap = MessageStorage
+						.getCreatorToLastRelatedEventMap(locationID, "location");
 
-				ldb.deleteLocation(locationID);
-				locationListModel.removeElementAt(locationList
-						.getSelectedIndex());
+				for (int key : creatorToLastRelatedEventMap.keySet()) {
+					MessageBody tmpmsgbody2 = new MessageBody(-1, locationID,
+							-1, MessageBody.UserResponse.NotYet,
+							creatorToLastRelatedEventMap.get(key), key);
+					int insertKey;
+					if (!(tmpmap.isEmpty())) {
+						insertKey = tmpmap.lastKey() + 1;
+					} else {
+						insertKey = 1;// start from msgid 1
+					}
+
+					tmpmap.put(insertKey, tmpmsgbody2);//
+				}
+
+				System.out.println("tmpmap is" + tmpmap);
+
+				if (creatorToLastRelatedEventMap.isEmpty()) {
+					ldb.deleteLocation(locationID);
+					locationListModel.removeElementAt(locationList
+							.getSelectedIndex());
+				}
 			}
 		} else if (e.getSource() == modifyButton) {
 			// TODO modify button

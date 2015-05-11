@@ -106,7 +106,7 @@ public class LoginDialog extends JFrame implements ActionListener
 
 		noLoginButton = new JButton("Log in (No user name and password required)");
 		noLoginButton.addActionListener(this);
-		butPanel.add(noLoginButton);
+		//butPanel.add(noLoginButton);
 		
 		button = new JButton("Log in");
 		button.addActionListener(this);

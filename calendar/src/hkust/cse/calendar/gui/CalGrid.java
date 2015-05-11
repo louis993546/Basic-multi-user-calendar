@@ -143,11 +143,6 @@ public class CalGrid extends JFrame implements ActionListener {
 		SortedMap<Integer, MessageBody> delUserMap = MessageStorage
 				.getDeleteUser();
 		for (int currMsgID : delUserMap.keySet()) {
-			// System.out
-			// .println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
-			// + (mb.getReceiverID() == currentUserID)
-			// + " && "
-			// + (mb.getResponse() == MessageBody.UserResponse.NotYet));
 			MessageBody currMsg = delUserMap.get(currMsgID);
 			if (currMsg.getExpireDateTime().isBefore(
 					timeMachine.getTMTimestamp().toLocalDateTime())) {
@@ -159,15 +154,13 @@ public class CalGrid extends JFrame implements ActionListener {
 				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
 					// this really delete the user and related events
 					adb.delEventsWithUser(userToBeDeletedID);
-					// TODO udb.deleteUser(userToBeDeletedID);
+					udb.deleteUser(userToBeDeletedID);
 
 					// because user is the last one to confirm and msg is
 					// expired
 
 				}
-			} else if (currMsg.getReceiverID() == currentUserID
-			/* && currMsg.getResponse() == MessageBody.UserResponse.NotYet */) {
-				// MessageStorage.popupMsgAndSave(currMsgID, "user");
+			} else if (currMsg.getReceiverID() == currentUserID) {
 				// ask for response
 				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(currMsgID,
 						"user");
@@ -179,11 +172,6 @@ public class CalGrid extends JFrame implements ActionListener {
 		SortedMap<Integer, MessageBody> delLocationMap = MessageStorage
 				.getDeleteLocation();
 		for (int currMsgID : delLocationMap.keySet()) {
-			// System.out
-			// .println("mb.getReceiverID()==currentUserID && mb.getResponse()==MessageBody.UserResponse.NotYet"
-			// + (mb.getReceiverID() == currentUserID)
-			// + " && "
-			// + (mb.getResponse() == MessageBody.UserResponse.NotYet));
 			MessageBody currMsg = delLocationMap.get(currMsgID);
 			if (currMsg.getExpireDateTime().isBefore(
 					timeMachine.getTMTimestamp().toLocalDateTime())) {
@@ -192,28 +180,25 @@ public class CalGrid extends JFrame implements ActionListener {
 				// save user id to be deleted before delete msg to check if it
 				// is the last one
 				delLocationMap.remove(currMsgID);
-				if (!MessageStorage.isExistID(locationToBeDeletedID, "location")) {
-					// this really delete the user and related events
+				if (!MessageStorage
+						.isExistID(locationToBeDeletedID, "location")) {
+					// this really delete the location and related events
 					adb.delEventsWithLocation(locationToBeDeletedID);
 					LocationDB ldb = LocationDB.getInstance();
-					ldb.deleteLocation(locationToBeDeletedID);					
-					
-					// TODO udb.deleteUser(userToBeDeletedID);
+					ldb.deleteLocation(locationToBeDeletedID);
 
 					// because user is the last one to confirm and msg is
 					// expired
 
 				}
-			} else if (currMsg.getReceiverID() == currentUserID
-			/* && currMsg.getResponse() == MessageBody.UserResponse.NotYet */) {
-				// MessageStorage.popupMsgAndSave(currMsgID, "user");
+			} else if (currMsg.getReceiverID() == currentUserID) {
 				// ask for response
 				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(currMsgID,
 						"location");
 			}
-			
+
 		}
-			
+
 		controller = con;
 		mCurrUser = null;
 

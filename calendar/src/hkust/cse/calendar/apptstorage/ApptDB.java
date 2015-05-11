@@ -184,8 +184,10 @@ public class ApptDB {
 	{
 		ArrayList<Appointment> aal = getAppointmentList();
 		
-		aal.removeIf((Appointment tmpappt) -> tmpappt.getLocation() != locName);
-//		for (Appointment a:aal)
+		aal.removeIf((Appointment tmpappt) -> !(tmpappt.getLocation().equals(locName)));
+		System.out.println(aal);
+		
+		//		for (Appointment a:aal)
 //		{
 //			if (a.getLocation() != l)
 //			{
