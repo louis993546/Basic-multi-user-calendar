@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Message {
 	private int messageID;
-	private int type;
+	private int type; //1: del Location; 2: del user; 3: del appt; 4: recieve invite
 	private ArrayList<Integer> userUIDList;
 	private int editID;
 	
@@ -51,5 +51,16 @@ public class Message {
 	public void setEditID(int editID) {
 		this.editID = editID;
 	}
-	
+	public boolean removeUIDFromUUL(int uid)
+	{
+		if (userUIDList.contains(uid) == true)
+		{
+			userUIDList.remove(uid);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

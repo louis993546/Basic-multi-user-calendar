@@ -87,8 +87,6 @@ public class MessageDB {
 		}
 	}
 
-	// a function to load message into some kind of map
-	// return an array list of string
 	public ArrayList<Message> getMessageList() {
 		ArrayList<Message> temp = new ArrayList<Message>();
 		try {
@@ -111,6 +109,19 @@ public class MessageDB {
 			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
 					+ e.getMessage());
 			System.exit(0);
+		}
+		return null;
+	}
+	
+	public Message getMessageByID(int id)
+	{
+		ArrayList<Message> MessageAL = getMessageList();
+		for (Message m:MessageAL)
+		{
+			if (m.getUserUIDList().contains(id))
+			{
+				return m;
+			}
 		}
 		return null;
 	}
@@ -155,6 +166,22 @@ public class MessageDB {
 			}
 		}
 		return messageForYou;
+	}
+
+	public boolean removeUIDFromUIDList(int uid, int id)
+	{
+		try {
+			stmt = c.createStatement();
+			Message mtbe = getMessageByID(id);
+			boolean success = mtbe.removeUIDFromUUL(uid);
+			String sql = "UPDATE MessageTable set UserUIDList = '" + ArrayListToString(mtbe.getUserUIDList()) + "' where ID = " + id + ";";
+			stmt.executeQuery(sql);
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

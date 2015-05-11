@@ -493,8 +493,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		Timestamp tempTS2 = new Timestamp(startDate[0]-1900, startDate[1]-1, startDate[2], shr, smin, 0, 0);
 		if (tempTS2.before(parent.timeMachine.getTMTimestamp()))
 		{
-			JOptionPane.showMessageDialog(this, "It's all in the past",
-					"Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "It's all in the past", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
@@ -563,9 +562,13 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 		adb = new ApptDB();
 		if (saveOrModify == 0)	//new appt
-			adb.addAppt(newAppt);
+			{
+				adb.addAppt(newAppt);
+			}
 		else					//modify appt
-			adb.modifyAppt(tempAppt.getID(), newAppt);
+			{
+				adb.modifyAppt(tempAppt.getID(), newAppt);
+			}
 		
 		//frequency(total of n-1 of appts)
 		boolean freqOnOff = rChB.isSelected();
