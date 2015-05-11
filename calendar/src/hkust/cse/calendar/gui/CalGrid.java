@@ -6,6 +6,7 @@ import hkust.cse.calendar.apptstorage.ApptStorageControllerImpl;
 import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.MessageStorage;
 import hkust.cse.calendar.apptstorage.UserDB;
+import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.MessageBody;
 import hkust.cse.calendar.unit.TimeMachine;
@@ -23,9 +24,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.Vector;
 
@@ -195,6 +200,30 @@ public class CalGrid extends JFrame implements ActionListener {
 				// ask for response
 				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(currMsgID,
 						"location");
+			}
+
+		}
+		ArrayList<Appointment> appointmentList = adb.getAppointmentList();
+		for (Appointment tmpappt : appointmentList) {
+			LocalDateTime currTime = TimeMachine.getInstance().getTMTimestamp()
+					.toLocalDateTime();
+			LocalDateTime startTime = tmpappt.getTimeSpan().StartTime()
+					.toLocalDateTime();
+
+			List<Integer> waitingList = tmpappt.getWaitingList();
+			boolean isInWaitList = waitingList.contains(currentUserID);
+
+			if (startTime.isBefore(currTime) && !(waitingList.isEmpty())) {
+				// ie. past but not all confirm, => delete event
+				adb.deleteAppt(tmpappt.getID());
+			} else if (currTime.isBefore(startTime) && isInWaitList) {
+				// ie. future event and in waitlist, => yes/no
+				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(-1,
+						"invite");// no msg id because useful info stored in
+									// appt[]
+				tmpDialog.setAppt(tmpappt);// for change waitlist(yes) remove appt(no)
+				
+
 			}
 
 		}

@@ -172,9 +172,9 @@ public class Appointment implements Comparable<Appointment> {
 //		}
 //	}
 
-	public boolean deleteFromWaiting(String name)
+	public boolean deleteFromWaiting(String name)//wtf? any explain?
 	{
-		if (waiting.remove(name) == true)
+		if (waiting.remove(name) == true)//name is str but waiting is int[]
 		{
 			return true;
 		}

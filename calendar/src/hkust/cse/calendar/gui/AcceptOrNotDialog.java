@@ -3,6 +3,7 @@ package hkust.cse.calendar.gui;
 import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.MessageStorage;
+import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.MessageBody;
 
 import java.awt.event.ActionEvent;
@@ -24,6 +25,7 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 	private MessageBody.UserResponse response = MessageBody.UserResponse.NotYet;
 	private String userOrLoc;
 	private int msgid;
+	private Appointment apptForInviteDialog;
 
 	public AcceptOrNotDialog(int msgid, String userOrLoc) {
 		this.userOrLoc = userOrLoc;
@@ -42,7 +44,9 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 			comment1 = new JLabel(
 					"This location is used by some event created by you in the future");
 
-		} else {// maybe invite
+		} else if (userOrLoc.equals("invite")) {// maybe invite
+			this.setTitle("Someone create Appt with id " + " . Do you join?");
+			comment1 = new JLabel("The creator of this event invite you");
 
 		}
 		this.setSize(400, 100);
@@ -110,8 +114,9 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 
 				}// else need more confirm
 				;
-			} else { // invite?
-
+			} else if (userOrLoc.equals("invite")) {
+				// TODO wait list to going list for the current user in the appt
+				// if last one , confirm (ie. do nothing?)
 			}
 
 			this.dispose();
@@ -134,16 +139,24 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 
 				MessageBody tmpMessageBody = deleteLocation.get(msgid);
 
-				int locationToBeDeletedID = tmpMessageBody.getLocationToBeDeletedID();
+				int locationToBeDeletedID = tmpMessageBody
+						.getLocationToBeDeletedID();
 
 				MessageStorage.deleteAllMsgWithUserOrLocationToBeDeleted(
 						locationToBeDeletedID, "location");
-			} else {// invite?
-
+			} else if (userOrLoc.equals("invite")) {
+				//simply del the appt
+				
+				
 			}
 
 			this.dispose();
 		}
 
+	}
+
+	public void setAppt(Appointment tmpappt) {
+		// TODO Auto-generated method stub
+		this.apptForInviteDialog=tmpappt;
 	}
 }
