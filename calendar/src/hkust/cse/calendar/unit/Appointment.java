@@ -176,7 +176,7 @@ public class Appointment implements Comparable<Appointment> {
 		}
 	}
 
-	public boolean addToAttend(int uid)
+	public boolean addToGoing(int uid)
 	{
 		going.add(uid);
 		return true;

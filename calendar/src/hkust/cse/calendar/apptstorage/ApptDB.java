@@ -235,8 +235,8 @@ public class ApptDB {
 	    		  + "  ,   REMINDER= "          + newAppt.getReminder()
 	    		  + "  ,   REMINDER_TIME= "     + newAppt.getReminderTime()
 	    		  + "  ,   REMINDER_UNIT= "     + newAppt.getReminderUnit()
-	    		  + "  ,   GOING = '"            + newAppt.getGoingList()
-	    		  + "' ,   WAITING = '"          + newAppt.getWaitingList()
+	    		  + "  ,   GOING = '"            + LinkedListToString(newAppt.getGoingList())
+	    		  + "' ,   WAITING = '"          + LinkedListToString(newAppt.getWaitingList())
 	    		  + "'  WHERE ID="               + id
 	    		  + ";";
 			stmt.executeUpdate(sql);
@@ -657,6 +657,7 @@ public class ApptDB {
 		{
 			Appt toBeEdit = getApptByID(id);
 			toBeEdit.getAppointment().deleteFromGoing(uid);
+			modifyAppt(toBeEdit.getID(), toBeEdit.getAppointment());
 			return true;
 		}
 		else	
@@ -671,6 +672,23 @@ public class ApptDB {
 		{
 			Appt toBeEdit = getApptByID(id);
 			toBeEdit.getAppointment().deleteFromWaiting(uid);
+			modifyAppt(toBeEdit.getID(), toBeEdit.getAppointment());
+			return true;
+		}
+		else	
+		{
+			return false;
+		}
+	}
+
+	public boolean addUIDToGoingList(int uid, int id)
+	{
+		//TODO 
+		if (isThisUIDInCreateGoingWaiting(uid, id) == 3)
+		{
+			Appt toBeEdit = getApptByID(id);
+			toBeEdit.getAppointment().addToGoing(uid);
+			modifyAppt(toBeEdit.getID(), toBeEdit.getAppointment());
 			return true;
 		}
 		else	

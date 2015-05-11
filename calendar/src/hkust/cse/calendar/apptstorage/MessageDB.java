@@ -129,7 +129,7 @@ public class MessageDB {
 	public boolean deleteMessage(int id) {
 		try {
 			stmt = c.createStatement();
-			String sql = "DELETE from MessageTable WHERE ID=" + id + ";";
+			String sql = "DELETE from MessageTable WHERE MessageID=" + id + ";";
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -182,6 +182,22 @@ public class MessageDB {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean removeAllEmptyMessages()
+	{
+		ArrayList<Message> allM = getMessageList();
+		if (allM.size()>0)
+		{
+			for (Message m:allM)
+			{
+				if (m.getUserUIDList().size() == 0)
+				{
+					return deleteMessage(m.getMessageID());
+				}
+			}
+		}
+		return false;
 	}
 
 }

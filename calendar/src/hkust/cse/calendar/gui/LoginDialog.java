@@ -210,7 +210,10 @@ public class LoginDialog extends JFrame implements ActionListener
 						}
 						break;
 					case 4: //confirm appointment invitation
-						int n4 = JOptionPane.showConfirmDialog(null, "Will to attent event X?", "Cofirm Appointment Invitation", JOptionPane.YES_NO_CANCEL_OPTION);
+						String op = "Will you attend this event :";
+						String apptTitle = adb.getApptByID(allMessages.get(i).getEditID()).getTitle();
+						op = op + apptTitle;
+						int n4 = JOptionPane.showConfirmDialog(null, op, "Cofirm Appointment Invitation", JOptionPane.YES_NO_CANCEL_OPTION);
 						if (n4 == JOptionPane.YES_NO_OPTION)
 						{
 							if (allMessages.get(i).getUserUIDList().size() == 1)
@@ -220,17 +223,14 @@ public class LoginDialog extends JFrame implements ActionListener
 							else
 							{	//remove user from list
 								mdb.removeUIDFromUIDList(user.getUID(), allMessages.get(i).getMessageID());
-//								ArrayList<Integer> newUIDList = allMessages.get(i).getUserUIDList();
-//								newUIDList.remove(user.getUID());
-//								Message tempM = new Message(allMessages.get(i).getType(), newUIDList ,allMessages.get(i).getEditID());
-//								mdb.modifyMessage(allMessages.get(i).getMessageID(), tempM);
 							}
-							//TODO remove user from waiting list
-//							adb.modifyAppt(allMessages.get(i).getEditID(), )
+							adb.removeUIDFromWaitingList(user.getUID(), allMessages.get(i).getMessageID());
+							adb.addUIDToGoingList(user.getUID(), allMessages.get(i).getMessageID());
 						}
 						else
 						{
-							//remove appointment
+							adb.deleteAppt(allMessages.get(i).getMessageID());
+							mdb.removeAllEmptyMessages();
 						}
 						break;
 					}
