@@ -1,16 +1,10 @@
 package hkust.cse.calendar.apptstorage;
 
 import hkust.cse.calendar.gui.AcceptOrNotDialog;
-import hkust.cse.calendar.gui.AppList;
-import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.MessageBody;
 import hkust.cse.calendar.unit.TimeMachine;
-import hkust.cse.calendar.unit.TimeSpan;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -34,6 +28,7 @@ public class MessageStorage {
 	public static void popupMsgAndSave(int i, String userOrLocation) {
 		MessageBody tmpMB = deleteUser.get(i);
 		System.out.println("user with id "+tmpMB.getUserToBeDeletedID()+ "will be deleted. Do you accept?");
+		@SuppressWarnings("unused")
 		AcceptOrNotDialog tmpDialog=new AcceptOrNotDialog();
 		//if yes, if no
 		

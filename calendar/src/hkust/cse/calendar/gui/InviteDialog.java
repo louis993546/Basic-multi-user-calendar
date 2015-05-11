@@ -6,7 +6,6 @@ import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.TimeInterval;
 import hkust.cse.calendar.unit.TimeSpan;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +14,6 @@ import java.awt.event.WindowEvent;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;

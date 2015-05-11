@@ -23,8 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import hkust.cse.calendar.apptstorage.MessageStorage;
-
 public class ModifyUserDialog extends JFrame implements ActionListener {
 	private JList<String> UserList;
 	private DefaultListModel<String> UserListModel = new DefaultListModel<String>();

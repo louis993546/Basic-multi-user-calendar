@@ -17,6 +17,7 @@ public class CalendarMain {
 			}catch(Exception e){
 				
 			}
+			@SuppressWarnings("unused")
 			LoginDialog loginDialog = new LoginDialog(); //create a new Login Dialog
 			//go to constructor of LoginDialog.java
 			while(logOut == false){

@@ -9,7 +9,6 @@ import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -39,7 +37,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -56,8 +53,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JLabel eTimeHL;
 	private JLabel eTimeML;
 	private String[] monthS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-	private String[] timeHS = {"08", "09", "10", "11",
-			"12", "13", "14", "15", "16", "17", "18"};//8am~6pm
+	private String[] timeHS = {"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18"};//8am~6pm
 	private String[] timeMS = {"00", "15", "30", "45"};
 	private String[] reminderS = {"Minute(s)", "Hour(s)", "Day(s)", "Week(s)"};
 	private ArrayList<String> locationAL;
@@ -65,9 +61,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JTextField yearSF;
 	private JComboBox<String> monthSF;
 	private JTextField daySF;
-	private JTextField yearEF;
-	private JComboBox<String> monthEF;
-	private JTextField dayEF;
 	private JComboBox<String> sTimeH;
 	private JComboBox<String> sTimeM;
 	private JComboBox<String> eTimeH;
@@ -76,7 +69,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JComboBox<String> reminderCB;
 	private JCheckBox reminderChB;
 	private JComboBox<String> lCB;
-	private DefaultListModel model;
 	private JTextField titleField;
 	private JButton saveBut;
 	private JButton CancelBut;
@@ -84,9 +76,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private JButton rejectBut;
 	private Appt NewAppt;
 	private CalGrid parent;
-	private boolean isNew = true;
-	private boolean isChanged = true;
-	private boolean isJoint = false;
 	private JCheckBox rChB;
 	private JTextField rTF;
 	private JComboBox rCB;
@@ -96,7 +85,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private Appt tempAppt;
 	private int saveOrModify = 0;
 	private int idofappt=0;
-	private int selectedApptId = -1;
 	private LocationDB ldb;
 	private ApptDB adb;
 	private UserDB udb;
@@ -109,7 +97,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		this.setAlwaysOnTop(false);
 		setTitle(title);
 		setModal(false);
-		ldb = ldb.getInstance();
+		ldb = LocationDB.getInstance();
 		locationAL = ldb.getLocationList();
 		GoingUIDAL = new LinkedList<Integer>();
 		InvitingUIDAL = new LinkedList<Integer>();
@@ -317,7 +305,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 
 	AppScheduler(String title, CalGrid cal, int startTime, int selectedApptId) {
 		
-		this.selectedApptId = selectedApptId;
 		commonConstructor(title, cal, startTime);
 	}
 	
@@ -330,16 +317,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	AppScheduler(String title, CalGrid cal) {
 		commonConstructor(title, cal, 480);
 	}
-	
-	String getTimeInCorrectFormat(int time)
-	{
-		String timeS;
-		if (time<10)
-			return ("0"+time);
-		else
-			return ""+time;
-	}
-	
+
 	AppScheduler(String title, CalGrid cal, Appt appt)
 	{
 		tempAppt = appt;
@@ -349,6 +327,14 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		updateSetApp(appt);
 	}
 
+	String getTimeInCorrectFormat(int time)
+	{
+		if (time<10)
+			return ("0"+time);
+		else
+			return ""+time;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// distinguish which button is clicked and continue with require function
 		if (e.getSource() == CancelBut) 
@@ -380,29 +366,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		}
 		else if (e.getSource() == inviteBut)
 		{
-			InviteDialog id = new InviteDialog(this);
+			new InviteDialog(this);
 		}
 		parent.getAppList().clear();
 		parent.getAppList().setTodayAppt(parent.GetTodayAppt());
 		parent.repaint();
-	}
-
-	private JPanel createPartOperaPane() {
-		JPanel POperaPane = new JPanel();
-		JPanel browsePane = new JPanel();
-		JPanel controPane = new JPanel();
-
-		POperaPane.setLayout(new BorderLayout());
-		TitledBorder titledBorder1 = new TitledBorder(BorderFactory
-				.createEtchedBorder(Color.white, new Color(178, 178, 178)),
-				"Add Participant:");
-		browsePane.setBorder(titledBorder1);
-
-		POperaPane.add(controPane, BorderLayout.SOUTH);
-		POperaPane.add(browsePane, BorderLayout.CENTER);
-		POperaPane.setBorder(new BevelBorder(BevelBorder.LOWERED));
-		return POperaPane;
-
 	}
 
 	private int[] getValidDate(JTextField a, JComboBox b, JTextField d) {
@@ -810,17 +778,6 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		parent.updateDB();
 		parent.updateReminderCheckerApptlist();
 		return true;
-	}
-
-	@SuppressWarnings("deprecation")
-	private Timestamp CreateTimeStamp(int[] date, int time) {
-		Timestamp stamp = new Timestamp(0);
-		stamp.setYear(date[0]);
-		stamp.setMonth(date[1] - 1);
-		stamp.setDate(date[2]);
-		stamp.setHours(time / 60);
-		stamp.setMinutes(time % 60);
-		return stamp;
 	}
 
 	public void updateSetApp(Appt appt) {

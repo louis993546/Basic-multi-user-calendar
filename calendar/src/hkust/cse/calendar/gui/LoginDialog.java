@@ -233,6 +233,7 @@ public class LoginDialog extends JFrame implements ActionListener
 						break;
 					}
 				}
+				@SuppressWarnings("unused")
 				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
 				setVisible( false );	
 			}

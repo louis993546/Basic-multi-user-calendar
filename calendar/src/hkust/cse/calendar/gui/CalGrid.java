@@ -410,6 +410,7 @@ public class CalGrid extends JFrame implements ActionListener {
 					SignUpDialog sud = new SignUpDialog();
 				}	
 				else if(e.getActionCommand().equals("Update Account for normal user")){
+					@SuppressWarnings("unused")
 					UpdateAccountInfoDialog mld = new UpdateAccountInfoDialog(currentUserID);
 				}
 				else
