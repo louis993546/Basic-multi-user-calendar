@@ -443,21 +443,14 @@ public class ApptDB {
 	public Appt getApptByID(int i)
 	{
 		ArrayList<Appointment> ApptAL = getAppointmentList();
-		if (ApptAL.size() > 0)
+		for (Appointment a: ApptAL)
 		{
-			for (Appointment a: ApptAL)
+			if(a.getID() == i)
 			{
-				if(a.getID() == i)
-				{
-					return new Appt(a);
-				}
+				return new Appt(a);
 			}
-			return null;
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 	
 	public int getApptID(Appointment a)
@@ -628,6 +621,10 @@ public class ApptDB {
 		Appt thatAppt = getApptByID(id);
 		if (thatAppt != null)
 		{
+			System.out.println(thatAppt.toString());
+			System.out.println(thatAppt.getAppointment().getCreaterUID());
+			System.out.println(thatAppt.getAppointment().getGoingList());
+			System.out.println(thatAppt.getAppointment().getWaitingList());
 			if (thatAppt.getAppointment().getCreaterUID() == uid)		//creator
 			{
 				return 1;
@@ -642,11 +639,13 @@ public class ApptDB {
 			}
 			else		//does not exist
 			{
+				System.out.println("Does not exist");
 				return 0;
 			}
 		}
 		else
 		{
+			System.out.println("Null appt");
 			return 0;
 		}
 	}
@@ -668,7 +667,7 @@ public class ApptDB {
 	
 	public boolean removeUIDFromWaitingList(int uid, int id)
 	{
-		if (isThisUIDInCreateGoingWaiting(uid, id) == 2)
+		if (isThisUIDInCreateGoingWaiting(uid, id) != 2)
 		{
 			Appt toBeEdit = getApptByID(id);
 			toBeEdit.getAppointment().deleteFromWaiting(uid);
@@ -684,8 +683,10 @@ public class ApptDB {
 	public boolean addUIDToGoingList(int uid, int id)
 	{
 		//TODO 
-		if (isThisUIDInCreateGoingWaiting(uid, id) == 3)
+		System.out.print ("is this uid in going list: ");
+		if (isThisUIDInCreateGoingWaiting(uid, id) != 3 )
 		{
+			System.out.println("yes");
 			Appt toBeEdit = getApptByID(id);
 			toBeEdit.getAppointment().addToGoing(uid);
 			modifyAppt(toBeEdit.getID(), toBeEdit.getAppointment());
@@ -693,6 +694,8 @@ public class ApptDB {
 		}
 		else	
 		{
+			System.out.println("no");
+			System.out.println("Value: " + isThisUIDInCreateGoingWaiting(uid, id));
 			return false;
 		}
 	}

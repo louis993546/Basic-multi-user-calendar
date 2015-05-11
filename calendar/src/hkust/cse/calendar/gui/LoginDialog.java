@@ -224,8 +224,8 @@ public class LoginDialog extends JFrame implements ActionListener
 							{	//remove user from list
 								mdb.removeUIDFromUIDList(user.getUID(), allMessages.get(i).getMessageID());
 							}
-							adb.removeUIDFromWaitingList(user.getUID(), allMessages.get(i).getMessageID());
 							adb.addUIDToGoingList(user.getUID(), allMessages.get(i).getMessageID());
+							adb.removeUIDFromWaitingList(user.getUID(), allMessages.get(i).getMessageID());
 						}
 						else
 						{

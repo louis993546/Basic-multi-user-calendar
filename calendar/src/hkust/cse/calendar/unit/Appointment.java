@@ -281,7 +281,7 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public LinkedList<Integer> getGoingList() {
-		System.out.println("going");
+//		System.out.println("going");
 		return going;
 	}
 
