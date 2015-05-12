@@ -554,20 +554,47 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, InvitingUIDAL, 12, parent.getCurrentUserID());
 		TimeSpan wholeDay=new TimeSpan(startDate[0], startDate[1],	startDate[2], 0, 0, 23, 59);
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-		for (Appt tempAppt : listAppt) {
-			if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-						"Time Conflict", JOptionPane.ERROR_MESSAGE);
-				return false;//cannot save
-			}				
-		}
+//		for (Appt tempAppt : listAppt) {
+//			if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
+//				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+//						"Time Conflict", JOptionPane.ERROR_MESSAGE);
+//				return false;//cannot save
+//			}				
+//		}
+		//useless above
+		
 		int currentUserID = parent.getCurrentUserID();
+		System.out.println(currentUserID);
+		ApptDB adb = new ApptDB();
 		Appt[] apptForUser=adb.getFutureApptWithUser(currentUserID);
 		Appt[] apptForLocation = adb.getApptByLocationName(location);
+		
 		TimeInterval newApptTimeInterval = new TimeInterval(newAppt.getTimeSpan());
+		System.out.println("-------------------");
+		System.out.println("newApptTimeInterval"+newApptTimeInterval);
 		TimeInterval timeIntervalForUser = new TimeInterval(apptForUser);
+		System.out.println("-------------------");
+		System.out.println("timeIntervalForUser"+timeIntervalForUser);
 		TimeInterval timeIntervalForLocation = new TimeInterval(apptForLocation);
+		System.out.println("-------------------");
+		System.out.println("timeIntervalForLocation"+timeIntervalForLocation);
+		
+		System.out.println("-------------------");
 		//if(newApptTimeInterval.)
+		timeIntervalForUser.clearBeforeNow();
+		timeIntervalForLocation.clearBeforeNow();
+		System.out.println(">>>newApptTimeInterval"+newApptTimeInterval);
+		if(timeIntervalForUser.isExistCommonElement(newApptTimeInterval)){
+			JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+					"Time Conflict with your other appointments", JOptionPane.ERROR_MESSAGE);
+			return false;//cannot save
+		}
+		System.out.println(">>>newApptTimeInterval2"+newApptTimeInterval);
+		if(timeIntervalForLocation.isExistCommonElement(newApptTimeInterval)){
+			JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot or location..",
+					"Location Conflict with other users", JOptionPane.ERROR_MESSAGE);
+			return false;//cannot save
+		}
 		
 		//ckeck conflict end
 

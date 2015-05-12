@@ -246,7 +246,7 @@ public class InviteDialog extends JFrame implements ActionListener
 			System.out.println("cretorAA.length: " + cretorAA.length);
 			if (cretorAA.length > 0)
 			{
-				ti = ti.setTimeInterval(cretorAA);
+//				ti = ti.setTimeInterval(cretorAA);
 			}
 				
 			int ilmSize = InvitingListModel.getSize();
@@ -258,7 +258,7 @@ public class InviteDialog extends JFrame implements ActionListener
 				{
 					System.out.println("userAA.length: " + userAA.length);
 					System.out.println("Adding some appointments for " + InvitingListModel.get(i).toString());
-					ti.addTimeInterval(ti, userAA);
+//					ti.addTimeInterval(ti, userAA);
 				}
 			}
 			System.out.println(ti);
