@@ -203,30 +203,7 @@ public class CalGrid extends JFrame implements ActionListener {
 			}
 
 		}
-		ArrayList<Appointment> appointmentList = adb.getAppointmentList();
-		for (Appointment tmpappt : appointmentList) {
-			LocalDateTime currTime = TimeMachine.getInstance().getTMTimestamp()
-					.toLocalDateTime();
-			LocalDateTime startTime = tmpappt.getTimeSpan().StartTime()
-					.toLocalDateTime();
 
-			List<Integer> waitingList = tmpappt.getWaitingList();
-			boolean isInWaitList = waitingList.contains(currentUserID);
-
-			if (startTime.isBefore(currTime) && !(waitingList.isEmpty())) {
-				// ie. past but not all confirm, => delete event
-				adb.deleteAppt(tmpappt.getID());
-			} else if (currTime.isBefore(startTime) && isInWaitList) {
-				// ie. future event and in waitlist, => yes/no
-				AcceptOrNotDialog tmpDialog = new AcceptOrNotDialog(-1,
-						"invite");// no msg id because useful info stored in
-									// appt[]
-				tmpDialog.setAppt(tmpappt);// for change waitlist(yes) remove appt(no)
-				
-
-			}
-
-		}
 
 		controller = con;
 		mCurrUser = null;
