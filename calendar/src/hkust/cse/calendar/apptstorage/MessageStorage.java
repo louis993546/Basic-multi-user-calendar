@@ -5,6 +5,15 @@ import hkust.cse.calendar.unit.Appt;
 import hkust.cse.calendar.unit.MessageBody;
 import hkust.cse.calendar.unit.TimeMachine;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,11 +26,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-public class MessageStorage {
-	static SortedMap<Integer, MessageBody> deleteUser = new ConcurrentSkipListMap<Integer, MessageBody>();
+public class MessageStorage implements java.io.Serializable {
+	static SortedMap<Integer, MessageBody> deleteUser = loadMap("deleteUser.map");
 	// deleteUser.put(-1, new
 	// MessageBody(-1,-1,-1,MessageBody.UserResponse.NotYet,LocalDateTime.now());
-	static SortedMap<Integer, MessageBody> deleteLocation = new ConcurrentSkipListMap<Integer, MessageBody>();
+	static SortedMap<Integer, MessageBody> deleteLocation = loadMap("deleteLocation.map");
 
 	private MessageStorage() {
 
@@ -34,6 +43,74 @@ public class MessageStorage {
 	public static SortedMap<Integer, MessageBody> getDeleteLocation() {
 		// TODO Auto-generated method stub
 		return deleteLocation;
+	}
+
+	public static void save(String filename, String filename2) {
+		try {
+			// Serialize data object to a file
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(filename));
+			out.writeObject(deleteUser);
+			out.flush();
+			out.close();
+
+			out = new ObjectOutputStream(new FileOutputStream(filename2));
+			out.writeObject(deleteLocation);
+			out.flush();
+			out.close();
+			System.out.println("");
+		} catch (IOException e) {
+			System.err.println("io error...");
+		}
+		//
+		// // Serialize data object to a byte array
+		// ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
+		// out = new ObjectOutputStream(bos) ;
+		// out.writeObject(object);
+		// out.close();
+		//
+		// // Get the bytes of the serialized object
+		// byte[] buf = bos.toByteArray();
+		// } catch (IOException e) {
+		// }
+	}
+
+	public static SortedMap<Integer, MessageBody> loadMap(String filename){
+		SortedMap<Integer, MessageBody> map=new ConcurrentSkipListMap<Integer, MessageBody>();
+		try{
+			ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(
+					new FileInputStream(filename)));
+			try{
+				map = (SortedMap<Integer, MessageBody>) ois.readObject();
+				
+			}catch(ClassNotFoundException e){
+				System.out.println("MessageStorage.load()");
+				e.printStackTrace();
+			}
+		}catch(FileNotFoundException e){
+	        File file = new File(filename);
+	        boolean fileCreated = false;
+	        try {
+	            fileCreated = file.createNewFile();
+	        } catch (IOException ioe) {
+	            System.out.println("Error while creating empty file: " + ioe);
+	        }
+	        
+	        map= new ConcurrentSkipListMap<Integer, MessageBody>();
+		}catch(IOException e){// why??
+			System.out.println("MessageStorage.load(): io exception");
+			PrintWriter writer = null;
+			try {
+				writer = new PrintWriter(filename);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				
+			}
+			writer.print("");
+			writer.close();
+			
+		}
+		return new ConcurrentSkipListMap<Integer, MessageBody>(map);
 	}
 
 
@@ -51,7 +128,6 @@ public class MessageStorage {
 	//
 	// }
 
-
 	public static SortedMap<Integer, LocalDateTime> getCreatorToLastRelatedEventMap(
 			int IDofUserOrLocToBeDeleted, String userOrLoc) {
 		// locked the user
@@ -60,19 +136,20 @@ public class MessageStorage {
 
 		// appt[] apptlist=getApptListInvolveUserInFuture(uid);
 		ApptDB adb = new ApptDB();
-		Appt[] apptlist=null;
-		if(userOrLoc.equals("user")){
-			apptlist= adb.getFutureApptWithUser(IDofUserOrLocToBeDeleted);
+		Appt[] apptlist = null;
+		if (userOrLoc.equals("user")) {
+			apptlist = adb.getFutureApptWithUser(IDofUserOrLocToBeDeleted);
 			// getApptListInvolveUserInFuture(IDofUserToBeDeleted);
-		}else if (userOrLoc.equals("location")){
-			apptlist= adb.getApptByLocationName(LocationDB.getInstance().getLocationName(IDofUserOrLocToBeDeleted));
-		}else{
+		} else if (userOrLoc.equals("location")) {
+			apptlist = adb.getApptByLocationName(LocationDB.getInstance()
+					.getLocationName(IDofUserOrLocToBeDeleted));
+		} else {
 			System.err
 					.println("MessageStorage.getCreatorToLastRelatedEventMap()");
 		}
 		System.out.println(Arrays.deepToString(apptlist));
 		// this may work
-		
+
 		Map<Integer, List<LocalDateTime>> CreatorToEndTimesMap = new HashMap<Integer, List<LocalDateTime>>();
 		for (Appt tmpappt : apptlist) {
 

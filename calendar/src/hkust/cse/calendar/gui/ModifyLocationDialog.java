@@ -120,7 +120,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 
 				for (int key : creatorToLastRelatedEventMap.keySet()) {
 					MessageBody tmpmsgbody2 = new MessageBody(-1, locationID,
-							-1, MessageBody.UserResponse.NotYet,
+							-1,
 							creatorToLastRelatedEventMap.get(key), key);
 					int insertKey;
 					if (!(tmpmap.isEmpty())) {

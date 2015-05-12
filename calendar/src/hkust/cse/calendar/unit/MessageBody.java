@@ -1,13 +1,15 @@
 package hkust.cse.calendar.unit;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class MessageBody {
+public class MessageBody implements Serializable {
 	int userToBeDeletedID;
 	int locationID;
 	int apptID;
-	UserResponse response;
-	LocalDateTime expireDateTime;
+	//LocalDateTime expireDateTime;
+	Timestamp expireDateTimeTS;
 	int receiverID;
 	
 	public int getUserToBeDeletedID() {
@@ -27,12 +29,10 @@ public class MessageBody {
 		return apptID;
 	}
 
-	public UserResponse getResponse() {
-		return response;
-	}
+	
 
 	public LocalDateTime getExpireDateTime() {
-		return expireDateTime;
+		return expireDateTimeTS.toLocalDateTime();
 	}
 
 	public int getReceiverID() {
@@ -43,22 +43,20 @@ public class MessageBody {
 	public String toString() {
 		return "\nMessageBody [userToBeDeletedID=" + userToBeDeletedID
 				+ ", \nlocationID=" + locationID + ", \napptID=" + apptID
-				+ ", \nresponse=" + response + ", \nexpireDateTime="
-				+ expireDateTime + ", \nreceiverID=" + receiverID + "]";
+				+ ", \nexpireDateTime="
+				+ expireDateTimeTS.toLocalDateTime() + ", \nreceiverID=" + receiverID + "]";
 	}
 
-	public enum UserResponse {
-		Yes, No, NotYet
-	}
+
 	
 	public MessageBody(int userID, int locationID, int apptID,
-			UserResponse response, LocalDateTime expireDateTime, int receiverID) {
+			 LocalDateTime expireDateTime, int receiverID) {
 		//super();
 		this.userToBeDeletedID = userID;
 		this.locationID = locationID;
 		this.apptID = apptID;
-		this.response = response;
-		this.expireDateTime = expireDateTime;
+		
+		this.expireDateTimeTS = Timestamp.valueOf(expireDateTime);
 		this.receiverID=receiverID;
 		//UserResponse.Yes;
 	}

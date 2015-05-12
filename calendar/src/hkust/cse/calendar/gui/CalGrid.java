@@ -140,6 +140,10 @@ public class CalGrid extends JFrame implements ActionListener {
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				
+				System.out
+						.println("CalGrid.CalGrid(...).new WindowAdapter() {...}.windowClosing()");
+				MessageStorage.save("deleteUser.map","deleteLocation.map"); 
 				System.exit(0);
 			}
 		});
@@ -526,6 +530,8 @@ public class CalGrid extends JFrame implements ActionListener {
 				int n = JOptionPane.showConfirmDialog(null, "Exit Program ?",
 						"Comfirm", JOptionPane.YES_NO_OPTION);
 				if (n == JOptionPane.YES_OPTION)
+					MessageStorage.save("deleteUser.map","deleteLocation.map");
+					
 					System.exit(0);
 
 			}

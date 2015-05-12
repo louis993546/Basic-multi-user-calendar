@@ -22,7 +22,7 @@ public class AcceptOrNotDialog extends JFrame implements ActionListener {
 	private JLabel comment2;
 	private JButton bAccept;
 	private JButton bReject;
-	private MessageBody.UserResponse response = MessageBody.UserResponse.NotYet;
+	
 	private String userOrLoc;
 	private int msgid;
 	private Appointment apptForInviteDialog;
