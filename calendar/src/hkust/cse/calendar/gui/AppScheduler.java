@@ -778,6 +778,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 			}
 		}
 		
+		
+		
 		//change the data of this appscheduler object
 		
 		//call savebuttonresponse again

@@ -424,9 +424,12 @@ public class AppList extends JPanel implements ActionListener {
 		Appt apptTitle = getSelectedAppTitle();
 		if (apptTitle != null)
 		{
-			if((apptTitle.TimeSpan().StartTime().before(parent.timeMachine.getTMTimestamp())))
+			int admin = parent.controller.getDefaultUser().Admin();
+			if((admin ==0) && (apptTitle.TimeSpan().StartTime().before(parent.timeMachine.getTMTimestamp())))
 			{
 				JOptionPane.showMessageDialog(parent, "You cannot delete things in the past!", "Error", JOptionPane.ERROR_MESSAGE);
+			}else if((admin ==0) && apptTitle.getAppointment().getCreaterUID()!=parent.getCurrentUserID()){
+				JOptionPane.showMessageDialog(parent, "You are not creator. Cannot delete.", "Error", JOptionPane.ERROR_MESSAGE);
 			}else{
 				ApptDB adb = new ApptDB();
 				adb.deleteAppt(apptTitle.getID());
@@ -445,8 +448,18 @@ public class AppList extends JPanel implements ActionListener {
 		
 		if (apptTitle != null)
 		{
-			if ((apptTitle.TimeSpan().StartTime().before(parent.timeMachine.getTMTimestamp()))) {
+			int numOfPeopleOfAppointment=apptTitle.getWaitingList().size()+apptTitle.getAttendList().size();
+			System.out.println(apptTitle.getWaitingList());
+			System.out.println(apptTitle.getAttendList());
+			System.out.println("numOfPeopleOfAppointment="+numOfPeopleOfAppointment);
+			
+			int admin = parent.controller.getDefaultUser().Admin();
+			if ((admin ==0) && (apptTitle.TimeSpan().StartTime().before(parent.timeMachine.getTMTimestamp()))) {
 				JOptionPane.showMessageDialog(parent, "You cannot modify things in the past!", "Error", JOptionPane.ERROR_MESSAGE);
+			}else if ((admin ==0) && numOfPeopleOfAppointment>1) {//group event
+				JOptionPane.showMessageDialog(parent, "You cannot modify group event! You may try delete it", "Error", JOptionPane.ERROR_MESSAGE);
+			}else if((admin ==0) && apptTitle.getAppointment().getCreaterUID()!=parent.getCurrentUserID()){
+				JOptionPane.showMessageDialog(parent, "You are not creator. Cannot modify", "Error", JOptionPane.ERROR_MESSAGE);
 			}else{
 				AppScheduler setAppDial = new AppScheduler("Modify", parent, apptTitle);//<--AppScheduler(String,CalGrid, int)
 				setAppDial.updateSetApp(apptTitle);
