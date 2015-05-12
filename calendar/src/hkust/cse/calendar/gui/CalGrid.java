@@ -370,10 +370,12 @@ public class CalGrid extends JFrame implements ActionListener {
 
 	}
 
-	JMenuBar createMenuBar() {
-
-		ActionListener listener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	public JMenuBar createMenuBar() 
+	{
+		ActionListener listener = new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
 				if (e.getActionCommand().equals("Manual Scheduling")) {
 					AppScheduler a = new AppScheduler("New", CalGrid.this);
 					a.updateSetApp(hkust.cse.calendar.gui.Utility
@@ -470,8 +472,7 @@ public class CalGrid extends JFrame implements ActionListener {
 		menuBar.add(Appmenu);
 		Appmenu.setEnabled(false);
 		Appmenu.setMnemonic('p');
-		Appmenu.getAccessibleContext().setAccessibleDescription(
-				"Appointment Management");
+		Appmenu.getAccessibleContext().setAccessibleDescription("Appointment Management");
 		mi = new JMenuItem("Manual Scheduling");
 		mi.addActionListener(listener);
 		JMenuItem ald = new JMenuItem("Appointment List");
@@ -479,10 +480,11 @@ public class CalGrid extends JFrame implements ActionListener {
 		Appmenu.add(mi);
 		Appmenu.add(ald);
 		
+		
+		
 		int admin = this.controller.getDefaultUser().Admin();
-		if(admin == 1){
-
-
+		if(admin == 1)
+		{
 			//modify location
 			menuBar.add(Locationmenu);
 			Locationmenu.setEnabled(false);

@@ -2,7 +2,7 @@ package hkust.cse.calendar.unit;
 
 public class User{
 
-	private int mID;						// Unique user ID
+	private int ID;						// Unique user ID
 	private String mPassword;				// User password
 	private String mEmail;						// User email
 	private String mFirstName;
@@ -11,7 +11,7 @@ public class User{
 
 	@Override
 	public String toString() { //for test only
-		return "User [mID=" + mID + ", mPassword=" + mPassword + ", mEmail="
+		return "User [mID=" + ID + ", mPassword=" + mPassword + ", mEmail="
 				+ mEmail + ", mFirstName=" + mFirstName + ", mLastName="
 				+ mLastName + ", mAdmin=" + mAdmin + "]";
 	}
@@ -44,7 +44,7 @@ public class User{
 	public User(int id, String email, String pass, int admin, String fn, String ln)
 	{
 		this(email, pass, admin, fn, ln);
-		mID = id;
+		ID = id;
 	}
 
 	// Getter of the user password
@@ -98,7 +98,7 @@ public class User{
 	
 	public int getUID()
 	{
-		return mID;
+		return ID;
 	}
 
 }

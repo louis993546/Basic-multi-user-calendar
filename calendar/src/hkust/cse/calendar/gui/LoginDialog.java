@@ -135,8 +135,9 @@ public class LoginDialog extends JFrame implements ActionListener
 			boolean allow = udb.checkIfExist(user);
 			if (allow)
 			{
-				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)), false);
 				user = udb.getFullUser(user);
+				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)), false);
+				System.out.println("Admin: " + grid.controller.getDefaultUser().Admin());
 				System.out.println("User ID: " + user.getUID());
 				ArrayList<Message> allMessages = mdb.getAllMessageForUser(user.getUID());
 				System.out.println("allMessages.size(): " + allMessages.size());
@@ -244,8 +245,12 @@ public class LoginDialog extends JFrame implements ActionListener
 						break;
 					}
 				}
+				grid.updateDB();
+				grid.updateAppList();
+				grid.UpdateCal();
+				grid.updateReminderCheckerApptlist();
 				grid.setVisible(true);
-				setVisible( false );	
+				setVisible(false);	
 			}
 			else
 			{
