@@ -457,6 +457,15 @@ public class CalGrid extends JFrame implements ActionListener {
 						System.err.println(ex.getClass().getName() + ": "
 								+ ex.getMessage());
 					}
+				} else if(e.getActionCommand().equals("Show public appointments")){
+					//Public_appointments_dialog d=new Public_appointments_dialog();
+					String publicApptText="";
+					for (Appointment appointment : adb.getAppointmentList()) {
+						if (appointment.getTitle().contains("(PUBLIC)")){
+							publicApptText+=appointment.toString();
+						}
+					}
+					JOptionPane.showMessageDialog(null,publicApptText);
 				} else if (e.getActionCommand().equals("Modify Clock")) {
 					TimeMachineDialog tmd = new TimeMachineDialog(CalGrid.this);
 
@@ -528,16 +537,22 @@ public class CalGrid extends JFrame implements ActionListener {
 		Appmenu.getAccessibleContext().setAccessibleDescription("Appointment Management");
 		mi = new JMenuItem("Manual Scheduling");
 		mi.addActionListener(listener);
-		JMenuItem ald = new JMenuItem("Appointment List");
-		ald.addActionListener(listener);
 		Appmenu.add(mi);
-		Appmenu.add(ald);
+		
+		mi = new JMenuItem("Show public appointments");
+		mi.addActionListener(listener);
+		Appmenu.add(mi);
+		
+		
 
 		int admin = this.controller.getDefaultUser().Admin();
 		if(admin == 1)
 		{
+			JMenuItem ald = new JMenuItem("Appointment List");
+			ald.addActionListener(listener);
+			Appmenu.add(ald);
 			//modify location
-
+			
 			menuBar.add(Locationmenu);
 			Locationmenu.setEnabled(false);
 			Locationmenu.setMnemonic('p');

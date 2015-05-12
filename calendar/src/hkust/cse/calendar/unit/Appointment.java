@@ -1,13 +1,13 @@
 /**
-* This class was created in an attempt to fit more data into each appointment without messing around with
-* how the existing skelton code access each Appt.
-* most of the whole program does not access Appointment object directly, but through Appt
-*
-* @deprecated a lot of getter for Timestamp are deprecated, and it is still being used by this program
-* 			  through our the whole program
-* @see Appt.java, ApptDB.java
-* @version 1.0
-*/
+ * This class was created in an attempt to fit more data into each appointment without messing around with
+ * how the existing skelton code access each Appt.
+ * most of the whole program does not access Appointment object directly, but through Appt
+ *
+ * @deprecated a lot of getter for Timestamp are deprecated, and it is still being used by this program
+ * 			  through our the whole program
+ * @see Appt.java, ApptDB.java
+ * @version 1.0
+ */
 
 package hkust.cse.calendar.unit;
 
@@ -21,12 +21,26 @@ public class Appointment implements Comparable<Appointment> {
 	private int startHour;
 	private int startMin;
 	private int startYear;
-	private int startMonth;//1~12
+	private int startMonth;// 1~12
 	private int startDay;
 	private int endHour;
 	private int endMin;
+
+	@Override
+	public String toString() {
+		return "Title: " + title + ", description: " + description
+				+ ", location: " + location + ", Time=" + startYear + "/"
+				+ startMonth +"/"+startDay+" "+ startHour + ":" + startMin
+				+"~"+endHour
+				+ ":" + endMin+"   reminder=" + reminder
+				+ ", reminderTime=" + reminderTime + ", reminderUnit="
+				+ reminderUnit + ", going=" + going + ", waiting=" + waiting
+				+ ", id=" + id + ", jid=" + jid + ", isJoint=" + isJoint
+				+ ", createrID=" + createrID + "]"+"\n";
+	}
+
 	private int endYear;
-	private int endMonth;//1~12
+	private int endMonth;// 1~12
 	private int endDay;
 	private int reminder;
 	private int reminderTime;
@@ -38,8 +52,10 @@ public class Appointment implements Comparable<Appointment> {
 	private boolean isJoint;
 	private int createrID;
 
-	public Appointment(String t, String d, String l, int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday, int r, int rt, int ru, LinkedList<Integer> aal,  LinkedList<Integer> wal, int i, int uid) 
-	{
+	public Appointment(String t, String d, String l, int shr, int smin,
+			int syr, int smon, int sday, int ehr, int emin, int eyr, int emon,
+			int eday, int r, int rt, int ru, LinkedList<Integer> aal,
+			LinkedList<Integer> wal, int i, int uid) {
 		title = t;
 		description = d;
 		location = l;
@@ -61,7 +77,7 @@ public class Appointment implements Comparable<Appointment> {
 		id = i;
 		createrID = uid;
 	}
-	
+
 	public Appointment() {
 		title = "Untitled";
 		description = "";
@@ -69,152 +85,125 @@ public class Appointment implements Comparable<Appointment> {
 		id = 0;
 		jid = -1;
 		going = new LinkedList<Integer>();
-//		reject = new LinkedList<String>();
+		// reject = new LinkedList<String>();
 		waiting = new LinkedList<Integer>();
-		//TODO not sure if time needs to be initiate
+		// TODO not sure if time needs to be initiate
 	}
 
-	public boolean setTitle(String t)
-	{
+	public boolean setTitle(String t) {
 		title = t;
 		return true;
 	}
 
-	public boolean setDescription(String d)
-	{
+	public boolean setDescription(String d) {
 		description = d;
 		return true;
 	}
 
-	public boolean setLocation(String l)
-	{
+	public boolean setLocation(String l) {
 		location = l;
 		return true;
 	}
 
-	public boolean setReminder(int r, int rt, int ru)
-	{
+	public boolean setReminder(int r, int rt, int ru) {
 		reminder = r;
 		reminderTime = rt;
 		reminderUnit = ru;
 		return true;
 	}
 
-	public void setStartEndYear(int yr)
-	{
-		//Warning: this does not do any checking
+	public void setStartEndYear(int yr) {
+		// Warning: this does not do any checking
 		startYear = yr;
 		endYear = yr;
 	}
-	
-	public void setStartEndMonth(int m)
-	{
-		//Warning: this does not do any checking
+
+	public void setStartEndMonth(int m) {
+		// Warning: this does not do any checking
 		startMonth = m;
 		endMonth = m;
 	}
-	
-	public void setStartEndDay(int d)
-	{
-		//Warning: this does not do any checking
+
+	public void setStartEndDay(int d) {
+		// Warning: this does not do any checking
 		startDay = d;
 		endDay = d;
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean endAfterStart(int shr, int smin, int syr, int smon, int sday, int ehr, int emin, int eyr, int emon, int eday)
-	{
-		Timestamp st = new Timestamp(syr-1900, smon, sday, shr, smin, 0, 0);
-		Timestamp et = new Timestamp(eyr-1900, emon, eday, ehr, emin, 0, 0);
-		if (st.compareTo(et) < 0)
-		{
+	public boolean endAfterStart(int shr, int smin, int syr, int smon,
+			int sday, int ehr, int emin, int eyr, int emon, int eday) {
+		Timestamp st = new Timestamp(syr - 1900, smon, sday, shr, smin, 0, 0);
+		Timestamp et = new Timestamp(eyr - 1900, emon, eday, ehr, emin, 0, 0);
+		if (st.compareTo(et) < 0) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	public boolean setID(int i)
-	{
+	public boolean setID(int i) {
 		id = i;
 		return true;
 	}
 
-	public boolean setJID(int j)
-	{
+	public boolean setJID(int j) {
 		jid = j;
 		return true;
 	}
 
-	public boolean deleteFromGoing(int uid)
-	{
-		if (going.contains(uid) == true)
-		{
+	public boolean deleteFromGoing(int uid) {
+		if (going.contains(uid) == true) {
 			Integer i = uid;
 			going.remove(i);
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	public boolean deleteFromWaiting(int uid)
-	{
-		if (waiting.contains(uid) == true)
-		{
+	public boolean deleteFromWaiting(int uid) {
+		if (waiting.contains(uid) == true) {
 			Integer i = uid;
 			waiting.remove(i);
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	public boolean addToGoing(int uid)
-	{
+	public boolean addToGoing(int uid) {
 		going.add(uid);
 		return true;
 	}
 
-	public boolean addWaiting(int uid)
-	{
+	public boolean addWaiting(int uid) {
 		waiting.add(uid);
 		return false;
 	}
 
-	public boolean setIsJoint(boolean i)
-	{
+	public boolean setIsJoint(boolean i) {
 		isJoint = i;
 		return true;
 	}
 
-	public void initiateAttend()
-	{
+	public void initiateAttend() {
 		going = new LinkedList<Integer>();
 	}
 
-	public void initiateWaiting()
-	{
+	public void initiateWaiting() {
 		waiting = new LinkedList<Integer>();
 	}
 
-	public void setAttend(LinkedList<Integer> a)
-	{
+	public void setAttend(LinkedList<Integer> a) {
 		going = a;
 	}
 
-	public void setWaiting(LinkedList<Integer> w)
-	{
+	public void setWaiting(LinkedList<Integer> w) {
 		waiting = w;
 	}
 
-	//get functions
+	// get functions
 
 	public String getTitle() {
 		return title;
@@ -281,13 +270,13 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	public LinkedList<Integer> getGoingList() {
-//		System.out.println("going");
+		// System.out.println("going");
 		return going;
 	}
 
-//	public LinkedList<String> getReject() {
-//		return reject;
-//	}
+	// public LinkedList<String> getReject() {
+	// return reject;
+	// }
 
 	public LinkedList<Integer> getWaitingList() {
 		return waiting;
@@ -301,13 +290,12 @@ public class Appointment implements Comparable<Appointment> {
 		return jid;
 	}
 
-	public boolean getIsJoint()
-	{
+	public boolean getIsJoint() {
 		return isJoint;
 	}
 
 	public boolean isDateValid(int yr, int mon, int day) {
-		//TODO Check if date is valid
+		// TODO Check if date is valid
 		return false;
 	}
 
@@ -318,68 +306,65 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	@SuppressWarnings("deprecation")
-	public TimeSpan getTimeSpan()
-	{
-		Timestamp st = new Timestamp(startYear-1900, startMonth-1, startDay, startHour, startMin, 0, 0);
-		Timestamp et = new Timestamp(endYear-1900, endMonth-1, endDay, endHour, endMin, 0, 0);//month of timestamp is 0-based, ie. 0~11
+	public TimeSpan getTimeSpan() {
+		Timestamp st = new Timestamp(startYear - 1900, startMonth - 1,
+				startDay, startHour, startMin, 0, 0);
+		Timestamp et = new Timestamp(endYear - 1900, endMonth - 1, endDay,
+				endHour, endMin, 0, 0);// month of timestamp is 0-based, ie.
+										// 0~11
 		TimeSpan a = new TimeSpan(st, et);
 		return a;
 	}
 
 	@Override
 	public int compareTo(Appointment a) {
-		//TODO comparing appointments
+		// TODO comparing appointments
 		return 0;
 	}
 
-	public void setEndDateTime(int hours, int minutes, int year, int month, int day) {
+	public void setEndDateTime(int hours, int minutes, int year, int month,
+			int day) {
 		// TODO Auto-generated method stub
-		if (isTimeValid(hours, minutes) == true)
-		{
+		if (isTimeValid(hours, minutes) == true) {
 			endHour = hours;
 			endMin = minutes;
 			setStartEndYear(year);
 			setStartEndMonth(month);
 			setStartEndDay(day);
-			
+
 		}
 	}
 
-	public void setStartDateTime(int hours, int minutes, int year, int month, int day) {
-		if (isTimeValid(hours, minutes) == true)
-		{
+	public void setStartDateTime(int hours, int minutes, int year, int month,
+			int day) {
+		if (isTimeValid(hours, minutes) == true) {
 			startHour = hours;
 			startMin = minutes;
 			setStartEndYear(year);
 			setStartEndMonth(month);
 			setStartEndDay(day);
-		}	
+		}
 	}
-	
-	public int getCreaterUID()
-	{
+
+	public int getCreaterUID() {
 		return createrID;
 	}
-	
-	public void setCreaterID(int id)
-	{
+
+	public void setCreaterID(int id) {
 		createrID = id;
 	}
-	
-	public boolean isThisUIDInGoing(int uid)
-	{
+
+	public boolean isThisUIDInGoing(int uid) {
 		return going.contains(uid);
 	}
-	
-	public boolean isThisUIDInWaiting(int uid)
-	{
-//		return waiting.contains(uid);
-//		System.out.println("The whole waiting list of this appointment: " + waiting);
-		for (int a:waiting)
-		{
-			if (a == uid)
-			{
-//				System.out.println("The following should be added: " + uid);
+
+	public boolean isThisUIDInWaiting(int uid) {
+		// return waiting.contains(uid);
+		// System.out.println("The whole waiting list of this appointment: " +
+		// waiting);
+		for (int a : waiting) {
+			if (a == uid) {
+				// System.out.println("The following should be added: " + uid);
 				return true;
 			}
 		}

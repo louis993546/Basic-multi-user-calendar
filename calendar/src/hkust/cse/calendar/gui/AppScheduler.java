@@ -91,6 +91,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 	private UserDB udb;
 	private LinkedList<Integer> GoingUIDAL;
 	private LinkedList<Integer> InvitingUIDAL;
+	private JCheckBox publicChB;
 	
 	private void commonConstructor(String title, CalGrid cal, int startTime) {
 		udb = new UserDB();
@@ -261,6 +262,14 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+		
+		//pReminder.setBorder(reminderBorder);
+		JLabel publicL = new JLabel("Set public event: ");
+		buttonPanel.add(publicL);
+		publicChB = new JCheckBox("yes");
+		buttonPanel.add(publicChB);
+		
+		
 		//Invite button
 		inviteBut = new JButton("Invite");
 		inviteBut.addActionListener(this);
@@ -499,7 +508,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		}
 		
 		//check if end date earlier then start date
+		
 		String title = titleField.getText().trim();
+		if(title.contains("(PUBLIC)")){//"(PUBLIC)" keyword is reserved for check if public
+			JOptionPane.showMessageDialog(this, "\"(PUBLIC)\" keyword is reserved",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if(publicChB.isSelected()){
+			title=title+"(PUBLIC)";
+		}
+		
 		String description = detailArea.getText();
 		String location = lCB.getSelectedItem().toString();
 		if (location != "N/A")
@@ -880,7 +899,17 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		eTimeH.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getEndHour()));
 		eTimeM.setSelectedItem(getTimeInCorrectFormat(appt.getAppointment().getEndMin()));
 		
-		titleField.setText(appt.getTitle());
+		//if public
+		String title = appt.getTitle();
+		String last8char=title.substring(Math.max(0,title.length()-8), title.length());
+		boolean isPublic = last8char.equals("(PUBLIC)");
+		if (isPublic){
+			publicChB.setSelected(true);
+			String extractedLast8char=title.substring(0,Math.max(0,title.length()-8));
+			titleField.setText(extractedLast8char);
+		}else {
+			titleField.setText(title);
+		}
 		
 		detailArea.setText(appt.getInfo());
 		
