@@ -1,6 +1,9 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.unit.Appt;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +28,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 	private JButton modifyButton;
 	private JButton exitButton;
 	private LocationDB ldb;
+	private ApptDB adb;
 	private ArrayList<String> locationStringAL = new ArrayList<String>();
 
 	public ModifyLocationDialog() {
@@ -36,6 +40,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 			}
 		});
 		ldb = LocationDB.getInstance();
+		adb = new ApptDB();
 		Container contentPane;
 		contentPane = getContentPane();
 		locationStringAL = ldb.getLocationList();
@@ -87,8 +92,18 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 			if ((id != 0) || (id != -1)) 
 			{
 				//TODO check if anyone is using it first
-				ldb.deleteLocation(id);
-				locationListModel.removeElementAt(locationList.getSelectedIndex());
+				Appt[] listOfAppt = adb.getApptByLocationName(locationList.getSelectedValue().toString());
+				if (listOfAppt.length > 1)
+				{
+					//ask all those users first
+					//somehow lock this location: set capacity to negative
+					//TODO should not display location with -ve capacity
+				}
+				else
+				{
+					ldb.deleteLocation(id);
+					locationListModel.removeElementAt(locationList.getSelectedIndex());
+				}
 			}
 		} else if (e.getSource() == modifyButton) {
 			// TODO modify button
