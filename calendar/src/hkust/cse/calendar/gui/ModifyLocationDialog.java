@@ -83,12 +83,12 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == deleteButton) {
-			int id = ldb.getLocationID(locationList.getSelectedValue()
-					.toString());
-			if ((id != 0) || (id != -1)) {
+			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
+			if ((id != 0) || (id != -1)) 
+			{
+				//TODO check if anyone is using it first
 				ldb.deleteLocation(id);
-				locationListModel.removeElementAt(locationList
-						.getSelectedIndex());
+				locationListModel.removeElementAt(locationList.getSelectedIndex());
 			}
 		} else if (e.getSource() == modifyButton) {
 			// TODO modify button
