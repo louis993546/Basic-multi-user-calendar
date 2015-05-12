@@ -108,11 +108,11 @@ public class TimeInterval {
 		
 		this();
 		for (Appt appt : apptlist) {
-			System.out.println("TimeInterval.TimeInterval()begin loop");
+			//System.out.println("TimeInterval.TimeInterval()begin loop");
 			TimeSpan timeSpan = appt.getAppointment().getTimeSpan();
 			TimeInterval singleTimeInterval = new TimeInterval(timeSpan);
 			this.unionwith(singleTimeInterval);
-			System.out.println("TimeInterval.TimeInterval()end loop");
+			//System.out.println("TimeInterval.TimeInterval()end loop");
 		}
 	}
 	
@@ -122,20 +122,20 @@ public class TimeInterval {
 		// map.get(datetmp) or anothermap.get(datetmp)
 		// for(datetobeadd: anothermap.keyset.removeALL(map.keyset));
 		// {map.put(datetobeadd,anothermap.get(datetobeadd));
-		System.out.println("union1: this"+this);
-		System.out.println("union2: anotherTimeInterval"+anotherTimeInterval);
+		//System.out.println("union1: this"+this);
+		//System.out.println("union2: anotherTimeInterval"+anotherTimeInterval);
 		Set<LocalDate> tmpKeySetx = anotherTimeInterval.timeIntervalMap.keySet();
 		Set<LocalDate> tmpKeySet = new TreeSet<LocalDate>(tmpKeySetx);
 		tmpKeySet.retainAll(this.timeIntervalMap.keySet());// find common date
 		
-		System.out.println("union2b: anotherTimeInterval"+anotherTimeInterval);
+		//System.out.println("union2b: anotherTimeInterval"+anotherTimeInterval);
 		for (LocalDate datetmp : tmpKeySet) {
 			BitSet tmpBitSet = (BitSet) this.timeIntervalMap.get(datetmp).clone();
 			tmpBitSet.or(anotherTimeInterval.timeIntervalMap.get(datetmp));
 			this.timeIntervalMap.put(datetmp,tmpBitSet);
 		}
 		
-		System.out.println("union result1: this"+this);
+		//System.out.println("union result1: this"+this);
 		
 		Set<LocalDate> tmpKeySet2x = anotherTimeInterval.timeIntervalMap
 				.keySet();
@@ -147,7 +147,7 @@ public class TimeInterval {
 			this.timeIntervalMap.put(datetobeadd, anotherTimeInterval.timeIntervalMap.get(datetobeadd));
 		}
 		
-		System.out.println("union result2: this"+this);
+		//System.out.println("union result2: this"+this);
 
 	}
 	
@@ -165,10 +165,10 @@ public class TimeInterval {
 //	{
 //		for (int i = 0; i<abu.length; i++)
 //		{
-//			System.out.println("a4: " + abu[i].TimeSpan());
+//			//System.out.println("a4: " + abu[i].TimeSpan());
 //			ti.unionwith(new TimeInterval(abu[i].TimeSpan()));
 //		}
-//		System.out.println("a5: " + ti.toString());
+//		//System.out.println("a5: " + ti.toString());
 //		return ti;
 //	}
 	
@@ -192,8 +192,8 @@ public class TimeInterval {
 
 
 	public void intersectWith(TimeInterval anotherTimeInterval) {
-		System.out.println("this "+this);
-		System.out.println("anotherTimeInterval "+anotherTimeInterval);
+		//System.out.println("this "+this);
+		//System.out.println("anotherTimeInterval "+anotherTimeInterval);
 		Set<LocalDate> tmpKeySet0 = this.timeIntervalMap.keySet();
 		Set<LocalDate> tmpKeySet = new TreeSet<LocalDate>(tmpKeySet0);
 		
@@ -241,7 +241,7 @@ public class TimeInterval {
 	}
 
 	public void clearBeforeNow() {
-		System.out.println("TimeInterval.clearBeforeNow()");
+		//System.out.println("TimeInterval.clearBeforeNow()");
 		System.out.println(this);
 		TimeMachine tm = TimeMachine.getInstance();
 		clearBeforeTime(tm.getTMTimestamp().toLocalDateTime());//
@@ -250,7 +250,7 @@ public class TimeInterval {
 
 	public void clearBeforeTime(LocalDateTime time) {
 
-		System.out.println("TimeInterval.clearBeforeTime(){clearbeforedate(time);...");
+		//System.out.println("TimeInterval.clearBeforeTime(){clearbeforedate(time);...");
 		System.out.println(this);
 		
 		clearbeforedate(time);
@@ -279,12 +279,12 @@ public class TimeInterval {
 	}
 
 	public void clearbeforedate(LocalDateTime time) {
-		System.out.println("TimeInterval.clearbeforedate()");
+		//System.out.println("TimeInterval.clearbeforedate()");
 		System.out.println(this);
 		int count=1;
 		Set<LocalDate> keySet1 = new TreeSet<LocalDate>(this.timeIntervalMap.keySet());
 		for (LocalDate tmpdate : keySet1) {
-			System.out.println("loop count="+count);
+			//System.out.println("loop count="+count);
 			System.out.println(this);
 			if (tmpdate.isBefore(time.toLocalDate())) {
 				this.timeIntervalMap.remove(tmpdate);
@@ -315,16 +315,16 @@ public class TimeInterval {
 
 	public boolean isExistCommonElement(TimeInterval t2) {
 		// nessecery?
-		System.out.println("TimeInterval.isExistCommonElement()");
-		System.out.println("this "+this);
+		//System.out.println("TimeInterval.isExistCommonElement()");
+		//System.out.println("this "+this);
 		TimeInterval timeInterval1 = new TimeInterval(this);
-		System.out.println("this2 "+this);
+		//System.out.println("this2 "+this);
 		TimeInterval timeInterval2 = new TimeInterval(t2);
 		timeInterval1.intersectWith(timeInterval2);
 		
 		
-		System.out.println("timeInterval1"+timeInterval1);
-		System.out.println("this3 "+this);
+		//System.out.println("timeInterval1"+timeInterval1);
+		//System.out.println("this3 "+this);
 		return !(timeInterval1.isEmpty());
 	}
 				
