@@ -556,7 +556,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
 
 //		for (Appt tempAppt : listAppt) {
-//			if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
+//			if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){//ignore
 //				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
 //						"Time Conflict", JOptionPane.ERROR_MESSAGE);
 //				return false;//cannot save
@@ -564,74 +564,11 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 //		}
 		//useless above
 		
-		int userIDForChecking = parent.getCurrentUserID();
-		ApptDB adb = new ApptDB();
-		Appt[] apptForUser=adb.getFutureApptWithUser(userIDForChecking);
-		Appt[] apptForLocation = adb.getApptByLocationName(location);
-		
-		TimeInterval newApptTimeInterval = new TimeInterval(newAppt.getTimeSpan());
-		//System.out.println("-------------------");
-		//System.out.println("newApptTimeInterval"+newApptTimeInterval);
-		TimeInterval timeIntervalForUser = new TimeInterval(apptForUser);
-		//System.out.println("-------------------");
-		//System.out.println("timeIntervalForUser"+timeIntervalForUser);
-		TimeInterval timeIntervalForLocation = new TimeInterval(apptForLocation);
-		//System.out.println("-------------------");
-		//System.out.println("timeIntervalForLocation"+timeIntervalForLocation);
-		
-		//System.out.println("-------------------");
-		//if(newApptTimeInterval.)
-		timeIntervalForUser.clearBeforeNow();
-		timeIntervalForLocation.clearBeforeNow();
-		//System.out.println(">>>newApptTimeInterval"+newApptTimeInterval);
-		if(timeIntervalForUser.isExistCommonElement(newApptTimeInterval)){
-			JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-					"Time Conflict with your other appointments", JOptionPane.ERROR_MESSAGE);
-			return false;//cannot save
+		ApptDB adb;
+		boolean returnValue=checkConflict(location, newAppt);
+		if(returnValue==false){
+			return false;
 		}
-		//System.out.println(">>>newApptTimeInterval2"+newApptTimeInterval);
-		if(timeIntervalForLocation.isExistCommonElement(newApptTimeInterval)){
-			JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot or location..",
-					"Location Conflict with other users", JOptionPane.ERROR_MESSAGE);
-			return false;//cannot save
-		}
-		
-		for (int userInWaitList : InvitingUIDAL) { //content simply copy from above
-			userIDForChecking = userInWaitList;
-			
-			adb = new ApptDB();
-			apptForUser=adb.getFutureApptWithUser(userIDForChecking);
-//			apptForLocation = adb.getApptByLocationName(location);
-			
-			newApptTimeInterval = new TimeInterval(newAppt.getTimeSpan());
-			//System.out.println("-------------------");
-			//System.out.println("newApptTimeInterval"+newApptTimeInterval);
-			timeIntervalForUser = new TimeInterval(apptForUser);
-			//System.out.println("-------------------");
-			//System.out.println("timeIntervalForUser"+timeIntervalForUser);
-//			timeIntervalForLocation = new TimeInterval(apptForLocation);
-			//System.out.println("-------------------");
-			//System.out.println("timeIntervalForLocation"+timeIntervalForLocation);
-			
-			//System.out.println("-------------------");
-			//if(newApptTimeInterval.)
-			timeIntervalForUser.clearBeforeNow();
-//			timeIntervalForLocation.clearBeforeNow();
-			//System.out.println(">>>newApptTimeInterval"+newApptTimeInterval);
-			if(timeIntervalForUser.isExistCommonElement(newApptTimeInterval)){
-				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with some appointment of users invited by you. Please choose another time slot.",
-						"Time Conflict with users you invited other appointments", JOptionPane.ERROR_MESSAGE);
-				return false;//cannot save
-			}
-			//System.out.println(">>>newApptTimeInterval2"+newApptTimeInterval);
-//			if(timeIntervalForLocation.isExistCommonElement(newApptTimeInterval)){
-//				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot or location..",
-//						"Location Conflict with other users", JOptionPane.ERROR_MESSAGE);
-//				return false;//cannot save
-//			}
-
-		}
-		
 		
 		//ckeck conflict end
 
@@ -670,14 +607,13 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 						if (newAppt.getStartYear()<2100)
 						{
 							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
-							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-							for (Appt tempAppt : listAppt) {
-								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-											"Time Conflict", JOptionPane.ERROR_MESSAGE);
-									return false;//cannot save
-								}				
+							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);// all user
+							
+							returnValue=checkConflict(location, newAppt);
+							if(returnValue==false){
+								return false;
 							}
+							
 							adb = new ApptDB();
 							if (saveOrModify == 0)	//new appt
 								adb.addAppt(newAppt);
@@ -699,13 +635,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 						{
 							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
 							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-							for (Appt tempAppt : listAppt) {
-								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-											"Time Conflict", JOptionPane.ERROR_MESSAGE);
-									return false;//cannot save
-								}				
+
+							returnValue=checkConflict(location, newAppt);
+							if(returnValue==false){
+								return false;
 							}
+							
 							adb = new ApptDB();
 							if (saveOrModify == 0)	//new appt
 								adb.addAppt(newAppt);
@@ -735,13 +670,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 							{
 								wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
 								listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-								for (Appt tempAppt : listAppt) {
-									if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-										JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-												"Time Conflict", JOptionPane.ERROR_MESSAGE);
-										return false;//cannot save
-									}				
+
+								returnValue=checkConflict(location, newAppt);
+								if(returnValue==false){
+									return false;
 								}
+								
 								adb = new ApptDB();
 								if (saveOrModify == 0)	//new appt
 									adb.addAppt(newAppt);
@@ -759,13 +693,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 						{
 							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
 							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-							for (Appt tempAppt : listAppt) {
-								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-											"Time Conflict", JOptionPane.ERROR_MESSAGE);
-									return false;//cannot save
-								}				
+
+							returnValue=checkConflict(location, newAppt);
+							if(returnValue==false){
+								return false;
 							}
+							
 							adb = new ApptDB();
 							if (saveOrModify == 0)	//new appt
 								adb.addAppt(newAppt);
@@ -781,13 +714,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 						{
 							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
 							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-							for (Appt tempAppt : listAppt) {
-								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-											"Time Conflict", JOptionPane.ERROR_MESSAGE);
-									return false;//cannot save
-								}				
+
+							returnValue=checkConflict(location, newAppt);
+							if(returnValue==false){
+								return false;
 							}
+							
 							adb = new ApptDB();
 							if (saveOrModify == 0)	//new appt
 								adb.addAppt(newAppt);
@@ -803,13 +735,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 						{
 							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
 							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-							for (Appt tempAppt : listAppt) {
-								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-											"Time Conflict", JOptionPane.ERROR_MESSAGE);
-									return false;//cannot save
-								}				
+
+							returnValue=checkConflict(location, newAppt);
+							if(returnValue==false){
+								return false;
 							}
+							
 							adb = new ApptDB();
 							if (saveOrModify == 0)	//new appt
 								adb.addAppt(newAppt);
@@ -825,13 +756,12 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 						{
 							wholeDay=new TimeSpan(newAppt.getStartYear(), newAppt.getStartMonth(), newAppt.getStartDay(), 0, 0, 23, 59);
 							listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
-							for (Appt tempAppt : listAppt) {
-								if(tempAppt.TimeSpan().Overlap(newAppt.getTimeSpan())==true && idofappt!=tempAppt.getID()){
-									JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
-											"Time Conflict", JOptionPane.ERROR_MESSAGE);
-									return false;//cannot save
-								}				
+
+							returnValue=checkConflict(location, newAppt);
+							if(returnValue==false){
+								return false;
 							}
+							
 							adb = new ApptDB();
 							if (saveOrModify == 0)	//new appt
 								adb.addAppt(newAppt);
@@ -842,6 +772,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 					else
 					{
 						//somethings wrong
+						System.err.println("AppScheduler.saveButtonResponse()");
 					}
 				}
 			}
@@ -858,6 +789,86 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		parent.updateDB();
 		parent.updateReminderCheckerApptlist();
 		return true;
+	}
+
+	public boolean checkConflict(String location, Appointment newAppt) {
+		boolean returnValue = true;
+		int userIDForChecking = parent.getCurrentUserID();
+		ApptDB adb = new ApptDB();
+		Appt[] apptForUser=adb.getFutureApptWithUser(userIDForChecking);
+		Appt[] apptForLocation = adb.getApptByLocationName(location);
+		
+		TimeInterval newApptTimeInterval = new TimeInterval(newAppt.getTimeSpan());
+		//System.out.println("-------------------");
+		//System.out.println("newApptTimeInterval"+newApptTimeInterval);
+		TimeInterval timeIntervalForUser = new TimeInterval(apptForUser);
+		//System.out.println("-------------------");
+		//System.out.println("timeIntervalForUser"+timeIntervalForUser);
+		TimeInterval timeIntervalForLocation = new TimeInterval(apptForLocation);
+		//System.out.println("-------------------");
+		//System.out.println("timeIntervalForLocation"+timeIntervalForLocation);
+		
+		//System.out.println("-------------------");
+		//if(newApptTimeInterval.)
+		timeIntervalForUser.clearBeforeNow();
+		timeIntervalForLocation.clearBeforeNow();
+		//subtract timespan for idofappt
+		TimeInterval timeIntervalForModify=new TimeInterval();
+		
+		if(idofappt!=0){
+			timeIntervalForModify = new TimeInterval(adb.getApptByID(idofappt).getAppointment().getTimeSpan());
+		}
+		timeIntervalForUser.subtract(timeIntervalForModify);
+		timeIntervalForLocation.subtract(timeIntervalForModify);
+		//System.out.println(">>>newApptTimeInterval"+newApptTimeInterval);
+		if(timeIntervalForUser.isExistCommonElement(newApptTimeInterval)){
+			JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot.",
+					"Time Conflict with your other appointments", JOptionPane.ERROR_MESSAGE);
+			returnValue= false;//cannot save
+		}
+		//System.out.println(">>>newApptTimeInterval2"+newApptTimeInterval);
+		else if(timeIntervalForLocation.isExistCommonElement(newApptTimeInterval)){
+			JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot or location..",
+					"Location Conflict with other users", JOptionPane.ERROR_MESSAGE);
+			returnValue=false;//cannot save
+		}
+		
+		for (int userInWaitList : InvitingUIDAL) { //content simply copy from above
+			userIDForChecking = userInWaitList;
+			
+			adb = new ApptDB();
+			apptForUser=adb.getFutureApptWithUser(userIDForChecking);
+//			apptForLocation = adb.getApptByLocationName(location);
+			
+			newApptTimeInterval = new TimeInterval(newAppt.getTimeSpan());
+			//System.out.println("-------------------");
+			//System.out.println("newApptTimeInterval"+newApptTimeInterval);
+			timeIntervalForUser = new TimeInterval(apptForUser);
+			//System.out.println("-------------------");
+			//System.out.println("timeIntervalForUser"+timeIntervalForUser);
+//			timeIntervalForLocation = new TimeInterval(apptForLocation);
+			//System.out.println("-------------------");
+			//System.out.println("timeIntervalForLocation"+timeIntervalForLocation);
+			
+			//System.out.println("-------------------");
+			//if(newApptTimeInterval.)
+			timeIntervalForUser.clearBeforeNow();
+//			timeIntervalForLocation.clearBeforeNow();
+			//System.out.println(">>>newApptTimeInterval"+newApptTimeInterval);
+			if(timeIntervalForUser.isExistCommonElement(newApptTimeInterval)){
+				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with some appointment of users invited by you. Please choose another time slot.",
+						"Time Conflict with users you invited other appointments", JOptionPane.ERROR_MESSAGE);
+				returnValue=false;//cannot save
+			}
+			//System.out.println(">>>newApptTimeInterval2"+newApptTimeInterval);
+//			if(timeIntervalForLocation.isExistCommonElement(newApptTimeInterval)){
+//				JOptionPane.showMessageDialog(this, "You are trying to choose a time slot which conflicts with another appointment. Please choose another time slot or location..",
+//						"Location Conflict with other users", JOptionPane.ERROR_MESSAGE);
+//				return false;//cannot save
+//			}
+
+		}
+		return returnValue;
 	}
 
 	public void updateSetApp(Appt appt) {
