@@ -135,6 +135,7 @@ public class LoginDialog extends JFrame implements ActionListener
 			boolean allow = udb.checkIfExist(user);
 			if (allow)
 			{
+				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)), false);
 				user = udb.getFullUser(user);
 				System.out.println("User ID: " + user.getUID());
 				ArrayList<Message> allMessages = mdb.getAllMessageForUser(user.getUID());
@@ -210,33 +211,40 @@ public class LoginDialog extends JFrame implements ActionListener
 						}
 						break;
 					case 4: //confirm appointment invitation
-						String op = "Will you attend this event :";
-						String apptTitle = adb.getApptByID(allMessages.get(i).getEditID()).getTitle();
-						op = op + apptTitle;
-						int n4 = JOptionPane.showConfirmDialog(null, op, "Cofirm Appointment Invitation", JOptionPane.YES_NO_CANCEL_OPTION);
-						if (n4 == JOptionPane.YES_NO_OPTION)
+						if ((adb.getApptByID(allMessages.get(i).getEditID()) != null) && (grid.timeMachine.getTMTimestamp().after(adb.getApptByID(allMessages.get(i).getEditID()).TimeSpan().StartTime()) == true))
 						{
-							if (allMessages.get(i).getUserUIDList().size() == 1)
-							{
-								mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
-							}
-							else
-							{	//remove user from list
-								mdb.removeUIDFromUIDList(user.getUID(), allMessages.get(i).getMessageID());
-							}
-							adb.addUIDToGoingList(user.getUID(), allMessages.get(i).getMessageID());
-							adb.removeUIDFromWaitingList(user.getUID(), allMessages.get(i).getMessageID());
+							mdb.deleteMessage(allMessages.get(i).getMessageID());
+							adb.deleteAppt(allMessages.get(i).getEditID());
 						}
 						else
 						{
-							adb.deleteAppt(allMessages.get(i).getMessageID());
-							mdb.removeAllEmptyMessages();
+							String op = "Will you attend this event :";
+							String apptTitle = adb.getApptByID(allMessages.get(i).getEditID()).getTitle();
+							op = op + apptTitle;
+							int n4 = JOptionPane.showConfirmDialog(null, op, "Cofirm Appointment Invitation", JOptionPane.YES_NO_CANCEL_OPTION);
+							if (n4 == JOptionPane.YES_NO_OPTION)
+							{
+								if (allMessages.get(i).getUserUIDList().size() == 1)
+								{
+									mdb.deleteMessage(allMessages.get(i).getMessageID());	//remove message
+								}
+								else
+								{	//remove user from list
+									mdb.removeUIDFromUIDList(user.getUID(), allMessages.get(i).getMessageID());
+								}
+								adb.addUIDToGoingList(user.getUID(), allMessages.get(i).getMessageID());
+								adb.removeUIDFromWaitingList(user.getUID(), allMessages.get(i).getMessageID());
+							}
+							else
+							{
+								adb.deleteAppt(allMessages.get(i).getEditID());
+								mdb.removeAllEmptyMessages();
+							}
 						}
 						break;
 					}
 				}
-				@SuppressWarnings("unused")
-				CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
+				grid.setVisible(true);
 				setVisible( false );	
 			}
 			else
@@ -247,7 +255,7 @@ public class LoginDialog extends JFrame implements ActionListener
 		else if (e.getSource() == noLoginButton)
 		{
 			User user = new User( "noname", "nopass");
-			CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)));
+			CalGrid grid = new CalGrid(new ApptStorageControllerImpl(new ApptStorageNullImpl(user)), true);
 			setVisible( false );	
 		}
 		else if(e.getSource() == signupButton) //Sign-up button

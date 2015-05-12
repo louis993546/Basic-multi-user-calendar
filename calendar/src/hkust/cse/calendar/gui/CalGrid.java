@@ -124,7 +124,7 @@ public class CalGrid extends JFrame implements ActionListener {
 	UserDB udb = new UserDB();
 	LocationDB ldb;
 
-	public CalGrid(ApptStorageControllerImpl con) {
+	public CalGrid(ApptStorageControllerImpl con, boolean visibility) {
 		super();
 		
 		ldb = LocationDB.getInstance();
@@ -291,9 +291,14 @@ public class CalGrid extends JFrame implements ActionListener {
 		
 		UpdateCal();
 		pack();				// sized the window to a preferred size
-		setVisible(true);	//set the window to be visible
+		setVisible(visibility);	//set the window to be visible
 	}
 
+	public void displayCalGrid(boolean visibility)
+	{
+		this.setVisible(visibility);
+	}
+	
 	public TableModel prepareTableModel() {
 
 		TableModel dataModel = new AbstractTableModel() {
