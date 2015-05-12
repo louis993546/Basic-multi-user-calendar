@@ -5,6 +5,7 @@ import hkust.cse.calendar.apptstorage.LocationDB;
 import hkust.cse.calendar.apptstorage.UserDB;
 import hkust.cse.calendar.unit.Appointment;
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.TimeInterval;
 import hkust.cse.calendar.unit.TimeMachine;
 import hkust.cse.calendar.unit.TimeSpan;
 
@@ -549,6 +550,7 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		LinkedList<Integer> temp = new LinkedList<Integer>();
 		temp.add(parent.getCurrentUserID());
 		//The id is 12 because the id cannot be known until sql give it a proper id number
+		//ckeck conflict
 		Appointment newAppt = new Appointment(title, description, location, shr, smin, startDate[0], startDate[1], startDate[2], ehr, emin, endDate[0], endDate[1], endDate[2], reminderOnOffInt, reminderTime, reminderUnit, temp, InvitingUIDAL, 12, parent.getCurrentUserID());
 		TimeSpan wholeDay=new TimeSpan(startDate[0], startDate[1],	startDate[2], 0, 0, 23, 59);
 		Appt[] listAppt=parent.controller.RetrieveAppts(parent.mCurrUser, wholeDay);
@@ -559,6 +561,15 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 				return false;//cannot save
 			}				
 		}
+		int currentUserID = parent.getCurrentUserID();
+		Appt[] apptForUser=adb.getFutureApptWithUser(currentUserID);
+		Appt[] apptForLocation = adb.getApptByLocationName(location);
+		TimeInterval newApptTimeInterval = new TimeInterval(newAppt.getTimeSpan());
+		TimeInterval timeIntervalForUser = new TimeInterval(apptForUser);
+		TimeInterval timeIntervalForLocation = new TimeInterval(apptForLocation);
+		//if(newApptTimeInterval.)
+		
+		//ckeck conflict end
 
 		adb = new ApptDB();
 		if (saveOrModify == 0)	//new appt
@@ -776,6 +787,8 @@ public class AppScheduler extends JDialog implements ActionListener, ComponentLi
 		
 		//call savebuttonresponse again
 		//
+		
+		
 		parent.updateDB();
 		parent.UpdateCal();
 		parent.updateDB();

@@ -104,6 +104,15 @@ public class TimeInterval {
 
 	}
 
+	public TimeInterval(Appt[] apptlist) {
+		this();
+		for (Appt appt : apptlist) {
+			TimeSpan timeSpan = appt.getAppointment().getTimeSpan();
+			TimeInterval singleTimeInterval = new TimeInterval(timeSpan);
+			this.unionwith(singleTimeInterval);
+		}
+	}
+	
 	public void unionwith(TimeInterval anotherTimeInterval) {
 		// union ??
 		// for(datetmp: anothermap.keyset.retainALL(map.keyset));
