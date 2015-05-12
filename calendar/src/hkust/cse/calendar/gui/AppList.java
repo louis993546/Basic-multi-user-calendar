@@ -456,8 +456,6 @@ public class AppList extends JPanel implements ActionListener {
 			int admin = parent.controller.getDefaultUser().Admin();
 			if ((admin ==0) && (apptTitle.TimeSpan().StartTime().before(parent.timeMachine.getTMTimestamp()))) {
 				JOptionPane.showMessageDialog(parent, "You cannot modify things in the past!", "Error", JOptionPane.ERROR_MESSAGE);
-			}else if ((admin ==0) && numOfPeopleOfAppointment>1) {//group event
-				JOptionPane.showMessageDialog(parent, "You cannot modify group event! You may try delete it", "Error", JOptionPane.ERROR_MESSAGE);
 			}else if((admin ==0) && apptTitle.getAppointment().getCreaterUID()!=parent.getCurrentUserID()){
 				JOptionPane.showMessageDialog(parent, "You are not creator. Cannot modify", "Error", JOptionPane.ERROR_MESSAGE);
 			}else{
