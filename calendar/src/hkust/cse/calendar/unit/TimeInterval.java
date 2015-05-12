@@ -6,7 +6,8 @@ import java.time.LocalTime;
 import java.util.BitSet;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeMap;
+//import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class TimeInterval {
 	private SortedMap<LocalDate, BitSet> timeIntervalMap;
@@ -17,7 +18,7 @@ public class TimeInterval {
 	
 	public TimeInterval()
 	{
-		timeIntervalMap = new TreeMap<LocalDate, BitSet>();
+		timeIntervalMap = new ConcurrentSkipListMap<LocalDate, BitSet>();
 	}
 
 	public TimeInterval(TimeSpan timeSpan) 
@@ -44,13 +45,13 @@ public class TimeInterval {
 				}
 				tmpTime = tmpTime.plusMinutes(15);
 			}
-			this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
+			this.timeIntervalMap = new ConcurrentSkipListMap<LocalDate, BitSet>();
 			timeIntervalMap.put(timeSpan.StartTime().toLocalDateTime().toLocalDate(), tmpBitset);// only one date!!
 
 		}
 		else
 		{
-			this.timeIntervalMap = new TreeMap<LocalDate, BitSet>();
+			this.timeIntervalMap = new ConcurrentSkipListMap<LocalDate, BitSet>();
 			{
 				LocalTime startTime = timeSpan.StartTime().toLocalDateTime().toLocalTime();
 				BitSet tmpBitset = new BitSet(40);
@@ -116,6 +117,7 @@ public class TimeInterval {
 		for (LocalDate datetmp : tmpKeySet) {
 			BitSet tmpBitSet = timeIntervalMap.get(datetmp);
 			tmpBitSet.or(anotherTimeInterval.timeIntervalMap.get(datetmp));
+			timeIntervalMap.put(datetmp,tmpBitSet);
 		}
 		
 		System.out.println(this);

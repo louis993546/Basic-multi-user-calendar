@@ -129,6 +129,35 @@ public class LocationDB {
 		}
 	}
 
+	public String getLocationName(int locID) {
+		try {
+			ArrayList<String> idAL = new ArrayList<String>();
+			stmt = c.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM LOCATIONTABLE WHERE ID='"
+							+ locID + "';");
+			while (rs.next()) {
+				String ans = rs.getString("LOCATION");
+				idAL.add(ans);
+			}
+			switch (idAL.size()) {
+			case 0:
+				return null; // does not exist
+			case 1:
+				return idAL.get(0); // only 1 exist (ideal scenario)
+			default:
+				return null; // exist multiple times (should never occur)
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": "
+					+ e.getMessage());
+			System.exit(0);
+			return null;
+		}
+	}
+	
+	
+	
 	public boolean deleteLocation(int id) {
 		try {
 			stmt = c.createStatement();

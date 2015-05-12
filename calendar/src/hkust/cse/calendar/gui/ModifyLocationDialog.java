@@ -2,14 +2,17 @@ package hkust.cse.calendar.gui;
 
 import hkust.cse.calendar.apptstorage.ApptDB;
 import hkust.cse.calendar.apptstorage.LocationDB;
-import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.apptstorage.MessageStorage;
+import hkust.cse.calendar.unit.MessageBody;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.SortedMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -88,21 +91,54 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == deleteButton) {
-			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
-			if ((id != 0) || (id != -1)) 
-			{
-				//TODO check if anyone is using it first
-				Appt[] listOfAppt = adb.getApptByLocationName(locationList.getSelectedValue().toString());
-				if (listOfAppt.length > 1)
-				{
-					//ask all those users first
-					//somehow lock this location: set capacity to negative
-					//TODO should not display location with -ve capacity
+
+//			int id = ldb.getLocationID(locationList.getSelectedValue().toString());
+//			if ((id != 0) || (id != -1)) 
+//			{
+//				//TODO check if anyone is using it first
+//				Appt[] listOfAppt = adb.getApptByLocationName(locationList.getSelectedValue().toString());
+//				if (listOfAppt.length > 1)
+//				{
+//					//ask all those users first
+//					//somehow lock this location: set capacity to negative
+//					//TODO should not display location with -ve capacity
+//				}
+//				else
+//				{
+//					ldb.deleteLocation(id);
+//					locationListModel.removeElementAt(locationList.getSelectedIndex());
+
+			int locationID = ldb.getLocationID(locationList.getSelectedValue()
+					.toString().split(": ")[0]);
+			System.out.println("location id is " + locationID);
+			if ((locationID != 0) && (locationID != -1)) {
+				SortedMap<Integer, MessageBody> tmpmap = MessageStorage
+						.getDeleteLocation();
+				
+				SortedMap<Integer, LocalDateTime> creatorToLastRelatedEventMap = MessageStorage
+						.getCreatorToLastRelatedEventMap(locationID, "location");
+
+				for (int key : creatorToLastRelatedEventMap.keySet()) {
+					MessageBody tmpmsgbody2 = new MessageBody(-1, locationID,
+							-1, MessageBody.UserResponse.NotYet,
+							creatorToLastRelatedEventMap.get(key), key);
+					int insertKey;
+					if (!(tmpmap.isEmpty())) {
+						insertKey = tmpmap.lastKey() + 1;
+					} else {
+						insertKey = 1;// start from msgid 1
+					}
+
+					tmpmap.put(insertKey, tmpmsgbody2);//
 				}
-				else
-				{
-					ldb.deleteLocation(id);
-					locationListModel.removeElementAt(locationList.getSelectedIndex());
+
+				System.out.println("tmpmap is" + tmpmap);
+
+				if (creatorToLastRelatedEventMap.isEmpty()) {
+					ldb.deleteLocation(locationID);
+					locationListModel.removeElementAt(locationList
+							.getSelectedIndex());
+
 				}
 			}
 		} else if (e.getSource() == modifyButton) {

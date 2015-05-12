@@ -1,53 +1,162 @@
 package hkust.cse.calendar.gui;
 
+import hkust.cse.calendar.apptstorage.ApptDB;
+import hkust.cse.calendar.apptstorage.LocationDB;
+import hkust.cse.calendar.apptstorage.MessageStorage;
+import hkust.cse.calendar.unit.Appointment;
+import hkust.cse.calendar.unit.MessageBody;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.SortedMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.TableModel;
 
-public class AcceptOrNotDialog extends JFrame implements ActionListener{
-	private JPanel groupApptFramePanel;
+public class AcceptOrNotDialog extends JFrame implements ActionListener {
+	private JPanel panel;
 	private JLabel comment1;
 	private JLabel comment2;
-	private JButton bAcceptGroupInv;
-	private JButton bRejectGroupInv;
+	private JButton bAccept;
+	private JButton bReject;
+	private MessageBody.UserResponse response = MessageBody.UserResponse.NotYet;
+	private String userOrLoc;
+	private int msgid;
+	private Appointment apptForInviteDialog;
 
-	public AcceptOrNotDialog() {
-		//"user with id "+tmpMB.getUserToBeDeletedID()etedID()+ "will be deleted. Do you accept?");
-		this.setTitle("User with id " + " will be deleted. Do you accept?");
+	public AcceptOrNotDialog(int msgid, String userOrLoc) {
+		this.userOrLoc = userOrLoc;
+		this.msgid = msgid;
+
+		// choose type
+		if (userOrLoc.equals("user")) {
+			this.setTitle("User with id " + " will be deleted. Do you accept?");
+			comment1 = new JLabel(
+					"This user is in some event created by you in the future");
+			// comment2 = new JLabel("Time: " + invite.TimeSpan().toString());
+
+		} else if (userOrLoc.equals("location")) {
+			this.setTitle("Location with id "
+					+ " will be deleted. Do you accept?");
+			comment1 = new JLabel(
+					"This location is used by some event created by you in the future");
+
+		} else if (userOrLoc.equals("invite")) {// maybe invite
+			this.setTitle("Someone create Appt with id " + " . Do you join?");
+			comment1 = new JLabel("The creator of this event invite you");
+
+		}
 		this.setSize(400, 100);
 		this.setAlwaysOnTop(true);
-		
-		groupApptFramePanel = new JPanel();
-		//System.out.println("trying to make group invitation dialogue");
-		comment1 = new JLabel("This user is in some event created by you in the future");
-		//comment2 = new JLabel("Time: " + invite.TimeSpan().toString());
-		
-		bAcceptGroupInv = new JButton("Accept");
-		bAcceptGroupInv.addActionListener(this);
-		
-		bRejectGroupInv = new JButton("Reject");
-		bRejectGroupInv.addActionListener(this);
-		
-		groupApptFramePanel.add(comment1);
-		groupApptFramePanel.add(comment2);
-		groupApptFramePanel.add(bAcceptGroupInv);
-		groupApptFramePanel.add(bRejectGroupInv);
-		
-		this.add(groupApptFramePanel);
+
+		panel = new JPanel();
+		// System.out.println("trying to make group invitation dialogue");
+
+		bAccept = new JButton("Accept");
+		bAccept.addActionListener(this);
+
+		bReject = new JButton("Reject");
+		bReject.addActionListener(this);
+
+		panel.add(comment1);
+		// groupApptFramePanel.add(comment2);
+		panel.add(bAccept);
+		panel.add(bReject);
+
+		this.add(panel);
 		pack();
 		this.setVisible(true);
 
-
-		
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == bAccept) {
+			// choose type for accept
+			if (userOrLoc.equals("user")) {
+				SortedMap<Integer, MessageBody> deleteUser = MessageStorage
+						.getDeleteUser();
+
+				MessageBody tmpMessageBody = deleteUser.get(msgid);
+
+				int userToBeDeletedID = tmpMessageBody.getUserToBeDeletedID();
+				// save id before del for check if last confirm
+				deleteUser.remove(msgid);
+				// find if userToBeDeleted exist
+
+				if (!MessageStorage.isExistID(userToBeDeletedID, "user")) {
+					// this really delete the user and related events
+					ApptDB adb = new ApptDB();
+					adb.delEventsWithUser(userToBeDeletedID);
+					// TODO udb.deleteUser(userToBeDeletedID);
+					// since user is the last one to confirm
+
+				}// else need more people confirm so do nothing
+				;
+
+			} else if (userOrLoc.equals("location")) {
+				SortedMap<Integer, MessageBody> deleteLocation = MessageStorage
+						.getDeleteLocation();
+				MessageBody tmpMessageBody = deleteLocation.get(msgid);
+				int locationToBeDeletedID = tmpMessageBody
+						.getLocationToBeDeletedID();
+				deleteLocation.remove(msgid);
+				// find if locationToBeDel exist
+				if (!MessageStorage
+						.isExistID(locationToBeDeletedID, "location")) {
+					ApptDB adb = new ApptDB();
+					adb.delEventsWithLocation(locationToBeDeletedID);
+					LocationDB ldb = LocationDB.getInstance();
+					ldb.deleteLocation(locationToBeDeletedID);
+
+				}// else need more confirm
+				;
+			} else if (userOrLoc.equals("invite")) {
+				// TODO wait list to going list for the current user in the appt
+				// if last one , confirm (ie. do nothing?)
+			}
+
+			this.dispose();
+		} else if (e.getSource() == bReject) {
+			// choose type for reject
+			// remove all msg related to this user or location
+			if (userOrLoc.equals("user")) {
+				SortedMap<Integer, MessageBody> deleteUser = MessageStorage
+						.getDeleteUser();
+
+				MessageBody tmpMessageBody = deleteUser.get(msgid);
+
+				int userToBeDeletedID = tmpMessageBody.getUserToBeDeletedID();
+
+				MessageStorage.deleteAllMsgWithUserOrLocationToBeDeleted(
+						userToBeDeletedID, "user");
+			} else if (userOrLoc.equals("location")) {
+				SortedMap<Integer, MessageBody> deleteLocation = MessageStorage
+						.getDeleteLocation();
+
+				MessageBody tmpMessageBody = deleteLocation.get(msgid);
+
+				int locationToBeDeletedID = tmpMessageBody
+						.getLocationToBeDeletedID();
+
+				MessageStorage.deleteAllMsgWithUserOrLocationToBeDeleted(
+						locationToBeDeletedID, "location");
+			} else if (userOrLoc.equals("invite")) {
+				//simply del the appt
+				
+				
+			}
+
+			this.dispose();
+		}
+
+	}
+
+	public void setAppt(Appointment tmpappt) {
 		// TODO Auto-generated method stub
-		
+		this.apptForInviteDialog=tmpappt;
 	}
 }
