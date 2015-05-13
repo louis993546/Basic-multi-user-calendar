@@ -738,4 +738,13 @@ public class ApptDB {
 			}
 		}
 	}
+	
+//	public String getNameByUID(int u)
+//	{
+//		ArrayList<Appointment> aal = getAppointmentList();
+//		for (Appointment a:aal)
+//		{
+//			if (a.get)
+//		}
+//	}
 }

@@ -11,9 +11,7 @@ public class User{
 
 	@Override
 	public String toString() { //for test only
-		return "User [mID=" + ID + ", mPassword=" + mPassword + ", mEmail="
-				+ mEmail + ", mFirstName=" + mFirstName + ", mLastName="
-				+ mLastName + ", mAdmin=" + mAdmin + "]";
+		return mFirstName+" "+mLastName;
 	}
 
 	// Getter of the user id

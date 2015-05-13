@@ -64,7 +64,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 		left.add(listPanel);
 
 		Box right = Box.createVerticalBox();
-		modifyButton = new JButton("Modify");
+		modifyButton = new JButton("New");
 		modifyButton.addActionListener(this);
 		deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(this);
@@ -147,6 +147,7 @@ public class ModifyLocationDialog extends JFrame implements ActionListener {
 			// load string into that GUI
 			// call update method in LocationDB
 			// TODO Location needs ID field
+			new NewLocationDialog();
 		} else if (e.getSource() == exitButton) {
 			dispose();
 		} else {

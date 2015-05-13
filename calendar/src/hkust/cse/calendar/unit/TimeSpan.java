@@ -51,17 +51,7 @@ public class TimeSpan{
 	}
 
 	public String toString() {
-		return 
-			"\nsYear    : " + mStartTime.getYear()   +
-			"\tsMonth   : " + mStartTime.getMonth()  +
-			"\tsDate    : " + mStartTime.getDate()   +
-			"\tsHours   : " + mStartTime.getHours()  +
-			"\tsMinutes : " + mStartTime.getMinutes()+
-			"\neYear    : " + mEndTime.  getYear()   +
-			"\teMonth   : " + mEndTime.  getMonth()  +
-			"\teDate    : " + mEndTime.  getDate()   +
-			"\teHours   : " + mEndTime.  getHours()  +
-			"\teMinutes : " + mEndTime.  getMinutes();
+		return mStartTime.toLocalDateTime().toString()+"~"+mEndTime.toLocalDateTime().toString();
 	}
 	
 	/* Get the starting time */

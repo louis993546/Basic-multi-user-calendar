@@ -93,12 +93,13 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		else
 			time = time + eTime.getMinutes();
 
+		UserDB udb = new UserDB();
 		area.setText("Appointment Information \n");
 		area.append("Title: " + appt.getTitle() + "\n");
 		area.append("Date: " + appt.TimeSpan().toString() + "\n");
 		area.append("Time: " + time + "\n");
 		area.append("Location: " + appt.getAppointment().getLocation() + "\n");
-		area.append("createrID: " + appt.getAppointment().getCreaterUID() + "\n");
+		area.append("createrID: " + udb.getUserWithUID(appt.getAppointment().getCreaterUID()) + "\n");
 		area.append("description: " + appt.getAppointment().getDescription()+ "\n");
 		area.append("\nParticipants:\n");
 		area.append("  Attend:");
@@ -107,7 +108,7 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		{
 			for(int i = 0; i < attendList.size(); i++)
 			{
-				area.append("  " + attendList.get(i));
+				area.append("  " + udb.getUserWithUID(attendList.get(i))+", ");
 			}
 		}
 		area.append("\n  Waiting:");
@@ -116,13 +117,13 @@ public class DetailsDialog extends JFrame implements ActionListener {
 		{
 			for(int i = 0; i < waitingList.size(); i++)
 			{
-				area.append("  " + waitingList.get(i));
+				area.append("  " + udb.getUserWithUID(waitingList.get(i))+", ");
 			}
 		}
 
 		area.append("\n\nDescription: \n" + appt.getInfo());
 		area.setEditable(false);
-		UserDB udb=new UserDB();
+		udb=new UserDB();
 		area.append("\n\nCreator: \n" + udb.getUserWithUID(appt.getAppointment().getCreaterUID()).FirstName()+" "+udb.getUserWithUID(appt.getAppointment().getCreaterUID()).getLastName());
 	}
 

@@ -11,6 +11,8 @@
 
 package hkust.cse.calendar.unit;
 
+import hkust.cse.calendar.apptstorage.UserDB;
+
 import java.sql.Timestamp;
 import java.util.LinkedList;
 
@@ -28,16 +30,18 @@ public class Appointment implements Comparable<Appointment> {
 
 	@Override
 	public String toString() {
+		UserDB udb = new UserDB();
 		return "Title: " + title + ", description: " + description
 				+ ", location: " + location + ", Time=" + startYear + "/"
 				+ startMonth +"/"+startDay+" "+ startHour + ":" + startMin
 				+"~"+endHour
-				+ ":" + endMin+"   reminder=" + reminder
+				+ ":" + endMin+ ", createrID=" + udb.getUserWithUID(createrID)
+				+"   reminder=" + reminder
 				+ ", reminderTime=" + reminderTime + ", reminderUnit="
 				+ reminderUnit + ", going=" + going + ", waiting=" + waiting
 				+ ", id=" + id + ", jid=" + jid + ", isJoint=" + isJoint
-				+ ", createrID=" + createrID + "]"+"\n";
-	}
+				 + "]"+"\n";
+	}//udb.getUserWithUID(
 
 	private int endYear;
 	private int endMonth;// 1~12
