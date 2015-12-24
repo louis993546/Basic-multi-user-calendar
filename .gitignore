@@ -1,17 +1,11 @@
 *.class
 
-# Things will NOT be be ignore
-!eclipse/
-!Sources/
-!SQLite Browser/
-!Zip/
-!calendar/sqlite-jdbc-3.8.7.jar
-
 # Things will be ignore
 Desktop.ini
 .DS_Store
 $RECYCLE.BIN/
 *.jar
+
 calendar/bin/**
 #calendar/appt.db
 #calendar/location.db
@@ -59,3 +53,15 @@ local.properties
 .metadata/.log
 
 .recommenders
+
+# database
+*.db
+*.map
+
+# Things will NOT be be ignore
+!eclipse/
+!Sources/
+!SQLite Browser/
+!Zip/
+!calendar/sqlite-jdbc-3.8.7.jar
+!Runnable JAR/*.jar
